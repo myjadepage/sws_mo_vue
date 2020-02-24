@@ -70,7 +70,7 @@ export default {
 </script>
 
 <style scope>
-h4{display: block;
+.section_ITEM h4{display: block;
     margin:7% 0 3% 5%;
     font-size: 20px;
     word-break: keep-all;
