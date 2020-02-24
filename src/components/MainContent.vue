@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Gnb from './Gnb'
+import Gnb from './shared/Gnb'
 import Item from './Item'
 
 export default {

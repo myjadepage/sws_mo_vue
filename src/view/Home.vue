@@ -1,7 +1,6 @@
 <template>
-<div id="swsWrap" class="makers_main">
+<div id="swsWrap" class="sws_main">
       <Header></Header>
-      <SideMenu></SideMenu>
       <MainContent></MainContent>
       <Footer></Footer>
 </div>
@@ -10,7 +9,6 @@
 <script>
 import Header from '@/components/shared/Header'
 import Footer from '@/components/shared/Footer'
-import SideMenu from '@/components/shared/SideMenu'
 import MainContent from '@/components/MainContent'
 
 export default {
@@ -21,7 +19,6 @@ export default {
   },
   components: {
     Header,
-    SideMenu,
     MainContent,
     Footer
   }

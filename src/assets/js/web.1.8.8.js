@@ -1,115 +1,6 @@
 /* eslint-disable eqeqeq */
 /* web.1.8.8.js (2020-01-21) */
 
-var isAnd = (navigator.userAgent.toLocaleLowerCase().indexOf('android') >= 0)
-var isIos = (navigator.userAgent.toLocaleLowerCase().indexOf('iphone') >= 0)
-var isIpad = (navigator.userAgent.toLocaleLowerCase().indexOf('ipad') >= 0)
-var isIe = (function () {
-  var agent = navigator.userAgent.toLowerCase()
-  if ((navigator.appName == 'Netscape' && agent.indexOf('trident') != -1) || (agent.indexOf('msie') != -1)) {
-    return true
-  } else {
-    return false
-  }
-})()
-
-var _MAKERS_ = {
-  DEVICE: {
-    isAnd: isAnd,
-    isIos: isIos,
-    isIpad: isIpad,
-    isIe: isIe,
-    isIphoneX: (function () { return isIphoneX() })()
-
-  },
-  STATE: {
-    OVERRIDE_FOOTER_EVENT: false
-  },
-  CONFIG: {
-    OVERRIDE_FOOTER_EVENT: function (bOverride) {
-      var override = bOverride || !_MAKERS_.STATE.OVERRIDE_FOOTER_EVENT    
-      _MAKERS_.STATE.OVERRIDE_FOOTER_EVENT = override
-    },
-    FORCE_WK_ON_RESUME: function () {
-      if (_MAKERS_.DEVICE.isAnd === true) return
-      if (_MAKERS_.DEVICE.isMakersApp === true) return
-
-      var lastTime = Date.now()
-      var watchKey = 'user_action'
-
-      LocalStorageManager.setItem(watchKey, lastTime)
-      LocalStorageManager.Watcher.watch(watchKey, function (sTimestamp) {
-        var currTime = Number(sTimestamp)
-        if (currTime > lastTime) {
-          lastTime = currTime
-          _MAKERS_.LIFE_CYCLE.ON_RESUME()
-        }
-      })
-    }
-  },
-  LIFE_CYCLE: {
-    ON_PAUSE: function () {},
-    ON_RESUME: function () {},
-    ON_REACTIVE: function () {},
-    ON_REFRESH: function () {
-      _MAKERS_.NATIVE.refreshOff()
-      location.hash = ''
-      location.reload()
-    }
-  }
-}
-
-_MAKERS_.NATIVE = (function () {
-  function invokeSafely (func) {
-    return function () {
-      var args = Array.prototype.slice.call(arguments)
-      try {
-        func.apply(null, args)
-      } catch (e) {}
-    }
-  }
-
-  function makeInvokerSafe (oInvoker, onInvokeSafeSuccess) {
-    for (var invoker in oInvoker) {
-      if (!oInvoker.hasOwnProperty(invoker)) continue
-      oInvoker[invoker] = invokeSafely(oInvoker[invoker])
-    }
-
-    if (onInvokeSafeSuccess) {
-      onInvokeSafeSuccess(oInvoker)
-    }
-
-    return oInvoker
-  }
-
-  function assignWithNoop (obj, source) {
-    for (var key in source) {
-      if (!source.hasOwnProperty(key)) continue
-      obj[key] = function () {}
-    }
-    return obj
-  }
-
-  var _UNDEFINED_INVOKER = (function () {
-    var undefinedInvoker = {}
-    undefinedInvoker = assignWithNoop(undefinedInvoker, _ANDROID_INVOKER_)
-    undefinedInvoker = assignWithNoop(undefinedInvoker, _IOS_INVOKER_)
-    return undefinedInvoker
-  })()
-
-  var _INVOKER_ = (function setInvoker () {
-    if (_MAKERS_.DEVICE.isMakersAppAnd === true) return _ANDROID_INVOKER_
-    if (_MAKERS_.DEVICE.isMakersAppIos === true) return _IOS_INVOKER_
-    return _UNDEFINED_INVOKER
-  })()
-
-  return makeInvokerSafe(_INVOKER_, function onInvokeSafeSuccess (invoker) {
-    if (_MAKERS_.DEVICE.isMakersAppIos === true) {
-      invoker.hideTitle()
-    }
-  })
-})()
-
 function getStringLength (str) {
   var korea_str_length = 0
   korea_str_length = (escape(str) + '%u').match(/%u/g).length - 1
@@ -133,25 +24,6 @@ function replaceUrl (url) {
 }
 
 var confirmClose = false
-function closeWebView () {
-  if (confirmClose) {
-    openConfirmLayer('메이커스를 종료하시겠습니까?', "tiaraPush('cancel', 'confirm_close_webview'); if (isAnd) {kakaoTalk.close();} else {location.href = 'app://closeWebView';}", '종료', '취소')
-  } else {
-    if (isAnd) {
-      kakaoTalk.close()
-    } else {
-      location.href = 'app://closeWebView'
-    }
-  }
-}
-
-function webviewClose () {
-  if (isAnd) {
-    kakaoTalk.close()
-  } else {
-    location.href = 'app://closeWebView'
-  }
-}
 
 function onCloseWebViewClick () {
   tiaraPush('close', 'global_module')
@@ -160,30 +32,6 @@ function onCloseWebViewClick () {
     onCloseWebView()
   } else {
     openConfirmLayer('메이커스를 종료하시겠습니까?', "tiaraPush('close', 'confirm_close_webview'); webviewClose();", '종료', '취소')
-  }
-}
-
-function isIphoneX () {
-  if (isIos === false) return false
-  if (isIpad === false) return false
-
-  try {
-    var ratio = window.devicePixelRatio || 1
-
-    var screen = {
-      width: window.screen.width * ratio,
-      height: window.screen.height * ratio
-    }
-
-    var iPhoneX = (screen.width === 1125 && screen.height === 2436)
-    var iPhoneXs = (screen.width === 1125 && screen.height === 2436)
-    var iPhoneXr = (screen.width === 828 && screen.height === 1792)
-    var iPhoneXsMax = (screen.width === 1242 && screen.height === 2688)
-
-    return (iPhoneX || iPhoneXs || iPhoneXr || iPhoneXsMax)
-  } catch (e) {
-    console.error(e)
-    return false
   }
 }
 
@@ -323,7 +171,7 @@ function joinPlusFriend (tiaraEvents, valueId) {
 
 function tiaraPush (tiaraAction, tiaraPath, tiaraValue) {
   try {
-    var eventArr = [ '__trackEvent', tiaraAction ]
+    var eventArr = ['__trackEvent', tiaraAction]
 
     if (tiaraPath != null) {
       if ($.isNumeric(tiaraPath)) {
@@ -346,25 +194,11 @@ function tiaraPush (tiaraAction, tiaraPath, tiaraValue) {
   }
 }
 
-function fbqTrack (evtCode, evtParam) {
-  if (isIos) { return }
-  if (isIpad) { return }
-  try {
-    fbq('track', evtCode, evtParam)
-  } catch (e) {
-    console.error(e)
-  }
-}
 
 function cleanReport (bbsId, articleId, commentId, contentType) {
   tiaraPush('cleanReport', bbsId)
   var cleanReportUrl = '/clean_report?bbs_id=' + bbsId + '&article_id=' + articleId + '&comment_id=' + commentId + '&content_type=' + contentType
   $('#clean_report_layer').load(cleanReportUrl)
-}
-
-function openShareKakaoStoryByDevice (oStoryConfig) {
-  var selectedKakaoStoryFn = isPc() === true ? Kakao.Story.share : Kakao.Story.open
-  selectedKakaoStoryFn(oStoryConfig)
 }
 
 /**
@@ -517,6 +351,7 @@ function openConfirmLayer (contents, js_func, btnOkTxt, btnCancelTxt) {
   })
   dimmedScreen(true)
 }
+
 function closeConfirmLayer () {
   $('#confirmLayer').fadeOut()
   $('#confirmLayer').off('touchmove')
@@ -779,6 +614,7 @@ function setMoveTopBtn (showHeight) {
 }
 
 var isToastLock = false
+
 function toast (message) {
   var toastMessage = $('#toastMessage')
   toastMessage.text(message)
