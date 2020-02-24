@@ -1,24 +1,26 @@
 <template>
 <div id="swsContent" class="cont_sws">
-<Gnb></Gnb>
-<Item></Item>
+  <BigSlide></BigSlide>
+  <Gnb></Gnb>
+  <WeeklyBest></WeeklyBest>
 </div>
-
 </template>
 
 <script>
 import Gnb from './shared/Gnb'
-import Item from './Item'
+import BigSlide from './slide/BigSlide'
+import WeeklyBest from './WeeklyBest'
 
 export default {
   name: 'MainContent',
   components: {
+    BigSlide,
     Gnb,
-    Item
+    WeeklyBest
   }
 }
 </script>
 
 <style>
-#swsContent.cont_sws{padding-top:95px}
+
 </style>

@@ -3397,7 +3397,7 @@ input[type="search"]::-webkit-search-cancel-button {
     background: #fff
 }
 .i-am-loader {
-    diplay: none;
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -3451,24 +3451,6 @@ input[type="search"]::-webkit-search-cancel-button {
     bottom: 0;
     background-color: rgba(0, 0, 0, .1)
 }
-.is-in-app .head_sws .common-header-close {
-    display: block
-}
-.is-makers-app .common-header, .is-makers-app .common-header-gnb-main {
-    display: none!important
-}
-.is-makers-app #kakaoContent {
-    padding-top: 0!important
-}
-.is-makers-app .hide-on-makers-app {
-    display: none
-}
-.show-on-makers-app {
-    display: none
-}
-.section_ITEM.section_CLOSING .btn_like {
-    display: none
-}
 .row-item[data-item-sold-count="0"] .wrap-item-order, .condition_order[data-condition-order="0"] {
     display: none
 }
@@ -3507,16 +3489,7 @@ body.is-orientation-landscape #buyBtns {
 .section_BANNER[data-banner-title*="앱노출"], .banner_product[data-banner-title*="앱노출"] {
     display: none !important;
 }
-.is-makers-app .section_BANNER[data-banner-title*="앱노출"], .is-makers-app .banner_product[data-banner-title*="앱노출"] {
-    display: block !important;
-}
 .section_BANNER[data-banner-title*="웹노출"], .banner_product[data-banner-title*="웹노출"] {
-    display: none !important;
-}
-.is-pc .section_BANNER[data-banner-title*="웹노출"], .is-pc .banner_product[data-banner-title*="웹노출"] {
-    display: block !important;
-}
-.is-makers-app .section_BANNER[data-banner-title*="톡노출"], .is-makers-app .banner_product[data-banner-title*="톡노출"], .is-pc .section_BANNER[data-banner-title*="톡노출"], .is-pc .banner_product[data-banner-title*="톡노출"] {
     display: none !important;
 }
 #tmoticonRelated {
