@@ -1,5 +1,5 @@
 <template>
-<div class="sale_slide">
+<div class="sale_slide pbottom">
     <h4>Sale</h4>
     <swiper :options="swiperOption">
         <swiper-slide>
@@ -54,7 +54,8 @@ export default {
   data () {
     return {
       swiperOption: {
-        slidesPerView: 2
+        slidesPerView: 2,
+        spaceBetween: 30
       }
     }
   }
@@ -62,19 +63,4 @@ export default {
 </script>
 
 <style scoped>
-.sale_slide h4{display: block;
-    margin:7% 0 3% 5%;
-    font-size: 20px;
-    word-break: keep-all;
-    line-height: 1.3;
-    color: #1a1a1a;
-    font-weight: 700;}
-    .sale_slide img{
-        width: 180px;
-        height: 220px;
-    }
-  .swiper-slide {
-    min-width: 320px;
-    height: 500px;
-  }
 </style>

@@ -1,32 +1,44 @@
 <template>
-<div class="brand_slide">
-         <swiper :options="swiperOption" class="swiper-box">
-            <swiper-slide class="swiper-item on">
-                <a href="/" class="link_gnb">
-                    <span class="link_gnb_text">구달</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb">
-                    <span class="link_gnb_text">알레그리</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb">
-                    <span class="link_gnb_text">Lf_Ifon</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb link_active">
-                    <span class="link_gnb_text">age20sale</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb">
-                    <span class="link_gnb_text">koreacosmetic</span>
-                </a>
-            </swiper-slide>
-         </swiper>
+<div class="brand_slide pbottom">
+  <h4>Best Brand</h4>
+  <swiper :options="swiperOption" class="swiper-box">
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-clio.png);"></dt>
+          <dd class="channel_name">클리오 코스메틱클리오</dd>
+       </dl>
+     </swiper-slide>
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-age20.png);"></dt>
+          <dd class="channel_name">에이지20</dd>
+       </dl>
+     </swiper-slide>
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-akb.png);"></dt>
+          <dd class="channel_name">애경</dd>
+       </dl>
+     </swiper-slide>
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-calli.png);"></dt>
+          <dd class="channel_name">칼리</dd>
+       </dl>
+     </swiper-slide>
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-goodal.png);"></dt>
+          <dd class="channel_name">구달</dd>
+       </dl>
+     </swiper-slide>
+     <swiper-slide>
+       <dl>
+          <dt class="channel_circle" style="background-image: url(static/brand/logo-jill.png);"></dt>
+          <dd class="channel_name">질스튜어트</dd>
+       </dl>
+     </swiper-slide>
+  </swiper>
 </div>
 
 </template>
@@ -44,7 +56,8 @@ export default {
   data () {
     return {
       swiperOption: {
-        slidesPerView: 4
+        slidesPerView: 3.5,
+        spaceBetween: 10
       }
     }
   }
@@ -52,28 +65,4 @@ export default {
 </script>
 
 <style scope>
-.swiper-box {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-  }
-  .swiper-item {
-    height: 100%;
-    text-align: center;
-    font-size: 18px ;
-    background: #fff;
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-  }
 </style>

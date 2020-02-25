@@ -12,3 +12,4 @@ export default {
 
 <style lang="css" src="@/assets/css/grid.min.css"></style>
 <style lang="css" src="@/assets/css/common.css"></style>
+<style lang="css" src="@/assets/css/swsmo.css"></style>

@@ -54,11 +54,11 @@ export default {
 </script>
 
 <style scope>
-.gnb_main,.is-orientation-landscape .gnb_main{max-width:640px;margin:0 auto}
+
 @media (orientation: landscape) {
     .gnb_main{max-width:640px;margin:0 auto}
 }
-.gnb_main{position: relative;z-index:99;font-size:16px;padding-top:30px;background-color:#fff;border-bottom:1px solid #d9d9d9}
+.gnb_main{position: relative;z-index:99;padding-top:30px; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
 .gnb_main li{float:left;width:20%;text-align:center}
 .gnb_main .gnb_main_li_tmoticon{display:none}
 .gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}
@@ -77,7 +77,6 @@ export default {
   .swiper-item {
     height: 100%;
     text-align: center;
-    font-size: 18px ;
     background: #fff;
     /* Center slide text vertically */
     display: -webkit-box;

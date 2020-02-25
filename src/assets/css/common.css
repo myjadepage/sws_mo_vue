@@ -116,12 +116,6 @@ body.is-orientation-landscape {
 .hide {
     display: none
 }
-.is-pc .hide-on-pc {
-    display: none !important
-}
-.is-pc .show-on-pc {
-    display: block !important
-}
 .clear_g {
     display: block;
     overflow: visible;
