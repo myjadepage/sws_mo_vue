@@ -2,18 +2,18 @@
 <div class="common-header-gnb-main">
     <div class="gnb_main">
          <swiper :options="swiperOption" class="swiper-box">
-            <swiper-slide class="swiper-item on">
+            <swiper-slide class="swiper-item">
                 <a href="/" class="link_gnb">
                     <span class="link_gnb_text link_gnb_text_home">홈</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
-                <a href="/artist" class="link_gnb">
+                <a href="/Beauty" class="link_gnb">
                     <span class="link_gnb_text link_gnb_text_artist">뷰티</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
-                <a href="/newest" class="link_gnb">
+                <a href="/Fashion" class="link_gnb">
                     <span class="link_gnb_text link_gnb_text_newest">패션</span>
                 </a>
             </swiper-slide>
