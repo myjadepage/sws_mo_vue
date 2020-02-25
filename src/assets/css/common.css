@@ -516,48 +516,61 @@ body.is-orientation-landscape {
     height: 34px
 }
 #swsFoot {
-    overflow: hidden;
     margin: 0 auto;
-    padding: 20px 14px 100px;
-    border-top: 1px solid #e0e0e0;
-    font-family: sans-serif;
-    background-color: #fff;
-    clear: both;
-    -webkit-transform: translate3d(0, 0, 0)
-}
-#swsFoot .copr_info {
-    float: left;
-    font-size: 11px;
-    color: #888;
-    clear: both
-}
-#swsFoot .link_swscorp {
-    display: block;
-    color: #888
-}
-#swsFoot .copr_info .txt_copy {
-    display: block;
-    width: 35px;
-    height: 12px;
-    background-position: 0 -14px
+    padding: 20px 5% 40px;
+    background-color: #f3f3f3;
 }
 #swsFoot .list_foot {
-    overflow: hidden;
-    float: right;
     margin: 0 auto;
     text-align: center;
     *zoom: 1
 }
 #swsFoot .list_foot li {
     float: left;
-    padding: 0 1px 0 16px
+    padding-left: 30px;
+}
+#swsFoot .list_foot li:first-child {
+    padding-left: 0px;
+}
+#swsFoot .info_foot {
+    clear: both;
+    padding: 15px 0;
+    font-size: 13px;
+    color: #666;
+}
+#swsFoot .info_foot .corp_name {
+    font-weight: 500;
+    padding-bottom: 5px;
+}
+#swsFoot .info_foot li span {
+    display: inline-block;
+    width: 35%;
+}
+#swsFoot .info_foot .addr {
+    display: inline-block;
+    width: 65%;
+    vertical-align: top;
 }
 #swsFoot .btn_foot {
     display: block;
-    font-size: 10px;
-    color: #a3a3a3;
+    font-size: 13px;
+    color: #111111;
     letter-spacing: -1px;
-    vertical-align: top
+}
+#swsFoot .copr_info {
+    float: left;
+    font-size: 11px;
+    color: #666666;
+    clear: both
+}
+#swsFoot .link_swscorp {
+    display: block;
+    color: #999
+}
+#swsFoot .copr_info .txt_copy {
+    display: block;
+    width: 35px;
+    height: 12px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio:1.5), only screen and (min-device-pixel-ratio:1.5), only screen and (min-resolution:1.5dppx) {
     .ico_makers {
