@@ -2,39 +2,15 @@
 <div class="sale_slide pbottom">
     <h4>Sale</h4>
     <swiper :options="swiperOption">
-        <swiper-slide>
-          <a href="/"><img src="/static/images/slide01.jpg"></a>
+        <swiper-slide v-for="item in items" :key="item.prdtSysId">
+          <a :href="'/product/' + item.prdtSysId"><img :src="item.bigImageUrl"></a>
           <div class="goods_best">
             <span class="condition_order">
-                <span class="num_condition">[보타니스트]</span>보태니컬 바 스킨숍
+                [{{ item.categoryName5 }}] {{ item.name }}
             </span>
             <div class="item_price">
-                <span class="discount">25%</span>
-                <strong>12,500원</strong>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <a href="/"><img src="/static/images/slide01.jpg"></a>
-          <div class="goods_best">
-            <span class="condition_order">
-                <span class="num_condition">[보타니스트]</span>보태니컬 바 스킨숍
-            </span>
-            <div class="item_price">
-                <span class="discount">25%</span>
-                <strong>12,500원</strong>
-            </div>
-          </div>
-        </swiper-slide>
-        <swiper-slide>
-          <a href="/"><img src="/static/images/slide01.jpg"></a>
-          <div class="goods_best">
-            <span class="condition_order">
-                <span class="num_condition">[보타니스트]</span>보태니컬 바 스킨숍
-            </span>
-            <div class="item_price">
-                <span class="discount">25%</span>
-                <strong>12,500원</strong>
+                <span class="discount">{{ item.marketPrice}}%</span>
+                <strong>{{ item.marketPrice }}원</strong>
             </div>
           </div>
         </swiper-slide>
@@ -45,6 +21,7 @@
 <script>
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { getProductList } from '../../api/index'
 export default {
   name: 'ProductSlide',
   components: {
@@ -53,14 +30,26 @@ export default {
   },
   data () {
     return {
+      items: [ ],
       swiperOption: {
         slidesPerView: 2,
         spaceBetween: 30
       }
     }
+  },
+  created () {
+    var vm = this
+    getProductList()
+      .then(function (res) {
+        console.log('아이템리스트 맞어?', res.data.jsonData.products)
+        vm.items = res.data.jsonData.products
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
 
-<style scoped>
+<style>
 </style>

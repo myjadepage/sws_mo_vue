@@ -24,17 +24,6 @@
     width: 180px;
     height: 220px;
 }
-.sale_slide .goods_best {
-    position: relative;
-    padding: 19px 0 0
-}
-.sale_slide .item_price {
-    overflow: hidden;
-    margin-top: 5px
-}
-.sale_slide .item_price .discount {
-    color: red;
-}
 .sale_slide .swiper-slide {
     width: 60%;
 }
@@ -165,18 +154,18 @@
     word-break: keep-all;
     line-height: 1.5
 }
-.section_ITEM .condition_order {
+.condition_order {
     display: block;
     margin-top: 18px;
-    font-weight: 600;
     line-height: 1.17;
     letter-spacing: .5px
 }
-.section_ITEM .item_price {
+.item_price {
     overflow: hidden;
     margin-top: 5px
 }
-.section_ITEM .item_price .discount {
+.item_price .discount {
+    font-family: 'Roboto', sans-serif ;
     color: red;
 }
 
