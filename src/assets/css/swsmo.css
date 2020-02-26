@@ -24,6 +24,17 @@
     width: 180px;
     height: 220px;
 }
+.sale_slide .goods_best {
+    position: relative;
+    padding: 19px 0 0
+}
+.sale_slide .item_price {
+    overflow: hidden;
+    margin-top: 5px
+}
+.sale_slide .item_price .discount {
+    color: red;
+}
 .sale_slide .swiper-slide {
     width: 60%;
 }
@@ -86,7 +97,7 @@
     display: block;
     position: relative;
     width: 100%;
-    height: 90px;
+    height: 100px;
     overflow: hidden;
     border-radius: 50%;
     border: 1px solid #dcdcdc;
@@ -260,35 +271,42 @@
 .ic-live-wrap.status-vod {
     background-color: #000;
 }
-.user-area {
+.brand-icon {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     height: 50px;
+    line-height: 50px;
     padding: 5px 10px;
+    color: #fff;
     background-color: rgba(0, 0, 0, 0.62);
 }
-.user-area .user-icon i {
+.brand-icon li {
+    float: left;
+}
+.brand-icon .brand-logo {
+    margin-top: 10px;
+}
+.brand-icon i {
     display: inline-block;
-    position: relative;
-    top: 8px;
     width: 32px;
     height: 32px;
     overflow: hidden;
     border-radius: 50%;
-    border: 1px solid #dcdcdc;
-    background-color: #fff;
+    /* border: 1px solid #dcdcdc; */
+    /* background-color: #fff; */
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    font-size: 14px;
-    color: #333;
 }
-.user-area .user-name, .user-area .user-icon, .user-area .user-icon li, .user-area .user-name li {
-    display: inline;
+.brand-icon .brand-name {
+    padding-left: 10px;
     font-size: 14px;
-    color: #fff;
+}
+.brand-icon .brand-view {
+    font-size: 12px;
+    float: right;
 }
 .desc-area {
     margin-bottom: 20px;

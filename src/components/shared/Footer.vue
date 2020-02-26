@@ -13,9 +13,9 @@
         <li><span>주소</span><span class="addr">서울 강남구 봉은사로 51길 19(논현동, 알디에스사옥)1층</span></li>
         <li><span>전화번호</span>070-7747-0059</li>
     </ul>
-     <div class="copr_info">
-        <a href="/" class="link_swscorp" role="button">© 2020 ShallWeShop, Inc.All right reserved.</a>
-    </div>
+     <p class="corp_info">
+        © 2020 ShallWeShop, Inc.All right reserved.
+    </p>
 </footer>
 </template>
 

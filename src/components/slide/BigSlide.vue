@@ -10,28 +10,28 @@
         </swiper-slide>
         <swiper-slide>
           <img src="/static/images/slide01.jpg">
-          <div class="bigSlide_title">
+          <div class="title">
             <h4>소녀들이 열광하는 LOVEMARK</h4>
             <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
           </div>
         </swiper-slide>
         <swiper-slide>
           <img src="/static/images/slide01.jpg">
-          <div class="bigSlide_title">
+          <div class="title">
             <h4>소녀들이 열광하는 LOVEMARK</h4>
             <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
           </div>
         </swiper-slide>
         <swiper-slide>
           <img src="/static/images/slide01.jpg">
-          <div class="bigSlide_title">
+          <div class="title">
             <h4>소녀들이 열광하는 LOVEMARK</h4>
             <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
           </div>
         </swiper-slide>
         <swiper-slide>
           <img src="/static/images/slide01.jpg">
-          <div class="bigSlide_title">
+          <div class="title">
             <h4>소녀들이 열광하는 LOVEMARK</h4>
             <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
           </div>

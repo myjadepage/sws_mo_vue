@@ -10,12 +10,11 @@
                     <div class="live-info-top">
                         <span class="ic-live-wrap status-vod">VOD</span>
                     </div>
-                    <div class="user-area">
-                        <ul class="user-icon">
-                            <li><i class="img-circle" style="background-image: url('assets/img/bj01.jpg');"></i><em>리아</em></li>
-                            <li>222,343 시청함</li>
-                        </ul>
-                    </div>
+                    <ul class="brand-icon">
+                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png');"></i></li>
+                        <li class="brand-name">리아</li>
+                        <li class="brand-view">222,343 시청함</li>
+                    </ul>
                 </a>
             </div>
             <div class="desc-area">1청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
@@ -28,15 +27,14 @@
                     <div class="live-info-top">
                         <span class="ic-live-wrap status-vod">VOD</span>
                     </div>
-                    <div class="user-area">
-                        <ul class="user-icon">
-                            <li><i class="img-circle" style="background-image: url('assets/img/bj01.jpg');"></i><em>리아</em></li>
-                            <li>222,343 시청함</li>
-                        </ul>
-                    </div>
+                    <ul class="brand-icon">
+                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png');"></i></li>
+                        <li class="brand-name">리아</li>
+                        <li class="brand-view">222,343 시청함</li>
+                    </ul>
                 </a>
             </div>
-            <div class="desc-area">2청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
+            <div class="desc-area">1청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
         </swiper-slide>
         <swiper-slide>
             <div class="img-area">
@@ -46,15 +44,14 @@
                     <div class="live-info-top">
                         <span class="ic-live-wrap status-vod">VOD</span>
                     </div>
-                    <div class="user-area">
-                        <ul class="user-icon">
-                            <li><i class="img-circle" style="background-image: url('assets/img/bj01.jpg');"></i><em>리아</em></li>
-                            <li>222,343 시청함</li>
-                        </ul>
-                    </div>
+                    <ul class="brand-icon">
+                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png');"></i></li>
+                        <li class="brand-name">리아</li>
+                        <li class="brand-view">222,343 시청함</li>
+                    </ul>
                 </a>
             </div>
-            <div class="desc-area">3청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
+            <div class="desc-area">1청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
         </swiper-slide>
       </swiper>
   </div>

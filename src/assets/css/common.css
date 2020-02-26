@@ -557,20 +557,11 @@ body.is-orientation-landscape {
     color: #111111;
     letter-spacing: -1px;
 }
-#swsFoot .copr_info {
+#swsFoot .corp_info {
     float: left;
     font-size: 11px;
-    color: #666666;
+    color: #999;
     clear: both
-}
-#swsFoot .link_swscorp {
-    display: block;
-    color: #999
-}
-#swsFoot .copr_info .txt_copy {
-    display: block;
-    width: 35px;
-    height: 12px;
 }
 @media only screen and (-webkit-min-device-pixel-ratio:1.5), only screen and (min-device-pixel-ratio:1.5), only screen and (min-resolution:1.5dppx) {
     .ico_makers {
