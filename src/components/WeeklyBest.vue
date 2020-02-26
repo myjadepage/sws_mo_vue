@@ -3,8 +3,7 @@
     <h4>Weekly Best</h4>
     <div class="box_best_item" v-for="item in items" :key="item.prdtSysId">
         <a :href="'/product/' + item.prdtSysId" class="link_goods">
-            <img class="thumb_img_holder" :src="item.bigImageUrl" alt="">
-            <img :src="item.bigImageUrl" class="thumb_img">
+            <img class="thumb_img" :src="item.bigImageUrl" alt="">
         </a>
         <div class="goods_best">
             <a href="/" class="link_goods">

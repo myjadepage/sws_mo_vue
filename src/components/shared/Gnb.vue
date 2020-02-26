@@ -4,27 +4,27 @@
          <swiper :options="swiperOption" class="swiper-box">
             <swiper-slide class="swiper-item">
                 <a href="/" class="link_gnb">
-                    <span class="link_gnb_text link_gnb_text_home">홈</span>
+                    <span class="link_gnb_text">홈</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
                 <a href="/Beauty" class="link_gnb">
-                    <span class="link_gnb_text link_gnb_text_artist">뷰티</span>
+                    <span class="link_gnb_text">뷰티</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
                 <a href="/Fashion" class="link_gnb">
-                    <span class="link_gnb_text link_gnb_text_newest">패션</span>
+                    <span class="link_gnb_text">패션</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
-                <a href="/preorder" class="link_gnb link_active">
-                    <span class="link_gnb_text link_gnb_text_preorder">가전</span>
+                <a href="/preorder" class="link_gnb">
+                    <span class="link_gnb_text">가전</span>
                 </a>
             </swiper-slide>
             <swiper-slide class="swiper-item">
-                <a href="/like" class="link_gnb">
-                    <span class="link_gnb_text link_gnb_text_my">마이</span>
+                <a href="/My" class="link_gnb">
+                    <span class="link_gnb_text">마이</span>
                 </a>
             </swiper-slide>
          </swiper>
@@ -58,7 +58,7 @@ export default {
 @media (orientation: landscape) {
     .gnb_main{max-width:640px;margin:0 auto}
 }
-.gnb_main{position: relative;z-index:99;padding-top:30px; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
+.gnb_main{position: relative;z-index:99;padding:30px 0 10px; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
 .gnb_main li{float:left;width:20%;text-align:center}
 .gnb_main .gnb_main_li_tmoticon{display:none}
 .gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}

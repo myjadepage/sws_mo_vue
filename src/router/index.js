@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/view/Home'
 import Beauty from '@/view/menu/Beauty'
 import About from '@/view/menu/About'
+import Login from '@/view/member/Login'
 
 Vue.use(Router)
 
@@ -14,6 +15,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/Beauty',

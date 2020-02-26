@@ -32,7 +32,7 @@ export default {
     return {
       items: [ ],
       swiperOption: {
-        slidesPerView: 2,
+        slidesPerView: 1.7,
         spaceBetween: 30
       }
     }
