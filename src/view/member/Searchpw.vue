@@ -1,22 +1,22 @@
 <template>
 <div class="memberWrap">
-  <Bar :val="title"></Bar>
-  <LoginForm></LoginForm>
+    <Bar :val="title"></Bar>
+    <SearchFormPw></SearchFormPw>
 </div>
 </template>
 
 <script>
-import LoginForm from '@/components/member/LoginForm'
+import SearchFormPw from '@/components/member/SearchFormPw'
 import Bar from '@/components/member/Bar'
+
 export default {
-  name: 'Login',
   components: {
-    LoginForm,
+    SearchFormPw,
     Bar
   },
   data () {
     return {
-      title: ' '
+      title: '비밀번호 찾기'
     }
   }
 }

@@ -77,7 +77,8 @@ table {
   border-spacing: 0
 }
 body {
-  -webkit-text-size-adjust: none
+  -webkit-text-size-adjust: none;
+  color: #111;
 }
 input:checked[type='checkbox'] {
   background-color: #666;
@@ -109,7 +110,7 @@ textarea,
 button {
   font-size: 14px;
   line-height: 1.5;
-  font-family: "Noto Sans KR", 'Malgun Gothic', '맑은 고딕', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: #1a1a1a
 }
 a {
@@ -193,6 +194,12 @@ button {
 }
 .pointer-events-none {
   pointer-events: none
+}
+.mb0{
+  margin-bottom: 0!important;
+}
+.color_main{
+  color: #e61754;
 }
 .ico_makers {
   overflow: hidden;
@@ -587,30 +594,67 @@ input[type="search"]::-webkit-search-cancel-button {
   background-position: -170px 0
 }
 
-/* 로그인 */
-
-#swsLogin {
+/*----------------------------------------------
+member-----------------------------------------*/
+.memberWrap {
   width: 360px;
   margin: 0 auto;
   text-align: center;
 }
-#swsLogin .logo {
+.member_headbar{
+  position: relative;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+}
+.member_headbar h1{
+  font-size:18px;
+  font-weight: 400;
+}
+.member_headbar span{
+  position: absolute;
+  right: 20px;
+  top: 17px;
+}
+.member_con{
+  height: 400px;
+  padding: 30px 20px 0;
+}
+.member_foot{
+  padding: 0 20px;
+  text-align: left;
+  color: #666;
+}
+.member_foot{
+  padding: 0 20px;
+  text-align: left;
+  color: #666;
+}
+.btn_center .btn {
+  width: 41%;
+}
+
+/* 아이디찾기/비번찾기 */
+.member_con .done_text{
+  font-size: 18px;
+  padding: 100px 70px 100px;
+}
+
+/* 로그인 */
+.sws_login .logo {
   margin: 0 auto;
   width: 70px;
   background-image: url(../img/sws-bi-black@3x.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position-y: bottom;
-  padding-top: 70px;
+  padding-top: 50px;
 }
-#swsLogin .title {
+.sws_login .title {
   padding-bottom: 25px;
   font-size: 22px;
   font-weight: 500;
   color: #111;
-}
-.sws_login {
-  padding: 30px 20px;
 }
 .login_service{
   padding-top: 20px;
@@ -637,35 +681,43 @@ input[type="search"]::-webkit-search-cancel-button {
   display: block;
 }
 
+/* 아이디 찾기 */
+.time_stop{
+  margin-top: 5px;
+  text-align: left;
+}
+.time_stop span{
+  color: #666;
+}
 
 /*------------------------------------------------------------------
-[ Input ]*/
+member [ Input ]*/
 
-#swsLogin input {
+.memberWrap input {
   outline: none;
   border: none;
 }
-#swsLogin .wrap-input100 {
+.memberWrap .wrap-input100 {
   width: 100%;
   position: relative;
   border-bottom: 2px solid #d9d9d9;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
-#swsLogin .label-input100 {
+.memberWrap .label-input100 {
   font-family: Poppins-Regular;
   font-size: 13px;
   color: #666666;
   line-height: 1.5;
   padding-left: 5px;
 }
-#swsLogin .input100 {
+.memberWrap .input100 {
   display: block;
   width: 100%;
   background: transparent;
   line-height: 1.2;
   padding: 0 5px;
 }
-#swsLogin .focus-input100 {
+.memberWrap .focus-input100 {
   position: absolute;
   display: block;
   width: 100%;
@@ -674,7 +726,7 @@ input[type="search"]::-webkit-search-cancel-button {
   left: 0;
   pointer-events: none;
 }
-#swsLogin .focus-input100::before {
+.memberWrap .focus-input100::before {
   content: "";
   display: block;
   position: absolute;
@@ -689,17 +741,9 @@ input[type="search"]::-webkit-search-cancel-button {
   background: #7f7f7f;
 }
 
-/*---------------------------------------------*/
-
-#swsLogin input.input100 {
-  height: 40px;
-}
-#swsLogin .input100:focus+.focus-input100::before {
-  width: 100%;
-}
-#swsLogin .has-val.input100+.focus-input100::before {
-  width: 100%;
-}
+.memberWrap input.input100 {height: 40px;}
+.memberWrap .input100:focus+.focus-input100::before {width: 100%;}
+.memberWrap .has-val.input100+.focus-input100::before {width: 100%;}
 
 
 
@@ -813,29 +857,6 @@ input[type="button"].btn-block {
   background-color: #343a40;
   border-color: #343a40;
 }
-.sws_icon{
-  background-image: url('../img/sws_icon.png');
-  background-repeat: no-repeat;
-}
-.btn-google{
-  background-position: -3px -3px;
-  background-color: #f4f4f4;
-}
-.btn-cacao{
-  background-position: -63px -3px;
-  background-color: #ffde00;
-}
-.btn-fb{
-  background-position: -125px -3px;
-  background-color: #4267b2;
-}
-.btn-naver{
-  background-position: -185px -3px;
-  background-color: #00c73c;
-}
-
-
-
 /*
  * 아이디 저장/ 자동로그인 스타일
  */
@@ -919,4 +940,33 @@ input[type="button"].btn-block {
 .toggle-button-save input[type=checkbox]:checked~.toggle-button__icon:before,
 .toggle-button-save input[type=checkbox]:checked~.toggle-button__icon:after{
   background: #fff;  
+}
+
+
+/*-------------------------
+icon*/
+.sws_icon{
+  background-image: url('../img/sws_icon.png');
+  background-repeat: no-repeat;
+}
+.btn-google{
+  background-position: -3px -3px;
+  background-color: #f4f4f4;
+}
+.btn-cacao{
+  background-position: -63px -3px;
+  background-color: #ffde00;
+}
+.btn-fb{
+  background-position: -125px -3px;
+  background-color: #4267b2;
+}
+.btn-naver{
+  background-position: -185px -3px;
+  background-color: #00c73c;
+}
+.icon_close{
+  background-position: -252px 0;
+  width: 14px;
+  height: 14px;
 }
