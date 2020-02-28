@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/view/Home'
-import Beauty from '@/view/menu/Beauty'
+import Fashion from '@/view/menu/Fashion'
 import About from '@/view/menu/About'
 import Login from '@/view/member/Login'
 import Searchid from '@/view/member/Searchid'
@@ -76,9 +76,9 @@ export default new Router({
       component: RegStep04
     },
     {
-      path: '/Beauty',
-      name: 'Beauty',
-      component: Beauty
+      path: '/category/패션',
+      name: 'Fashion',
+      component: Fashion
     },
     {
       path: '/About',

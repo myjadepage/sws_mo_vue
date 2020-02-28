@@ -3,28 +3,13 @@
     <div class="gnb_main">
          <swiper :options="swiperOption" class="swiper-box">
             <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb">
+                <a href="/" class="link_gnb on">
                     <span class="link_gnb_text">홈</span>
                 </a>
             </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/Beauty" class="link_gnb">
-                    <span class="link_gnb_text">뷰티</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/Fashion" class="link_gnb">
-                    <span class="link_gnb_text">패션</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/preorder" class="link_gnb">
-                    <span class="link_gnb_text">가전</span>
-                </a>
-            </swiper-slide>
-            <swiper-slide class="swiper-item">
-                <a href="/My" class="link_gnb">
-                    <span class="link_gnb_text">마이</span>
+            <swiper-slide class="swiper-item" v-for="menu in category" :key="menu.categoryCode">
+                <a :href="'/category/' + menu.name" class="link_gnb">
+                    <span class="link_gnb_text"> {{ menu.name }}</span>
                 </a>
             </swiper-slide>
          </swiper>
@@ -36,6 +21,7 @@
 <script>
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { getCategoryList } from '../../api'
 
 export default {
   name: 'Gnb',
@@ -47,8 +33,20 @@ export default {
     return {
       swiperOption: {
         slidesPerView: 5
-      }
+      },
+      category: []
     }
+  },
+  created () {
+    var vm = this
+    getCategoryList()
+      .then(function (res) {
+        console.log('카테고리 맞어?', res.data.jsonData.categories)
+        vm.category = res.data.jsonData.categories
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
 }
 </script>
@@ -63,9 +61,7 @@ export default {
 .gnb_main .gnb_main_li_tmoticon{display:none}
 .gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}
 .gnb_main .on .link_gnb{position:relative;}
-.gnb_main .on .link_gnb:after{content:'';display:inline-block;position:absolute;bottom:-1px;left:10px;right:10px;height:4px;background-color:#1a1a1a}
-.gnb_main .on .link_gnb.link_gnb_artist:after { left: -2px; right: -2px; }
-.gnb_main .on .link_gnb.link_gnb_preorder:after { left: -2px; right: -2px; }
+.gnb_main .on .link_gnb_text{color: #e61654}
 .gnb_main .link_gnb .link_gnb_text{position:relative;display:inline-block;padding:8px 0;letter-spacing:.6px}
 .gnb_main .link_active .link_gnb_text:after{content:' ';position:absolute;top:8px;right:-10px;width:6px;height:6px;-webkit-border-radius:50%;border-radius:50%;background-color:#db635d}
 .gnb_main .link_gnb_my.link_active:after{right:-11px}
