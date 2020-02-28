@@ -18,10 +18,10 @@
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
               <span class="focus-input100"></span>
-              <button type="button" class="btn_send color_main">확인</button>
+              <button type="button" id="show-modal" class="btn_send color_main" @click="showModal = true">확인</button>
             </div>
 
-            <ul class="time_stop">
+            <ul class="form_item_wrap info_tex">
               <li><strong  class="color_main">제한시간 09:58</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
@@ -42,7 +42,7 @@
               <button type="button" class="btn_send color_main">확인</button>
             </div>
 
-            <ul class="time_stop">
+           <ul class="form_item_wrap info_tex">
               <li><strong  class="color_main">제한시간 09:58</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
@@ -54,14 +54,26 @@
   <div class="member_foot">
        <p>SNS 간편가입을 통해 가입하신 경우, 아이디/비밀번호 문의는 해당 SNS 서비스를 통해 이용 가능합니다.</p>
   </div>
+
+  <modal v-if="showModal" @close="showModal = false">
+    <h3 slot="header">알림</h3>
+    <p slot="body">010-1234-1234로<br>
+    인증번호를 받으시겠습니까?</p>
+  </modal>
+
 </div>
 </template>
 
 <script>
+import modal from '@/components/Popup'
 export default {
+  components: {
+    modal
+  },
   data () {
     return {
-      activetab: 1
+      activetab: 1,
+      showModal: false
     }
   }
 }

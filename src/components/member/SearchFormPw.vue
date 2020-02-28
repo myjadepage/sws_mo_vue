@@ -9,17 +9,16 @@
           <!-- 1.등록된 휴대폰으로 아이디찾기 -->
           <div v-if="activetab === 1" class="tabcontent">
             <h4>아이디 입력</h4>
-            <div class="wrap-input100 validate-input mb0" data-validate=" 전화번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder="'-'없이 번호를 입력해 주세요">
+            <div class="wrap-input100 validate-input mb0" data-validate="아이디를 입력해 주세요">
+              <input class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요">
               <span class="focus-input100"></span>
-              <button type="button" class="btn_send">전송</button>
             </div>
 
             <h4>휴대폰번호 본인인증</h4>
             <div class="wrap-input100 validate-input" data-validate="인증번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
+              <input class="input100" type="text" name="id" placeholder=" -없이 번호를 입력해 주세요">
               <span class="focus-input100"></span>
-              <button type="button" class="btn_send color_main">확인</button>
+              <button type="button" class="btn_send">전송</button>
             </div>
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
@@ -35,13 +34,18 @@
 
           <!-- 2.등록된 이메일로 아이디 찾기 -->
           <div v-if="activetab === 2" class="tabcontent">
-              <h4>등록된 이메일로 아이디 찾기</h4>
-              <div class="wrap-input100 validate-input" data-validate=" 전화번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder="'-'없이 번호를 입력해 주세요">
+              <h4>아이디 입력</h4>
+              <div class="wrap-input100 validate-input mb0" data-validate="아이디를 입력해 주세요">
+              <input class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요">
+              <span class="focus-input100"></span>
+            </div>
+
+            <h4>이메일로 본인인증</h4>
+            <div class="wrap-input100 validate-input" data-validate="이메일주소를 입력해 주세요">
+              <input class="input100" type="text" name="id" placeholder="">
               <span class="focus-input100"></span>
               <button type="button" class="btn_send">전송</button>
             </div>
-
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
               <span class="focus-input100"></span>
@@ -58,6 +62,10 @@
 
   <!-- 공통아래 -->
   <div class="member_foot">
+       <ul>
+         <li>* 본인 확인용 절차이며, 다른 용도로 사용되지 않습니다.</li>
+         <li>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</li>
+       </ul>
        <p>SNS 간편가입을 통해 가입하신 경우, 아이디/비밀번호 문의는 해당 SNS 서비스를 통해 이용 가능합니다.</p>
   </div>
 </div>
