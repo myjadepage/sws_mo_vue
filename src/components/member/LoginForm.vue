@@ -7,13 +7,13 @@
         <form action="">
                 <div class="wrap-input100 validate-input" data-validate="아이디를 입력해 주세요">
                 <!-- <span class="label-input100">아이디</span> -->
-                <input class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요">
+                <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
                 <span class="focus-input100"></span>
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate="패스워드를 입력해 주세요">
                 <!-- <span class="label-input100">패스워드</span> -->
-                <input class="input100" type="password" name="password" placeholder="패스워드를 입력해 주세요">
+                <input class="input100" type="password" v-model="password" name="password" placeholder="패스워드를 입력해 주세요">
                 <span class="focus-input100"></span>
                 </div>
 
@@ -36,7 +36,7 @@
                     </li>
                 </ul>
 
-                <button type="button" class="btn btn-block btn-main">로그인</button>
+                <button type="button" class="btn btn-block btn-main" @click="login">로그인</button>
 
                 <ul class="form_item_wrap login_service">
                     <li><a href="/Searchid">아이디 찾기</a></li>
@@ -51,20 +51,20 @@
             <!-- <h2 class="title">SNS 간편로그인</h2> -->
             <ul class="form_item_wrap">
                 <li>
-                <a href="/" class="btn btn-circle sws_icon btn-google"></a>
-                <span>구글</span>
+                    <a href="/" class="btn btn-circle sws_icon btn-google" @click="googleLogin"></a>
+                    <span>구글</span>
                 </li>
                 <li>
-                <a href="/" class="btn btn-circle sws_icon btn-cacao"></a>
-                <span>카카오</span>
+                    <a href="/" class="btn btn-circle sws_icon btn-cacao" @click="cacaoLogin"></a>
+                    <span>카카오</span>
                 </li>
                 <li>
-                <a href="/" class="btn btn-circle sws_icon btn-fb"></a>
-                <span>페이스북</span>
+                    <a href="/" class="btn btn-circle sws_icon btn-fb" @click="facebookLogin"></a>
+                    <span>페이스북</span>
                 </li>
                 <li>
-                <a href="/" class="btn btn-circle sws_icon btn-naver"></a>
-                <span>네이버</span>
+                    <a href="/" class="btn btn-circle sws_icon btn-naver" @clcik="naverLogin"></a>
+                    <span>네이버</span>
                 </li>
             </ul>
         </div>
@@ -75,7 +75,30 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      id: null,
+      password: null
+    }
+  },
+  methods: {
+    login () {
+    //   let selectedUser = null
+    //   this.allUsers.forEach(user => {
+    //     if (user.id === this.id) {
+    //       selectedUser = user
+    //     }
+    //   })
+    //   if (selectedUser === null) {
+    //     alert('입력하신 아이디가 없습니다.')
+    //   } else {
+    //     if (user.password !== this.password) {
+    //       alert('입력하신 아이디와 패스워드가 일치하지 않습니다.')
+    //     }
+    //   }
+      console.log(this.id, this.password)
+    }
+  }
 }
 </script>
 
