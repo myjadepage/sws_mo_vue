@@ -3,14 +3,23 @@
     <div class="gnb_main">
          <swiper :options="swiperOption" class="swiper-box">
             <swiper-slide class="swiper-item">
-                <a href="/" class="link_gnb on">
+              <router-link to="/" class="link_gnb">
+                 <span class="link_gnb_text">홈</span>
+              </router-link>
+                <!-- <a href="/" class="link_gnb on">
                     <span class="link_gnb_text">홈</span>
-                </a>
+                </a> -->
             </swiper-slide>
             <swiper-slide class="swiper-item" v-for="menu in category" :key="menu.categoryCode">
-                <a :href="'/category/' + menu.name" class="link_gnb">
+              <!-- 쿼리가 있으면, `/register?plan=private` 이 됩니다. -->
+              <!-- <router-link :to="{ path: 'register', query: { plan: 'private' }}">Register</router-link> -->
+              <!-- <router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link> -->
+              <router-link :to="'/category/' + menu.name" class="link_gnb">
+                 <span class="link_gnb_text"> {{ menu.name }}</span>
+              </router-link>
+                <!-- <a :href="'/category/' + menu.name" class="link_gnb">
                     <span class="link_gnb_text"> {{ menu.name }}</span>
-                </a>
+                </a> -->
             </swiper-slide>
          </swiper>
     </div>
@@ -60,8 +69,9 @@ export default {
 .gnb_main li{float:left;width:20%;text-align:center}
 .gnb_main .gnb_main_li_tmoticon{display:none}
 .gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}
-.gnb_main .on .link_gnb{position:relative;}
-.gnb_main .on .link_gnb_text{color: #e61654}
+.gnb_main .link_gnb.router-link-exact-active {color: #e61654}
+.gnb_main .active .link_gnb{position:relative;}
+.gnb_main .active .link_gnb_text{color: #e61654}
 .gnb_main .link_gnb .link_gnb_text{position:relative;display:inline-block;padding:8px 0;letter-spacing:.6px}
 .gnb_main .link_active .link_gnb_text:after{content:' ';position:absolute;top:8px;right:-10px;width:6px;height:6px;-webkit-border-radius:50%;border-radius:50%;background-color:#db635d}
 .gnb_main .link_gnb_my.link_active:after{right:-11px}
