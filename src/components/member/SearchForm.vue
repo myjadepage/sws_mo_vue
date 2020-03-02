@@ -31,10 +31,10 @@
           <div v-if="activetab === 2" class="tabcontent">
               <h4>등록된 이메일로 아이디 찾기</h4>
               <div class="wrap-input100 validate-input" data-validate=" 전화번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder="'-'없이 번호를 입력해 주세요">
-              <span class="focus-input100"></span>
-              <button type="button" class="btn_send">전송</button>
-            </div>
+                <input class="input100" type="text" name="id" placeholder="'-'없이 번호를 입력해 주세요">
+                <span class="focus-input100"></span>
+                <button type="button" class="btn_send">전송</button>
+              </div>
 
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">

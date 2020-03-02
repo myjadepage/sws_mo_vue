@@ -41,7 +41,7 @@
                 <ul class="form_item_wrap login_service">
                     <li><a href="/Searchid">아이디 찾기</a></li>
                     <li><a href="/Searchpw">패스워드 찾기</a></li>
-                    <li><a href="/Register">회원가입</a></li>
+                    <li><a href="/RegStep00">회원가입</a></li>
                 </ul>
         </form>
     </div>

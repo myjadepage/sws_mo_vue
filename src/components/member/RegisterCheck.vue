@@ -24,7 +24,7 @@
                         <div class="toggle-button__icon"></div>
                     </div>
                     <span>{{ term.text }}</span>
-                    <a href="/"> > </a>
+                    <a :href="term.url"> > </a>
                 </li>
             </ul>
 
@@ -34,7 +34,7 @@
         </ul>
     </div>
      <div class="member_foot">
-        <a type="button" herf="/RegStep02" class="btn btn-block btn-dark">다음</a>
+        <button type="button" class="btn btn-block btn-dark" @click="checkForm">다음</button>
       </div>
 </div>
 </template>
@@ -44,10 +44,10 @@ export default {
   data () {
     return {
       terms: [
-        {'id': '01', 'text': '[필수] 서비스 이용약관 동의'},
-        {'id': '02', 'text': '[필수] 개인정보 수집 및 이용 동의'},
-        {'id': '03', 'text': '[선택] 개인정보 제3자 제공 동의'},
-        {'id': '04', 'text': '[선택] 이벤트 알림 수신 동의'}
+        {'id': '01', 'text': '[필수] 서비스 이용약관 동의', 'url': '/RegStep01'},
+        {'id': '02', 'text': '[필수] 개인정보 수집 및 이용 동의', 'url': '/RegStep01'},
+        {'id': '03', 'text': '[선택] 개인정보 제3자 제공 동의', 'url': '/RegStep01'},
+        {'id': '04', 'text': '[선택] 이벤트 알림 수신 동의', 'url': '/RegStep01'}
       ],
       checked: []
     }
@@ -66,6 +66,17 @@ export default {
         } else {
           this.checked = []
         }
+      }
+    }
+  },
+  methods: {
+    checkForm (e) {
+      if (this.checked[0] !== '01') {
+        alert('필수항복을 체크해 주세요')
+      } else if (this.checked[1] !== '02') {
+        alert('필수항복을 체크해 주세요')
+      } else {
+        this.$router.push('/RegStep02')
       }
     }
   }
