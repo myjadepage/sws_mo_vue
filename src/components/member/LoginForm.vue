@@ -83,15 +83,6 @@
 <script>
 import KakaoLogin from 'vue-kakao-login'
 
-let onSuccess = (data) => {
-  console.log(data)
-  console.log('success')
-}
-let onFailure = (data) => {
-  console.log(data)
-  console.log('failure')
-}
-
 export default {
   components: {
     KakaoLogin
@@ -116,8 +107,14 @@ export default {
           console.log('error', error)
         })
     },
-    onSuccess,
-    onFailure,
+    onSuccess: function (data) {
+      console.log(data)
+      console.log('success')
+    },
+    onFailure: function (data) {
+      console.log(data)
+      console.log('failure')
+    },
     login () {
     //   let selectedUser = null
     //   this.allUsers.forEach(user => {

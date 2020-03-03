@@ -26,7 +26,7 @@
               <button type="button" class="btn_send color_main">확인</button>
             </div>
 
-            <ul class="time_stop">
+            <ul class="form_item_wrap info_text">
               <li><strong  class="color_main">제한시간 09:58</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
@@ -52,7 +52,7 @@
               <button type="button" class="btn_send color_main">확인</button>
             </div>
 
-            <ul class="time_stop">
+            <ul class="form_item_wrap info_text">
               <li><strong  class="color_main">제한시간 09:58</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
