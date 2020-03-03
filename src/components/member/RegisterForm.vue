@@ -28,7 +28,7 @@
 
             <h4 class="small_title">이메일 입력</h4>
             <div class="wrap-input100">
-                <input class="input100" type="email" v-model="email" name="email" placeholder="이메일 형식에 맞게 입력해 주세요" required>
+                <input class="input100" type="text" v-model="email" name="email" placeholder="이메일 형식에 맞게 입력해 주세요" required>
                 <span class="focus-input100"></span>
             </div>
     </div>
@@ -76,6 +76,8 @@ export default {
         alert('비밀번호가 다릅니다.')
       } else if (this.email === null) {
         alert('이메일을 입력해 주세요')
+      } else {
+        this.$router.push('/RegStep03')
       }
     }
   }
@@ -88,5 +90,4 @@ export default {
     right: 0;
     top:10px;
 }
-
 </style>

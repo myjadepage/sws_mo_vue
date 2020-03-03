@@ -12,14 +12,14 @@
         <form action="">
             <h4 class="small_title">휴대폰 번호 인증</h4>
             <div class="wrap-input100 validate-input" data-validate="인증번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder=" -없이 번호를 입력해 주세요">
+              <input class="input100" type="text" v-model="phone" name="phone" placeholder=" -없이 번호를 입력해 주세요">
               <span class="focus-input100"></span>
               <button type="button" class="btn_send">전송</button>
             </div>
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
               <span class="focus-input100"></span>
-              <button type="button" class="btn_send color_main">확인</button>
+              <button type="button" class="btn_send color_main" @click="checkPhone">확인</button>
             </div>
 
             <ul class="time_stop">
@@ -33,14 +33,18 @@
         </form>
     </div>
      <div class="member_foot">
-        <a type="button" herf="" class="btn btn-block btn-dark">다음</a>
+        <button type="button" class="btn btn-block btn-dark" @click="checkCertifyDone">다음</button>
       </div>
 </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    checkCertifyDone: function () {
+      this.$router.push('/RegStep04')
+    }
+  }
 }
 </script>
 

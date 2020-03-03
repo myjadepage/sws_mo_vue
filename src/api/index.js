@@ -8,7 +8,9 @@ function getProductList () {
   return axios.get(`${config.baseUrl}products/lists`)
 }
 function getCategoryList () {
-  return axios.get(`${config.baseUrl}categories/1`)
+  return axios.get(`${config.baseUrl}categories`, {
+    params: {'categoryLevel': '1'}
+  })
 }
 
 export {

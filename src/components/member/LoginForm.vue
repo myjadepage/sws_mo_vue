@@ -51,21 +51,28 @@
             <!-- <h2 class="title">SNS 간편로그인</h2> -->
             <ul class="form_item_wrap">
                 <li>
-                    <a href="/" class="btn btn-circle sws_icon btn-google" @click="googleLogin"></a>
+                    <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
                     <span>구글</span>
                 </li>
                 <li>
-                    <a href="/" class="btn btn-circle sws_icon btn-cacao" @click="cacaoLogin"></a>
+                    <KakaoLogin
+                    api-key="78eed5dbee80e670a64a4e79c08ed7a9"
+                    :on-success=onSuccess
+                    :on-failure=onFailure
+                    class="btn btn-circle sws_icon btn-cacao"
+                    />
                     <span>카카오</span>
+                    <!-- <a href="/" class="btn btn-circle sws_icon btn-cacao" @click="kakaoLogin"></a>
+                    <span>카카오</span> -->
                 </li>
-                <li>
+                <!-- <li>
                     <a href="/" class="btn btn-circle sws_icon btn-fb" @click="facebookLogin"></a>
                     <span>페이스북</span>
                 </li>
                 <li>
                     <a href="/" class="btn btn-circle sws_icon btn-naver" @clcik="naverLogin"></a>
                     <span>네이버</span>
-                </li>
+                </li> -->
             </ul>
         </div>
 
@@ -74,7 +81,21 @@
 </template>
 
 <script>
+import KakaoLogin from 'vue-kakao-login'
+
+let onSuccess = (data) => {
+  console.log(data)
+  console.log('success')
+}
+let onFailure = (data) => {
+  console.log(data)
+  console.log('failure')
+}
+
 export default {
+  components: {
+    KakaoLogin
+  },
   data () {
     return {
       id: null,
@@ -82,6 +103,21 @@ export default {
     }
   },
   methods: {
+    handleClickGetAuth () {
+      this.$gAuth.getAuthCode()
+        .then(authCode => {
+          console.log('authCode', authCode)
+        // return this.$http.post('http://your-backend-server.com/auth/google', { code: authCode, redirect_uri: 'postmessage' })
+        })
+        .then(response => {
+          console.log('response', response)
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+    },
+    onSuccess,
+    onFailure,
     login () {
     //   let selectedUser = null
     //   this.allUsers.forEach(user => {
@@ -102,6 +138,9 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
+#kakao-login-btn>img {
+    display: none;
+}
 
 </style>
