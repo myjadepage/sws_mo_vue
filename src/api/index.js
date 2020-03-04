@@ -25,12 +25,12 @@ function sendSms () {
   // }
   // const data = {'mobile': '01011112222'}
   // console.log('data', JSON.stringify(data))
- 
+
   const form = new FormData()
-  console.log(form)
   form.append('mobile', '01011112222')
-  console.log('form', form)
-  // return axios.post(`${config.baseUrl2}auth/smssend`, form)
+  form.append('jsonData', form)
+  console.log(form)
+  // return axios.post(`${config.baseUrl2}auth/smssend`, JSON.stringify(form))
 }
 
 export {
