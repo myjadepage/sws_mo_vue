@@ -1,13 +1,20 @@
 <template>
    <div class="mypage_headbar">
-     <span class="ico_back_arr"></span>
+     <div @click="goBack" class="barClick">
+      <span class="ico_back_arr"></span>
           {{val}}
+      </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['val']
+  props: ['val'],
+  methods: {
+    goBack () {
+      this.$router.go(-1)
+    }
+  }
 }
 </script>
 

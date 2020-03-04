@@ -18,7 +18,7 @@
             <a href="/" id="btnHomeTop" role="button" class="btn_home common-header-home">
                 <span class="ico_sws ico_home">홈으로</span>
             </a>
-            <a href="/" id="btnSideMenu" class="btn_menu common-header-menu" role="button">
+            <a href="/mypage" id="btnSideMenu" class="btn_menu common-header-menu" role="button">
                 <span class="ico_sws ico_menu">메뉴</span>
             </a>
         </div>
