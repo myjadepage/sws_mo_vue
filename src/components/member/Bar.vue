@@ -15,7 +15,5 @@ export default {
   props: ['val']
 }
 </script>
-
 <style>
-
 </style>
