@@ -13,6 +13,11 @@ import RegStep01 from '@/view/member/RegStep01'
 import RegStep02 from '@/view/member/RegStep02'
 import RegStep03 from '@/view/member/RegStep03'
 import RegStep04 from '@/view/member/RegStep04'
+import MyPage from '@/view/mypage/MainPage'
+import Notice from '@/view/mypage/Notice'
+import Contact from '@/view/mypage/Contact'
+import Tracking from '@/view/mypage/Tracking'
+import TrackingDetail from '@/view/mypage/TrackingDetail'
 
 Vue.use(Router)
 
@@ -84,6 +89,31 @@ export default new Router({
       path: '/About',
       name: 'About',
       component: About
+    },
+    {
+      path: '/MyPage',
+      name: 'MyPage',
+      component: MyPage
+    },
+    {
+      path: '/Notice',
+      name: 'Notice',
+      component: Notice
+    },
+    {
+      path: '/Contact',
+      name: 'Contact',
+      component: Contact
+    },
+    {
+      path: '/Tracking',
+      name: 'Tracking',
+      component: Tracking
+    },
+    {
+      path: '/Tracking/Detail',
+      name: 'TrackingDetail',
+      component: TrackingDetail
     }
   ]
 })
