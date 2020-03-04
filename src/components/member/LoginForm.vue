@@ -49,7 +49,7 @@
         <!-- 소셜로그인 -->
         <div class="social">
             <!-- <h2 class="title">SNS 간편로그인</h2> -->
-            <ul class="form_item_wrap">
+            <ul>
                 <li>
                     <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
                     <span>구글</span>

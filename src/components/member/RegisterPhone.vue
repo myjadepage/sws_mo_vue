@@ -14,22 +14,22 @@
             <div class="wrap-input100 validate-input" data-validate="인증번호를 입력해 주세요">
               <input class="input100" type="text" v-model="phone" name="phone" placeholder=" -없이 번호를 입력해 주세요">
               <span class="focus-input100"></span>
-              <button type="button" class="btn_send">전송</button>
+              <button type="button" class="btn_send" @click="sendPhone">전송</button>
             </div>
             <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
-              <input class="input100" type="text" name="id" placeholder="인증번호 입력(10분 이내)">
+              <input class="input100" type="text" v-model="verityNum" name="verityNum" placeholder="인증번호 입력(10분 이내)">
               <span class="focus-input100"></span>
               <button type="button" class="btn_send color_main" @click="checkPhone">확인</button>
             </div>
 
-            <ul class="info_text">
+            <ul class="info_text" style="display:none">
               <li><strong  class="color_main">제한시간 09:58</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
-            <ul>
-         <li>* 본인 확인용 절차이며, 다른 용도로 사용되지 않습니다.</li>
-         <li>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</li>
-       </ul>
+            <ul class="info_text">
+              <li>* 본인 확인용 절차이며, 다른 용도로 사용되지 않습니다.</li>
+              <li>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</li>
+            </ul>
         </form>
     </div>
      <div class="member_foot">
@@ -39,8 +39,28 @@
 </template>
 
 <script>
+import { sendSms } from '../../api'
+
 export default {
+  data () {
+    return {
+      phone: null,
+      verityNum: null
+    }
+  },
   methods: {
+    sendPhone: function () {
+      sendSms()
+        .then(function (res) {
+          console.log('sms성공?', res)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    checkPhone: function () {
+
+    },
     checkCertifyDone: function () {
       this.$router.push('/RegStep04')
     }

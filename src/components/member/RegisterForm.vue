@@ -45,7 +45,8 @@ export default {
       id: null,
       password: null,
       confirmpw: null,
-      email: null
+      email: null,
+      userInfo: {}
     }
   },
   watch: {
@@ -77,7 +78,11 @@ export default {
       } else if (this.email === null) {
         alert('이메일을 입력해 주세요')
       } else {
-        this.$router.push('/RegStep03')
+        this.userInfo.userId = this.id
+        this.userInfo.password = this.password
+        this.userInfo.email = this.email
+        console.log('userinfo', this.userInfo)
+        this.$router.push('/RegStep03', this.userInfo)
       }
     }
   }

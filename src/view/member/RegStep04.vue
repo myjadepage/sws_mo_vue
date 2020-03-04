@@ -3,8 +3,8 @@
     <Bar :val="title"></Bar>
       <div class="sws_register">
           <h5></h5>
-      <div class="member_con">
-          <h2 class="title">
+      <div class="member_con member_done">
+          <h2 class="title_done">
               WELCOME
           </h2>
           <p>쉘위샵 회원가입을 축하드립니다.</p>
@@ -31,15 +31,5 @@ export default {
 </script>
 
 <style scope>
-.member_con{
-    padding-left:50px;
-    padding-right:50px;
-}
-h5 {height : 15px;}
-.title{
-    padding-top: 30px;
-    font-size: 40px;
-    font-weight: 900;
-    font-family: 'Roboto';
-}
+
 </style>

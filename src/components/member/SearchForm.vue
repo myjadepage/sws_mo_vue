@@ -105,9 +105,4 @@ export default {
   text-align: left;
   font-weight: 400;
 }
-.btn_send{
-    position: absolute;
-    right: 0;
-    top:10px;
-}
 </style>

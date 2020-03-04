@@ -29,7 +29,7 @@
                 </a>
             </div>
             <div class="wrap_btn_search common-header-search">
-                 <a href="/" id="btnSearchTop" class="link_search" role="button">
+                 <a href="/Login" id="btnSearchTop" class="link_search" role="button">
                     <span class="ico_sws ico_basket">장바구니</span>
                 </a>
             </div>
