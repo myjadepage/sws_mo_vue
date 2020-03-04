@@ -25,7 +25,7 @@ function sendSms () {
   // }
   // const data = {'mobile': '01011112222'}
   // console.log('data', JSON.stringify(data))
- 
+
   const form = new FormData()
   console.log(form)
   form.append('mobile', '01011112222')
