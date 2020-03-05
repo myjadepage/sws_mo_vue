@@ -33,15 +33,6 @@ function checkId2 () {
 }
 
 function sendSms () {
-  let jsonData = {
-    'mobile': '01011112222'
-  }
-  var fordata = new FormData()
-  fordata.set('jsonData', JSON.stringify(jsonData))
-  // fordata.append(jsonData, JSON.stringify(jsonData))
-  // jsonData = JSON.stringify(jsonData)
-  console.log(fordata.get('jsonData'))
-  return axios.post(`${config.baseUrl2}auth/smssend`, fordata)
 }
 
 export {

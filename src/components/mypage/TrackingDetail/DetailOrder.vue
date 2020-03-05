@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     formatPrice () {
-      return this.order.price.toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return this.order.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
     isOrderShipping () {
       return this.order.sta === '배송중' || this.order.sta === '배송완료'
