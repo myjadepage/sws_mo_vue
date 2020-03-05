@@ -16,26 +16,29 @@ function getCategoryList () {
 
 // 회원가입
 function createtUser () {
-  return axios.post(`${config.baseUrl}auth/join`)
+  const jsonData = {
+    'jsonData': {'userId': 'test', 'password': 'jgdHd8gDyABz9Mxm/vMsN7exDu/pxpOlWqQqRn6L7R4=', 'mobile': '01011112222', 'email': 'test@mail.com'}
+  }
+  console.log(JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/join`)
+}
+
+function checkId2 () {
+  const jsonData = {
+    'jsonData': {'userId': 'test'}
+  }
+  return axios.post(`${config.baseUrl2}users/chkdupid`, {
+    data: jsonData
+  })
 }
 
 function sendSms () {
-  // const data = {
-  //   'jsonData': {'mobile': '01011112222'}
-  // }
-  // const data = {'mobile': '01011112222'}
-  // console.log('data', JSON.stringify(data))
-
-  const form = new FormData()
-  console.log(form)
-  form.append('mobile', '01011112222')
-  console.log('form', form)
-  // return axios.post(`${config.baseUrl2}auth/smssend`, form)
 }
 
 export {
   getProductList,
   getCategoryList,
   createtUser,
-  sendSms
+  sendSms,
+  checkId2
 }
