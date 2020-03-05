@@ -1,15 +1,12 @@
 <template>
   <div class="trackingStatusWrap">
-      <ul ref="trackingList">
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[0].cnt}}</span><div class="trackingSta">{{trackingLists[0].sta}}</div></li></router-link>
-        <li><span class="ico_right_progress"></span></li>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[1].cnt}}</span><div class="trackingSta">{{trackingLists[1].sta}}</div></li></router-link>
-        <li><span class="ico_right_progress"></span></li>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[2].cnt}}</span><div class="trackingSta">{{trackingLists[2].sta}}</div></li></router-link>
-        <li><span class="ico_right_progress"></span></li>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[3].cnt}}</span><div class="trackingSta">{{trackingLists[3].sta}}</div></li></router-link>
-      </ul>
-
+        <router-link to=""><span class="trackingData"><span class="trackingCnt">{{trackingLists[0].cnt}}</span><div class="trackingSta">{{trackingLists[0].sta}}</div></span></router-link>
+        <span class="ico_right_progress"></span>
+        <router-link to=""><span class="trackingData"><span class="trackingCnt">{{trackingLists[1].cnt}}</span><div class="trackingSta">{{trackingLists[1].sta}}</div></span></router-link>
+        <span class="ico_right_progress"></span>
+        <router-link to=""><span class="trackingData"><span class="trackingCnt">{{trackingLists[2].cnt}}</span><div class="trackingSta">{{trackingLists[2].sta}}</div></span></router-link>
+        <span class="ico_right_progress"></span>
+        <router-link to=""><span class="trackingData"><span class="trackingCnt">{{trackingLists[3].cnt}}</span><div class="trackingSta">{{trackingLists[3].sta}}</div></span></router-link>
   </div>
 </template>
 

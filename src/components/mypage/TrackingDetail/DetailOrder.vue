@@ -1,7 +1,7 @@
 <template>
   <div class="detailOrderWrap">
       <div class="orderHeader">
-         <span class="orderDate"><h3>{{order.date}} {{order.tm}}</h3></span><span class="orderSta">{{order.sta}}</span>
+         <span class="orderDate"><h3>{{order.date}}. {{order.tm}}</h3></span><span class="orderSta">{{order.sta}}</span>
       </div>
       <div class="orderNo">주문번호: {{order.no}}</div>
       <div class="orderBody">
@@ -11,10 +11,12 @@
           <span class="orderOption">{{order.option}}</span>
           <div v-if="!isOrderShipping">{{formatPrice}}원</div>
           <br v-if="isOrderShipping">
+          <div class="text-center">
           <button class="detailOrderBtn cancelBtn" v-if="order.sta=='결제완료'||order.sta=='상품준비중'">주문취소</button>
           <button class="detailOrderBtn" v-if="order.sta=='배송완료'||order.sta=='배송중'">교환요청</button>
           <button class="detailOrderBtn" v-if="order.sta=='배송완료'||order.sta=='배송중'">반품요청</button>
           <button class="detailOrderBtnCr" v-if="order.sta=='배송완료'||order.sta=='배송중'">수취확인/리뷰작성</button>
+          </div>
       </div>
   </div>
 </template>
@@ -46,5 +48,7 @@ export default {
 </script>
 
 <style>
-
+.detailOrderWrap .text-center{
+  /* text-align: center; */
+}
 </style>

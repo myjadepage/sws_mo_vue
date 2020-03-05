@@ -3,11 +3,11 @@
 <div class="staHeader">주문 배송 조회</div>
 <div class="staBody">
   <ul>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[0].cnt}}</span><div class="trackingSta">{{trackingLists[0].sta}}</div></li></router-link>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[1].cnt}}</span><div class="trackingSta">{{trackingLists[1].sta}}</div></li></router-link>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[2].cnt}}</span><div class="trackingSta">{{trackingLists[2].sta}}</div></li></router-link>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[3].cnt}}</span><div class="trackingSta">{{trackingLists[3].sta}}</div></li></router-link>
-        <router-link to=""><li class="trackingData"><span class="trackingCnt">{{trackingLists[4].cnt}}</span><div class="trackingSta">{{trackingLists[4].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[0].cnt}}</span><div class="trackingSta">{{trackingLists[0].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[1].cnt}}</span><div class="trackingSta">{{trackingLists[1].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[2].cnt}}</span><div class="trackingSta">{{trackingLists[2].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[3].cnt}}</span><div class="trackingSta">{{trackingLists[3].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[4].cnt}}</span><div class="trackingSta">{{trackingLists[4].sta}}</div></li></router-link>
       </ul>
 </div>
 </div>
