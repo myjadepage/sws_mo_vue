@@ -16,26 +16,38 @@ function getCategoryList () {
 
 // 회원가입
 function createtUser () {
-  return axios.post(`${config.baseUrl}auth/join`)
+  const jsonData = {
+    'jsonData': {'userId': 'test', 'password': 'jgdHd8gDyABz9Mxm/vMsN7exDu/pxpOlWqQqRn6L7R4=', 'mobile': '01011112222', 'email': 'test@mail.com'}
+  }
+  console.log(JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/join`)
+}
+
+function checkId2 () {
+  const jsonData = {
+    'jsonData': {'userId': 'test'}
+  }
+  return axios.post(`${config.baseUrl2}users/chkdupid`, {
+    data: jsonData
+  })
 }
 
 function sendSms () {
-  // const data = {
-  //   'jsonData': {'mobile': '01011112222'}
-  // }
-  // const data = {'mobile': '01011112222'}
-  // console.log('data', JSON.stringify(data))
-
-  const form = new FormData()
-  form.append('mobile', '01011112222')
-  form.append('jsonData', form)
-  console.log(form)
-  // return axios.post(`${config.baseUrl2}auth/smssend`, JSON.stringify(form))
+  let jsonData = {
+    'mobile': '01011112222'
+  }
+  var fordata = new FormData()
+  fordata.set('jsonData', JSON.stringify(jsonData))
+  // fordata.append(jsonData, JSON.stringify(jsonData))
+  // jsonData = JSON.stringify(jsonData)
+  console.log(fordata.get('jsonData'))
+  return axios.post(`${config.baseUrl2}auth/smssend`, fordata)
 }
 
 export {
   getProductList,
   getCategoryList,
   createtUser,
-  sendSms
+  sendSms,
+  checkId2
 }

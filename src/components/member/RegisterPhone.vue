@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { sendSms } from '../../api'
+import { sendSms, createtUser } from '../../api'
 
 export default {
   data () {
@@ -51,8 +51,8 @@ export default {
   methods: {
     sendPhone: function () {
       sendSms()
-        .then(function (res) {
-          console.log('sms성공?', res)
+        .then(data => {
+          console.log('sms성공?', data)
         })
         .catch(function (error) {
           console.log(error)
@@ -62,6 +62,14 @@ export default {
 
     },
     checkCertifyDone: function () {
+      createtUser()
+        .then(function (res) {
+          console.log('가입성공?', res)
+        })
+        .catch(function (error) {
+          console.log('ERROR', error)
+        })
+
       this.$router.push('/RegStep04')
     }
   }

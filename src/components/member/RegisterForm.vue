@@ -13,7 +13,7 @@
             <div class="wrap-input100">
                 <input class="input100" type="text" v-model="id" name="id" placeholder="아이디(6-12자)" required>
                 <span class="focus-input100"></span>
-                <button type="button" class="btn_send">중복확인</button>
+                <button type="button" class="btn_send" @click="checkId">중복확인</button>
             </div>
 
             <h4 class="small_title">비밀번호 입력</h4>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { checkId2 } from '../../api'
 export default {
   data () {
     return {
@@ -66,6 +67,15 @@ export default {
     }
   },
   methods: {
+    checkId: function () {
+      checkId2()
+        .then(function (res) {
+          console.log('중복성공?', res)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     checkJoin: function () {
       if (this.id === null) {
         alert('아이디를 입력해 주세요')
