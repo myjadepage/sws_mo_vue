@@ -47,15 +47,5 @@ export default {
 </script>
 
 <style>
-.contactWrap{
-    width: 360px;
-    max-height: 740px;
-}
 
-.contactWrap button{
-    position: absolute;
-    bottom: 0%;
-    max-width: 360px;
-    border-radius: 0;
-}
 </style>

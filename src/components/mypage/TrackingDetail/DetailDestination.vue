@@ -37,32 +37,5 @@ export default {
 </script>
 
 <style>
-.detailDestWrap{
-  font-family: "Noto Sans KR";
-  margin-top: 5px;
-  background-color: white;
-  padding: 15px 12px;
-}
 
-.detailDestWrap .destHeader{
-  font-size: 16px;
-  font-weight: 500;
-  padding-bottom: 4px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.detailDestWrap .destBody{
-  margin: 15px 0 0 0;
-}
-
-.detailDestWrap .destBody th{
-  width: 39px;
-  color:#666666;
-  font-weight: normal;
-  font-size: 14px;
-  padding-right: 23px;
-}
-.detailDestWrap .destBody td{
-  font-size: 14px;
-}
 </style>

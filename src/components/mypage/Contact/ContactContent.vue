@@ -26,22 +26,4 @@ export default {
 
 <style>
 
-.contact_content textarea{
-    width: 336px;
-    height: 200px;
-    resize: none;
-    border: 1px solid #CCCCCC;
-    font-size: 14px;
-    display: inline-block;
-    padding:5px;
-}
-.contact_content h3{
-    margin: 20px 12px 10px ;
-    font-size: 15px;
-    font-weight: normal;
-    font-family: "Noto Sans KR";
-}
-.contact_content .text-center{
-    text-align: center;
-}
 </style>

@@ -1056,3 +1056,823 @@ icon*/
   width: 14px;
   height: 14px;
 }
+
+/* 
+
+Mypage > Main 
+
+*/
+
+.mainPageWrap{
+  min-width: 360px;
+  background-color: #f3f3f3;
+}
+
+.mySettingsWrap{
+  margin-top: 5px;
+  background-color: #fff;
+}
+
+.mySettingsWrap li{
+  font-size: 15px;
+  padding: 18px 22px;
+}
+
+.mySettingsWrap hr{
+  margin: 0 12px;
+  border : 1px solid #f3f3f3;
+}
+
+.mySettingsWrap .ico_password{
+    display: inline-block;
+    margin-right: 9px;
+    background: url('../img/ico/password.png');
+    width: 17px;
+    height: 17px;
+    background-size: 100%;
+}
+.mySettingsWrap .ico_notice{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/notice.png');
+  width: 18px;
+  height: 20px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_alert{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/alert.png');
+  width: 16px;
+  height: 17px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_clock{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/clock.png');
+  width: 18px;
+  height: 18px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_heart{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/heart.png');
+  width: 17px;
+  height: 15px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_review{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/review.png');
+  width: 20px;
+  height: 18px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_info{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/info.png');
+  width: 18px;
+  height: 18px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_message{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/message.png');
+  width: 20px;
+  height: 15px;
+  background-size: 100%;
+}
+.mySettingsWrap .ico_signout{
+  display: inline-block;
+  margin-right: 9px;
+  background: url('../img/ico/signout.png');
+  width: 16px;
+  height: 16px;
+  background-size: 100%;
+}
+
+.mySettingsWrap span{
+  position: relative;
+  top: 2px;
+}
+
+
+.myInfoWrap .profile_img{
+  width: 65px;
+  height: 65px;
+  background: url('../img/ico/ico_member.png');
+  background-size: 100%;
+  margin-top: 10px;
+  margin-right: 15px;
+  float: left;
+}
+
+.myInfoWrap .infoHeader{
+  height: 120px;
+  padding:28px 22px 0px;
+  color: white;
+  background-color: #282a34;
+}
+
+.myInfoWrap .profile_id{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.myInfoWrap .infoFooter{
+  height: 44px;
+  color: white;
+  font-size: 15px;
+  background: #32343e;
+  text-align: center;
+  line-height: 44px;
+  padding: 0 22px;
+}
+
+.myInfoWrap .btnBox{
+  text-align: right;
+}
+
+.myInfoWrap .dot{
+  margin: 0 0.9em;
+  font-weight: 500;
+}
+.myInfoWrap .profileEditBtn{
+  display: inline-block;
+  position: relative;
+  text-align: right;
+  height: 22px;
+}
+
+.myInfoWrap .ico_edit{
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  background: url('../img/ico/ico_edit.png');
+  background-size: 100%;
+}
+
+.myInfoWrap .follower,.following,.point{
+  font-weight: 500;
+}
+
+.myInfoWrap .point{
+  color :#e61754;
+}
+  
+.myOptionBarWrap{
+  height: 33px;
+  padding: 17px 17px 0;
+  margin-top: 1px;
+  background: white;
+}
+
+.cartBtn{
+  float: right;
+  width: 20px;
+  height: 20px;
+  background: url('../img/ico/ico_cart.png');
+  background-size: 90%;
+  background-position: 0 -1px;
+  background-repeat: no-repeat;
+}
+.settingBtn{
+  float: right;
+  margin-right: 30px;
+  width: 20px;
+  height: 20px;
+  background: url('../img/ico/ico_setting.png');
+  background-size: 100%;
+}
+.qaBtn{
+  float: right;
+  margin-right: 30px;
+  width: 20px;
+  height: 20px;
+  background: url('../img/ico/ico_qa.png');
+  background-size: 100%;
+}
+
+.myOptionBarWrap .cartBadge{
+  display: inline-block;
+  position: relative;
+  top:-10px;
+  left: 10px;
+  line-height: 20px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 18px;
+  height: 18px;
+  background-color: #e61754;
+  color: white;
+  font-family: Roboto;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.orderStatusWrap{
+  margin-top: 5px;
+  width: 100%;
+  height: 133px;
+  background-color: white;
+}
+
+.orderStatusWrap .staHeader{
+  padding: 20px 22px;
+  font-size: 16px;
+}
+
+.orderStatusWrap .staBody{
+  margin: 0 12px;
+}
+
+.orderStatusWrap .trackingSta{
+  font-size: 13px;
+  color: #666666;
+  }
+
+.orderStatusWrap .trackingCnt{
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: bold;
+  color: #cccccc;
+}
+
+.orderStatusWrap .enabled{
+  color: black;
+}
+
+.orderStatusWrap .shipping{
+  color: #e61754;
+}
+
+.orderStatusWrap .staBody li{
+  width: 20%;
+  height: 50px;
+  text-align: center;
+  float: left;
+}
+
+.myUtilWrap{
+  margin-top: 5px;
+  height: 180px;
+  background-color: #fff;
+  padding: 20px 11px;
+}
+
+.myUtilWrap .utilBtn{
+  display: inline-block;
+  text-align: center;
+  width: 32%;
+  height: 60px;
+  margin:20px 0;
+}
+
+.myUtilWrap .ico_track{
+  display: inline-block;
+  background: url('../img/ico/delivery.png');
+  width: 29px;
+  height: 23px;
+  background-size: 100%;
+}
+.myUtilWrap .ico_list{
+  display: inline-block;
+  background: url('../img/ico/list.png');
+  width: 20px;
+  height: 24px;
+  background-size: 100%;
+}
+.myUtilWrap .ico_card{
+  display: inline-block;
+  background: url('../img/ico/card.png');
+  width: 32px;
+  height: 18px;
+  background-size: 100%;
+}
+.myUtilWrap .ico_gift{
+  display: inline-block;
+  background: url('../img/ico/gift.png');
+  width: 24px;
+  height: 24px;
+  background-size: 100%;
+}
+.myUtilWrap .ico_friend{
+  display: inline-block;
+  background: url('../img/ico/member.png');
+  width: 34px;
+  height: 27px;
+  background-size: 100%;
+}
+.myUtilWrap .ico_utilQa{
+  display: inline-block;
+  background: url('../img/ico/qa2@3x.png');
+  width: 41px;
+  height: 27px;
+  background-size: 100%;
+}
+
+.myFooterWrap{
+  padding: 20px 22px 0;
+  height: 60px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.myFooterWrap .footerText{
+  line-height: 40px;
+}
+
+.myFooterWrap .center{
+  margin: 0 5%;
+}
+
+
+/* 
+
+MyPage > Contact 
+
+*/
+
+.contactWrap{
+  width: 360px;
+  max-height: 740px;
+}
+
+.contactWrap button{
+  position: absolute;
+  bottom: 0%;
+  max-width: 360px;
+  border-radius: 0;
+}
+
+.contact_content textarea{
+  width: 336px;
+  height: 200px;
+  resize: none;
+  border: 1px solid #CCCCCC;
+  font-size: 14px;
+  display: inline-block;
+  padding:5px;
+}
+.contact_content h3{
+  margin: 20px 12px 10px ;
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Noto Sans KR";
+}
+.contact_content .text-center{
+  text-align: center;
+}
+
+.contact_email h3{
+  font-family: "Noto Sans KR";
+  font-size: 15px;
+  font-weight: normal;
+     margin: 30px 12px 20px;
+}
+
+.email_form input, select{
+    all: unset;
+}
+
+.email_form select{
+    color:#E61754;
+}
+.email_form input{
+    width: 80%
+}
+
+.email_form input:focus{
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    border-bottom: 3px solid black;
+}
+
+.email_form{
+    margin: 0 12px 0;
+    border-bottom: 1px solid #EEEEEE;
+    width: 95%;
+}
+.contact_email .text-right{
+    display: inline-block;
+    text-align: right;
+}
+
+.contact_info_wrap{
+  font-family: "Noto Sans KR";
+  margin-top: 10px;
+  height: 100px;
+  background-color: #F2F2F2;
+}
+
+.contact_info_wrap .contact_mainText{
+  font-size: 16px;
+  padding-top: 15px;
+  margin-bottom: 3px;
+}
+.contact_info_wrap .contact_subText{
+  font-size: 13px;
+  color: #666666;
+}
+
+.ico_qa{
+  float: left;
+  margin:33px 15px 33px 12px;
+  display: inline-block;
+  background: url("../img/ico/qa@3x.png");
+  background-size: 100%;
+  width: 53px;
+  height: 34px;
+}
+
+.text-color-sws{
+  color: #e61754;
+  font-weight: 500;
+}
+
+/* 
+
+MyPage > Notice
+
+*/
+
+.noticeWrap{
+  width: 360px;
+}
+
+.noticeWrap hr{
+    border:1px solid #F9F9F9;
+    margin: 0;
+}
+
+#listHr{
+    width: 95%;
+}
+
+
+.noticeListWrap{
+  padding: 10px;
+  height: 100%;
+}
+
+.noticeListWrap:hover{
+  background: #F9F9F9;
+}
+
+.notice_date{
+  font-family: Roboto;
+ font-size: 13px;
+ color: #666666;
+}
+
+.notice_title,.notice_content{
+  font-family: "Noto Sans KR";
+  font-size: 14px;
+}
+
+.noticeListWrap .hidden{
+  display: none;
+}
+
+/* 
+
+MyPage > Shared > Bar
+
+*/
+
+.mypage_headbar{
+  font-family: "Noto Sans KR";
+  font-size: 16px;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  background-color: white;
+}
+
+.mypage_headbar .ico_back_arr{
+  background: url('../img/ico/back_arr@3x.png');
+  background-size: 100%;
+  float: left;
+  margin: 17px 10px 16px 16px;
+  width: 17px;
+  height: 13px;
+}
+
+
+/* 
+
+MyPage > Tracking
+
+*/
+
+.trackingWrap{
+  min-width: 360px;
+  min-height: 720px;
+  background-color: #f3f3f3;
+}
+
+.trackingDetailWrap{
+  max-width: 360px;
+  height: 720px;
+  background-color: #f3f3f3;
+}
+
+.trackingOrderWrap{
+  display: inline-block;
+    font-family: "Noto Sans KR";
+    margin-top: 5px;
+    max-width: 360px;
+    background-color: white;
+}
+
+.trackingOrderWrap h3{
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.trackingOrderWrap .orderBody{
+  float: left;
+  margin: 0 12px 15px;
+}
+
+.trackingOrderWrap .orderTitle,.orderOption{
+  font-size: 14px;
+}
+
+.trackingOrderWrap .orderHeader{
+    border-bottom: 1px solid #f3f3f3;
+    margin:20px 12px 10px;
+    padding-bottom: 5px;
+}
+
+.trackingOrderWrap .orderSta{
+    float: right;
+    font-size: 14px;
+    font-weight: 500;
+    color:#e61754;
+}
+
+.trackingOrderWrap .orderDate{
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.trackingOrderWrap .orderOption{
+    color: #666666;
+}
+
+.trackingOrderWrap .orderImage{
+    float: left;
+    width:70px;
+    height: 70px;
+    background-color:#f3f3f3;
+    margin-right: 10px;
+}
+.trackingOrderWrap .shippingSearchBtn{
+  width: 70px;
+  height: 32px;
+  color: #e61754;
+  border: 1px solid #e61754;
+  border-radius: 2px;
+  margin: 15px 0 15px 82px;
+}
+
+.trackingStatusWrap{
+  margin-top: 1px;
+  padding-top: 21px;
+  width: 360px;
+  height: 70px;
+  background-color: white;
+}
+.trackingStatusWrap ul li {
+    text-align: center;
+    float: left;
+    color: #cccccc;
+}
+
+.trackingStatusWrap .trackingCnt{
+  font-family: Roboto;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.trackingStatusWrap .trackingSta{
+    font-family: "Noto Sans KR";
+  font-size: 13px;
+}
+
+.ico_right_progress{
+  display: inline-block;
+  background: url("../img/ico/right_arr@3x.png");
+  background-size: 100%;
+  width: 7px;
+  height: 12px;
+
+}
+
+.trackingStatusWrap ul li:nth-child(odd){
+  width: 84px;
+}
+.trackingStatusWrap ul li:nth-child(even){
+  padding-top: 6px;
+  width: 7px;
+}
+.trackingStatusWrap .selectedMode{
+  color: #e61754;
+}
+
+.detailDestWrap{
+  font-family: "Noto Sans KR";
+  margin-top: 5px;
+  background-color: white;
+  padding: 15px 12px;
+}
+
+.detailDestWrap .destHeader{
+  font-size: 16px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.detailDestWrap .destBody{
+  margin: 15px 0 0 0;
+}
+
+.detailDestWrap .destBody th{
+  width: 39px;
+  color:#666666;
+  font-weight: normal;
+  font-size: 14px;
+  padding-right: 23px;
+}
+.detailDestWrap .destBody td{
+  font-size: 14px;
+}
+
+.detailOrderWrap{
+  font-family: "Noto Sans KR";
+  margin-top: 5px;
+  padding-left: 12px;
+  background-color: white;
+}
+
+.detailOrderWrap .orderHeader h3{
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  float: left;
+}
+
+.detailOrderWrap .orderSta{
+  float: right;
+}
+
+.detailOrderWrap .orderHeader{
+  padding: 20px 12px 5px;
+  border-bottom: 1px solid #eeeeee;
+  height: 20px;
+}
+
+.detailOrderWrap .orderBody{
+  padding: 10px 0 15px 0;
+  border-top: 1px solid #eeeeee;
+}
+
+.detailOrderWrap .orderNo{
+  /* padding:10px 0 10px 12px; */
+  height: 20px;
+}
+
+.detailOrderWrap .orderHeader .orderSta{
+  color: #e61754;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.detailOrderWrap .orderNo{
+  margin: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  height: 20px;
+  color: #666666;
+}
+
+.detailOrderWrap .orderImage{
+  float: left;
+  width:70px;
+  height: 70px;
+  background-color:#f3f3f3;
+  margin: 0 10px 102px 0;
+}
+
+.detailOrderWrap .orderOption{
+  color: #666666;
+}
+
+.detailOrderWrap .detailOrderBtn{
+  text-align: center;
+  font-size: 13px;
+  width: 70px;
+  height: 34px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  margin: 15px 0 0 0;
+}
+
+.detailOrderWrap .cancelBtn{
+  color: #666666;
+  width: 246px;
+}
+
+.detailOrderWrap .detailOrderBtnCr{
+  text-align: center;
+  font-size: 13px;
+  width: 110px;
+  height: 32px;
+  color: #e61754;
+  border: 1px solid #e61754;
+   margin: 15px 0 0 0;
+  border-radius: 2px;
+}
+
+.detailOrderWrap .orderPrice{
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.detailPayWrap{
+  font-family: "Noto Sans KR";
+  margin-top: 5px;
+  background-color: white;
+  padding:15px 12px 20px;
+}
+
+.detailPayWrap .payHeader{
+  font-size: 16px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.detailPayWrap .payPrice{
+  margin: 15px 0 7px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.detailPayWrap .discountPrice{
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 8px;
+}
+
+.detailPayWrap .pointCell{
+  border-top: 1px solid #eeeeee;
+}
+
+.detailPayWrap .pointCell th{
+  padding-top: 8px;
+}
+
+.detailPayWrap .mainPrice th{
+  padding-bottom: 8px;
+}
+
+.detailPayWrap .payPrice th, .discountPrice th{
+  font-weight: normal;
+  width: 91px;
+  text-align: left;
+  font-size: 14px;
+}
+.detailPayWrap .payPrice td, .discountPrice td{
+  font-size: 14px;
+  width: 245px;
+  text-align: right;
+}
+
+.detailPayWrap .payFooter th{
+  font-size: 18px;
+  font-weight: 500;
+   width: 94px;
+  text-align: left;
+  color: #e61754;
+}
+
+.detailPayWrap .payFooter td{
+  font-size: 18px;
+  font-weight: 500;
+  width: 245px;
+  text-align: right;
+  color: #e61754;
+}
+
+.detailPayWrap .discountSection th{
+  padding-bottom: 5px;
+}

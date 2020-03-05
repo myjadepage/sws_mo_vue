@@ -62,17 +62,5 @@ export default {
 </script>
 
 <style>
-.noticeWrap{
-  width: 360px;
-}
-
-.noticeWrap hr{
-    border:1px solid #F9F9F9;
-    margin: 0;
-}
-
-#listHr{
-    width: 95%;
-}
 
 </style>

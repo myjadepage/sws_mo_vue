@@ -13,36 +13,5 @@ export default {
 </script>
 
 <style>
-.contact_info_wrap{
-    font-family: "Noto Sans KR";
-    margin-top: 10px;
-    height: 100px;
-    background-color: #F2F2F2;
-}
-
-.contact_info_wrap .contact_mainText{
-    font-size: 16px;
-    padding-top: 15px;
-    margin-bottom: 3px;
-}
-.contact_info_wrap .contact_subText{
-    font-size: 13px;
-    color: #666666;
-}
-
-.ico_qa{
-    float: left;
-    margin:33px 15px 33px 12px;
-    display: inline-block;
-    background: url("../../../assets/img/qa@3x.png");
-    background-size: 100%;
-    width: 53px;
-    height: 34px;
-}
-
-.text-color-sws{
-    color: #e61754;
-    font-weight: 500;
-}
 
 </style>

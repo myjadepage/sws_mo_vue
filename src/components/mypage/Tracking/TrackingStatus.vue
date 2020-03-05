@@ -29,48 +29,5 @@ export default {
 </script>
 
 <style>
-    .trackingStatusWrap{
-      margin-top: 12px;
-      padding-top: 21px;
-      width: 360px;
-      height: 70px;
-      background-color: white;
-    }
-    .trackingStatusWrap ul li {
-        text-align: center;
-        float: left;
-        color: #cccccc;
-    }
-
-    .trackingStatusWrap .trackingCnt{
-      font-family: Roboto;
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .trackingStatusWrap .trackingSta{
-        font-family: "Noto Sans KR";
-      font-size: 13px;
-    }
-
-    .ico_right_progress{
-      display: inline-block;
-      background: url("../../../assets/img/right_arr@3x.png");
-      background-size: 100%;
-      width: 7px;
-      height: 12px;
-
-    }
-
-    .trackingStatusWrap ul li:nth-child(odd){
-      width: 84px;
-    }
-    .trackingStatusWrap ul li:nth-child(even){
-      padding-top: 6px;
-      width: 7px;
-    }
-    .trackingStatusWrap .selectedMode{
-      color: #e61754;
-    }
 
 </style>

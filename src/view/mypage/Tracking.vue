@@ -27,9 +27,5 @@ export default {
 </script>
 
 <style>
-  .trackingWrap{
-    max-width: 360px;
-    height: 720px;
-    background-color: #f3f3f3;
-  }
+
 </style>

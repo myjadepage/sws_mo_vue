@@ -22,28 +22,5 @@ export default {
 </script>
 
 <style>
-.noticeListWrap{
-  padding: 10px;
-  height: 100%;
-}
-
-.noticeListWrap:hover{
-  background: #F9F9F9;
-}
-
-.notice_date{
-  font-family: Roboto;
- font-size: 13px;
- color: #666666;
-}
-
-.notice_title,.notice_content{
-  font-family: "Noto Sans KR";
-  font-size: 14px;
-}
-
-.noticeListWrap .hidden{
-  display: none;
-}
 
 </style>

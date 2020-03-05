@@ -1,13 +1,13 @@
 <template>
 <div class="mainPageWrap">
 <Bar :val="title" />
-<ul class="tempLink">
-  <h2>임시 링크</h2>
-  <li><router-link to="/notice">공지사항</router-link></li>
-  <li><router-link to="/contact">문의하기</router-link></li>
-  <li><router-link to="/tracking">배송조회</router-link></li>
-  <li><router-link to="/tracking/detail">상세조회</router-link></li>
-</ul>
+<OptionBar/>
+<Info/>
+<OrderStatus/>
+<Util/>
+<Settings/>
+<Footer/>
+
 </div>
 </template>
 
@@ -32,13 +32,5 @@ export default {
 }
 </script>
 <style>
-.mainPageWrap{
-  max-width: 360px;
-  background-color: #f3f3f3;
-}
 
-.mainPageWrap .tempLink li{
-  cursor: pointer;
-  font-size: 1rem;
-}
 </style>
