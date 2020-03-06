@@ -18,6 +18,7 @@ import Notice from '@/view/mypage/Notice'
 import Contact from '@/view/mypage/Contact'
 import Tracking from '@/view/mypage/Tracking'
 import TrackingDetail from '@/view/mypage/TrackingDetail'
+import ProductDetail from '@/view/ProductDetail/ProductDetailMain'
 
 Vue.use(Router)
 
@@ -114,6 +115,11 @@ export default new Router({
       path: '/Tracking/Detail',
       name: 'TrackingDetail',
       component: TrackingDetail
+    },
+    {
+      path: '/Product',
+      name: 'ProductDetail',
+      component: ProductDetail
     }
   ]
 })

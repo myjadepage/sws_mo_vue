@@ -2,42 +2,40 @@
   <div class="detailPayWrap">
     <div class="payHeader">결제정보</div>
     <div class="payBody">
-      <div class="payPrice">
-        <table class="mainPrice">
-          <tr>
-            <th >상품금액</th>
-            <td>{{formatPrice(paymentInfo.pro_price)}}원</td>
-          </tr>
-          <tr>
-            <th>배송비</th>
+      <table>
+        <tr>
+          <th >상품금액</th>
+            <td class="boldPrice">{{formatPrice(paymentInfo.pro_price)}}원</td>
+        </tr>
+        <tr class="underline">
+          <th>배송비</th>
             <td>{{formatPrice(paymentInfo.shippingPrice)}}원</td>
-          </tr>
-        </table>
-      </div>
-      <div v-if="paymentInfo.discount" class="discountPrice">
-        <table class="discountSection">
-          <tr>
+        </tr>
+
+       <tbody v-if="paymentInfo.discount.coupon.length || paymentInfo.discount.point">
+        <tr >
             <th>총 할인금액</th>
             <td>-{{formatPrice(totalDiscount)}}원</td>
-          </tr>
-          <tr v-for="(c,index) in paymentInfo.discount.coupon" :key="index">
+        </tr>
+      </tbody>
+        <tbody class="underline" v-if="paymentInfo.discount.coupon.length">
+        <tr  v-for="(c,index) in paymentInfo.discount.coupon" :key="index">
             <th>할인쿠폰</th>
             <td>-{{formatPrice(c)}}원</td>
           </tr>
-          <tr class="pointCell">
-            <th>포인트사용</th>
+          </tbody>
+          <tbody v-if="paymentInfo.discount.point">
+        <tr class="underlineBlack">
+          <th>포인트사용</th>
             <td>-{{formatPrice(paymentInfo.discount.point)}}원</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <div class="payFooter">
-      <table>
+        </tr>
+        </tbody>
         <tr>
-          <th>총 결제 금액</th>
-          <td>{{formatPrice(totalPrice)}}원</td>
+            <th class="thTotalPrice">총 결제 금액</th>
+          <td class="tdTotalPrice">{{formatPrice(totalPrice)}}원</td>
         </tr>
       </table>
+
     </div>
   </div>
 </template>
@@ -50,8 +48,8 @@ export default {
         pro_price: 39900,
         shippingPrice: 3000,
         discount: {
-          coupon: [3000, 3000],
-          point: 1000
+          coupon: [600, 500, 4000],
+          point: 2300
         }
       }
     }
@@ -65,13 +63,14 @@ export default {
     totalDiscount () {
       let value = 0
 
-      if (this.paymentInfo.discount.coupon) {
+      if (this.paymentInfo.discount.coupon.length) {
         for (const item of this.paymentInfo.discount.coupon) {
           value += item
         }
       }
+      let p = this.paymentInfo.discount.point ? this.paymentInfo.discount.point : 0
 
-      value += this.paymentInfo.discount.point
+      value += p
 
       return value
     },

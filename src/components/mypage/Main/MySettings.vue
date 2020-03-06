@@ -3,7 +3,7 @@
      <ul>
 
       <router-link to=""><li><span class="ico_password"></span>비밀번호 변경</li></router-link>
-      <router-link to=""><li><span class="ico_notice"></span>공지사항</li></router-link>
+      <router-link to="/notice"><li><span class="ico_notice"></span>공지사항</li></router-link>
       <router-link to=""><li><span class="ico_alert"></span>알림 설정</li></router-link>
       <hr>
       <router-link to=""><li><span class="ico_clock"></span>최근 본 상품</li></router-link>
