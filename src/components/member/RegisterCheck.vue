@@ -72,9 +72,9 @@ export default {
   methods: {
     checkForm (e) {
       if (this.checked[0] !== '01') {
-        alert('필수항복을 체크해 주세요')
+        alert('필수항목을 체크해 주세요')
       } else if (this.checked[1] !== '02') {
-        alert('필수항복을 체크해 주세요')
+        alert('필수항목을 체크해 주세요')
       } else {
         this.$router.push('/RegStep02')
       }
