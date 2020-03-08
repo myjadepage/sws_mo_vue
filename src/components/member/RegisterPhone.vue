@@ -20,7 +20,7 @@
           <span class="focus-input100"></span>
           <button type="button" class="btn_send color_main" @click="checkPhone">확인</button>
         </div>
-        <ul class="info_text">
+        <ul class="info_text" :class="{hide: isHide}">
           <li><strong  class="color_main">제한시간 {{ countTime }}초</strong></li>
           <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
         </ul>
@@ -42,6 +42,7 @@ import { chkSmsAuth, sendSms, createtUser } from '../../api'
 export default {
   data () {
     return {
+      isHide: true,
       phone: null,
       authNo: null,
       countTime: null,
@@ -49,17 +50,18 @@ export default {
       userInfo: {}
     }
   },
-  created () {
+  mounted () {
     EventBus.$on('userInfo', this.inserUserInfo)
   },
   methods: {
     inserUserInfo: function (payload) {
-      console.log('받았냐', payload.userId)
+      console.log('받았냐', payload)
       this.userInfo.userId = payload.userId
       this.userInfo.password = payload.password
       this.userInfo.email = payload.email
     },
     sendPhone: function () {
+      this.isHide = false
       // 전화번호 유효성검사
       sendSms(0, 1, this.phone)
         .then(data => {
@@ -80,6 +82,7 @@ export default {
               .then(function (res) {
                 if (res.jsonData.code === 200) {
                   alert('인증을 성공하였습니다.')
+                  this.isHide = true
                 }
               })
               .catch(function (error) {
@@ -95,9 +98,10 @@ export default {
     countTimeDown: function (limitDate) {
       this.countTime = limitDate
       this.timer = setInterval(() => {
-        this.countTime = Math.floor(this.countTime / 60) + ' : ' + (this.countTime % 60)
+        this.countTime -= 1
+        this.countTimeDown()
+        // this.countTime = Math.floor(this.countTime / 60) + ' : ' + (this.countTime % 60)
       }, 1000)
-      this.countTime--
     },
     // 인증번호입력확인
     checkPhone: function () {

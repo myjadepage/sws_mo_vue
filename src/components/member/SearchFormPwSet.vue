@@ -2,11 +2,11 @@
   <div class="member_con">
       <div class="content">
             <h4>새 비밀번호 설정</h4>
-            <div class="wrap-input100 validate-input" data-validate="비밀번호를 입력해 주세요">
+            <div class="wrap-input100">
               <input class="input100" type="text" name="id" placeholder="새 비밀번호 8-20자이내로 입력해 주세요">
               <span class="focus-input100"></span>
             </div>
-            <div class="wrap-input100 validate-input mb0" data-validate="인증번호를 입력해 주세요">
+            <div class="wrap-input100 mb0">
               <input class="input100" type="text" name="id" placeholder="새 비밀번호를 다시 입력해 주세요">
               <span class="focus-input100"></span>
             </div>

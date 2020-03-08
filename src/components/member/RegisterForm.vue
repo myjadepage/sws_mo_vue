@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import { checkJoinId } from '../../api'
-import { EventBus } from './EventBus'
+// import { checkJoinId } from '../../api'
+// import { EventBus } from './EventBus'
 
 export default {
   data () {
@@ -48,8 +48,8 @@ export default {
       id: null,
       password: null,
       confirmpw: null,
-      email: null,
-      userInfo: {}
+      email: null
+      // userInfo: {}
     }
   },
   methods: {
@@ -68,18 +68,20 @@ export default {
       } else {
         // 아이디중복체크
         // '0001' 사용가능아이디
-        checkJoinId(this.id)
-          .then(function (res) {
-            console.log('중복성공?', res)
-            if (res.data.jsonData.resultCode === '0001') {
-              alert('사용가능한 아이디입니다.')
-            }
-          })
-          .catch(function (error) {
-            console.log('error', error)
-            alert('중복 아이디가 있습니다.')
-            return false
-          })
+        this.$store.dispatch('CHECH_JOIN_ID')
+
+        // checkJoinId(this.id)
+        //   .then(function (res) {
+        //     console.log('중복성공?', res)
+        //     if (res.data.jsonData.resultCode === '0001') {
+        //       alert('사용가능한 아이디입니다.')
+        //     }
+        //   })
+        //   .catch(function (error) {
+        //     console.log('error', error)
+        //     alert('중복 아이디가 있습니다.')
+        //     return false
+        //   })
       }
     },
     checkJoin: function () {
@@ -106,17 +108,17 @@ export default {
         this.email = ''
         alert('올바른 이메일 주소를 입력하세요')
       } else {
-        this.userInfo.userId = this.id
-        this.userInfo.password = this.password
-        this.userInfo.email = this.email
-        EventBus.$emit('userInfo', this.userInfo)
+        this.$store.userInfo.userId = this.id
+        this.$store.userInfo.password = this.password
+        this.$store.userInfo.email = this.email
+        // EventBus.$emit('userInfo', this.userInfo)
         this.$router.push('/RegStep03')
       }
     }
   }
 }
 // 해결해야할것
-// 아이디 중복함수 필수 실행 체크
+// 아이디 중복함수 필수 실행 체크????
 </script>
 
 <style scope>

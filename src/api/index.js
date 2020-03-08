@@ -49,7 +49,7 @@ function sendSms (authType, authWay, authWayValue) {
     'authType': authType,
     'authWay': authWay,
     'authWayValue': authWayValue
-  }  
+  }
   var fordata = new FormData()
   fordata.set('jsonData', JSON.stringify(jsonData))
   console.log(JSON.stringify(jsonData))
