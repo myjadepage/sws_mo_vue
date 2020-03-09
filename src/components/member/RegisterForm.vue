@@ -39,9 +39,6 @@
 </template>
 
 <script>
-// import { checkJoinId } from '../../api'
-// import { EventBus } from './EventBus'
-
 export default {
   data () {
     return {
@@ -49,7 +46,6 @@ export default {
       password: null,
       confirmpw: null,
       email: null
-      // userInfo: {}
     }
   },
   methods: {
@@ -59,29 +55,19 @@ export default {
       const regId = /^[A-za-z0-9]{6,12}$/
       if (this.id === null) {
         alert('아이디를 입력해 주세요')
+        return false
+      } else if (this.id.length < 6 || this.id.length > 12) {
+        alert('아이디를 6-12자로 입력해 주세요')
+        this.id = ''
+        return false
       } else if (!regId.test(this.id)) {
         alert('영문, 숫자로 입력해 주세요')
         this.id = ''
-      } else if (this.id.length < 7 || this.id.length > 13) {
-        alert('아이디를 6-12자로 입력해 주세요')
-        this.id = ''
+        return false
       } else {
-        // 아이디중복체크
-        // '0001' 사용가능아이디
+      // 아이디중복체크
+        this.$store.state.userInfo.userId = this.id
         this.$store.dispatch('CHECH_JOIN_ID')
-
-        // checkJoinId(this.id)
-        //   .then(function (res) {
-        //     console.log('중복성공?', res)
-        //     if (res.data.jsonData.resultCode === '0001') {
-        //       alert('사용가능한 아이디입니다.')
-        //     }
-        //   })
-        //   .catch(function (error) {
-        //     console.log('error', error)
-        //     alert('중복 아이디가 있습니다.')
-        //     return false
-        //   })
       }
     },
     checkJoin: function () {
@@ -108,16 +94,16 @@ export default {
         this.email = ''
         alert('올바른 이메일 주소를 입력하세요')
       } else {
-        this.$store.userInfo.userId = this.id
-        this.$store.userInfo.password = this.password
-        this.$store.userInfo.email = this.email
-        // EventBus.$emit('userInfo', this.userInfo)
+        this.$store.state.userInfo.userId = this.id
+        this.$store.state.userInfo.password = this.password
+        this.$store.state.userInfo.email = this.email
         this.$router.push('/RegStep03')
       }
     }
   }
 }
 // 해결해야할것
+// 패스워드 암호화!
 // 아이디 중복함수 필수 실행 체크????
 </script>
 

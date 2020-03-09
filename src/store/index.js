@@ -12,16 +12,20 @@ export const store = new Vuex.Store({
   mutations,
   actions: {
     CHECH_JOIN_ID () {
-      checkJoinId()
+      checkJoinId(this.state.userInfo.userId)
         .then(res => {
-          console.log('중복성공?', res)
+          console.log('아이디체크성공!', res)
           if (res.data.jsonData.resultCode === '0001') {
             alert('사용가능한 아이디입니다.')
+          } else if (res.data.jsonData.resultCode === '0003') {
+            alert('중복 아이디가 있습니다.')
+            this.state.userInfo.userId = ''
+            return false
           }
         })
         .catch(error => {
           console.log('error', error)
-          alert('중복 아이디가 있습니다.')
+          alert('아이디체크 중 문제가 생겼습니다.')
         })
     }
   }
