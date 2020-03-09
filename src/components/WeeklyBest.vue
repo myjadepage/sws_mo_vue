@@ -3,7 +3,7 @@
     <h4>Weekly Best</h4>
     <div class="box_best_item" v-for="item in items" :key="item.prdtSysId">
         <a :href="'/product/' + item.prdtSysId" class="link_goods">
-            <img class="thumb_img" :src="item.bigImageUrl" alt="">
+            <img class="thumb_img" :src="item.bigImageUrl" alt="" style="border-top: 1px solid #efefef;border-bottom: 1px solid #efefef;">
         </a>
         <div class="goods_best">
             <a :href="'/product/' + item.prdtSysId" class="link_goods">
@@ -11,11 +11,11 @@
                 <span class="txt_goods">당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디숍을 만나보세요.</span>
             </a>
             <span class="condition_order">
-                [{{ item.categoryName5 }}] {{ item.name }}
+                [{{ item.brandName }}] {{ item.name }}
             </span>
             <div class="item_price">
-                <span class="discount">{{ item.marketPrice}}%</span>
-                <strong>{{ item.marketPrice }}원</strong>
+                <span class="discount">{{  (item.discountRate) * 100 }}%</span>
+                <strong>{{ item.price }}원</strong>
             </div>
         </div>
     </div>

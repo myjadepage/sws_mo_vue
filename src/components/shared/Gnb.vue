@@ -41,7 +41,8 @@ export default {
   data () {
     return {
       swiperOption: {
-        slidesPerView: 5
+        slidesPerView: 4.5,
+        spaceBetween: 10
       },
       category: []
     }
@@ -66,8 +67,8 @@ export default {
     .gnb_main{max-width:640px;margin:0 auto}
 }
 .gnb_main{position: relative;z-index:99;padding:30px 0 10px; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
-.gnb_main li{float:left;width:20%;text-align:center}
-.gnb_main .gnb_main_li_tmoticon{display:none}
+/* .gnb_main li{float:left;text-align:center}
+.gnb_main .gnb_main_li_tmoticon{display:none} */
 .gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}
 .gnb_main .link_gnb.router-link-exact-active {color: #e61654}
 .gnb_main .active .link_gnb{position:relative;}
@@ -97,5 +98,12 @@ export default {
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+  }
+ .gnb_main .swiper-item:nth-child(11),
+ .gnb_main .swiper-item:nth-child(12){
+    width: 100px !important;
+  }
+  .gnb_main .swiper-item:nth-child(13) {
+    width: 120px !important;
   }
 </style>
