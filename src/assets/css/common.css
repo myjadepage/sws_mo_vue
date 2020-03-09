@@ -203,6 +203,13 @@ button {
 .color_main{
   color: #e61754;
 }
+.sws_icon {
+  overflow: hidden;
+  background: url(/src/assets/img/sws_icon.png) no-repeat;
+  font-size: 1px;
+  line-height: 0;
+  text-indent: -9999px
+}
 .ico_makers {
   overflow: hidden;
   background: url(//t1.daumcdn.net/makers/css/180123/ico_makers_v2_m320.png) no-repeat;
@@ -411,12 +418,11 @@ button {
 }
 .head_sws .box_menu_right .common-header-search .link_search .ico_basket {
   display: block;
-  width: 18px;
-  height: 19px;
+  width: 22px;
+  height: 24px;
   position: relative;
-  top: 1px;
-  left: 2px;
-  background-position: -120px -20px
+  top: -4px;
+  background-position: -303px 0px
 }
 .head_sws .box_menu_right .wrap_btn_close {
   float: right;
@@ -618,7 +624,7 @@ member-----------------------------------------*/
   top: 17px;
 }
 .member_con{ 
-  height: 400px;
+  height: 370px;
   padding: 30px 30px 0;
 }
 .member_con h2 {
