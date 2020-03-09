@@ -3,34 +3,25 @@
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full sm"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half sm"></span>
         <span v-for="(j,jid) of noneStarCnt" :key="jid" class="ico_star_none sm"></span>
-    <span class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{date}}</span><span class="reviewWriter">{{concealedWriter}}</span>
-      <div class="reviewContent">{{content}}</div>
-      <div v-if="photo.length===1" class="photoSection"></div>
-      <div v-if="photo.length>2" class="multiPhotoSection">
-        <span v-for="(p,idx) in photo" :key="idx" class="subPhoto"></span>
+    <span class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{review.date}}</span><span class="reviewWriter">{{concealedWriter}}</span>
+      <div class="reviewContent">{{review.content}}</div>
+      <div v-if="review.photo.length===1" class="photoSection"></div>
+      <div v-if="review.photo.length>2" class="multiPhotoSection">
+        <span v-for="(p,idx) in review.photo" :key="idx" class="subPhoto"></span>
       </div>
-      <div v-if="media" class="mediaSection"></div>
+      <div v-if="review.media" class="mediaSection"></div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      rate: 3.5,
-      writer: 'abcdefg',
-      date: '2020.02.11',
-      content: '수공예라 그런지 마감이 좀 아쉽네요. 넓은 면에 미세한 스크레치가 꽤 있는데 볼 때 예쁘진 않지만 마사지에 영향 줄 정도는 아니고 깃 부분 중앙이 좀 뾰족한데 혈점 자극하는 데 쓰도록 해봐야겠어요. 불투명한 색이라 그런지 사진처럼예쁘진 않아요. 그래도 다른 곳보다 저렴해서 괜찮은 것 같아요  그래도 다른 곳보다 저렴해서 괜찮은 것 같 그래도 다',
-      photo: [1],
-      media: false
-    }
-  },
+  props: ['review'],
   computed: {
     fullStarCnt () {
-      return Math.floor(this.rate)
+      return Math.floor(this.review.rate)
     },
     halfStarCnt () {
-      return this.rate % 1
+      return this.review.rate % 1
     },
     noneStarCnt () {
       if (this.halfStarCnt) {
@@ -40,7 +31,7 @@ export default {
       }
     },
     concealedWriter () {
-      let val = this.writer
+      let val = this.review.writer
       val = val.split('')
       for (let i = 3; i < val.length; i++) {
         val[i] = '*'
