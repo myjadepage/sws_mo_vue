@@ -28,7 +28,8 @@ input,
 select,
 button {
   margin: 0;
-  padding: 0
+  padding: 0;
+  user-select: none;
 }
 fieldset,
 img {
@@ -1189,7 +1190,10 @@ Mypage > Main
   font-weight: 500;
 }
 
+
+
 .myInfoWrap .infoFooter{
+  font-family: "Noto Sans KR";
   height: 44px;
   color: white;
   font-size: 15px;
@@ -1199,27 +1203,22 @@ Mypage > Main
   padding: 0 22px;
 }
 
-.myInfoWrap .btnBox{
-  text-align: right;
-}
 
 .myInfoWrap .dot{
   margin: 0 0.9em;
   font-weight: 500;
 }
-.myInfoWrap .profileEditBtn{
-  display: inline-block;
-  position: relative;
-  text-align: right;
-  height: 22px;
-}
 
 .myInfoWrap .ico_edit{
+  display: inline-block;
   width: 22px;
   height: 22px;
-  display: inline-block;
+  position: relative;
+  left: -30px;
+  top: -15px;
   background: url('../img/ico/ico_edit.png');
   background-size: 100%;
+  cursor: pointer;
 }
 
 .myInfoWrap .follower,.following,.point{
@@ -1228,19 +1227,20 @@ Mypage > Main
 
 .myInfoWrap .point{
   color :#e61754;
+  font-weight: 500;
 }
   
 .myOptionBarWrap{
-  height: 33px;
+  /* height:  */
   padding: 17px 17px 0;
   margin-top: 1px;
-  background: white;
+  background: #282a34;
 }
 
 .cartBtn{
   float: right;
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 22px;
   background: url('../img/ico/ico_cart.png');
   background-size: 90%;
   background-position: 0 -1px;
@@ -1249,15 +1249,15 @@ Mypage > Main
 .settingBtn{
   float: right;
   margin-right: 30px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: url('../img/ico/ico_setting.png');
   background-size: 100%;
 }
 .qaBtn{
   float: right;
   margin-right: 30px;
-  width: 20px;
+  width: 21px;
   height: 20px;
   background: url('../img/ico/ico_qa.png');
   background-size: 100%;
@@ -1268,11 +1268,12 @@ Mypage > Main
   position: relative;
   top:-10px;
   left: 10px;
-  line-height: 20px;
+  line-height: 22px;
   border-radius: 10px;
   text-align: center;
-  min-width: 18px;
-  height: 18px;
+  padding: 0 4px;
+  min-width: 14px;
+  height: 20px;
   background-color: #e61754;
   color: white;
   font-family: Roboto;
@@ -1549,27 +1550,33 @@ MyPage > Notice
 
 /* 
 
-MyPage > Shared > Bar
+Shared > Bar
 
 */
 
-.mypage_headbar{
+.headBarWrap{
   font-family: "Noto Sans KR";
   font-size: 16px;
+  font-weight: 500;
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
   background-color: white;
 }
 
-.mypage_headbar .ico_back_arr{
+.headBarWrap .ico_back_arr{
+  background-repeat: no-repeat;
+  position: relative;
+  top: 18px;
+  left: 17px;
+  float: left;
   background: url('../img/ico/back_arr@3x.png');
   background-size: 100%;
-  float: left;
-  margin: 17px 10px 16px 16px;
-  width: 17px;
+  width: 16px;
   height: 13px;
 }
+
 
 
 /* 
@@ -1875,3 +1882,35 @@ Tracking > Detail
 .detailPayWrap .payBody .underlineBlack{
   border-bottom: 1px solid black;
 }
+
+/* 
+
+Product > Description > Review
+
+*/
+
+.reviewHeaderWrap .ico_star_half{
+  display: inline-block;
+  background: url("../img/ico/ico_star_half.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
+}
+
+
+.reviewHeaderWrap .ico_star_full{
+  display: inline-block;
+  margin-left: 3px;
+  background: url("../img/ico/ico_star_full.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
+}
+.reviewHeaderWrap .ico_star_none{
+  display: inline-block;
+  background: url("../img/ico/ico_star_none.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
+}
+

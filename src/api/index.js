@@ -10,7 +10,7 @@ const config = {
  */
 // 상품리스트
 function getProductList () {
-  return axios.get(`${config.baseUrl}products/lists`)
+  return axios.get(`${config.baseUrl2}products/lists`)
 }
 
 // 카테고리
@@ -18,6 +18,9 @@ function getCategoryList () {
   return axios.get(`${config.baseUrl}categories`, {
     params: {'categoryLevel': '1'}
   })
+}
+function getProduct (prdtSysid) {
+  return axios.get(`${config.baseUrl2}products/${prdtSysid}`)
 }
 
 /**
@@ -109,5 +112,6 @@ export {
   checkJoinId,
   chkSmsAuth,
   userLogin,
-  retauthMine
+  retauthMine,
+  getProduct
 }
