@@ -6,11 +6,11 @@
           <a :href="'/product/' + item.prdtSysId"><img :src="item.bigImageUrl"></a>
           <div class="goods_best">
             <span class="condition_order">
-                [{{ item.categoryName5 }}] {{ item.name }}
+                [{{ item.brandName }}] {{ item.name }}
             </span>
             <div class="item_price">
-                <span class="discount">{{ item.marketPrice}}%</span>
-                <strong>{{ item.marketPrice }}원</strong>
+                <span class="discount">{{ (item.discountRate) * 100 }}%</span>
+                <strong>{{ item.price }}원</strong>
             </div>
           </div>
         </swiper-slide>
@@ -41,7 +41,7 @@ export default {
     var vm = this
     getProductList()
       .then(function (res) {
-        console.log('아이템리스트 맞어?', res.data.jsonData.products)
+        console.log('Sale리스트?', res.data.jsonData.products)
         vm.items = res.data.jsonData.products
       })
       .catch(function (error) {

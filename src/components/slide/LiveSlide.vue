@@ -69,9 +69,8 @@ export default {
   data () {
     return {
       swiperOption: {
-        slidesPerView: 1.2,
-        slidesOffsetBefore: -260,
-        loop: true
+        slidesPerView: 1
+        // loop: true
       }
     }
   }
