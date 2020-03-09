@@ -8,28 +8,6 @@
       <li @click="selectMediaMode(3)"><span class="dot">·</span>후기</li>
       <li @click="selectMediaMode(4)"><span class="dotL">·</span>이미지</li>
     </ul>
-
-    <!-- <table class="mediaMenu">
-      <thead>
-        <tr>
-          <th class="selected">·</th>
-          <th>·</th>
-          <th>·</th>
-          <th>·</th>
-          <th>·</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="selected">메인</td>
-          <td>언박싱</td>
-          <td>사용법</td>
-          <td>후기</td>
-          <td>이미지</td>
-        </tr>
-      </tbody>
-    </table> -->
-
   </div>
 </template>
 

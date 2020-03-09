@@ -1186,7 +1186,10 @@ Mypage > Main
   font-weight: 500;
 }
 
+
+
 .myInfoWrap .infoFooter{
+  font-family: "Noto Sans KR";
   height: 44px;
   color: white;
   font-size: 15px;
@@ -1196,27 +1199,22 @@ Mypage > Main
   padding: 0 22px;
 }
 
-.myInfoWrap .btnBox{
-  text-align: right;
-}
 
 .myInfoWrap .dot{
   margin: 0 0.9em;
   font-weight: 500;
 }
-.myInfoWrap .profileEditBtn{
-  display: inline-block;
-  position: relative;
-  text-align: right;
-  height: 22px;
-}
 
 .myInfoWrap .ico_edit{
+  display: inline-block;
   width: 22px;
   height: 22px;
-  display: inline-block;
+  position: relative;
+  left: -30px;
+  top: -15px;
   background: url('../img/ico/ico_edit.png');
   background-size: 100%;
+  cursor: pointer;
 }
 
 .myInfoWrap .follower,.following,.point{
@@ -1225,19 +1223,20 @@ Mypage > Main
 
 .myInfoWrap .point{
   color :#e61754;
+  font-weight: 500;
 }
   
 .myOptionBarWrap{
-  height: 33px;
+  /* height:  */
   padding: 17px 17px 0;
   margin-top: 1px;
-  background: white;
+  background: #282a34;
 }
 
 .cartBtn{
   float: right;
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 22px;
   background: url('../img/ico/ico_cart.png');
   background-size: 90%;
   background-position: 0 -1px;
@@ -1246,15 +1245,15 @@ Mypage > Main
 .settingBtn{
   float: right;
   margin-right: 30px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: url('../img/ico/ico_setting.png');
   background-size: 100%;
 }
 .qaBtn{
   float: right;
   margin-right: 30px;
-  width: 20px;
+  width: 21px;
   height: 20px;
   background: url('../img/ico/ico_qa.png');
   background-size: 100%;
@@ -1547,11 +1546,11 @@ MyPage > Notice
 
 /* 
 
-MyPage > Shared > Bar
+Shared > Bar
 
 */
 
-.mypage_headbar{
+.headBarWrap{
   font-family: "Noto Sans KR";
   font-size: 16px;
   font-weight: 500;
@@ -1562,11 +1561,11 @@ MyPage > Shared > Bar
   background-color: white;
 }
 
-.mypage_headbar .ico_back_arr{
+.headBarWrap .ico_back_arr{
   background-repeat: no-repeat;
   position: relative;
   top: 18px;
-  left: 16px;
+  left: 17px;
   float: left;
   background: url('../img/ico/back_arr@3x.png');
   background-size: 100%;
@@ -1880,6 +1879,11 @@ Tracking > Detail
   border-bottom: 1px solid black;
 }
 
+/* 
+
+Product > Description > Review
+
+*/
 
 .reviewHeaderWrap .ico_star_half{
   display: inline-block;
@@ -1890,22 +1894,19 @@ Tracking > Detail
 }
 
 
-
-
 .reviewHeaderWrap .ico_star_full{
-  /* display: inline-block; */
-  float: left;
-  visibility: hidden;
+  display: inline-block;
+  margin-left: 3px;
   background: url("../img/ico/ico_star_full.png");
   background-size: 100%;
   width: 20px;
   height: 20px;
 }
-
-.reviewHeaderWrap .ico_star_full:hover{
-  visibility: visible;
+.reviewHeaderWrap .ico_star_none{
+  display: inline-block;
+  background: url("../img/ico/ico_star_none.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
 }
 
-.reviewHeaderWrap .rating input{
-  /* display: none; */
-}

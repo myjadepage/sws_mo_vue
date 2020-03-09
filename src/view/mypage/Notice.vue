@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Bar from '@/components/mypage/shared/Bar'
+import Bar from '@/components/shared/Bar'
 import NoticeList from '@/components/mypage/Notice/NoticeList'
 
 export default {

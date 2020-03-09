@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Bar from '@/components/mypage/shared/Bar'
+import Bar from '@/components/shared/Bar'
 import Order from '@/components/mypage/TrackingDetail/DetailOrder'
 import Destination from '@/components/mypage/TrackingDetail/DetailDestination'
 import Payment from '@/components/mypage/TrackingDetail/DetailPayment'

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Bar from '@/components/mypage/shared/Bar'
+import Bar from '@/components/shared/Bar'
 import Content from '@/components/mypage/Contact/ContactContent'
 import Email from '@/components/mypage/Contact/ContactEmail'
 import Info from '@/components/mypage/Contact/ContactInfo'

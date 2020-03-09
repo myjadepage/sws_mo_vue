@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style>
-
+.detailDescWrap{
+  display: inline-block;
+  width: 100%;
+}
 </style>

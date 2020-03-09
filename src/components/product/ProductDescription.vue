@@ -52,6 +52,7 @@ export default {
     text-align: center;
     padding: 30px 0 9px 0;
     font-weight: 500;
+    cursor: pointer;
     border-bottom: 1px solid #eeeeee;
 }
 

@@ -1,5 +1,5 @@
 <template>
-   <div class="mypage_headbar">
+   <div class="headBarWrap">
      <div @click="goBack" class="barClick">
       <span class="ico_back_arr"></span>
           {{val}}

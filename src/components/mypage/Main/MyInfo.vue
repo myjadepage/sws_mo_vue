@@ -1,12 +1,15 @@
 <template>
   <div class="myInfoWrap">
     <div class="infoHeader">
+      <div class="profile_pic">
       <div class="profile_img"></div>
-      <div class="btnBox">
-      <button class="profileEditBtn"><span class="ico_edit"></span></button>
       </div>
+      <div class="profile_text">
+        <br>
       <div class="profile_id">{{member.id}}</div>
       <div class="profile_name">{{member.name}}</div>
+      </div>
+      <span class="ico_edit"></span>
     </div>
     <div class="infoFooter">
         팔로워 <span class="follower">{{formatFollwer}}</span>
