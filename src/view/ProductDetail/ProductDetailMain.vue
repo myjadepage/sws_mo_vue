@@ -22,7 +22,6 @@ export default {
 
     getProduct(id).then((res) => {
       this.product = res.data.jsonData.product
-      // console.log(this.product.name)
     }
     ).catch((e) => console.log(e)
     )

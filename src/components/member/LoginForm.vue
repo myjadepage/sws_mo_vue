@@ -4,51 +4,45 @@
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>
-        <form action="">
-                <div class="wrap-input100 validate-input" data-validate="아이디를 입력해 주세요">
-                <!-- <span class="label-input100">아이디</span> -->
-                <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
-                <span class="focus-input100"></span>
-                </div>
+        <div class="wrap-input100" >
+          <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
+          <span class="focus-input100"></span>
+        </div>
+         <div class="wrap-input100">
+            <!-- <span class="label-input100">패스워드</span> -->
+            <input class="input100" type="password" v-model="password" name="password" placeholder="패스워드를 입력해 주세요">
+            <span class="focus-input100"></span>
+            </div>
+         <ul class="form_item_wrap">
+            <li>
+              <div class="toggle-button toggle-button-save">
+                <input id="toggleButtonId" type="checkbox">
+                <label for="toggleButtonId"></label>
+                <div class="toggle-button__icon"></div>
+              </div>
+              <label style="color:#666">아이디 저장</label>
+            </li>
+            <li>
+              <div class="toggle-button toggle-button-save">
+                <input id="toggleButtonAutoId" type="checkbox">
+                <label for="toggleButtonAutoId"></label>
+                <div class="toggle-button__icon"></div>
+              </div>
+              <label style="color:#666">자동 로그인</label>
+            </li>
+         </ul>
+         <button type="button" class="btn btn-block btn-main" @click="login">로그인</button>
+         <ul class="form_item_wrap login_service">
+            <li><a href="/Searchid">아이디 찾기</a></li>
+            <li><a href="/Searchpw">패스워드 찾기</a></li>
+            <li><a href="/RegStep00">회원가입</a></li>
+          </ul>
 
-                <div class="wrap-input100 validate-input" data-validate="패스워드를 입력해 주세요">
-                <!-- <span class="label-input100">패스워드</span> -->
-                <input class="input100" type="password" v-model="password" name="password" placeholder="패스워드를 입력해 주세요">
-                <span class="focus-input100"></span>
-                </div>
-
-                <ul class="form_item_wrap">
-                    <li>
-                        <div class="toggle-button toggle-button-save">
-                            <input id="toggleButtonId" type="checkbox">
-                            <label for="toggleButtonId"></label>
-                            <div class="toggle-button__icon"></div>
-                        </div>
-                        <label>아이디 저장</label>
-                    </li>
-                    <li>
-                        <div class="toggle-button toggle-button-save">
-                            <input id="toggleButtonAutoId" type="checkbox">
-                            <label for="toggleButtonAutoId"></label>
-                            <div class="toggle-button__icon"></div>
-                        </div>
-                        <label>자동 로그인</label>
-                    </li>
-                </ul>
-
-                <button type="button" class="btn btn-block btn-main" @click="login">로그인</button>
-
-                <ul class="form_item_wrap login_service">
-                    <li><a href="/Searchid">아이디 찾기</a></li>
-                    <li><a href="/Searchpw">패스워드 찾기</a></li>
-                    <li><a href="/RegStep00">회원가입</a></li>
-                </ul>
-        </form>
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
         <div class="social">
-            <!-- <h2 class="title">SNS 간편로그인</h2> -->
+            <h2 class="title">SNS 간편로그인</h2>
             <ul>
                 <li>
                     <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
@@ -82,6 +76,7 @@
 
 <script>
 import KakaoLogin from 'vue-kakao-login'
+import { userLogin } from '../../api'
 
 export default {
   components: {
@@ -94,6 +89,24 @@ export default {
     }
   },
   methods: {
+    // 일반로그인
+    login () {
+      userLogin(this.id, this.password)
+        .then(res => {
+          if (res.data.jsonData.resultCode === '0001') {
+            console.log('로그인성공?', res)
+            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
+            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
+            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
+            this.$router.push('/')
+          }
+        })
+        .catch(function (error) {
+          console.log('ERROR', error)
+        })
+      console.log(this.id, this.password)
+    },
+    // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.getAuthCode()
         .then(authCode => {
@@ -114,22 +127,6 @@ export default {
     onFailure: function (data) {
       console.log(data)
       console.log('failure')
-    },
-    login () {
-    //   let selectedUser = null
-    //   this.allUsers.forEach(user => {
-    //     if (user.id === this.id) {
-    //       selectedUser = user
-    //     }
-    //   })
-    //   if (selectedUser === null) {
-    //     alert('입력하신 아이디가 없습니다.')
-    //   } else {
-    //     if (user.password !== this.password) {
-    //       alert('입력하신 아이디와 패스워드가 일치하지 않습니다.')
-    //     }
-    //   }
-      console.log(this.id, this.password)
     }
   }
 }

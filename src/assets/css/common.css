@@ -61,7 +61,7 @@ button {
   font-size: 100%
 }
 input::placeholder { 
-  color: #ccc;
+  color: #999;
 } 
 label{
   vertical-align: top;
@@ -285,10 +285,9 @@ button {
   min-width: 320px;
   -webkit-transform: translate3d(0, 0, 0)
 }
-@media (orientation: landscape) {
-  .head_sws {
-    max-width: 640px;
-    margin: 0 auto
+@media only screen and (orientation: portrait) {
+  body {
+    min-width: 360px;
   }
 }
 .head_sws .common-header-logo,
@@ -606,12 +605,12 @@ member-----------------------------------------*/
 .member_headbar{
   position: relative;
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: 50px;
+  line-height: 50px;
 }
 .member_headbar h1{
   font-size:18px;
-  font-weight: 400;
+  font-weight: 500;
 }
 .member_headbar span{
   position: absolute;
@@ -619,7 +618,7 @@ member-----------------------------------------*/
   top: 17px;
 }
 .member_con{ 
-  height: 430px;
+  height: 400px;
   padding: 30px 30px 0;
 }
 .member_con h2 {
@@ -638,7 +637,7 @@ member-----------------------------------------*/
 }
 .member_foot{ 
   padding: 10px 20px;
-  text-align: left;
+  text-align: center;
   color: #666;
   letter-spacing: -1px;
 }
@@ -716,11 +715,13 @@ member-----------------------------------------*/
   padding-top: 20px;
 }
 .login_service li:not(:last-child):after{
-  content: "|";
-  padding-left: 15px;
+  content: '|'; 
+  padding-left: 5px;
   color: #ccc;
 }
-
+.login_service a {
+  color: #666;
+}
 .form_item_wrap{
   overflow: hidden;
   margin-bottom: 25px;  
@@ -731,6 +732,9 @@ member-----------------------------------------*/
 }
 .form_item_wrap li:not(:first-child){
   padding-left: 20px;
+}
+.form_item_wrap.login_service li:not(:first-child){
+  padding-left: 5px;
 }
 .form_item_wrap_ver {
   padding-top: 30px;  
@@ -783,7 +787,7 @@ member [ Input ]*/
 .memberWrap .wrap-input100 {
   width: 100%;
   position: relative;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid #eee;
   margin-bottom: 10px;
 }
 .memberWrap .label-input100 {
