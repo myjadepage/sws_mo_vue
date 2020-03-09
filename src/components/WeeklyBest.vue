@@ -6,7 +6,7 @@
             <img class="thumb_img" :src="item.bigImageUrl" alt="">
         </a>
         <div class="goods_best">
-            <a href="/" class="link_goods">
+            <a :href="'/product/' + item.prdtSysId" class="link_goods">
                 <span class="tit_goods">깨지지 않는 아이 컬러 팔레트</span>
                 <span class="txt_goods">당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디숍을 만나보세요.</span>
             </a>

@@ -117,7 +117,7 @@ export default new Router({
       component: TrackingDetail
     },
     {
-      path: '/Product',
+      path: '/Product/:prdtSysId',
       name: 'ProductDetail',
       component: ProductDetail
     }

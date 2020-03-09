@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Bar from '@/components/mypage/shared/Bar'
+import Bar from '@/components/shared/Bar'
 import OptionBar from '@/components/mypage/Main/MyOptionIconBar'
 import Info from '@/components/mypage/Main/MyInfo'
 import OrderStatus from '@/components/mypage/Main/MyOrderStatus'

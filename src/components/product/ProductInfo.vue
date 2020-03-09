@@ -1,14 +1,14 @@
 <template>
   <div class="productInfoWrap">
-      <div class="productTitle">{{product.name}}</div>
+      <div class="productTitle">{{props.name}}</div>
 
       <div class="discountSection">
       <span v-if="product.isLive" class="onair">
           라이브가
       </span>
-      <span v-if="product.discountRate" class="productDiscount">{{product.discountRate}}%</span>
+      <span v-if="props.discountRate" class="productDiscount">{{props.discountRate}}%</span>
       <span class="won"><span class="saleProductPrice">{{formatPrice(calcPrice)}}</span>원</span>
-        <span v-if="product.discountRate" class="orProductPrice">{{formatPrice(product.price)}}</span>
+        <span v-if="props.discountRate" class="orProductPrice">{{formatPrice(props.price)}}</span>
         </div>
 
         <div class="utilSection">
@@ -19,12 +19,12 @@
 
         <div class="deliveryPriceSection">
             <span class="sectionHead dp">배송비</span>
-            <span>{{formatPrice(product.deliveryPrice)}}원<span class="policy"> {{product.deliveryPolicy}}</span></span>
+            <span>{{calcDeliveryPrice===0?'무료':formatPrice(calcDeliveryPrice)+'원'}}<span class="policy"> {{this.props.deliveryCommentHTML}}</span></span>
         </div>
 
         <div class="pointSection">
             <span class="sectionHead pt">적립혜택</span>
-            <span>{{formatPrice(product.point)}}원<span class="sectionBody pt">({{product.pointRate}}% 적립)</span></span>
+            <span>{{formatPrice(props.point)}}원<span v-if="props.pointRate" class="sectionBody pt">({{props.pointRate}}% 적립)</span></span>
         </div>
 
   </div>
@@ -32,34 +32,36 @@
 
 <script>
 export default {
+  props: ['props'],
   data () {
     return {
       product: {
-        name: '[클리오] 킬커버 광채쿠션 타마누 카밍 세럼 (50ml) 킬커버 광채쿠션 타마누 카밍 세럼 (50ml)',
         isLive: true,
-        discountRate: 50,
-        price: 132500,
         isAlarm: true,
         deliveryPrice: 2500,
-        deliveryPolicy: '(50,000원 이상 구매시 무료 배송) 3일 이내 발송 예정(주말/공휴일 제외)',
-        point: 240,
-        pointRate: 1
-
+        deliveryPolicy: '(50,000원 이상 구매시 무료 배송) 3일 이내 발송 예정(주말/공휴일 제외)'
       }
     }
   },
   computed: {
     calcPrice () {
-      if (!this.product.discountRate) {
-        return this.product.price
+      if (!this.props.discountRate) {
+        return this.props.price
       }
-      let val = this.product.price - Math.floor(this.product.price * (this.product.discountRate * 0.01) / 10) * 10
+      let val = this.props.price - Math.floor(this.props.price * (this.props.discountRate * 0.01) / 10) * 10
       return val
+    },
+    calcDeliveryPrice () {
+      switch (this.props.deliveryPriceTypeCode) {
+        case 1: return 0
+        case 2: return this.props.debitAmount
+        case 3: return this.props.prepaymentAmount
+      }
     }
   },
   methods: {
     formatPrice (money) {
-      return money.toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
 
     toggleAlarm () {

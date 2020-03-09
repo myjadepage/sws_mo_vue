@@ -28,7 +28,8 @@ input,
 select,
 button {
   margin: 0;
-  padding: 0
+  padding: 0;
+  user-select: none;
 }
 fieldset,
 img {
@@ -1264,11 +1265,12 @@ Mypage > Main
   position: relative;
   top:-10px;
   left: 10px;
-  line-height: 20px;
+  line-height: 22px;
   border-radius: 10px;
   text-align: center;
-  min-width: 18px;
-  height: 18px;
+  padding: 0 4px;
+  min-width: 14px;
+  height: 20px;
   background-color: #e61754;
   color: white;
   font-family: Roboto;
@@ -1552,20 +1554,26 @@ MyPage > Shared > Bar
 .mypage_headbar{
   font-family: "Noto Sans KR";
   font-size: 16px;
+  font-weight: 500;
   width: 100%;
-  height: 45px;
-  line-height: 45px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
   background-color: white;
 }
 
 .mypage_headbar .ico_back_arr{
+  background-repeat: no-repeat;
+  position: relative;
+  top: 18px;
+  left: 16px;
+  float: left;
   background: url('../img/ico/back_arr@3x.png');
   background-size: 100%;
-  float: left;
-  margin: 17px 10px 16px 16px;
-  width: 17px;
+  width: 16px;
   height: 13px;
 }
+
 
 
 /* 
@@ -1870,4 +1878,34 @@ Tracking > Detail
 }
 .detailPayWrap .payBody .underlineBlack{
   border-bottom: 1px solid black;
+}
+
+
+.reviewHeaderWrap .ico_star_half{
+  display: inline-block;
+  background: url("../img/ico/ico_star_half.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
+.reviewHeaderWrap .ico_star_full{
+  /* display: inline-block; */
+  float: left;
+  visibility: hidden;
+  background: url("../img/ico/ico_star_full.png");
+  background-size: 100%;
+  width: 20px;
+  height: 20px;
+}
+
+.reviewHeaderWrap .ico_star_full:hover{
+  visibility: visible;
+}
+
+.reviewHeaderWrap .rating input{
+  /* display: none; */
 }

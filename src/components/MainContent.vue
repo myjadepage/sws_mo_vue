@@ -16,8 +16,13 @@ import BigSlide from './slide/BigSlide'
 import WeeklyBest from './WeeklyBest'
 import ProductSlide from './slide/ProductSlide'
 import BrandSlide from './slide/BrandSlide'
+import {getProductList} from '../api/index'
 
 export default {
+  created () {
+    getProductList().then((res) => {
+    }).catch((e) => console.log(e))
+  },
   name: 'MainContent',
   components: {
     BigSlide,

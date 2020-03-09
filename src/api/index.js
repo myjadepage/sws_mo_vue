@@ -6,12 +6,15 @@ const config = {
 }
 
 function getProductList () {
-  return axios.get(`${config.baseUrl}products/lists`)
+  return axios.get(`${config.baseUrl2}products/lists`)
 }
 function getCategoryList () {
   return axios.get(`${config.baseUrl}categories`, {
     params: {'categoryLevel': '1'}
   })
+}
+function getProduct (prdtSysid) {
+  return axios.get(`${config.baseUrl2}products/${prdtSysid}`)
 }
 
 // 회원가입
@@ -49,7 +52,7 @@ function sendSms (authType, authWay, authWayValue) {
     'authType': authType,
     'authWay': authWay,
     'authWayValue': authWayValue
-  }  
+  }
   var fordata = new FormData()
   fordata.set('jsonData', JSON.stringify(jsonData))
   console.log(JSON.stringify(jsonData))
@@ -72,5 +75,6 @@ export {
   createtUser,
   sendSms,
   checkJoinId,
-  chkSmsAuth
+  chkSmsAuth,
+  getProduct
 }

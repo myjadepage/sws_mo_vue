@@ -2,23 +2,35 @@
   <div class="productDetailWrap">
       <Bar :val="title" />
       <Media/>
-      <Info/>
+      <Info :props="product" />
       <Description/>
       <ProductFooter/>
   </div>
 </template>
 
 <script>
-import Bar from '@/components/product/Bar'
+import Bar from '@/components/shared/Bar'
 import Media from '@/components/product/ProductMedia'
 import Info from '@/components/product/ProductInfo'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
+import {getProduct} from '@/api/index'
 
 export default {
+  created () {
+    let id = this.$route.params.prdtSysId
+
+    getProduct(id).then((res) => {
+      this.product = res.data.jsonData.product
+      // console.log(this.product.name)
+    }
+    ).catch((e) => console.log(e)
+    )
+  },
   data () {
     return {
-      title: '상품상세'
+      title: '상품상세',
+      product: {}
     }
   },
   components: {

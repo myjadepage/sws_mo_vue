@@ -6,7 +6,7 @@
               <li @click="menuClick(2)">상품문의</li>
               <li @click="menuClick(3)">배송/교환/반품</li>
       </ul>
-    <DetailDesc/>
+    <DetailDesc :selectedMenu="selectedMenu" s/>
   </div>
 </template>
 

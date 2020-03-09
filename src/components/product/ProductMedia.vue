@@ -2,11 +2,11 @@
   <div class="productMediaWrap">
     <div :style="mediaSize" class="mainMedia"></div>
     <ul class="mediaMenu">
-      <li @click="selectMediaMode(0)" class="selected">메인</li>
-      <li @click="selectMediaMode(1)">언박싱</li>
-      <li @click="selectMediaMode(2)">사용법</li>
-      <li @click="selectMediaMode(3)">후기</li>
-      <li @click="selectMediaMode(4)">이미지</li>
+      <li @click="selectMediaMode(0)" class="selected"><span class="dot">·</span>메인</li>
+      <li @click="selectMediaMode(1)"><span class="dotL">·</span>언박싱</li>
+      <li @click="selectMediaMode(2)"><span class="dotL">·</span>사용법</li>
+      <li @click="selectMediaMode(3)"><span class="dot">·</span>후기</li>
+      <li @click="selectMediaMode(4)"><span class="dotL">·</span>이미지</li>
     </ul>
 
     <!-- <table class="mediaMenu">
@@ -73,7 +73,7 @@ export default {
   height: 40px;
   color: white;
   cursor: pointer;
-  line-height: 45px;
+  /* line-height: 45px; */
 }
 
 .mediaMenu{
@@ -82,7 +82,7 @@ export default {
   /* user-select: none; */
 }
 
-.mediaMenu th,td{
+.mediaMenu th,.mediaMenu td{
   background-color: black;
   width: 20%;
   text-align: center;
@@ -95,8 +95,6 @@ export default {
   font-size: 20pt;
   line-height: 1px;
 }
-.mediaMenu td{
-}
 
 .productMediaWrap .mediaMenu .selected{
   font-weight: 500;
@@ -104,16 +102,24 @@ export default {
 }
 
 .productMediaWrap .dot{
+  position: relative;
+  top:-10px;
+  left: 9px;
+  display: inline-block;
   font-size: 25px;
-  width: 5px;
-  height: 5px;
+  width: 0px;
+  height: 0px;
   font-weight: bold;
   visibility: hidden;
 }
 .productMediaWrap .dotL{
+  position: relative;
+  top:-10px;
+  left: 15px;
+  display: inline-block;
   font-size: 25px;
-  width: 5px;
-  height: 5px;
+  width: 0px;
+  height: 0px;
   font-weight: bold;
   visibility: hidden;
 }

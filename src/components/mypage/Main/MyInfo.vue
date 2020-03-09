@@ -25,9 +25,9 @@ export default {
       member: {
         id: 'SOOYEON_JUNG',
         name: '뷰티크루_수연',
-        follower: 10000,
+        follower: 1,
         following: 1500,
-        point: 38654
+        point: 1
       }
     }
   },
