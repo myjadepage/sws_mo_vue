@@ -71,11 +71,35 @@ function createtUser (user) {
     'mobile': user.phone,
     'email': user.email
   }
-  console.log(JSON.stringify(jsonData))
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
   return axios.post(`${config.baseUrl2}auth/join`, formdata)
 }
+
+// 일반로그인
+function userLogin (userId, password) {
+  let jsonData = {
+    'userId': userId,
+    'password': password
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+}
+
+// 본인인증결과
+function retauthMine (authType, authWay, authWayValue) {
+  let jsonData = {
+    'authType': authType,
+    'authWay': authWay,
+    'authWayValue': authWayValue
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/retauthmine`, formdata)
+}
+
+// 이메일로 아이디찾기
 
 export {
   getProductList,
@@ -83,5 +107,7 @@ export {
   createtUser,
   sendSms,
   checkJoinId,
-  chkSmsAuth
+  chkSmsAuth,
+  userLogin,
+  retauthMine
 }

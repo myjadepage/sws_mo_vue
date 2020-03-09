@@ -4,11 +4,11 @@
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>
-        <div class="wrap-input100 validate-input" data-validate="아이디를 입력해 주세요">
+        <div class="wrap-input100" >
           <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
           <span class="focus-input100"></span>
         </div>
-         <div class="wrap-input100 validate-input" data-validate="패스워드를 입력해 주세요">
+         <div class="wrap-input100">
             <!-- <span class="label-input100">패스워드</span> -->
             <input class="input100" type="password" v-model="password" name="password" placeholder="패스워드를 입력해 주세요">
             <span class="focus-input100"></span>
@@ -76,6 +76,7 @@
 
 <script>
 import KakaoLogin from 'vue-kakao-login'
+import { userLogin } from '../../api'
 
 export default {
   components: {
@@ -88,6 +89,24 @@ export default {
     }
   },
   methods: {
+    // 일반로그인
+    login () {
+      userLogin(this.id, this.password)
+        .then(res => {
+          if (res.data.jsonData.resultCode === '0001') {
+            console.log('로그인성공?', res)
+            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
+            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
+            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
+            this.$router.push('/')
+          }
+        })
+        .catch(function (error) {
+          console.log('ERROR', error)
+        })
+      console.log(this.id, this.password)
+    },
+    // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.getAuthCode()
         .then(authCode => {
@@ -108,22 +127,6 @@ export default {
     onFailure: function (data) {
       console.log(data)
       console.log('failure')
-    },
-    login () {
-    //   let selectedUser = null
-    //   this.allUsers.forEach(user => {
-    //     if (user.id === this.id) {
-    //       selectedUser = user
-    //     }
-    //   })
-    //   if (selectedUser === null) {
-    //     alert('입력하신 아이디가 없습니다.')
-    //   } else {
-    //     if (user.password !== this.password) {
-    //       alert('입력하신 아이디와 패스워드가 일치하지 않습니다.')
-    //     }
-    //   }
-      console.log(this.id, this.password)
     }
   }
 }
