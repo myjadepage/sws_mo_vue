@@ -67,7 +67,7 @@ export default {
 }
 
   .searchProductWrap img{
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
     width: 70px;
     height:70px;
     margin: 0 10px 30px 12px;

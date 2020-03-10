@@ -1447,6 +1447,7 @@ MyPage > Contact
   text-align: center;
 }
 
+
 .contact_email h3{
   font-family: "Noto Sans KR";
   font-size: 15px;
@@ -1467,15 +1468,10 @@ MyPage > Contact
   width: 80%;
 }
 
-.email_form input:focus{
-    margin-bottom: 0;
-    padding-bottom: 5px;
-    border-bottom: 3px solid black;
-}
-
 .email_form{
     margin: 0 12px 0;
-    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: ;
+    /* border-bottom: 1px solid #EEEEEE; */
     width: 95%;
 }
 
