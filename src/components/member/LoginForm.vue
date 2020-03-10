@@ -42,7 +42,7 @@
     <div class="member_foot">
         <!-- 소셜로그인 -->
         <div class="social">
-            <h2 class="title">SNS 간편로그인</h2>
+            <!-- <h2 class="title">SNS 간편로그인</h2> -->
             <ul>
                 <li>
                     <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
@@ -56,18 +56,21 @@
                     class="btn btn-circle sws_icon btn-cacao"
                     />
                     <span>카카오</span>
-<!--
-                    <button type="button" class="btn btn-circle sws_icon btn-cacao" @click="KakaoLogin"></button>
-                    <span>카카오</span> -->
                 </li>
                 <!-- <li>
                     <a href="/" class="btn btn-circle sws_icon btn-fb" @click="facebookLogin"></a>
                     <span>페이스북</span>
-                </li>
+                </li>-->
                 <li>
-                    <a href="/" class="btn btn-circle sws_icon btn-naver" @clcik="naverLogin"></a>
+                  <NaverLogin
+                  client-id="wot76zDwHaETcFxP4xEM"
+                  callback-url="http://localhost:8080/RegStep00Naver"
+                  :callback-function=callbackFunction
+                  class="btn btn-circle sws_icon btn-naver"
+                  />
+                    <!-- <a href="/" class="btn btn-circle sws_icon btn-naver" @clcik="naverLogin"></a> -->
                     <span>네이버</span>
-                </li> -->
+                </li>
             </ul>
         </div>
 
@@ -77,11 +80,13 @@
 
 <script>
 import KakaoLogin from 'vue-kakao-login'
-import { userLogin } from '../../api'
+import NaverLogin from 'vue-naver-login'
+import { userLogin, snsLogin } from '../../api'
 
 export default {
   components: {
-    KakaoLogin
+    KakaoLogin,
+    NaverLogin
   },
   data () {
     return {
@@ -108,12 +113,21 @@ export default {
         })
       console.log(this.id, this.password)
     },
+
     // 구글로그인
     handleClickGetAuth () {
-      this.$gAuth.getAuthCode()
-        .then(authCode => {
-          console.log('authCode', authCode)
-        // return this.$http.post('http://your-backend-server.com/auth/google', { code: authCode, redirect_uri: 'postmessage' })
+      this.$gAuth.signIn()
+        .then(GoogleUser => {
+          console.log('GoogleUser', GoogleUser.uc.access_token)
+          this.isSignIn = this.$gAuth.isAuthorized
+          snsLogin(3, GoogleUser.uc.access_token)
+            .then(res => {
+              console.log('acees', res)
+              this.$router.push('/RegStep00')
+            })
+            .catch(function (error) {
+              console.log('ERROR', error)
+            })
         })
         .then(response => {
           console.log('response', response)
@@ -122,13 +136,28 @@ export default {
           console.log('error', error)
         })
     },
-    onSuccess: (data) => {
-      console.log(data)
+
+    // 카카오로그인 성공시
+    onSuccess: function (data) {
+      var vm = this
       console.log('success')
+      snsLogin(1, data.access_token)
+        .then(res => {
+          console.log('acees', res)
+          vm.$router.push('/RegStep00')
+        })
+        .catch(function (error) {
+          console.log('ERROR', error)
+        })
     },
     onFailure: (data) => {
       console.log(data)
       console.log('failure')
+    },
+
+    // 네이버로그인시 콜백함수
+    callbackFunction: function (status) {
+      alert('들어왔니')
     }
   }
 }

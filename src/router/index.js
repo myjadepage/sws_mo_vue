@@ -9,6 +9,7 @@ import Searchpw from '@/view/member/Searchpw'
 import SearchpwSet from '@/view/member/SearchpwSet'
 import SearchDone from '@/view/member/SearchDone'
 import RegStep00 from '@/view/member/RegStep00'
+import RegStep00Naver from '@/view/member/RegStep00Naver'
 import RegStep01 from '@/view/member/RegStep01'
 import RegStep02 from '@/view/member/RegStep02'
 import RegStep03 from '@/view/member/RegStep03'
@@ -60,6 +61,11 @@ export default new Router({
       path: '/RegStep00',
       name: 'RegStep00',
       component: RegStep00
+    },
+    {
+      path: '/RegStep00Naver',
+      name: 'RegStep00Naver',
+      component: RegStep00Naver
     },
     {
       path: '/RegStep01',

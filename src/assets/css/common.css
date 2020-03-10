@@ -624,7 +624,7 @@ member-----------------------------------------*/
   top: 17px;
 }
 .member_con{ 
-  height: 380px;
+  height: 390px;
   padding: 30px 30px 0;
 }
 .member_con h2 {
@@ -716,6 +716,9 @@ member-----------------------------------------*/
   font-size: 22px;
   font-weight: 500;
   color: #111;
+}
+.sws_login .member_foot .social .title {
+  padding-bottom: 15px;
 }
 .login_service{
   padding-top: 20px;

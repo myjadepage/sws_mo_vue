@@ -103,6 +103,17 @@ function retauthMine (authType, authWay, authWayValue) {
   return axios.post(`${config.baseUrl2}auth/retauthmine`, formdata)
 }
 
+// 간편로그인
+function snsLogin (snsType, snsToken) {
+  let jsonData = {
+    'snsType': snsType,
+    'snsToken': snsToken
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/snslogin`, formdata)
+}
+
 export {
   getProductList,
   getCategoryList,
@@ -112,5 +123,6 @@ export {
   chkSmsAuth,
   userLogin,
   retauthMine,
-  getProduct
+  getProduct,
+  snsLogin
 }

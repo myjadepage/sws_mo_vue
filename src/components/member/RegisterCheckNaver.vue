@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+import { snsLogin } from '../../api'
 
 export default {
   data () {
@@ -52,6 +54,19 @@ export default {
       ],
       checked: []
     }
+  },
+  mounted () {
+    var params = {}
+    var param = $(location).attr('href')
+    param.replace(/[#&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value })
+    console.log('param', params.access_token)
+    snsLogin(2, params.access_token)
+      .then(res => {
+        console.log('res', res)
+      })
+      .catch(function (error) {
+        console.log('ERROR', error)
+      })
   },
   computed: {
     isCheckAll: {
@@ -77,7 +92,7 @@ export default {
       } else if (this.checked[1] !== '02') {
         alert('필수항목을 체크해 주세요')
       } else {
-        this.$router.push('/RegStep02')
+        this.$router.push('/RegStep03')
       }
     }
   }
