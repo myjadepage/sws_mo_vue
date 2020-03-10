@@ -99,11 +99,11 @@ export default {
     -webkit-align-items: center;
     align-items: center;
   }
- .gnb_main .swiper-item:nth-child(11),
- .gnb_main .swiper-item:nth-child(12){
+ .gnb_main .swiper-item:nth-child(12),
+ .gnb_main .swiper-item:nth-child(13){
     width: 100px !important;
   }
-  .gnb_main .swiper-item:nth-child(13) {
+  .gnb_main .swiper-item:nth-child(14) {
     width: 120px !important;
   }
 </style>

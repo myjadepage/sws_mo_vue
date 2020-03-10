@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const config = {
   baseUrl: 'http://192.168.1.40:3000/api/v1/',
-  baseUrl2: 'http://192.168.1.20:3000/api/v1/'
+  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
+  baseUrl3: 'http:///api.shallwe.shop/api/v1/'
 }
 
 /**
@@ -10,7 +11,7 @@ const config = {
  */
 // 상품리스트
 function getProductList () {
-  return axios.get(`${config.baseUrl2}products/lists`)
+  return axios.get(`${config.baseUrl}products/lists`)
 }
 
 // 카테고리
@@ -20,7 +21,7 @@ function getCategoryList () {
   })
 }
 function getProduct (prdtSysid) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysid}`)
+  return axios.get(`${config.baseUrl}products/${prdtSysid}`)
 }
 
 /**

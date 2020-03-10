@@ -8,6 +8,11 @@ import GAuth from 'vue-google-oauth2'
 
 Vue.use(GAuth, {'client_id': '64392911625-v0krge4vu1k02v5mv4dvdpj67ei9jh2v.apps.googleusercontent.com'})
 
+// 가격 세자리 콤마 필터
+Vue.filter('makeComma', val => {
+  return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

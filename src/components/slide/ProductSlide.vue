@@ -10,7 +10,7 @@
             </span>
             <div class="item_price">
                 <span class="discount">{{ (item.discountRate) * 100 }}%</span>
-                <strong>{{ item.price }}원</strong>
+                <strong>{{ item.price | makeComma}}원</strong>
             </div>
           </div>
         </swiper-slide>

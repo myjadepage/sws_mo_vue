@@ -1,16 +1,30 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import mutations from './mutations'
 import { checkJoinId } from '../api'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    userInfo: {}
+    userInfo: {},
+    isAuth: false
   },
-  mutations,
+  getters: {
+    getId: state => state.userId.userId,
+    getIsAuth: state => state.isAuth
+  },
+  mutations: {
+    UID (state, uid) {
+      state.userId.userId = uid
+    },
+    IS_AUTH (state, isAuth) {
+      state.isAuth = isAuth
+    }
+  },
   actions: {
+    login () {
+    },
+    // 아이디중복체크
     CHECH_JOIN_ID () {
       checkJoinId(this.state.userInfo.userId)
         .then(res => {

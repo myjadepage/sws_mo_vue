@@ -16,7 +16,7 @@
          <ul class="form_item_wrap">
             <li>
               <div class="toggle-button toggle-button-save">
-                <input id="toggleButtonId" type="checkbox">
+                <input id="toggleButtonId" type="checkbox" :idSaveCheck="false">
                 <label for="toggleButtonId"></label>
                 <div class="toggle-button__icon"></div>
               </div>
@@ -85,7 +85,8 @@ export default {
   data () {
     return {
       id: null,
-      password: null
+      password: null,
+      idSaveCheck: false
     }
   },
   methods: {
