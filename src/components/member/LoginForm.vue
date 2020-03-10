@@ -56,7 +56,8 @@
                     class="btn btn-circle sws_icon btn-cacao"
                     />
                     <span>카카오</span>
-                    <!-- <a href="/" class="btn btn-circle sws_icon btn-cacao" @click="kakaoLogin"></a>
+<!--
+                    <button type="button" class="btn btn-circle sws_icon btn-cacao" @click="KakaoLogin"></button>
                     <span>카카오</span> -->
                 </li>
                 <!-- <li>
@@ -121,11 +122,11 @@ export default {
           console.log('error', error)
         })
     },
-    onSuccess: function (data) {
+    onSuccess: (data) => {
       console.log(data)
       console.log('success')
     },
-    onFailure: function (data) {
+    onFailure: (data) => {
       console.log(data)
       console.log('failure')
     }

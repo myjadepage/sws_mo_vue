@@ -104,8 +104,6 @@ function retauthMine (authType, authWay, authWayValue) {
   return axios.post(`${config.baseUrl2}auth/retauthmine`, formdata)
 }
 
-// 이메일로 아이디찾기
-
 export {
   getProductList,
   getCategoryList,

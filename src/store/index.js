@@ -15,14 +15,7 @@ export const store = new Vuex.Store({
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product
   },
-  mutations: {
-    UID (state, uid) {
-      state.userId.userId = uid
-    },
-    IS_AUTH (state, isAuth) {
-      state.isAuth = isAuth
-    }
-  },
+  mutations: {},
   actions: {
     login () {
     },
