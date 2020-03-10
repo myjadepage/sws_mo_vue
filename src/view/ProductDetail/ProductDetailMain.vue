@@ -4,7 +4,8 @@
       <Media/>
       <Info />
       <Description />
-      <ProductFooter/>
+      <ProductFooter />
+      <!-- Footer에게 normalOptions를 Prop으로 넘겨줘야함 -->
   </div>
 </template>
 

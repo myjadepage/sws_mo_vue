@@ -6,7 +6,7 @@
       <span v-if="keyword" @click="deleteInput" class="ico_delete_btn"></span>
       <div>
         <ul v-if="products && inputFocus" >
-          <li  v-for="p in products" :key="p.prdtSysId">
+          <li @click="keywordClick(p)" v-for="p in products" :key="p.prdtSysId">
             {{p.briefComment}}
           </li>
         </ul>
@@ -31,13 +31,18 @@ export default {
     }
   },
   methods: {
+    keywordClick (p) {
+      this.products = {p}
+      this.clickSearchBtn()
+    },
+
     enFocused () {
       this.$emit('inputFoucsed')
       this.inputFocus = true
     },
     unFocused () {
       this.$emit('inputOutFoucsed')
-      this.inputFocus = false
+      setTimeout(() => { this.inputFocus = false }, 100)
     },
 
     goBack () {

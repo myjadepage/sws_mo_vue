@@ -26,7 +26,6 @@ export default {
   methods: {
     search (p) {
       this.products = p
-      console.log(p)
     }
   }
 }
