@@ -1571,16 +1571,19 @@ Shared > Bar
   background-color: white;
 }
 
-.headBarWrap .ico_back_arr{
+.ico_back_arr{
   background-repeat: no-repeat;
-  position: relative;
-  top: 18px;
-  left: 17px;
   float: left;
   background: url('../img/ico/back_arr@3x.png');
   background-size: 100%;
   width: 16px;
   height: 13px;
+}
+
+.headBarWrap .ico_back_arr{
+  position: relative;
+  top: 18px;
+  left: 17px;
 }
 
 

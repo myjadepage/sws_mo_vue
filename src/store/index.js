@@ -7,11 +7,13 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     userInfo: {},
+    product: {},
     isAuth: false
   },
   getters: {
     getId: state => state.userId.userId,
-    getIsAuth: state => state.isAuth
+    getIsAuth: state => state.isAuth,
+    getProduct: state => state.product
   },
   mutations: {
     UID (state, uid) {

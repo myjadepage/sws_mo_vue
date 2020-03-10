@@ -176,7 +176,7 @@ export default {
         sum += i.rate
       }
 
-      return Math.round(sum / this.totalReviewCnt)
+      return Math.round(sum / this.totalReviewCnt).toFixed(1)
     }
   }
 

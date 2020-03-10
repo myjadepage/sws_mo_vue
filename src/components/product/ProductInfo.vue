@@ -1,30 +1,30 @@
 <template>
   <div class="productInfoWrap">
-      <div class="productTitle">{{props.name}}</div>
+      <div class="productTitle">{{product.name}}</div>
 
       <div class="discountSection">
-      <span v-if="product.isLive" class="onair">
+      <span v-if="additionalInfo.isLive" class="onair">
           라이브가
       </span>
-      <span v-if="props.discountRate" class="productDiscount">{{props.discountRate}}%</span>
+      <span v-if="product.discountRate" class="productDiscount">{{product.discountRate * 100}}%</span>
       <span class="won"><span class="saleProductPrice">{{formatPrice(calcPrice)}}</span>원</span>
-        <span v-if="props.discountRate" class="orProductPrice">{{formatPrice(props.price)}}</span>
+        <span v-if="product.discountRate" class="orProductPrice">{{formatPrice(product.price)}}</span>
         </div>
 
         <div class="utilSection">
             <span class="icoBtn"><span class="ico ico_share"></span>공유하기</span>
-            <span @click="toggleAlarm" class="icoBtn" v-if="product.isAlarm"><span class="ico ico_bell"></span>방송알림ON</span>
-            <span @click="toggleAlarm" class="icoBtn" v-if="product.isAlarm===false"><span class="ico ico_no_bell"></span>방송알림OFF</span>
+            <span @click="toggleAlarm" class="icoBtn" v-if="additionalInfo.isAlarm"><span class="ico ico_bell"></span>방송알림ON</span>
+            <span @click="toggleAlarm" class="icoBtn" v-if="additionalInfo.isAlarm===false"><span class="ico ico_no_bell"></span>방송알림OFF</span>
         </div>
 
         <div class="deliveryPriceSection">
             <span class="sectionHead dp">배송비</span>
-            <span>{{calcDeliveryPrice===0?'무료':formatPrice(calcDeliveryPrice)+'원'}}<span class="policy"> {{this.props.deliveryCommentHTML}}</span></span>
+            <span>{{calcDeliveryPrice===0?'무료':formatPrice(calcDeliveryPrice)+'원'}}<span class="policy"> {{product.deliveryCommentHTML}}</span></span>
         </div>
 
         <div class="pointSection">
             <span class="sectionHead pt">적립혜택</span>
-            <span>{{formatPrice(props.point)}}원<span v-if="props.pointRate" class="sectionBody pt">({{props.pointRate}}% 적립)</span></span>
+            <span>{{formatPrice(product.point)}}원<span v-if="product.pointRate" class="sectionBody pt">({{product.pointRate}}% 적립)</span></span>
         </div>
 
   </div>
@@ -32,10 +32,13 @@
 
 <script>
 export default {
-  props: ['props'],
+  created () {
+    this.product = this.$store.getters.getProduct
+  },
+  // props: ['props'],
   data () {
     return {
-      product: {
+      additionalInfo: {
         isLive: true,
         isAlarm: true,
         deliveryPrice: 2500,
@@ -45,17 +48,17 @@ export default {
   },
   computed: {
     calcPrice () {
-      if (!this.props.discountRate) {
-        return this.props.price
+      if (!this.product.discountRate) {
+        return this.product.price
       }
-      let val = this.props.price - Math.floor(this.props.price * (this.props.discountRate * 0.01) / 10) * 10
+      let val = this.product.price - Math.floor(this.product.price * (this.product.discountRate * 0.01) / 10) * 10
       return val
     },
     calcDeliveryPrice () {
-      switch (this.props.deliveryPriceTypeCode) {
+      switch (this.product.deliveryPriceTypeCode) {
         case 1: return 0
-        case 2: return this.props.debitAmount
-        case 3: return this.props.prepaymentAmount
+        case 2: return this.product.debitAmount
+        case 3: return this.product.prepaymentAmount
       }
     }
   },
@@ -65,7 +68,7 @@ export default {
     },
 
     toggleAlarm () {
-      this.product.isAlarm = !this.product.isAlarm
+      this.additionalInfo.isAlarm = !this.additionalInfo.isAlarm
     }
 
   }

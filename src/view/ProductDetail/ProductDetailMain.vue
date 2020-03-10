@@ -1,9 +1,9 @@
 <template>
-  <div class="productDetailWrap">
+  <div class="productDetailWrap" v-if="product.prdtSysId">
       <Bar :val="title" />
       <Media/>
-      <Info :props="product" />
-      <Description/>
+      <Info />
+      <Description />
       <ProductFooter/>
   </div>
 </template>
@@ -19,9 +19,11 @@ import {getProduct} from '@/api/index'
 export default {
   created () {
     let id = this.$route.params.prdtSysId
+    let self = this
 
     getProduct(id).then((res) => {
-      this.product = res.data.jsonData.product
+      self.$store.state.product = res.data.jsonData.product
+      self.product = res.data.jsonData.product
     }
     ).catch((e) => console.log(e)
     )

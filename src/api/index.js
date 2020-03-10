@@ -20,8 +20,9 @@ function getCategoryList () {
     params: {'categoryLevel': '1'}
   })
 }
-function getProduct (prdtSysid) {
-  return axios.get(`${config.baseUrl}products/${prdtSysid}`)
+
+function getProduct (id) {
+  return axios.get(`${config.baseUrl}products/${id}`)
 }
 
 /**
