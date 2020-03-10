@@ -8,12 +8,14 @@ export const store = new Vuex.Store({
   state: {
     userInfo: {},
     product: {},
+    searchCat: 0,
     isAuth: false
   },
   getters: {
     getId: state => state.userId.userId,
     getIsAuth: state => state.isAuth,
-    getProduct: state => state.product
+    getProduct: state => state.product,
+    getSearchCat: state => state.searchCat
   },
   mutations: {},
   actions: {
