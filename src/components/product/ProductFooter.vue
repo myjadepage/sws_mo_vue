@@ -1,13 +1,17 @@
 <template>
   <div class="productFooterWrap">
+      <Option/>
       <button class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
       <button class="goBtn buy">구매하기</button>
   </div>
 </template>
 
 <script>
+import Option from './Footer/ProductFooterOption'
 export default {
-
+  components: {
+    Option
+  }
 }
 </script>
 

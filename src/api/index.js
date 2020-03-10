@@ -10,8 +10,8 @@ const config = {
  * 메인
  */
 // 상품리스트
-function getProductList () {
-  return axios.get(`${config.baseUrl}products/lists`)
+function getProductList (param = '') {
+  return axios.get(`${config.baseUrl}products/lists${'?' + param}`)
 }
 
 // 카테고리
@@ -20,8 +20,14 @@ function getCategoryList () {
     params: {'categoryLevel': '1'}
   })
 }
-function getProduct (prdtSysid) {
-  return axios.get(`${config.baseUrl}products/${prdtSysid}`)
+
+// 단일 상품
+function getProduct (id) {
+  return axios.get(`${config.baseUrl}products/${id}`)
+}
+
+function getBrandList () {
+  return axios.get(`${config.baseUrl}brands/`)
 }
 
 /**
@@ -124,5 +130,6 @@ export {
   userLogin,
   retauthMine,
   getProduct,
-  snsLogin
+  snsLogin,
+  getBrandList
 }

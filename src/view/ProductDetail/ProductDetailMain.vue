@@ -1,10 +1,11 @@
 <template>
-  <div class="productDetailWrap">
+  <div class="productDetailWrap" v-if="product.prdtSysId">
       <Bar :val="title" />
       <Media/>
-      <Info :props="product" />
-      <Description/>
-      <ProductFooter/>
+      <Info />
+      <Description />
+      <ProductFooter />
+      <!-- Footer에게 normalOptions를 Prop으로 넘겨줘야함 -->
   </div>
 </template>
 
@@ -19,9 +20,11 @@ import {getProduct} from '@/api/index'
 export default {
   created () {
     let id = this.$route.params.prdtSysId
+    let self = this
 
     getProduct(id).then((res) => {
-      this.product = res.data.jsonData.product
+      self.$store.state.product = res.data.jsonData.product
+      self.product = res.data.jsonData.product
     }
     ).catch((e) => console.log(e)
     )

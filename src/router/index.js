@@ -19,7 +19,8 @@ import Notice from '@/view/mypage/Notice'
 import Contact from '@/view/mypage/Contact'
 import Tracking from '@/view/mypage/Tracking'
 import TrackingDetail from '@/view/mypage/TrackingDetail'
-import ProductDetail from '@/view/ProductDetail/ProductDetailMain'
+import ProductDetail from '@/view/productDetail/ProductDetailMain'
+import Search from '@/view/search/SearchPage'
 
 Vue.use(Router)
 
@@ -126,6 +127,11 @@ export default new Router({
       path: '/Product/:prdtSysId',
       name: 'ProductDetail',
       component: ProductDetail
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
     }
   ]
 })

@@ -1450,6 +1450,7 @@ MyPage > Contact
   text-align: center;
 }
 
+
 .contact_email h3{
   font-family: "Noto Sans KR";
   font-size: 15px;
@@ -1470,15 +1471,9 @@ MyPage > Contact
   width: 80%;
 }
 
-.email_form input:focus{
-    margin-bottom: 0;
-    padding-bottom: 5px;
-    border-bottom: 3px solid black;
-}
-
 .email_form{
     margin: 0 12px 0;
-    border-bottom: 1px solid #EEEEEE;
+    /* border-bottom: 1px solid #EEEEEE; */
     width: 95%;
 }
 
@@ -1574,16 +1569,19 @@ Shared > Bar
   background-color: white;
 }
 
-.headBarWrap .ico_back_arr{
+.ico_back_arr{
   background-repeat: no-repeat;
-  position: relative;
-  top: 18px;
-  left: 17px;
   float: left;
   background: url('../img/ico/back_arr@3x.png');
   background-size: 100%;
   width: 16px;
-  height: 13px;
+  height: 12px;
+}
+
+.headBarWrap .ico_back_arr{
+  position: relative;
+  top: 18px;
+  left: 17px;
 }
 
 
