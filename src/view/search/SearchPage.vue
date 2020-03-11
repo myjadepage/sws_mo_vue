@@ -1,6 +1,6 @@
 <template>
   <div class="searchPageWrap">
-      <SearchHeader @clickSearch="search" @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
+      <SearchHeader @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
       <SearchCategory v-if="!isInputFocus" />
       <div v-if="!isInputFocus">
         <SearchProduct  v-for="p in products" :key="p.prdtSysId" :product="p" />
@@ -35,5 +35,6 @@ export default {
   .searchPageWrap{
     background-color: #f3f3f3;
     min-height: 640px;
+    height: 100%;
   }
 </style>

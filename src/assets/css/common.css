@@ -29,7 +29,6 @@ select,
 button {
   margin: 0;
   padding: 0;
-  user-select: none;
 }
 fieldset,
 img {
