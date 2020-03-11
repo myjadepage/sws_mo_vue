@@ -45,17 +45,17 @@
             <!-- <h2 class="title">SNS 간편로그인</h2> -->
             <ul>
                 <li>
-                    <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
-                    <span>구글</span>
+                  <a class="btn btn-circle sws_icon btn-google" @click="handleClickGetAuth"></a>
+                  <span>구글</span>
                 </li>
                 <li>
-                    <KakaoLogin
-                    api-key="78eed5dbee80e670a64a4e79c08ed7a9"
-                    :on-success=onSuccess
-                    :on-failure=onFailure
-                    class="btn btn-circle sws_icon btn-cacao"
-                    />
-                    <span>카카오</span>
+                  <KakaoLogin
+                  api-key="78eed5dbee80e670a64a4e79c08ed7a9"
+                  :on-success=onSuccess
+                  :on-failure=onFailure
+                  class="btn btn-circle sws_icon btn-cacao"
+                  />
+                  <span>카카오</span>
                 </li>
                 <!-- <li>
                     <a href="/" class="btn btn-circle sws_icon btn-fb" @click="facebookLogin"></a>
@@ -68,8 +68,7 @@
                   :callback-function=callbackFunction
                   class="btn btn-circle sws_icon btn-naver"
                   />
-                    <!-- <a href="/" class="btn btn-circle sws_icon btn-naver" @clcik="naverLogin"></a> -->
-                    <span>네이버</span>
+                  <span>네이버</span>
                 </li>
             </ul>
         </div>
