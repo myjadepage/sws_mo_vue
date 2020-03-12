@@ -1,7 +1,7 @@
 <template>
   <div class="searchHeaderWrap">
       <span @click="goBack" class="ico_back_arr"></span>
-      <input ref="input" @focus="enFocused" @blur="unFocused"  @keydown="inputKeyPressed" @keydown.enter="clickSearchBtn" v-model="keyword" type="text" placeholder="검색어를 입력해주세요.">
+      <input ref="input" @change="inputKeyPressed" @focus="enFocused" @blur="unFocused"  @keydown="inputKeyPressed" @keydown.enter="clickSearchBtn" v-model="keyword" type="text" placeholder="검색어를 입력해주세요.">
       <span @click="clickSearchBtn" class="ico_search_btn"></span>
       <span v-if="keyword" @click="deleteInput" class="ico_delete_btn"></span>
       <div>
@@ -54,7 +54,7 @@ export default {
     },
     inputKeyPressed () {
       let self = this
-      if (this.keyword) {
+      if (this.keyword && this.keyword !== ' ') {
         if (this.timer) {
           clearTimeout(this.timer)
         }
@@ -62,6 +62,7 @@ export default {
           if (self.searchMode === 0) {
             getProductList('name=' + self.keyword).then((res) => {
               self.products = res.data.jsonData.products
+              console.log(self.keyword)
             }
             ).catch((e) => console.log(e)
             )
@@ -148,6 +149,7 @@ export default {
 
 .searchHeaderWrap li{
   background-color:#fff;
+  cursor: pointer;
   margin-left: 40px;
   font-size: 15px;
   width: 100%;

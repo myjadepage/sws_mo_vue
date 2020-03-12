@@ -37,6 +37,7 @@ export default {
       if (this.maxHeight === 'maxHeight:fit-content;') {
         this.maxHeight = 'maxHeight:800px;'
         this.btnText = '상세 정보 펼쳐보기'
+        window.scrollTo(0, 550)
       } else {
         this.maxHeight = 'maxHeight:fit-content;'
         this.btnText = '상세 정보 접기'

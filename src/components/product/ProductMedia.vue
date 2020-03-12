@@ -21,7 +21,7 @@ export default {
   },
   computed: {
     mediaSize () {
-      return this.mediaDirection === 0 ? 'height:202px;' : 'height:500px;'
+      return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
     }
   },
   methods: {
