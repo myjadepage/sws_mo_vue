@@ -22,6 +22,7 @@ import TrackingDetail from '@/view/mypage/TrackingDetail'
 import ProductDetail from '@/view/productDetail/ProductDetailMain'
 import Search from '@/view/search/SearchPage'
 import BuyPageMain from '@/view/buyProduct/BuyPageMain'
+import BuyComplete from '@/view/buyProduct/BuyComplete'
 
 Vue.use(Router)
 
@@ -138,6 +139,11 @@ export default new Router({
       path: '/BuyProduct',
       name: 'BuyProduct',
       component: BuyPageMain
+    },
+    {
+      path: '/BuyComplete',
+      name: 'BuyComplete',
+      component: BuyComplete
     }
   ]
 })
