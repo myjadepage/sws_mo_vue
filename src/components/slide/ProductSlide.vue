@@ -41,7 +41,7 @@ export default {
     var vm = this
     getSaleProduct()
       .then(function (res) {
-        console.log('Sale리스트?', res.data.jsonData.products)
+        console.log('Sale리스트?', res.data.jsonData)
         vm.items = res.data.jsonData.products
       })
       .catch(function (error) {
