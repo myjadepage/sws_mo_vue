@@ -21,13 +21,28 @@ function getCategoryList () {
   })
 }
 
+// 상품세일
+function getSaleProduct () {
+  return axios.get(`${config.baseUrl2}products/salelists`)
+}
+
+// 주간베스트상품(Weekly)
+function getWeeklyProduct () {
+  return axios.get(`${config.baseUrl2}products/weeklylists`)
+}
+
+// 베스트브랜드
+function getBrandList () {
+  return axios.get(`${config.baseUrl}brands`)
+}
+
+/**
+ *
+ * 상품 상세
+ */
 // 단일 상품
 function getProduct (id) {
   return axios.get(`${config.baseUrl}products/${id}`)
-}
-
-function getBrandList () {
-  return axios.get(`${config.baseUrl}brands/`)
 }
 
 /**
@@ -123,6 +138,8 @@ function snsLogin (snsType, snsToken) {
 export {
   getProductList,
   getCategoryList,
+  getSaleProduct,
+  getWeeklyProduct,
   createtUser,
   sendSms,
   checkJoinId,

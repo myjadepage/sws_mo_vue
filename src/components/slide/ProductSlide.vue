@@ -3,14 +3,14 @@
     <h4>Sale</h4>
     <swiper :options="swiperOption">
         <swiper-slide v-for="item in items" :key="item.prdtSysId">
-          <a :href="'/product/' + item.prdtSysId"><img :src="item.bigImageUrl"></a>
+          <a :href="'/product/' + item.prdtSysId"><img :src="item.smallImageUrl"></a>
           <div class="goods_best">
             <span class="condition_order">
                 [{{ item.brandName }}] {{ item.name }}
             </span>
             <div class="item_price">
-                <span class="discount">{{ (item.discountRate) * 100 }}%</span>
-                <strong>{{ item.price | makeComma}}원</strong>
+                <span class="discount">{{ item.discountRate }}%</span>
+                <strong>{{ item.salesPrice | makeComma}}원</strong>
             </div>
           </div>
         </swiper-slide>
@@ -21,7 +21,7 @@
 <script>
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import { getProductList } from '../../api/index'
+import { getSaleProduct } from '../../api/index'
 export default {
   name: 'ProductSlide',
   components: {
@@ -39,7 +39,7 @@ export default {
   },
   created () {
     var vm = this
-    getProductList()
+    getSaleProduct()
       .then(function (res) {
         console.log('Sale리스트?', res.data.jsonData.products)
         vm.items = res.data.jsonData.products
