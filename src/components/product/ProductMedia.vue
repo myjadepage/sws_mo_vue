@@ -1,8 +1,46 @@
 <template>
   <div class="productMediaWrap">
     <div :style="mediaSize" class="mainMedia">
-      <div id="player_container"  class="use-drag-handle use-thin-controlbar use-play-1 flowplayer"></div>
+      <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div>
+      <div class="layer-player">
+          <!-- 하단 구매영역 -->
+          <div class="buy-wrap">
+              <h2 class="title">
+                  [클리오] 킬커버 광채쿠션 타마누 카밍 세럼 (50ml)
+              </h2>
+              <p class="price-title">
+                  <span>
+                      <strong>25% <em>32,500</em></strong>
+                      <del>132,500</del>
+                  </span>
+                  <button type="button" class="btn btn-sm btn-main">구매하기</button>
+              </p>
+          </div>
+          <div class="thumbs">
+              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
+                <img src="https://flowplayer.com/demos/images/agency/2-thumb.jpeg">
+                <p class="thumb-title">제품뷰티</p>
+              </span>
+              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
+                <img src="https://flowplayer.com/demos/images/agency/6-thumb.jpeg">
+                <p class="thumb-title">언박싱</p>
+              </span>
+              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
+                <img src="https://flowplayer.com/demos/images/agency/5-thumb.jpeg">
+                <p class="thumb-title">설명</p>
+              </span>
+              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
+                <img src="https://flowplayer.com/demos/images/agency/3-thumb.jpeg">
+                <p class="thumb-title">제품특장점</p>
+              </span>
+              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
+                <img src="https://flowplayer.com/demos/images/agency/6-thumb.jpeg">
+                <p class="thumb-title">비교</p>
+              </span>
+          </div>
+        </div>
     </div>
+
     <ul class="mediaMenu">
       <li @click="selectMediaMode(0)" class="selected"><span class="dot">·</span>제품뷰티</li>
       <li @click="selectMediaMode(1)"><span class="dotL">·</span>언박싱</li>
@@ -15,7 +53,8 @@
 
 <script>
 // import $ from 'jquery'
-import flowplayer from 'flowplayer'
+import 'flowplayer-files/lib/styles/flowplayer.css'
+import flowplayer from 'flowplayer-files'
 
 export default {
   data () {
@@ -26,33 +65,21 @@ export default {
   },
   mounted: function () {
     flowplayer('#player_container', {
-      token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A',
+      poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
       float_on_scroll: true,
       rewind: true,
       seekable: false,
+      // type: 'video/mp4',
       src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
-      poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
-      share: {
-        link: true,
-        facebook: true,
-        twitter: false,
-        iframe: 'https://example.com/iframe.html'
-      }
-      // clip: {
-      //   sources: [
-      //     {
-      //       src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
-      //       type: 'video/mp4',
-      //       title: 'aaaa'
-      //     }
-      //   ]
-      // }
+      token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
     })
+    const thumbs = this.$el.querySelectorAll('[data-video]')
+    this.getThumbs(thumbs)
   },
   computed: {
     mediaSize () {
       // return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
-      return this.mediaDirection === 0 ? 'padding-top:0;' : 'padding-top:0;'
+      return this.mediaDirection === 0 ? 'height:100%;' : 'height:40px;'
     }
   },
   methods: {

@@ -8,36 +8,6 @@
           <dd class="channel_name">{{ item.name }}</dd>
        </dl>
      </swiper-slide>
-     <!-- <swiper-slide>
-       <dl>
-          <dt class="channel_circle" style="background-image: url(static/brand/logo-age20.png);"></dt>
-          <dd class="channel_name">에이지20</dd>
-       </dl>
-     </swiper-slide>
-     <swiper-slide>
-       <dl>
-          <dt class="channel_circle" style="background-image: url(static/brand/logo-akb.png);"></dt>
-          <dd class="channel_name">애경</dd>
-       </dl>
-     </swiper-slide>
-     <swiper-slide>
-       <dl>
-          <dt class="channel_circle" style="background-image: url(static/brand/logo-calli.png);"></dt>
-          <dd class="channel_name">칼리</dd>
-       </dl>
-     </swiper-slide>
-     <swiper-slide>
-       <dl>
-          <dt class="channel_circle" style="background-image: url(static/brand/logo-goodal.png);"></dt>
-          <dd class="channel_name">구달</dd>
-       </dl>
-     </swiper-slide>
-     <swiper-slide>
-       <dl>
-          <dt class="channel_circle" style="background-image: url(static/brand/logo-jill.png);"></dt>
-          <dd class="channel_name">질스튜어트</dd>
-       </dl>
-     </swiper-slide> -->
   </swiper>
 </div>
 

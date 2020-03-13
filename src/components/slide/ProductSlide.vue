@@ -9,7 +9,7 @@
                 [{{ item.brandName }}] {{ item.name }}
             </span>
             <div class="item_price">
-                <span class="discount">{{ item.discountRate }}%</span>
+                <span class="discount">{{ item.discountRate * 100 }}%</span>
                 <strong>{{ item.salesPrice | makeComma}}원</strong>
             </div>
           </div>
