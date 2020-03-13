@@ -1,14 +1,16 @@
 <template>
   <div class="buyPrdInfoWrap">
     <div class="infoHeader">주문상품 정보</div>
-    <div class="prdImg">{{product.imgUrl}}</div>
-    <div class="prdTitle">{{product.name}}</div>
-    <div class="prdOptions">
-      <span v-for="(o, idx) in options.length-2" :key="idx">
-        [옵션명{{o}}]
-      </span>
+    <div class="prdImg"><img :src="product.smallImageUrl" alt=""></div>
+    <div class="prdTitle">[{{product.brandName}}] {{product.name}}</div>
+    <div class="prdOptions" v-if="options">
+      <span v-for="(o,idx) in options" :key="idx">
+        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.optionObj" :key="i">{{i}} {{oo}} </span>
+        </span>
     </div>
-    <div class="prdPriceCnt">{{calcTotalPrice}}</div>
+    <div class="prdPriceCnt">
+      {{calcTotalPrice|makeComma}}원 / 수량{{countPrductNum}}개
+    </div>
   </div>
 </template>
 
@@ -22,16 +24,63 @@ export default {
     return {
       product: {},
       options: {}
+      // price:,
+      // count:
     }
   },
   computed: {
     calcTotalPrice () {
-      return this.product.price * (this.options.price * this.options.count)
+      let optionPrice = 0
+
+      for (const o of this.options) {
+        optionPrice += (o.price * o.count)
+      }
+
+      return this.product.price + optionPrice
+    },
+    countPrductNum () {
+      let val = 0
+      for (const i of this.options) {
+        val += i.count
+      }
+      return val
     }
+  },
+  mounted () {
+    this.$store.state.optionAddedPrice = this.calcTotalPrice
   }
 }
 </script>
 
 <style>
 
+.buyPrdInfoWrap{
+  margin-top: 5px;
+  background-color: #fff;
+  padding: 15px 12px;
+  font-size: 15px;
+}
+
+.buyPrdInfoWrap .prdImg img{
+  float: left;
+  width: 70px;
+  margin-right: 10px;
+  height: 70px;
+}
+
+.buyPrdInfoWrap .infoHeader{
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.buyPrdInfoWrap .prdOptions{
+  margin: 5px 0;
+  color: #666666;
+  font-size: 14px;
+}
+
+.buyPrdInfoWrap .prdPriceCnt{
+  font-weight: 500;
+}
 </style>

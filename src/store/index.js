@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
   state: {
     userInfo: {},
     product: {},
-    productPrice: 0,
+    optionAddedPrice: 0,
+    finalPrice: 0,
     selectedOptions: [],
     searchCat: 0,
     isAuth: false
@@ -17,7 +18,8 @@ export const store = new Vuex.Store({
     getId: state => state.userId.userId,
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product,
-    getProductPrice: state => state.productPrice,
+    getOptionAddedPrice: state => state.optionAddedPrice,
+    getFinalPrice: state => state.finalPrice,
     getSelectedOptions: state => state.selectedOptions,
     getSelectedOptionsLength: state => state.selectedOptions.length,
     getOptionCnt: state => idx => state.selectedOptions[idx].count,

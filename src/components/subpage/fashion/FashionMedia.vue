@@ -1,8 +1,9 @@
 <template>
   <div class="fashionMediaWrap">
       <div class="mediaSection">
+          <div class="media"><img :src="'../../static/images/'+img+'.jpg'" alt="">
           <span class="userProfile"><span class="img"></span></span>
-          <div class="media"></div>
+          </div>
       </div>
 
     <div class="mediaInfoSection">
@@ -17,7 +18,7 @@
 
 <script>
 export default {
-  props: ['props'],
+  props: ['props', 'img'],
   data () {
     return {
       tags: ['메이크업신동', '코랄핑크덕후']
@@ -29,9 +30,15 @@ export default {
 <style>
 
 .fashionMediaWrap  .media{
-    background-color: gray;
+    /* background-color: gray; */
     width: 100%;
-    padding-top: 56.25%;
+    /* padding-top: 56.25%; */
+}
+
+.fashionMediaWrap .media img{
+  width: 100%;
+  height: 100%;
+ /* padding-top: 56.25%; */
 }
 
 .fashionMediaWrap .userProfile{
@@ -39,10 +46,10 @@ export default {
     /* display: inline-block; */
     width: 32px;
     height: 32px;
-    background-color: burlywood;
+    background-color: #671fff;
     position: relative;
-    top: 20px;
-    right: 20px;
+    bottom: 330px;
+    right: 50px;
     border-radius: 15px;
 }
 
