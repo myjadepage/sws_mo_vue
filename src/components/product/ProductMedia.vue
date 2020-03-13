@@ -1,17 +1,22 @@
 <template>
   <div class="productMediaWrap">
-    <div :style="mediaSize" class="mainMedia"></div>
+    <div :style="mediaSize" class="mainMedia">
+      <div id="player_container"  class="use-drag-handle use-thin-controlbar use-play-1 flowplayer"></div>
+    </div>
     <ul class="mediaMenu">
-      <li @click="selectMediaMode(0)" class="selected"><span class="dot">·</span>메인</li>
+      <li @click="selectMediaMode(0)" class="selected"><span class="dot">·</span>제품뷰티</li>
       <li @click="selectMediaMode(1)"><span class="dotL">·</span>언박싱</li>
-      <li @click="selectMediaMode(2)"><span class="dotL">·</span>사용법</li>
-      <li @click="selectMediaMode(3)"><span class="dot">·</span>후기</li>
-      <li @click="selectMediaMode(4)"><span class="dotL">·</span>이미지</li>
+      <li @click="selectMediaMode(2)"><span class="dotL">·</span>설명</li>
+      <li @click="selectMediaMode(3)"><span class="dot">·</span>제품특장점</li>
+      <li @click="selectMediaMode(4)"><span class="dotL">·</span>비교</li>
     </ul>
   </div>
 </template>
 
 <script>
+// import $ from 'jquery'
+import flowplayer from 'flowplayer'
+
 export default {
   data () {
     return {
@@ -19,9 +24,35 @@ export default {
       mediaMode: 0
     }
   },
+  mounted: function () {
+    flowplayer('#player_container', {
+      token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A',
+      float_on_scroll: true,
+      rewind: true,
+      seekable: false,
+      src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
+      poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
+      share: {
+        link: true,
+        facebook: true,
+        twitter: false,
+        iframe: 'https://example.com/iframe.html'
+      }
+      // clip: {
+      //   sources: [
+      //     {
+      //       src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
+      //       type: 'video/mp4',
+      //       title: 'aaaa'
+      //     }
+      //   ]
+      // }
+    })
+  },
   computed: {
     mediaSize () {
-      return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
+      // return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
+      return this.mediaDirection === 0 ? 'padding-top:0;' : 'padding-top:0;'
     }
   },
   methods: {

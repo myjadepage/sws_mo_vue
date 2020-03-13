@@ -11,11 +11,11 @@
                 <span class="txt_goods">{{ item.briefDescription }}</span>
             </a>
             <span class="condition_order">
-                [{{ item.brandName }}] {{ item.name }}
+                [{{ item.brandName }}] {{ item.productName }}
             </span>
             <div class="item_price">
-                <span class="discount">{{  (item.discountRate) * 100 }}%</span>
-                <strong>{{ item.price | makeComma }}원</strong>
+                <span class="discount">{{  (item.discountRate) }}%</span>
+                <strong>{{ item.salesPrice | makeComma }}원</strong>
             </div>
         </div>
     </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getProductList } from '../api/index'
+import { getWeeklyProduct } from '../api/index'
 export default {
   name: 'WeeklyBest',
   data () {
@@ -33,9 +33,9 @@ export default {
   },
   created () {
     var vm = this
-    getProductList()
+    getWeeklyProduct()
       .then(function (res) {
-        console.log('아이템리스트 맞어?', res.data.jsonData.products)
+        console.log('위클리상품 맞어?', res.data.jsonData.products)
         vm.items = res.data.jsonData.products
       })
       .catch(function (error) {

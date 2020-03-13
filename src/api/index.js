@@ -21,13 +21,28 @@ function getCategoryList () {
   })
 }
 
+// 상품세일
+function getSaleProduct () {
+  return axios.get(`${config.baseUrl}products/salelists`)
+}
+
+// 주간베스트상품(Weekly)
+function getWeeklyProduct () {
+  return axios.get(`${config.baseUrl}products/weeklylists`)
+}
+
+// 베스트브랜드
+function getBrandList () {
+  return axios.get(`${config.baseUrl}brands`)
+}
+
+/**
+ *
+ * 상품 상세
+ */
 // 단일 상품
 function getProduct (id) {
   return axios.get(`${config.baseUrl}products/${id}`)
-}
-
-function getBrandList () {
-  return axios.get(`${config.baseUrl}brands/`)
 }
 
 /**
@@ -43,7 +58,7 @@ function checkJoinId (id) {
   // fordata.set('jsonData', JSON.stringify(jsonData))
   // console.log(fordata.get('jsonData'))
   console.log(JSON.stringify(jsonData))
-  return axios.get(`${config.baseUrl2}users/chkdupid`, {
+  return axios.get(`${config.baseUrl}users/chkdupid`, {
     params: jsonData
   })
 }
@@ -57,7 +72,7 @@ function sendSms (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/sendauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/sendauthmine`, formdata)
 }
 
 // 본인인증확인
@@ -70,7 +85,7 @@ function chkSmsAuth (authType, authWay, authWayValue, authNo) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/chkauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
 }
 
 // 회원가입
@@ -83,7 +98,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/join`, formdata)
+  return axios.post(`${config.baseUrl}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -94,7 +109,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 본인인증결과
@@ -106,7 +121,7 @@ function retauthMine (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/retauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/retauthmine`, formdata)
 }
 
 // 간편로그인
@@ -117,12 +132,14 @@ function snsLogin (snsType, snsToken) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/snslogin`, formdata)
+  return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
 }
 
 export {
   getProductList,
   getCategoryList,
+  getSaleProduct,
+  getWeeklyProduct,
   createtUser,
   sendSms,
   checkJoinId,
