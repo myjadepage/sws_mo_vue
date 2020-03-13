@@ -8,8 +8,8 @@ export const store = new Vuex.Store({
   state: {
     userInfo: {},
     product: {},
-    optionAddedPrice: 0,
-    finalPrice: 0,
+    optionAddedPrice: null,
+    finalPrice: null,
     selectedOptions: [],
     searchCat: 0,
     isAuth: false

@@ -27,7 +27,7 @@ export default {
     clickBuy () {
       if (this.buyMode === false) {
         this.$emit('buyModeClick')
-      } else {
+      } else if (this.$store.getters.getSelectedOptionsLength > 0) {
         this.$router.push('/BuyProduct')
       }
     },

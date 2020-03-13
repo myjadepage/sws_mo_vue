@@ -7,8 +7,8 @@
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
-    <TotalPriceInfo :discount="discountPoint+discountCoupon" />
-    <BuyFooter/>
+    <TotalPriceInfo @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
+    <BuyFooter :finalPrice="finalPrice" />
 </div>
 </template>
 
@@ -36,7 +36,8 @@ export default {
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'}],
-      couponMode: false
+      couponMode: false,
+      finalPrice: 0
     }
   },
   methods: {
@@ -45,6 +46,9 @@ export default {
     },
     discountByCoupon (coupon) {
       this.discountCoupon = coupon
+    },
+    getfinalPrice (price) {
+      this.finalPrice = price
     }
   }
 }
