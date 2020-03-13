@@ -6,7 +6,7 @@
               <li @click="menuClick(2)">상품문의</li>
               <li @click="menuClick(3)">배송/교환/반품</li>
       </ul>
-    <DetailDesc :selectedMenu="selectedMenu" s/>
+    <DetailDesc :selectedMenu="selectedMenu" />
   </div>
 </template>
 
@@ -14,31 +14,35 @@
 import DetailDesc from './ProductDetailDesc'
 
 export default {
-  created () {
+  mounted () {
     let self = this
-    var timer
 
-    window.addEventListener('scroll', () => {
-      if (!timer) {
-        timer = setTimeout(function () {
-          timer = null
-          if (window.scrollY >= 600 && !self.$refs.descMenu.classList.contains('scrolling')) {
-            console.log(window.scrollY)
-            self.$refs.descMenu.classList.add('scrolling')
-          } else if (window.scrollY < 600 && self.$refs.descMenu.classList.contains('scrolling')) {
-            self.$refs.descMenu.classList.remove('scrolling')
-            console.log(window.scrollY)
+    document.addEventListener('scroll', () => {
+      if (!this.timer) {
+        this.timer = setTimeout(function () {
+          self.timer = null
+          if (window.scrollY >= 600 && !self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
+            self.$el.getElementsByClassName('descMenu')[0].classList.add('scrolling')
+          } else if (window.scrollY < 600 && self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
+            self.$el.getElementsByClassName('descMenu')[0].classList.remove('scrolling')
           }
-        }, 200)
+        }, 300)
       }
     })
+  },
+  beforeDestroy () {
+    if (this.timer) {
+      this.timer.clearTimeout()
+      this.timer = null
+    }
   },
   components: {
     DetailDesc
   },
   data () {
     return {
-      selectedMenu: 0
+      selectedMenu: 0,
+      timer: null
     }
   },
   methods: {

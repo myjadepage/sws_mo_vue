@@ -7,7 +7,7 @@
           <span  class="delimeter">|</span>
           <span ref="lSort" @click="latestSort" class="latestBtn selected">최신순</span>
       </div>
-      <Media v-for="(p,idx) in products" :key="idx" :props="p" />
+      <Media v-for="(p,idx) in products" :key="idx" :img="idx+1" :props="p" />
   </div>
 </template>
 

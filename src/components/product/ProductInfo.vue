@@ -62,6 +62,9 @@ export default {
         case 1: return 0
         case 2: return this.product.debitAmount
         case 3: return this.product.prepaymentAmount
+        case 4: return 2500
+        case 5: return 2500
+        default: return 2500
       }
     }
   },

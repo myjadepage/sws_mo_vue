@@ -58,11 +58,11 @@ export default {
           return
         }
       }
-      let item = {}
+      let item = {price: 0, count: 0, optionObj: {}}
       item.price = 0
       for (let i = 0; i < this.product.normalOptions.length; i++) {
         item.price += this.product.normalOptions[i].price
-        item[this.$refs['option' + i][0].name] = this.$refs['option' + i][0].value
+        item.optionObj[this.$refs['option' + i][0].name] = this.$refs['option' + i][0].value
       }
 
       item.count = 1
@@ -94,7 +94,7 @@ export default {
         val += (item.count * item.price)
       }
 
-      return val + this.$store.getters.getProductPrice
+      return val + this.$store.getters.getProduct.price
     }
   }
 

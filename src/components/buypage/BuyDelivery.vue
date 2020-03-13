@@ -1,24 +1,22 @@
 <template>
   <div class="buyDeliveryWrap">
-    <!-- <div class="buyDeliveryHeader">
+    <div class="buyDeliveryHeader">
       배송정보
+      <button class="deliveryConfigBtn">변경</button>
     </div>
     <div class="buyDeliveryBody">
       <table>
         <tr>
-          <th>수령인</th>
           <td>{{member.name}}</td>
         </tr>
         <tr>
-          <th>연락처</th>
-          <td>{{member.phone}}</td>
-        </tr>
-        <tr>
-          <th>배송지</th>
           <td>{{member.addr}}</td>
         </tr>
+        <tr>
+          <td>{{member.phone}}</td>
+        </tr>
       </table>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -37,5 +35,33 @@ export default {
 </script>
 
 <style>
+.buyDeliveryWrap{
+  margin-top: 5px;
+  background-color: #fff;
+  padding: 17px 12px 15px;
+}
 
+.buyDeliveryWrap .buyDeliveryHeader{
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.buyDeliveryWrap .buyDeliveryHeader button{
+  float: right;
+  width: 50px;
+  height: 30px;
+  font-size: 13px;
+  color: #666666;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+}
+
+.buyDeliveryWrap .buyDeliveryBody table{
+  width: 100%;
+}
+
+.buyDeliveryWrap .buyDeliveryBody td{
+  font-size: 15px;
+}
 </style>
