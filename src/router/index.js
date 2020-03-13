@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/view/Home'
-import Fashion from '@/view/menu/Fashion'
+import Fashion from '@/view/subpage/Fashion/FashionMain'
 import About from '@/view/menu/About'
 import Login from '@/view/member/Login'
 import Searchid from '@/view/member/Searchid'
@@ -21,6 +21,8 @@ import Tracking from '@/view/mypage/Tracking'
 import TrackingDetail from '@/view/mypage/TrackingDetail'
 import ProductDetail from '@/view/productDetail/ProductDetailMain'
 import Search from '@/view/search/SearchPage'
+import BuyPageMain from '@/view/buyProduct/BuyPageMain'
+import BuyComplete from '@/view/buyProduct/BuyComplete'
 
 Vue.use(Router)
 
@@ -132,6 +134,16 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: Search
+    },
+    {
+      path: '/BuyProduct',
+      name: 'BuyProduct',
+      component: BuyPageMain
+    },
+    {
+      path: '/BuyComplete',
+      name: 'BuyComplete',
+      component: BuyComplete
     }
   ]
 })

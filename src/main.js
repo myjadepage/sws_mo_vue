@@ -6,6 +6,9 @@ import router from './router'
 import { store } from './store/index'
 import GAuth from 'vue-google-oauth2'
 
+var IMP = window.IMP // 생략가능
+IMP.init('imp99407185') // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+
 Vue.use(GAuth, {'client_id': '64392911625-v0krge4vu1k02v5mv4dvdpj67ei9jh2v.apps.googleusercontent.com'})
 
 // 가격 세자리 콤마 필터

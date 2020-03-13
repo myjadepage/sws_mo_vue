@@ -1,10 +1,11 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
+    <div v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info />
       <Description />
-      <ProductFooter />
+      <ProductFooter @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <!-- Footer에게 normalOptions를 Prop으로 넘겨줘야함 -->
   </div>
 </template>
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       title: '상품상세',
-      product: {}
+      product: {},
+      buyMode: false
     }
   },
   components: {
@@ -45,4 +47,15 @@ export default {
 .productDetailWrap{
     min-width: 360px;
 }
+.darkFilter{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: black;
+  opacity: 50%;
+  width: 100%;
+  height: 100%;
+}
+
 </style>

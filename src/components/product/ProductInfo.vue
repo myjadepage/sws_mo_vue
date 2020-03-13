@@ -46,12 +46,15 @@ export default {
       }
     }
   },
+  mounted () {
+    this.$store.state.productPrice = this.calcPrice
+  },
   computed: {
     calcPrice () {
       if (!this.product.discountRate) {
         return this.product.price
       }
-      let val = this.product.price - Math.floor(this.product.price * (this.product.discountRate * 0.01) / 10) * 10
+      let val = this.product.price - Math.floor(this.product.price * (this.product.discountRate) / 10) * 10
       return val
     },
     calcDeliveryPrice () {
