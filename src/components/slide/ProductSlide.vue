@@ -21,7 +21,7 @@
 <script>
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import { getSaleProduct } from '../../api/index'
+import { getSaleProduct } from '../../api'
 export default {
   name: 'ProductSlide',
   components: {

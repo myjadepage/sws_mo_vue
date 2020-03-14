@@ -28,9 +28,14 @@
                     <span class="ico_sws ico_search">검색</span>
                 </a>
             </div>
-            <div class="wrap_btn_search common-header-search">
-                 <a href="/Login" id="btnSearchTop" class="link_search" role="button">
+            <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true">
+                 <a href="/Mypage" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_basket">장바구니</span>
+                </a>
+            </div>
+            <div class="wrap_btn_search common-header-search" v-else>
+                 <a href="/Login" id="btnSearchTop" class="link_search" role="button">
+                    <span class="sws_icon ico_basket">로그인</span>
                 </a>
             </div>
             <!-- <div class="wrap_btn_close common-header-close">

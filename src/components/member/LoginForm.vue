@@ -31,7 +31,7 @@
               <label style="color:#666">자동 로그인</label>
             </li>
          </ul>
-         <button type="button" class="btn btn-block btn-main" @click="login">로그인</button>
+         <button type="button" class="btn btn-block btn-main" @click="$store.dispatch('login({id, password})')">로그인</button>
          <ul class="form_item_wrap login_service">
             <li><a href="/Searchid">아이디 찾기</a></li>
             <li><a href="/Searchpw">패스워드 찾기</a></li>
@@ -80,7 +80,7 @@
 <script>
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
-import { userLogin, snsLogin } from '../../api'
+import { snsLogin } from '../../api'
 
 export default {
   components: {
@@ -95,23 +95,22 @@ export default {
     }
   },
   methods: {
-    // 일반로그인
-    login () {
-      userLogin(this.id, this.password)
-        .then(res => {
-          if (res.data.jsonData.resultCode === '0001') {
-            console.log('로그인성공?', res)
-            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
-            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
-            this.$router.push('/')
-          }
-        })
-        .catch(function (error) {
-          console.log('ERROR', error)
-        })
-      console.log(this.id, this.password)
-    },
+    // login () {
+    //   userLogin(this.id, this.password)
+    //     .then(res => {
+    //       if (res.data.jsonData.resultCode === '0001') {
+    //         console.log('로그인성공?', res)
+    //         localStorage.setItem('accessToken', res.data.jsonData.accessToken)
+    //         localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
+    //         localStorage.setItem('userSysId', res.data.jsonData.userSysId)
+    //         this.$router.push('/')
+    //       }
+    //     })
+    //     .catch(function (error) {
+    //       console.log('ERROR', error)
+    //     })
+    //   console.log(this.id, this.password)
+    // },
 
     // 구글로그인
     handleClickGetAuth () {

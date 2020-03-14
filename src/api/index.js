@@ -36,6 +36,11 @@ function getBrandList () {
   return axios.get(`${config.baseUrl}brands`)
 }
 
+// 라이브방송정보 리스트
+function getLiveProduct () {
+  return axios.get(`${config.baseUrl2}broadcasts/lists`)
+}
+
 /**
  *
  * 상품 상세
@@ -72,7 +77,7 @@ function sendSms (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/sendauthmine`, formdata)
+  return axios.post(`${config.baseUrl2}auth/sendauthmine`, formdata)
 }
 
 // 본인인증확인
@@ -85,7 +90,7 @@ function chkSmsAuth (authType, authWay, authWayValue, authNo) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
+  return axios.post(`${config.baseUrl2}auth/chkauthmine`, formdata)
 }
 
 // 회원가입
@@ -98,7 +103,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/join`, formdata)
+  return axios.post(`${config.baseUrl2}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -109,7 +114,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/login`, formdata)
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
 
 // 본인인증결과
@@ -140,6 +145,7 @@ export {
   getCategoryList,
   getSaleProduct,
   getWeeklyProduct,
+  getLiveProduct,
   createtUser,
   sendSms,
   checkJoinId,

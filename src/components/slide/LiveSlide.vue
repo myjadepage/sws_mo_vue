@@ -19,7 +19,7 @@
             </div>
             <div class="desc-area">1청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
         </swiper-slide>
-        <swiper-slide>
+        <!-- <swiper-slide>
             <div class="img-area">
                 <a href="/">
                     <img src="static/images/1.jpg" alt="청하의 선택">
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="desc-area">1청하가 선택한 질스튜어트 잇백! 로젤라 미니 체인 클러치 백</div>
-        </swiper-slide>
+        </swiper-slide> -->
       </swiper>
   </div>
 </template>

@@ -15,7 +15,7 @@
       <hr>
       <router-link to=""><li><span class="ico_message"></span>메세지</li></router-link>
       <hr>
-      <router-link to=""><li><span class="ico_signout"></span>로그아웃</li></router-link>
+      <router-link to="" @click="$store.dispatch('logOut')"><li><span class="ico_signout"></span>로그아웃</li></router-link>
     </ul>
   </div>
 </template>

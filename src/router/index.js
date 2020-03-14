@@ -1,30 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/view/Home'
-import Fashion from '@/view/subpage/Fashion/FashionMain'
-import About from '@/view/menu/About'
-import Login from '@/view/member/Login'
-import Searchid from '@/view/member/Searchid'
-import Searchpw from '@/view/member/Searchpw'
-import SearchpwSet from '@/view/member/SearchpwSet'
-import SearchDone from '@/view/member/SearchDone'
-import RegStep00 from '@/view/member/RegStep00'
-import RegStep00Naver from '@/view/member/RegStep00Naver'
-import RegStep01 from '@/view/member/RegStep01'
-import RegStep02 from '@/view/member/RegStep02'
-import RegStep03 from '@/view/member/RegStep03'
-import RegStep04 from '@/view/member/RegStep04'
-import MyPage from '@/view/mypage/MainPage'
-import Notice from '@/view/mypage/Notice'
-import Contact from '@/view/mypage/Contact'
-import Tracking from '@/view/mypage/Tracking'
-import TrackingDetail from '@/view/mypage/TrackingDetail'
-import ProductDetail from '@/view/productDetail/ProductDetailMain'
-import Search from '@/view/search/SearchPage'
-import BuyPageMain from '@/view/buyProduct/BuyPageMain'
-import BuyComplete from '@/view/buyProduct/BuyComplete'
+import { store } from '../store/index'
 
 Vue.use(Router)
+
+const rejectAuthUser = (to, from, next) => {
+  if (store.state.isLogin === true) {
+    alert('이미 로그인을 하였습니다.')
+    next('/')
+  } else {
+    next()
+  }
+}
+const isAuthUser = (to, from, next) => {
+  if (store.state.isLogin === false) {
+    alert('로그인이 필요한 메뉴입니다.')
+    next('/')
+  } else {
+    next()
+  }
+}
 
 export default new Router({
   mode: 'history',
@@ -33,117 +28,119 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: () => import('@/view/Home')
     },
     {
       path: '/Login',
       name: 'Login',
-      component: Login
+      beforeEnter: rejectAuthUser,
+      component: () => import('@/view/member/Login')
     },
     {
       path: '/Searchid',
       name: 'Searchid',
-      component: Searchid
+      component: () => import('@/view/member/Searchid')
     },
     {
       path: '/Searchpw',
       name: 'Searchpw',
-      component: Searchpw
+      component: () => import('@/view/member/Searchpw')
     },
     {
       path: '/SearchpwSet',
       name: 'SearchpwSet',
-      component: SearchpwSet
+      component: () => import('@/view/member/SearchpwSet')
     },
     {
       path: '/SearchDone',
       name: 'SearchDone',
-      component: SearchDone
+      component: () => import('@/view/member/SearchDone')
     },
     {
       path: '/RegStep00',
       name: 'RegStep00',
-      component: RegStep00
+      component: () => import('@/view/member/RegStep00')
     },
     {
       path: '/RegStep00Naver',
       name: 'RegStep00Naver',
-      component: RegStep00Naver
+      component: () => import('@/view/member/RegStep00Naver')
     },
     {
       path: '/RegStep01',
       name: 'RegStep01',
-      component: RegStep01
+      component: () => import('@/view/member/RegStep01')
     },
     {
       path: '/RegStep02',
       name: 'RegStep02',
-      component: RegStep02
+      component: () => import('@/view/member/RegStep02')
     },
     {
       path: '/RegStep03',
       name: 'RegStep03',
-      component: RegStep03
+      component: () => import('@/view/member/RegStep03')
     },
     {
       path: '/RegStep04',
       name: 'RegStep04',
-      component: RegStep04
+      component: () => import('@/view/member/RegStep04')
     },
     {
       path: '/category/패션',
       name: 'Fashion',
-      component: Fashion
+      component: () => import('@/view/subpage/Fashion/FashionMain')
     },
     {
       path: '/About',
       name: 'About',
-      component: About
+      component: () => import('@/view/menu/About')
     },
     {
       path: '/MyPage',
       name: 'MyPage',
-      component: MyPage
+      beforeEnter: isAuthUser,
+      component: () => import('@/view/mypage/MainPage')
     },
     {
       path: '/Notice',
       name: 'Notice',
-      component: Notice
+      component: () => import('@/view/mypage/Notice')
     },
     {
       path: '/Contact',
       name: 'Contact',
-      component: Contact
+      component: () => import('@/view/mypage/Contact')
     },
     {
       path: '/Tracking',
       name: 'Tracking',
-      component: Tracking
+      component: () => import('@/view/mypage/Tracking')
     },
     {
       path: '/Tracking/Detail',
       name: 'TrackingDetail',
-      component: TrackingDetail
+      component: () => import('@/view/mypage/TrackingDetail')
     },
     {
       path: '/Product/:prdtSysId',
       name: 'ProductDetail',
-      component: ProductDetail
+      component: () => import('@/view/productDetail/ProductDetailMain')
     },
     {
       path: '/search',
       name: 'Search',
-      component: Search
+      component: () => import('@/view/search/SearchPage')
     },
     {
       path: '/BuyProduct',
       name: 'BuyProduct',
-      component: BuyPageMain
+      component: () => import('@/view/buyProduct/BuyPageMain')
     },
     {
       path: '/BuyComplete',
       name: 'BuyComplete',
-      component: BuyComplete
+      component: () => import('@/view/buyProduct/BuyComplete')
     }
   ]
 })
