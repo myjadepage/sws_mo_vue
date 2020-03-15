@@ -6,29 +6,34 @@
         <span class="circle_dot disable"></span>
         <span class="circle_dot disable"></span>
     </h5>
+
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">기본정보 입력</h2>
             <h4 class="small_title">아이디 입력</h4>
             <div class="wrap-input100">
-                <input class="input100" type="text" v-model="id" name="id" placeholder="아이디(6-12자)" required maxlength="12">
+                <input class="input100" type="text" name="id" placeholder="아이디(6-12자)" maxlength="12"
+                  v-model="id" required>
                 <span class="focus-input100"></span>
                 <button type="button" class="btn_send" @click="checkId">중복확인</button>
             </div>
 
             <h4 class="small_title">비밀번호 입력</h4>
             <div class="wrap-input100">
-                <input class="input100" type="password" v-model="password" name="password" placeholder="영문, 숫자, 특수문자 혼합 6-12자" required maxlength="12">
+                <input class="input100" type="password" name="password" placeholder="영문, 숫자, 특수문자 혼합 6-20자" maxlength="20"
+                  v-model="password" required>
                 <span class="focus-input100"></span>
             </div>
             <div class="wrap-input100">
-                <input class="input100" type="password" v-model="confirmpw" name="confirmpw" placeholder="비밀번호 다시 입력" required>
+                <input class="input100" type="password" name="confirmpw" placeholder="비밀번호 다시 입력"
+                  v-model="confirmpw" required>
                 <span class="focus-input100"></span>
             </div>
 
             <h4 class="small_title">이메일 입력</h4>
             <div class="wrap-input100">
-                <input class="input100" type="text" v-model="email" name="email" placeholder="이메일 형식에 맞게 입력해 주세요" required>
+                <input class="input100" type="text" name="email" placeholder="이메일 형식에 맞게 입력해 주세요"
+                  v-model="email" required>
                 <span class="focus-input100"></span>
             </div>
     </div>
@@ -52,16 +57,12 @@ export default {
     /** 아이디 유효성Check
      * 영문, 숫자 6~12자 입력 */
     checkId: function () {
-      const regId = /^[A-za-z0-9]{6,12}$/
+      const regId = new RegExp('^[A-za-z0-9]{6,12}$')
       if (this.id === null) {
         alert('아이디를 입력해 주세요')
         return false
-      } else if (this.id.length < 6 || this.id.length > 12) {
-        alert('아이디를 6-12자로 입력해 주세요')
-        this.id = ''
-        return false
       } else if (!regId.test(this.id)) {
-        alert('영문, 숫자로 입력해 주세요')
+        alert('영문, 숫자의 아이디 6-12자로 입력해 주세요')
         this.id = ''
         return false
       } else {
@@ -71,17 +72,18 @@ export default {
       }
     },
     checkJoin: function () {
-      const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
+      // const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
+      const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
       if (this.id === null) {
         alert('아이디를 입력해 주세요')
       } else if (this.password === null) {
         alert('비밀번호를 입력해 주세요')
       } else if (regPassword.test(this.password)) {
-        alert('영문과 숫자, 특수문자로 입력해 주세요')
+        alert('영문,숫자 또는 특수문자로 입력해 주세요')
         this.password = ''
-      } else if (this.password.length < 7 || this.password.length > 13) {
-        alert('비밀번호를 6-12자로 입력해 주세요')
+      } else if (this.password.length < 7 || this.password.length > 21) {
+        alert('비밀번호를 6-20자로 입력해 주세요')
         this.password = ''
       } else if (this.confirmpw === null) {
         alert('비밀번호를 다시한번 입력해 주세요')
@@ -94,6 +96,7 @@ export default {
         this.email = ''
         alert('올바른 이메일 주소를 입력하세요')
       } else {
+        // const pwChange = sha256(this.password)
         this.$store.state.userInfo.userId = this.id
         this.$store.state.userInfo.password = this.password
         this.$store.state.userInfo.email = this.email
