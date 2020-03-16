@@ -42,8 +42,12 @@ export default {
   margin-bottom: 16px;
 }
 
+.PayMethodsWrap .methods{
+  text-align: center;
+}
+
 .PayMethodsWrap .methods button{
-  width: 150px;
+  width: 30%;
   height: 40px;
   margin: 0 10px 10px 0;
   border: 1px solid #eeeeee;

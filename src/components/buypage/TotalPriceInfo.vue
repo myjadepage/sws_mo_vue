@@ -40,9 +40,6 @@ export default {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   },
-  updated () {
-    this.$store.state.finalPrice = this.payFinalPrice
-  },
   computed: {
     prdPrice () {
       return this.$store.getters.getOptionAddedPrice
@@ -58,6 +55,7 @@ export default {
       }
     },
     payFinalPrice () {
+      this.$emit('finalPrice', this.prdPrice + this.deliveryPrice - this.discount)
       return this.prdPrice + this.deliveryPrice - this.discount
     }
   }

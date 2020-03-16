@@ -9,8 +9,8 @@ export const store = new Vuex.Store({
     userInfo: {},
     isLogin: false, // 로그인을 했는지 여부
     product: {},
-    optionAddedPrice: 0,
-    finalPrice: 0,
+    optionAddedPrice: null,
+    finalPrice: null,
     selectedOptions: [],
     searchCat: 0,
     isAuth: false
