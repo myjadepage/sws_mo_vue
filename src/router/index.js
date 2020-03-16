@@ -13,6 +13,7 @@ const rejectAuthUser = (to, from, next) => {
   }
 }
 const isAuthUser = (to, from, next) => {
+  console.log('store.state.isLogin', store.state.isLogin)
   if (store.state.isLogin === false) {
     alert('로그인이 필요한 메뉴입니다.')
     next('/')
@@ -29,6 +30,31 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: () => import('@/view/Home')
+    },
+    {
+      path: '/RegStep04',
+      name: 'RegStep04',
+      component: () => import('@/view/member/RegStep04')
+    },
+    {
+      path: '/category/패션',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/About',
+      name: 'About',
+      component: () => import('@/view/menu/About')
+    },
+    {
+      path: '/Product/:prdtSysId',
+      name: 'ProductDetail',
+      component: () => import('@/view/productDetail/ProductDetailMain')
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => import('@/view/search/SearchPage')
     },
     {
       path: '/Login',
@@ -82,21 +108,6 @@ export default new Router({
       component: () => import('@/view/member/RegStep03')
     },
     {
-      path: '/RegStep04',
-      name: 'RegStep04',
-      component: () => import('@/view/member/RegStep04')
-    },
-    {
-      path: '/category/패션',
-      name: 'Fashion',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/About',
-      name: 'About',
-      component: () => import('@/view/menu/About')
-    },
-    {
       path: '/MyPage',
       name: 'MyPage',
       beforeEnter: isAuthUser,
@@ -121,16 +132,6 @@ export default new Router({
       path: '/Tracking/Detail',
       name: 'TrackingDetail',
       component: () => import('@/view/mypage/TrackingDetail')
-    },
-    {
-      path: '/Product/:prdtSysId',
-      name: 'ProductDetail',
-      component: () => import('@/view/productDetail/ProductDetailMain')
-    },
-    {
-      path: '/search',
-      name: 'Search',
-      component: () => import('@/view/search/SearchPage')
     },
     {
       path: '/BuyProduct',

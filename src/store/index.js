@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { checkJoinId, userLogin } from '../api'
+import router from '../router'
+import { userLogin } from '../api'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,7 @@ export const store = new Vuex.Store({
     isAuth: false
   },
   getters: {
-    getId: state => state.userId.userId,
+    getId: state => state.userInfo.userId,
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product,
     getOptionAddedPrice: state => state.optionAddedPrice,
@@ -49,43 +50,26 @@ export const store = new Vuex.Store({
     // 로그아웃
     logOut ({commit}) {
       commit('logOut')
-      this.$router.push('/')
+      router.push('/')
     },
     // 로그인
     login ({dispatch}, loginObj) {
+      console.log('loginObj', loginObj)
       userLogin(loginObj.id, loginObj.password)
         .then(res => {
-          if (res.data.jsonData.resultCode === '0001') {
-            console.log('로그인성공?', res)
-            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
-            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
-            this.$router.push('/MyPage')
-          } else {
-            alert('없는 아이디 정보입니다.')
-          }
+          console.log('로그인성공?', res)
+          var config = {}
+          config.accessToken = res.data.jsonData.accessToken
+          config.refreshToken = res.data.jsonData.refreshToken
+          dispatch('getUserInfo', config)
         })
         .catch(function (error) {
           console.log('ERROR', error)
         })
     },
-    // 아이디중복체크
-    CHECH_JOIN_ID () {
-      checkJoinId(this.state.userInfo.userId)
-        .then(res => {
-          console.log('아이디체크성공!', res)
-          if (res.data.jsonData.resultCode === '0001') {
-            alert('사용가능한 아이디입니다.')
-          } else if (res.data.jsonData.resultCode === '0003') {
-            alert('중복 아이디가 있습니다.')
-            this.state.userInfo.userId = ''
-            return false
-          }
-        })
-        .catch(error => {
-          console.log('error', error)
-          alert('아이디체크 중 문제가 생겼습니다.')
-        })
+    getUserInfo ({commit}, payload) {
+      commit('loginSuccess')
+      router.push('/MyPage')
     }
   }
 })

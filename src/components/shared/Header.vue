@@ -12,37 +12,31 @@
     </div>
     <div class="wrap_util">
         <div class="box_menu_left">
-            <!-- <a href="/" id="btnBackTop" role="button" class="btn_back common-header-back">
-                <span class="ico_sws ico_back">뒤로가기</span>
-            </a>
-            <a href="/" id="btnHomeTop" role="button" class="btn_home common-header-home">
-                <span class="ico_sws ico_home">홈으로</span>
-            </a> -->
-            <a href="/mypage" id="btnSideMenu" class="btn_menu common-header-menu" role="button">
-                <span class="ico_sws ico_menu">메뉴</span>
-            </a>
+            <router-link to="/MyPage" id="btnSideMenu" class="btn_menu common-header-menu" role="button"
+               v-if="$store.state.isLogin === true">
+                <span class="sws_icon ico_menu">메뉴</span>
+            </router-link>
+            <router-link to="Login" id="btnSideMenu" class="btn_menu common-header-menu" role="button"
+               v-else>
+                <span class="sws_icon ico_menu">메뉴</span>
+            </router-link>
         </div>
         <div class="box_menu_right">
             <div class="wrap_btn_search common-header-search">
-                <a href="/search" id="btnSearchTop" class="link_search" role="button">
-                    <span class="ico_sws ico_search">검색</span>
-                </a>
+                <router-link to="/search" id="btnSearchTop" class="link_search" role="button">
+                    <span class="sws_icon ico_search">검색</span>
+                </router-link>
             </div>
             <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true">
-                 <a href="/Mypage" id="btnSearchTop" class="link_search" role="button">
+                 <router-link to="/MyPage" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_basket">장바구니</span>
-                </a>
+                </router-link>
             </div>
             <div class="wrap_btn_search common-header-search" v-else>
-                 <a href="/Login" id="btnSearchTop" class="link_search" role="button">
-                    <span class="sws_icon ico_basket">로그인</span>
-                </a>
+                 <router-link to="/Login" id="btnSearchTop" class="link_search" role="button">
+                    <span class="sws_icon ico_login">로그인</span>
+                </router-link>
             </div>
-            <!-- <div class="wrap_btn_close common-header-close">
-                <a href="javascript:onCloseWebViewClick();" id="btnCloseTop" class="btn_close" role="button">
-                    <span class="ico_sws ico_close">닫기</span>
-                </a>
-            </div> -->
         </div>
     </div>
 </div>

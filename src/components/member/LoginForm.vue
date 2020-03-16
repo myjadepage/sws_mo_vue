@@ -1,18 +1,20 @@
 <template>
 <div class="sws_login">
-    <h1 class="logo"></h1>
+    <router-link to="/"><h1 class="logo"></h1></router-link>
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>
         <div class="wrap-input100" >
-          <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
+          <input class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요"
+          v-model="id" required>
           <span class="focus-input100"></span>
         </div>
-         <div class="wrap-input100">
-            <!-- <span class="label-input100">패스워드</span> -->
-            <input class="input100" type="password" v-model="password" name="password" placeholder="패스워드를 입력해 주세요">
-            <span class="focus-input100"></span>
-            </div>
+        <div class="wrap-input100">
+          <!-- <span class="label-input100">패스워드</span> -->
+          <input class="input100" type="password" name="password" placeholder="패스워드를 입력해 주세요"
+            v-model="password" required>
+          <span class="focus-input100"></span>
+         </div>
          <ul class="form_item_wrap">
             <li>
               <div class="toggle-button toggle-button-save">
@@ -31,11 +33,11 @@
               <label style="color:#666">자동 로그인</label>
             </li>
          </ul>
-         <button type="button" class="btn btn-block btn-main" @click="$store.dispatch('login({id, password})')">로그인</button>
+         <button type="button" class="btn btn-block btn-main" @click="$store.dispatch('login', {id, password})">로그인</button>
          <ul class="form_item_wrap login_service">
-            <li><a href="/Searchid">아이디 찾기</a></li>
-            <li><a href="/Searchpw">패스워드 찾기</a></li>
-            <li><a href="/RegStep00">회원가입</a></li>
+            <li><router-link to="/Searchid">아이디 찾기</router-link></li>
+            <li><router-link to="/Searchpw">패스워드 찾기</router-link></li>
+            <li><router-link to="/RegStep00">회원가입</router-link></li>
           </ul>
 
     </div>
@@ -50,10 +52,10 @@
                 </li>
                 <li>
                   <KakaoLogin
-                  api-key="78eed5dbee80e670a64a4e79c08ed7a9"
-                  :on-success=onSuccess
-                  :on-failure=onFailure
-                  class="btn btn-circle sws_icon btn-cacao"
+                    api-key="78eed5dbee80e670a64a4e79c08ed7a9"
+                    :on-success=onSuccess
+                    :on-failure=onFailure
+                    class="btn btn-circle sws_icon btn-cacao"
                   />
                   <span>카카오</span>
                 </li>
@@ -63,10 +65,10 @@
                 </li>-->
                 <li>
                   <NaverLogin
-                  client-id="wot76zDwHaETcFxP4xEM"
-                  callback-url="http://localhost:8080/RegStep00Naver"
-                  :callback-function=callbackFunction
-                  class="btn btn-circle sws_icon btn-naver"
+                    client-id="wot76zDwHaETcFxP4xEM"
+                    callback-url="http://localhost:8080/RegStep00Naver"
+                    :callback-function=callbackFunction
+                    class="btn btn-circle sws_icon btn-naver"
                   />
                   <span>네이버</span>
                 </li>
@@ -95,23 +97,6 @@ export default {
     }
   },
   methods: {
-    // login () {
-    //   userLogin(this.id, this.password)
-    //     .then(res => {
-    //       if (res.data.jsonData.resultCode === '0001') {
-    //         console.log('로그인성공?', res)
-    //         localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-    //         localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
-    //         localStorage.setItem('userSysId', res.data.jsonData.userSysId)
-    //         this.$router.push('/')
-    //       }
-    //     })
-    //     .catch(function (error) {
-    //       console.log('ERROR', error)
-    //     })
-    //   console.log(this.id, this.password)
-    // },
-
     // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.signIn()

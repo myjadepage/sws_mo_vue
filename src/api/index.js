@@ -1,4 +1,5 @@
 import axios from 'axios'
+// import changePw from 'aes256'
 
 const config = {
   baseUrl: 'http://192.168.1.40:3000/api/v1/',
@@ -108,11 +109,13 @@ function createtUser (user) {
 
 // 일반로그인
 function userLogin (userId, password) {
+  // const pwChange = changePw.encrypt('SWS-AES256-2020!', password)
   let jsonData = {
     'userId': userId,
     'password': password
   }
   var formdata = new FormData()
+  console.log(JSON.stringify(jsonData))
   formdata.set('jsonData', JSON.stringify(jsonData))
   return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
@@ -137,7 +140,7 @@ function snsLogin (snsType, snsToken) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
+  return axios.post(`${config.baseUrl2}auth/snslogin`, formdata)
 }
 
 export {
