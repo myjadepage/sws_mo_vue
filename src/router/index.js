@@ -23,12 +23,6 @@ const isAuthUser = (to, from, next) => {
       next()
     }
   })
-  // if (store.state.isLogin === false) {
-  //   alert('로그인이 필요한 메뉴입니다.')
-  //   next('/')
-  // } else {
-  //   next()
-  // }
 }
 
 export default new Router({
