@@ -1,6 +1,6 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-    <div v-if="buyMode" class="darkFilter"></div>
+    <div @click="buyMode = false" v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info />

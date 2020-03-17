@@ -1,14 +1,19 @@
 <template>
 <div class="buyPageMainWrap">
+  <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Delivery/>
+    <Delivery :member=member @deliveryBtnClick="addrModalVisibility = true" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
     <TotalPriceInfo @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
-    <BuyFooter :finalPrice="finalPrice" />
+    <BuyFooter :coupon="discountCoupon" :finalPrice="finalPrice" />
+
+    <AddrModal @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
+    <!-- <InfoModal @modalClose="modalVisibility = false" v-if="modalVisibility" /> -->
+
 </div>
 </template>
 
@@ -22,10 +27,12 @@ import Term from '@/components/buypage/BuyTerm'
 import PayMethods from '@/components/buypage/PayMethods'
 import TotalPriceInfo from '@/components/buypage/TotalPriceInfo'
 import BuyFooter from '@/components/buypage/BuyFooter'
+import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
+import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
 
 export default {
   components: {
-    Bar, ProductInfo, Delivery, Coupon, PayMethods, CouponDetail, Term, TotalPriceInfo, BuyFooter
+    Bar, ProductInfo, Delivery, Coupon, PayMethods, CouponDetail, Term, TotalPriceInfo, BuyFooter, AddrModal, InfoModal
   },
   data () {
     return {
@@ -37,10 +44,21 @@ export default {
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'}],
       couponMode: false,
-      finalPrice: 0
+      finalPrice: 0,
+      addrModalVisibility: false,
+      member: {
+        orderPostNumber: 12345,
+        name: '임동욱',
+        phone: '010-1234-1234',
+        addr: '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'
+      }
     }
   },
   methods: {
+    addrModalClose () {
+      this.addrModalVisibility = false
+      this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
+    },
     discountByPoint (point) {
       this.discountPoint = point
     },

@@ -42,11 +42,11 @@
     </div>
 
     <ul class="mediaMenu">
-      <li @click="selectMediaMode(0)" class="selected"><span class="dot">·</span>제품뷰티</li>
-      <li @click="selectMediaMode(1)"><span class="dotL">·</span>언박싱</li>
-      <li @click="selectMediaMode(2)"><span class="dotL">·</span>설명</li>
-      <li @click="selectMediaMode(3)"><span class="dot">·</span>제품특장점</li>
-      <li @click="selectMediaMode(4)"><span class="dotL">·</span>비교</li>
+      <li @click="selectMediaMode(0)" class="selected"><div class="dot">·</div>제품뷰티</li>
+      <li @click="selectMediaMode(1)"><div class="dot">·</div>언박싱</li>
+      <li @click="selectMediaMode(2)"><div class="dot">·</div>설명</li>
+      <li @click="selectMediaMode(3)"><div class="dot">·</div>제품특장점</li>
+      <li @click="selectMediaMode(4)"><div class="dot">·</div>비교</li>
     </ul>
   </div>
 </template>
@@ -98,6 +98,7 @@ export default {
 }
 
 .productMediaWrap .mediaMenu{
+  text-align: center;
   height: 40px;
 }
 
@@ -138,32 +139,15 @@ export default {
 }
 
 .productMediaWrap .dot{
-  position: relative;
-  top:-10px;
-  left: 9px;
-  display: inline-block;
+  line-height:20px;
   font-size: 25px;
-  width: 0px;
-  height: 0px;
-  font-weight: bold;
-  visibility: hidden;
-}
-.productMediaWrap .dotL{
-  position: relative;
-  top:-10px;
-  left: 15px;
-  display: inline-block;
-  font-size: 25px;
-  width: 0px;
-  height: 0px;
-  font-weight: bold;
+  font-weight:bold;
+  height: 10px;
+  margin-bottom: 5px;
   visibility: hidden;
 }
 
 .productMediaWrap .selected .dot{
-  visibility: visible;
-}
-.productMediaWrap .selected .dotL{
   visibility: visible;
 }
 </style>

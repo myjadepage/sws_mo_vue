@@ -36,6 +36,7 @@
 </template>
 
 <script>
+// import { EventBus } from './EventBus'
 import { chkSmsAuth, sendSms, createtUser } from '../../api'
 
 export default {
@@ -93,9 +94,6 @@ export default {
         .then(function (res) {
           console.log('가입성공?', res)
           if (res.data.jsonData.resultCode === '0001') {
-            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-            localStorage.setItem('refreshToken', res.data.jsonData.refreshToken)
-            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
             vm.$router.push('/RegStep04')
           }
         })

@@ -24,6 +24,26 @@ export default {
       }
       this.currentMethod = idx
       this.$el.getElementsByClassName('methodBtn')[idx].classList.add('selected')
+
+      switch (idx) {
+        case 0:
+          this.$store.state.payMethod = 'card'
+          break
+        case 1:
+          this.$store.state.payMethod = 'trans'
+          break
+        case 2:
+          this.$store.state.payMethod = 'vbank'
+          break
+        case 3:
+          this.$store.state.payMethod = 'phone'
+          break
+        case 4:
+          this.$store.state.payMethod = 'samsung'
+          break
+        default:
+          break
+      }
     }
   }
 }

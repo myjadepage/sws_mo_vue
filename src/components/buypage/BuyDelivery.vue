@@ -2,7 +2,7 @@
   <div class="buyDeliveryWrap">
     <div class="buyDeliveryHeader">
       배송정보
-      <button class="deliveryConfigBtn">변경</button>
+      <button @click="deliveryBtnClick" class="deliveryConfigBtn">변경</button>
     </div>
     <div class="buyDeliveryBody">
       <table>
@@ -22,13 +22,10 @@
 
 <script>
 export default {
-  data () {
-    return {
-      member: {
-        name: '임동욱',
-        phone: '010-1234-1234',
-        addr: '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'
-      }
+  props: ['member'],
+  methods: {
+    deliveryBtnClick () {
+      this.$emit('deliveryBtnClick')
     }
   }
 }

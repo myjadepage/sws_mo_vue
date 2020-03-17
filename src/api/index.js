@@ -1,5 +1,4 @@
 import axios from 'axios'
-// import changePw from 'aes256'
 
 const config = {
   baseUrl: 'http://192.168.1.40:3000/api/v1/',
@@ -40,6 +39,27 @@ function getBrandList () {
 // 라이브방송정보 리스트
 function getLiveProduct () {
   return axios.get(`${config.baseUrl2}broadcasts/lists`)
+}
+
+/*
+주문
+*/
+
+function postOrders (jsonData) { // 주문정보등록
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+
+  return axios.post('http://192.168.1.40:3800/api/v1/orders', formdata)
+
+  // return axios.post({
+  //   method: 'post',
+  //   url: `http://192.168.1.40:3800/api/v1/orders`,
+  //   data: formdata,
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   }
+  // }
+  // )
 }
 
 /**
@@ -109,13 +129,11 @@ function createtUser (user) {
 
 // 일반로그인
 function userLogin (userId, password) {
-  // const pwChange = changePw.encrypt('SWS-AES256-2020!', password)
   let jsonData = {
     'userId': userId,
     'password': password
   }
   var formdata = new FormData()
-  console.log(JSON.stringify(jsonData))
   formdata.set('jsonData', JSON.stringify(jsonData))
   return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
@@ -140,7 +158,7 @@ function snsLogin (snsType, snsToken) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/snslogin`, formdata)
+  return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
 }
 
 export {
@@ -157,5 +175,6 @@ export {
   retauthMine,
   getProduct,
   snsLogin,
-  getBrandList
+  getBrandList,
+  postOrders
 }

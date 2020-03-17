@@ -9,7 +9,7 @@
     <div class="text-center" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <span v-for="(o,i) in product.normalOptions" :key="i">
-          {{o.name}} {{item[o.name]}}
+          {{o.name}} {{item.optionObj[o.name]}}
         </span>
         <br>
         <div class="countBtnSection">
@@ -31,11 +31,13 @@ export default {
     return {
       product: {'normalOptions': [
         {
+          id: 1,
           name: '사이즈',
           content: [90, 95, 100],
           price: 29900
         },
         {
+          id: 2,
           name: '색상',
           content: ['흰색', '핑크색', '노랑', '검정'],
           price: 0

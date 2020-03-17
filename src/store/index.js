@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from '../router'
-import { userLogin } from '../api'
+import { checkJoinId, userLogin } from '../api'
 
 Vue.use(Vuex)
 
@@ -10,23 +9,49 @@ export const store = new Vuex.Store({
     userInfo: {},
     isLogin: false, // 로그인을 했는지 여부
     product: {},
+    postCode: {},
     optionAddedPrice: null,
     finalPrice: null,
+    payMethod: null,
     selectedOptions: [],
     searchCat: 0,
-    isAuth: false
+    isAuth: false,
+    orderData: {jsonData: {
+      'amount': 0,
+      'totalAmount': 0,
+      'qty': 0,
+      'orderName': '',
+      'orderPostNumber': '',
+      'orderAddress1': '',
+      'orderAddress2': '',
+      'orderTel': '',
+      'orderMobile': '',
+      'orderEmail': '',
+      'receiverName': '',
+      'receiverPostNumber': '',
+      'receiverAddress1': '',
+      'receiverAddress2': '',
+      'receiverTel': '',
+      'receiverMobile': '',
+      'couponDiscount': 0,
+      'couponList': '',
+      'orderProducts': []
+    }}
   },
   getters: {
-    getId: state => state.userInfo.userId,
+    getId: state => state.userId.userId,
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product,
     getOptionAddedPrice: state => state.optionAddedPrice,
+    getPayMethod: state => state.payMethod,
     getFinalPrice: state => state.finalPrice,
     getSelectedOptions: state => state.selectedOptions,
     getSelectedOptionsLength: state => state.selectedOptions.length,
     getOptionCnt: state => idx => state.selectedOptions[idx].count,
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
-    getSearchCat: state => state.searchCat
+    getSearchCat: state => state.searchCat,
+    getPostCode: state => state.postCode,
+    getOrderData: state => state.orderData
   },
   mutations: {
     // 로그인 성공시
@@ -41,6 +66,7 @@ export const store = new Vuex.Store({
       state.isLogin = false
       state.userInfo = null
     },
+    addPrdtToOrderData: (state, item) => state.orderData.jsonData.orderProducts.push(item),
     addOption: (state, item) => state.selectedOptions.push(item),
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
     decreaseOptionCnt: (state, idx) => state.selectedOptions[idx].count--,
@@ -50,29 +76,43 @@ export const store = new Vuex.Store({
     // 로그아웃
     logOut ({commit}) {
       commit('logOut')
-      router.push('/')
+      this.$router.push('/')
     },
     // 로그인
     login ({dispatch}, loginObj) {
-      console.log('loginObj', loginObj)
       userLogin(loginObj.id, loginObj.password)
         .then(res => {
-          console.log('로그인성공?', res)
-          var config = {}
-          config.accessToken = res.data.jsonData.accessToken
-          config.refreshToken = res.data.jsonData.refreshToken
-          dispatch('getUserInfo', config)
+          if (res.data.jsonData.resultCode === '0001') {
+            console.log('로그인성공?', res)
+            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
+            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
+            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
+            this.$router.push('/MyPage')
+          } else {
+            alert('없는 아이디 정보입니다.')
+          }
         })
         .catch(function (error) {
           console.log('ERROR', error)
         })
     },
-    getUserInfo ({commit}, payload) {
-      return new Promise((resolve, reject) => {
-        commit('loginSuccess')
-        resolve()
-        router.push('/MyPage')
-      })
+    // 아이디중복체크
+    CHECH_JOIN_ID () {
+      checkJoinId(this.state.userInfo.userId)
+        .then(res => {
+          console.log('아이디체크성공!', res)
+          if (res.data.jsonData.resultCode === '0001') {
+            alert('사용가능한 아이디입니다.')
+          } else if (res.data.jsonData.resultCode === '0003') {
+            alert('중복 아이디가 있습니다.')
+            this.state.userInfo.userId = ''
+            return false
+          }
+        })
+        .catch(error => {
+          console.log('error', error)
+          alert('아이디체크 중 문제가 생겼습니다.')
+        })
     }
   }
 })

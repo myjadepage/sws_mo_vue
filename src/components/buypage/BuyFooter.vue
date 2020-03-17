@@ -5,35 +5,75 @@
 </template>
 
 <script>
+import {postOrders} from '@/api/index.js'
+
 export default {
-  props: ['finalPrice'],
+  props: ['finalPrice', 'coupon'],
   methods: {
     payBtnClick () {
-      this.$IMP().request_pay({
-        pg: 'html5_inicis',
-        pay_method: 'card',
-        merchant_uid: 'merchant_' + new Date().getTime(),
-        name: '주문명:결제테스트',
-        amount: 14000,
-        buyer_email: 'iamport@siot.do',
-        buyer_name: '구매자이름',
-        buyer_tel: '010-1234-5678',
-        buyer_addr: '서울특별시 강남구 삼성동',
-        buyer_postcode: '123-456'
-      }, (resultSuccess) => {
-        // 성공할 때 실행 될 콜백 함수
-        var msg = '결제가 완료되었습니다.'
-        msg += '고유ID : ' + resultSuccess.imp_uid
-        msg += '상점 거래ID : ' + resultSuccess.merchant_uid
-        msg += '결제 금액 : ' + resultSuccess.paid_amount
-        msg += '카드 승인번호 : ' + resultSuccess.apply_num
-        alert(msg)
-      }, (resultFailure) => {
-        // 실패시 실행 될 콜백 함수
-        var msg = '결제에 실패하였습니다.'
-        msg += '에러내용 : ' + resultFailure.error_msg
-        alert(msg)
+      let item = {
+        'amount': this.finalPrice,
+        'totalAmount': this.$store.getters.getOptionAddedPrice,
+        'qty': this.$store.getters.getSelectedOptionsLength,
+        'orderName': '홍길동',
+        'orderPostNumber': this.$store.getters.getPostCode.zonecode,
+        'orderAddress1': '인천광역시 부평구 갈산동',
+        'orderAddress2': '대동아파트 11-123',
+        'orderTel': '032-111-2222',
+        'orderMobile': '010-1111-2222',
+        'orderEmail': 'abc@gmail.com',
+        'receiverName': '이순신',
+        'receiverPostNumber': '21384',
+        'receiverAddress1': this.$store.getters.getPostCode.address,
+        'receiverAddress2': this.$store.getters.getPostCode.detail,
+        'receiverTel': '032-222-3333',
+        'receiverMobile': '010-2222-3333',
+        'couponDiscount': this.coupon,
+        'couponList': '1;2',
+        'orderProducts': []
+      }
+      let cnt = 0
+      for (const o of this.$store.getters.getSelectedOptions) {
+        cnt += o.count
+      }
+
+      item.orderProducts.push({
+        'prdtSysId': this.$store.getters.getProduct.prdtSysId,
+        'qty': cnt,
+        'price': this.$store.getters.getProduct.price,
+        'discount': this.$store.getters.getProduct.discount,
+        'discountRate': this.$store.getters.getProduct.discountRate
+        // 'options': [{'prdtOptionSysId': 1, 'optionAmount': 2000}, {'prdtOptionSysId': 10, 'optionAmount': 1000}]
       })
+
+      console.log(item)
+
+      postOrders(item)
+        .then(res => { // 주문정보등록 성공 시
+          this.$IMP().request_pay({ // 아임포트 호출
+            pg: 'html5_inicis',
+            pay_method: this.$store.getters.getPayMethod,
+            merchant_uid: res.data.jsonData.res.orderSysId,
+            name: this.$store.getters.getProduct.name,
+            amount: this.finalPrice,
+            buyer_email: 'sarkh91@epiens.com',
+            buyer_name: '천곤홍',
+            buyer_tel: '010-2675-0229',
+            buyer_addr: this.$store.getters.getPostCode.address,
+            buyer_postcode: this.$store.getters.getPostCode.zonecode,
+            m_redirect_url: 'm.shallwe.shop/buyComplete'
+          }, (res) => {
+            if (res.sucess) {
+              console.log(res)
+            } else {
+              console.log(res)
+            }
+          })
+        })
+
+        .catch(error => { // 주문정보등록 실패
+          console.log(error)
+        })
     }
   }
 }

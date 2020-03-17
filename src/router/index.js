@@ -13,21 +13,12 @@ const rejectAuthUser = (to, from, next) => {
   }
 }
 const isAuthUser = (to, from, next) => {
-  console.log('store.state.isLogin', store.state.isLogin)
-  store.dispatch('getMemberInfo').then(() => {
-    if (store.state.isLogin === false) {
-      alert('로그인이 필요한 화면입니다.')
-      next({ name: 'Login' })
-    } else {
-      next()
-    }
-  })
-  // if (store.state.isLogin === false) {
-  //   alert('로그인이 필요한 메뉴입니다.')
-  //   next('/')
-  // } else {
-  //   next()
-  // }
+  if (store.state.isLogin === false) {
+    alert('로그인이 필요한 메뉴입니다.')
+    next('/')
+  } else {
+    next()
+  }
 }
 
 export default new Router({
@@ -35,40 +26,15 @@ export default new Router({
   base: '/',
   routes: [
     {
-      path: '/Login',
-      name: 'Login',
-      beforeEnter: rejectAuthUser,
-      component: () => import('@/view/member/Login')
-    },
-    {
       path: '/',
       name: 'Home',
       component: () => import('@/view/Home')
     },
     {
-      path: '/RegStep04',
-      name: 'RegStep04',
-      component: () => import('@/view/member/RegStep04')
-    },
-    {
-      path: '/category/패션',
-      name: 'Fashion',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/About',
-      name: 'About',
-      component: () => import('@/view/menu/About')
-    },
-    {
-      path: '/Product/:prdtSysId',
-      name: 'ProductDetail',
-      component: () => import('@/view/productDetail/ProductDetailMain')
-    },
-    {
-      path: '/search',
-      name: 'Search',
-      component: () => import('@/view/search/SearchPage')
+      path: '/Login',
+      name: 'Login',
+      beforeEnter: rejectAuthUser,
+      component: () => import('@/view/member/Login')
     },
     {
       path: '/Searchid',
@@ -116,6 +82,21 @@ export default new Router({
       component: () => import('@/view/member/RegStep03')
     },
     {
+      path: '/RegStep04',
+      name: 'RegStep04',
+      component: () => import('@/view/member/RegStep04')
+    },
+    {
+      path: '/category/패션',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/About',
+      name: 'About',
+      component: () => import('@/view/menu/About')
+    },
+    {
       path: '/MyPage',
       name: 'MyPage',
       beforeEnter: isAuthUser,
@@ -142,9 +123,24 @@ export default new Router({
       component: () => import('@/view/mypage/TrackingDetail')
     },
     {
+      path: '/Product/:prdtSysId',
+      name: 'ProductDetail',
+      component: () => import('@/view/productDetail/ProductDetailMain')
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => import('@/view/search/SearchPage')
+    },
+    {
       path: '/BuyProduct',
       name: 'BuyProduct',
       component: () => import('@/view/buyProduct/BuyPageMain')
+    },
+    {
+      path: '/BuyProduct/searchPost',
+      name: 'searchPost',
+      component: () => import('@/components/buypage/Modal/DaumPostModal')
     },
     {
       path: '/BuyComplete',

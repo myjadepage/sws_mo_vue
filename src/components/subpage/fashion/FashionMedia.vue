@@ -2,7 +2,7 @@
   <div class="fashionMediaWrap">
       <div class="mediaSection">
           <div class="media"><img :src="'../../static/images/'+img+'.jpg'" alt="">
-          <span class="userProfile"><span class="img"></span></span>
+          <!-- <span class="userProfile"><span class="img"></span></span> -->
           </div>
       </div>
 
@@ -30,7 +30,7 @@ export default {
 <style>
 
 .fashionMediaWrap  .media{
-    /* background-color: gray; */
+    background-color: gray;
     width: 100%;
     /* padding-top: 56.25%; */
 }

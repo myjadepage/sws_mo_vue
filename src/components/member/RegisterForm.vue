@@ -44,9 +44,6 @@
 </template>
 
 <script>
-// import changePw from 'aes256'
-import { checkJoinId } from '../../api'
-
 export default {
   data () {
     return {
@@ -70,23 +67,12 @@ export default {
         return false
       } else {
       // 아이디중복체크
-        checkJoinId(this.id)
-          .then(res => {
-            if (res.data.jsonData.resultCode === '0001') {
-              alert('사용가능한 아이디입니다.')
-            } else if (res.data.jsonData.resultCode === '0003') {
-              alert('중복 아이디가 있습니다.')
-              this.id = ''
-              return false
-            }
-          })
-          .catch(error => {
-            console.log('error', error)
-            alert('아이디체크 중 문제가 생겼습니다.')
-          })
+        this.$store.state.userInfo.userId = this.id
+        this.$store.dispatch('CHECH_JOIN_ID')
       }
     },
     checkJoin: function () {
+      // const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
       const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
       if (this.id === null) {
@@ -110,7 +96,7 @@ export default {
         this.email = ''
         alert('올바른 이메일 주소를 입력하세요')
       } else {
-        // const pwChange = changePw.encrypt('SWS-AES256-2020!', this.password)
+        // const pwChange = sha256(this.password)
         this.$store.state.userInfo.userId = this.id
         this.$store.state.userInfo.password = this.password
         this.$store.state.userInfo.email = this.email
@@ -119,6 +105,9 @@ export default {
     }
   }
 }
+// 해결해야할것
+// 패스워드 암호화!
+// 아이디 중복함수 필수 실행 체크????
 </script>
 
 <style scope>
