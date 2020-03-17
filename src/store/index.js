@@ -31,9 +31,13 @@ export const store = new Vuex.Store({
   mutations: {
     // 로그인 성공시
     loginSuccess (state) {
-      state.isLogin = true
       localStorage.getItem('accessToken')
       localStorage.getItem('refreshToken')
+      if (localStorage.getItem('accessToken')) {
+        state.isLogin = true
+      } else {
+        state.isLogin = false
+      }
     },
     // 로그인 실패시
     loginError (state) {
@@ -66,7 +70,7 @@ export const store = new Vuex.Store({
           let refreshToken = res.data.jsonData.refreshToken
           localStorage.setItem('accessToken', accessToken)
           localStorage.setItem('refreshToken', refreshToken)
-          dispatch('getUserInfo', {accessToken, refreshToken})
+          dispatch('getUserInfo')
         })
         .catch(function (error) {
           console.log('ERROR', error)

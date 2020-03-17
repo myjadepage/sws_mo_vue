@@ -4,21 +4,21 @@ import { store } from '../store/index'
 
 Vue.use(Router)
 
-const rejectAuthUser = (to, from, next) => {
-  if (store.state.isLogin === true) {
-    alert('이미 로그인을 하였습니다.')
-    next('/')
-  } else {
-    next()
-  }
-}
+// const rejectAuthUser = (to, from, next) => {
+//   if (store.state.isLogin === true) {
+//     alert('이미 로그인을 하였습니다.')
+//     next('/')
+//   } else {
+//     next()
+//   }
+// }
 
 const isAuthUser = (to, from, next) => {
   console.log('store.state.isLogin', store.state.isLogin)
   store.dispatch('getUserInfo').then(() => {
     if (store.state.isLogin === false) {
       alert('로그인이 필요한 화면입니다.')
-      next('Login')
+      next('/Login')
     } else {
       next()
     }
@@ -32,7 +32,7 @@ export default new Router({
     {
       path: '/Login',
       name: 'Login',
-      beforeEnter: rejectAuthUser,
+      // beforeEnter: rejectAuthUser,
       component: () => import('@/view/member/Login')
     },
     {

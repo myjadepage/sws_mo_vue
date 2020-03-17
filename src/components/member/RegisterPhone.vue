@@ -62,7 +62,7 @@ export default {
               break
             case '0001' : alert('인증코드를 발송하였습니다.')
               this.countTimeDown(res.data.jsonData.res.limitDate)
-              this.authNo = res.data.jsonData.res.authNo
+              this.authNo = res.data.jsonData.res.authNo// 테스트 끝나면 지울것
           }
         })
         .catch(function (error) {
