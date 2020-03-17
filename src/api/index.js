@@ -39,7 +39,7 @@ function getBrandList () {
 
 // 라이브방송정보 리스트
 function getLiveProduct () {
-  return axios.get(`${config.baseUrl2}broadcasts/lists`)
+  return axios.get(`${config.baseUrl2}broadcasts/mainlists`)
 }
 
 /**
@@ -49,6 +49,10 @@ function getLiveProduct () {
 // 단일 상품
 function getProduct (id) {
   return axios.get(`${config.baseUrl}products/${id}`)
+}
+
+function getBroadCast (id) {
+  return axios.get(`${config.baseUrl}broadcasts/${id}`)
 }
 
 /**
@@ -157,5 +161,6 @@ export {
   retauthMine,
   getProduct,
   snsLogin,
-  getBrandList
+  getBrandList,
+  getBroadCast
 }

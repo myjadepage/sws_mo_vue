@@ -45,10 +45,10 @@ export default {
   data () {
     return {
       terms: [
-        {'id': '01', 'text': '[필수] 서비스 이용약관 동의', 'url': '/RegStep01'},
-        {'id': '02', 'text': '[필수] 개인정보 수집 및 이용 동의', 'url': '/RegStep01'},
-        {'id': '03', 'text': '[선택] 개인정보 제3자 제공 동의', 'url': '/RegStep01'},
-        {'id': '04', 'text': '[선택] 이벤트 알림 수신 동의', 'url': '/RegStep01'}
+        {'id': '01', 'text': '[필수] 서비스 이용약관 동의', 'url': '/Terms/01'},
+        {'id': '02', 'text': '[필수] 개인정보 수집 및 이용 동의', 'url': '/Terms/02'},
+        {'id': '03', 'text': '[선택] 개인정보 제3자 제공 동의', 'url': '/Terms/03'},
+        {'id': '04', 'text': '[선택] 이벤트 알림 수신 동의', 'url': '/Terms/04'}
       ],
       checked: []
     }

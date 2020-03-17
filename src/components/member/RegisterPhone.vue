@@ -53,15 +53,15 @@ export default {
       this.isHide = false
       // 전화번호 유효성검사
       sendSms(0, 1, this.phone)
-        .then(data => {
-          console.log('sms전송성공', data.data.jsonData.res)
-          switch (data.data.jsonData.resultCode) {
+        .then(res => {
+          console.log('sms전송성공', res.data.jsonData.res)
+          switch (res.data.jsonData.resultCode) {
             case '1001' : alert('일 최대 5회로 전송횟수가 초과되었습니다.')
               break
             case '0002' : alert('전송에 실패하였습니다.')
               break
             case '0001' : alert('인증코드를 발송하였습니다.')
-              this.countTimeDown(data.data.jsonData.res.limitDate)
+              this.countTimeDown(res.data.jsonData.res.limitDate)
           }
         })
         .catch(function (error) {
@@ -71,9 +71,9 @@ export default {
     // 2.인증번호입력확인
     checkPhone: function () {
       chkSmsAuth(0, 1, this.phone, this.authNo)
-        .then(data => {
-          console.log('인증번호입력확인', data)
-          switch (data.data.jsonData.resultCode) {
+        .then(res => {
+          console.log('인증번호입력확인', res)
+          switch (res.data.jsonData.resultCode) {
             case '1002' : alert('인증 시도 횟수 5회를 초과하였습니다.')
               break
             case '0002' : alert('인증에 실패하였습니다.')
@@ -93,9 +93,6 @@ export default {
         .then(function (res) {
           console.log('가입성공?', res)
           if (res.data.jsonData.resultCode === '0001') {
-            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-            localStorage.setItem('refreshToken', res.data.jsonData.refreshToken)
-            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
             vm.$router.push('/RegStep04')
           }
         })

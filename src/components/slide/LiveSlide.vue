@@ -4,18 +4,18 @@
       <swiper :options="swiperOption">
         <swiper-slide v-for="item in items" :key="item.broadcastSysId">
             <div class="img-area">
-                <a href="/">
-                    <img src="static/images/1.jpg" alt="청하의 선택">
+                <router-link :to="'/product/' + item.broadcastSysId" style="height:251px">
+                    <img :src="item.thumnailUrl" alt="청하의 선택">
                     <span class="circle-box"><i class="xi-play"></i></span>
                     <div class="live-info-top">
-                        <span class="ic-live-wrap status-vod">VOD</span>
+                        <span class="ic-live-wrap status-vod">{{ item.broadcastType === '1' ? 'VOD': 'LIVE'  }}</span>
                     </div>
                     <ul class="brand-icon">
-                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png');"></i></li>
+                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png')"></i></li>
                         <li class="brand-name">리아</li>
                         <li class="brand-view">{{ item.viewCnt | makeComma }} 시청함</li>
                     </ul>
-                </a>
+                </router-link>
             </div>
             <div class="desc-area">{{ item.briefComment }}</div>
         </swiper-slide>
@@ -37,6 +37,7 @@ export default {
   data () {
     return {
       items: [ ],
+      broadcastType: null,
       swiperOption: {
         slidesPerView: 1
         // loop: true
@@ -57,6 +58,8 @@ export default {
       .catch(function (error) {
         console.log(error)
       })
+  },
+  computed: {
   }
 }
 </script>

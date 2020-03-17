@@ -12,12 +12,13 @@ const rejectAuthUser = (to, from, next) => {
     next()
   }
 }
+
 const isAuthUser = (to, from, next) => {
   console.log('store.state.isLogin', store.state.isLogin)
-  store.dispatch('getMemberInfo').then(() => {
+  store.dispatch('getUserInfo').then(() => {
     if (store.state.isLogin === false) {
       alert('로그인이 필요한 화면입니다.')
-      next({ name: 'Login' })
+      next('Login')
     } else {
       next()
     }
@@ -101,9 +102,9 @@ export default new Router({
       component: () => import('@/view/member/RegStep00Naver')
     },
     {
-      path: '/RegStep01',
-      name: 'RegStep01',
-      component: () => import('@/view/member/RegStep01')
+      path: '/Terms/:num',
+      name: 'Terms',
+      component: () => import('@/view/member/Terms')
     },
     {
       path: '/RegStep02',

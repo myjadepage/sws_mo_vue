@@ -4,7 +4,7 @@
       <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div>
       <div class="layer-player">
           <!-- 하단 구매영역 -->
-          <div class="buy-wrap">
+          <!-- <div class="buy-wrap">
               <h2 class="title">
                   [클리오] 킬커버 광채쿠션 타마누 카밍 세럼 (50ml)
               </h2>
@@ -15,8 +15,8 @@
                   </span>
                   <button type="button" class="btn btn-sm btn-main">구매하기</button>
               </p>
-          </div>
-          <div class="thumbs">
+          </div> -->
+          <!-- <div class="thumbs">
               <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
                 <img src="https://flowplayer.com/demos/images/agency/2-thumb.jpeg">
                 <p class="thumb-title">제품뷰티</p>
@@ -37,7 +37,7 @@
                 <img src="https://flowplayer.com/demos/images/agency/6-thumb.jpeg">
                 <p class="thumb-title">비교</p>
               </span>
-          </div>
+          </div> -->
         </div>
     </div>
 
@@ -73,8 +73,6 @@ export default {
       src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
       token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
     })
-    const thumbs = this.$el.querySelectorAll('[data-video]')
-    this.getThumbs(thumbs)
   },
   computed: {
     mediaSize () {

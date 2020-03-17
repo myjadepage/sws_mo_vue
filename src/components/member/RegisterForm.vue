@@ -114,6 +114,7 @@ export default {
         this.$store.state.userInfo.userId = this.id
         this.$store.state.userInfo.password = this.password
         this.$store.state.userInfo.email = this.email
+        console.log('this.$store.state.userInfo', this.$store.state.userInfo)
         this.$router.push('/RegStep03')
       }
     }
