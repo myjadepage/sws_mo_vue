@@ -69,13 +69,6 @@ export const store = new Vuex.Store({
     },
     getUserInfo ({commit}, payload) {
       return new Promise((resolve, reject) => {
-        // let token = localStorage.getItem('access_token')
-        // let userInfo = {}
-        // let config = {
-        //   headers: {
-        //     'access_token': token
-        //   }
-        // }
         commit('loginSuccess')
         resolve()
         router.push('/MyPage')
