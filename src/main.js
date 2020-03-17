@@ -22,6 +22,15 @@ Vue.filter('makeComma', val => {
   return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 })
 
+// 검색시 상품이름 짧게
+Vue.filter('shortString', val => {
+  if (val.length > 28) {
+    return val.replace(val.substring(27), '')
+  } else {
+    return val
+  }
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

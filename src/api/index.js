@@ -3,7 +3,8 @@ import axios from 'axios'
 const config = {
   baseUrl: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
-  baseUrl3: 'http:///api.shallwe.shop/api/v1/'
+  baseUrl3: 'http:///api.shallwe.shop/api/v1/',
+  iamport: 'https://api.iamport.kr/'
 }
 
 /**
@@ -50,17 +51,22 @@ function postOrders (jsonData) { // 주문정보등록
   formdata.set('jsonData', JSON.stringify(jsonData))
 
   return axios.post('http://192.168.1.40:3800/api/v1/orders', formdata)
-
-  // return axios.post({
-  //   method: 'post',
-  //   url: `http://192.168.1.40:3800/api/v1/orders`,
-  //   data: formdata,
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   }
-  // }
-  // )
 }
+
+function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  formdata.set('orderSysId', orderSysId)
+
+  return axios.post(`http://192.168.1.40:3800/api/v1/orders/${orderSysId}/pays`, formdata)
+}
+
+// function getIamportResData () {
+//   var formdata = new FormData()
+//   formdata.set('param', {imp_key: '2734728252534385', imp_secret: 'AgzBAqiSaGnXYaezrMWU6Lv0KZ5saV1KbBmM2FFcm29kdoUEaRzhC4in4nQeiRZuslgu0VHmYQHbfCQq'})
+
+//   return axios.post('https://api.iamport.kr/users/getToken', formdata)
+// }
 
 /**
  *
@@ -176,5 +182,7 @@ export {
   getProduct,
   snsLogin,
   getBrandList,
-  postOrders
+  postOrders,
+  payOrders
+  // getIamportResData
 }

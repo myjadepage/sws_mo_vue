@@ -50,6 +50,8 @@ export default {
 
       postOrders(item)
         .then(res => { // 주문정보등록 성공 시
+          sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+
           this.$IMP().request_pay({ // 아임포트 호출
             pg: 'html5_inicis',
             pay_method: this.$store.getters.getPayMethod,

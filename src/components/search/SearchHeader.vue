@@ -7,7 +7,7 @@
       <div>
         <ul v-if="products && inputFocus" >
           <li @click="keywordClick(p)" v-for="p in products" :key="p.prdtSysId">
-            {{p.briefComment}}
+            {{p.name|shortString}}
           </li>
         </ul>
       </div>
@@ -62,7 +62,6 @@ export default {
           if (self.searchMode === 0) {
             getProductList('name=' + self.keyword).then((res) => {
               self.products = res.data.jsonData.products
-              console.log(self.keyword)
             }
             ).catch((e) => console.log(e)
             )

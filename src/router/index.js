@@ -146,6 +146,11 @@ export default new Router({
       path: '/BuyComplete',
       name: 'BuyComplete',
       component: () => import('@/view/buyProduct/BuyComplete')
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: () => import('@/view/cart/CartMain')
     }
   ]
 })
