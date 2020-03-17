@@ -21,7 +21,7 @@ import {getProductList} from '../api/index'
 export default {
   created () {
     getProductList().then((res) => {
-    }).catch((e) => console.log(e))
+    }).catch((e) => console.log(e ))
   },
   name: 'MainContent',
   components: {
