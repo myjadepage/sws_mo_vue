@@ -14,18 +14,32 @@ const rejectAuthUser = (to, from, next) => {
 }
 const isAuthUser = (to, from, next) => {
   console.log('store.state.isLogin', store.state.isLogin)
-  if (store.state.isLogin === false) {
-    alert('로그인이 필요한 메뉴입니다.')
-    next('/')
-  } else {
-    next()
-  }
+  store.dispatch('getMemberInfo').then(() => {
+    if (store.state.isLogin === false) {
+      alert('로그인이 필요한 화면입니다.')
+      next({ name: 'Login' })
+    } else {
+      next()
+    }
+  })
+  // if (store.state.isLogin === false) {
+  //   alert('로그인이 필요한 메뉴입니다.')
+  //   next('/')
+  // } else {
+  //   next()
+  // }
 }
 
 export default new Router({
   mode: 'history',
   base: '/',
   routes: [
+    {
+      path: '/Login',
+      name: 'Login',
+      beforeEnter: rejectAuthUser,
+      component: () => import('@/view/member/Login')
+    },
     {
       path: '/',
       name: 'Home',
@@ -55,12 +69,6 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: () => import('@/view/search/SearchPage')
-    },
-    {
-      path: '/Login',
-      name: 'Login',
-      beforeEnter: rejectAuthUser,
-      component: () => import('@/view/member/Login')
     },
     {
       path: '/Searchid',
