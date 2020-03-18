@@ -17,15 +17,13 @@
 <script>
 export default {
   created () {
-    this.product = this.$store.getters.getProduct
-    this.options = this.$store.getters.getSelectedOptions
+    this.product = JSON.parse(sessionStorage.getItem('product'))
+    this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
   },
   data () {
     return {
       product: {},
       options: {}
-      // price:,
-      // count:
     }
   },
   computed: {
@@ -36,7 +34,7 @@ export default {
         optionPrice += (o.price * o.count)
       }
 
-      return this.product.price + optionPrice
+      return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     },
     countPrductNum () {
       let val = 0
@@ -45,9 +43,6 @@ export default {
       }
       return val
     }
-  },
-  mounted () {
-    this.$store.state.optionAddedPrice = this.calcTotalPrice
   }
 }
 </script>

@@ -10,7 +10,7 @@
           </tr>
           <tr>
               <th>배송비</th>
-              <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':무료배송}}</td>
+              <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':'무료배송'}}</td>
           </tr>
           <tr v-if="discount">
               <th>할인금액</th>
@@ -28,7 +28,8 @@
 export default {
   props: ['discount'],
   created () {
-    this.product = this.$store.getters.getProduct.price
+    this.product = JSON.parse(sessionStorage.getItem('product'))
+    this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
   },
   data () {
     return {
@@ -42,7 +43,12 @@ export default {
   },
   computed: {
     prdPrice () {
-      return this.$store.getters.getOptionAddedPrice
+      let optionPrice = 0
+
+      for (const o of this.options) {
+        optionPrice += (o.price * o.count)
+      }
+      return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     },
     deliveryPrice () {
       switch (this.product.deliveryPriceTypeCode) {

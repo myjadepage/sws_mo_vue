@@ -50,7 +50,7 @@ function postOrders (jsonData) { // 주문정보등록
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post('http://192.168.1.40:3800/api/v1/orders', formdata)
+  return axios.post('http://shallwe.shop:3000/api/v1/orders', formdata)
 }
 
 function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
@@ -58,7 +58,7 @@ function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
   formdata.set('jsonData', JSON.stringify(jsonData))
   formdata.set('orderSysId', orderSysId)
 
-  return axios.post(`http://192.168.1.40:3800/api/v1/orders/${orderSysId}/pays`, formdata)
+  return axios.post(`http://shallwe.shop:3000/api/v1/orders/${orderSysId}/pays`, formdata)
 }
 
 /**

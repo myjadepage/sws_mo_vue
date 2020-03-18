@@ -31,6 +31,9 @@ import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
 import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
 
 export default {
+  created () {
+    window.scrollTo(0, 0)
+  },
   components: {
     Bar, ProductInfo, Delivery, Coupon, PayMethods, CouponDetail, Term, TotalPriceInfo, BuyFooter, AddrModal, InfoModal
   },
@@ -41,8 +44,9 @@ export default {
       discountCoupon: 0,
       coupons: [
         {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
-        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
-        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'}],
+        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 2000, condition: '주문 상품 금액 최고 10,000원 이상'},
+        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 10000, condition: '주문 상품 금액 최고 10,000원 이상'}
+      ],
       couponMode: false,
       finalPrice: 0,
       addrModalVisibility: false,

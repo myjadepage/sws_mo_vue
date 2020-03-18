@@ -5,16 +5,25 @@
 </template>
 
 <script>
-import {postOrders} from '@/api/index.js'
+// import {postOrders} from '@/api/index.js'
 
 export default {
   props: ['finalPrice', 'coupon'],
   methods: {
     payBtnClick () {
+      let product = JSON.parse(sessionStorage.getItem('product'))
+      let options = JSON.parse(sessionStorage.getItem('selectedOptions'))
+      let optionPrice = 0
+      let optionQty = 0
+      for (const o of options) {
+        optionPrice += (o.price * o.count)
+        optionQty += o.count
+      }
+
       let item = {
-        'amount': this.finalPrice,
-        'totalAmount': this.$store.getters.getOptionAddedPrice,
-        'qty': this.$store.getters.getSelectedOptionsLength,
+        'amount': product.price - (product.price * product.discountRate) + optionPrice,
+        'totalAmount': this.finalPrice,
+        'qty': optionQty,
         'orderName': '홍길동',
         'orderPostNumber': this.$store.getters.getPostCode.zonecode,
         'orderAddress1': '인천광역시 부평구 갈산동',
@@ -32,50 +41,46 @@ export default {
         'couponList': '1;2',
         'orderProducts': []
       }
-      let cnt = 0
-      for (const o of this.$store.getters.getSelectedOptions) {
-        cnt += o.count
-      }
 
       item.orderProducts.push({
-        'prdtSysId': this.$store.getters.getProduct.prdtSysId,
-        'qty': cnt,
-        'price': this.$store.getters.getProduct.price,
-        'discount': this.$store.getters.getProduct.discount,
-        'discountRate': this.$store.getters.getProduct.discountRate
+        'prdtSysId': product.prdtSysId,
+        'qty': optionQty,
+        'price': product.price,
+        'discount': product.discount,
+        'discountRate': product.discountRate
         // 'options': [{'prdtOptionSysId': 1, 'optionAmount': 2000}, {'prdtOptionSysId': 10, 'optionAmount': 1000}]
       })
 
       console.log(item)
 
-      postOrders(item)
-        .then(res => { // 주문정보등록 성공 시
-          sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+      // postOrders(item)
+      //   .then(res => { // 주문정보등록 성공 시
+      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
 
-          this.$IMP().request_pay({ // 아임포트 호출
-            pg: 'html5_inicis',
-            pay_method: this.$store.getters.getPayMethod,
-            merchant_uid: res.data.jsonData.res.orderSysId,
-            name: this.$store.getters.getProduct.name,
-            amount: this.finalPrice,
-            buyer_email: 'sarkh91@epiens.com',
-            buyer_name: '천곤홍',
-            buyer_tel: '010-2675-0229',
-            buyer_addr: this.$store.getters.getPostCode.address,
-            buyer_postcode: this.$store.getters.getPostCode.zonecode,
-            m_redirect_url: 'm.shallwe.shop/buyComplete'
-          }, (res) => {
-            if (res.sucess) {
-              console.log(res)
-            } else {
-              console.log(res)
-            }
-          })
-        })
+      //     this.$IMP().request_pay({ // 아임포트 호출
+      //       pg: 'html5_inicis',
+      //       pay_method: this.$store.getters.getPayMethod,
+      //       merchant_uid: res.data.jsonData.res.orderSysId,
+      //       name: this.$store.getters.getProduct.name,
+      //       amount: this.finalPrice,
+      //       buyer_email: 'sarkh91@epiens.com',
+      //       buyer_name: '천곤홍',
+      //       buyer_tel: '010-2675-0229',
+      //       buyer_addr: this.$store.getters.getPostCode.address,
+      //       buyer_postcode: this.$store.getters.getPostCode.zonecode,
+      //       m_redirect_url: 'm.shallwe.shop/buyComplete'
+      //     }, (res) => {
+      //       if (res.sucess) {
+      //         console.log(res)
+      //       } else {
+      //         console.log(res)
+      //       }
+      //     })
+      //   })
 
-        .catch(error => { // 주문정보등록 실패
-          console.log(error)
-        })
+      //   .catch(error => { // 주문정보등록 실패
+      //     console.log(error)
+      //   })
     }
   }
 }

@@ -34,13 +34,13 @@ export default {
           id: 1,
           name: '사이즈',
           content: [90, 95, 100],
-          price: 29900
+          price: 2000
         },
         {
           id: 2,
           name: '색상',
           content: ['흰색', '핑크색', '노랑', '검정'],
-          price: 0
+          price: 1000
         }
       ]}
     }
@@ -96,7 +96,7 @@ export default {
         val += (item.count * item.price)
       }
 
-      return val + this.$store.getters.getProduct.price
+      return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
     }
   }
 

@@ -1,14 +1,14 @@
 <template>
   <div class="couponDetailWrap">
       <div class="category">
-          <button @click="catBtnClick(0)" class="catBtn">쿠폰선택</button>
+          <button @click="catBtnClick(0)" class="catBtn selected">쿠폰선택</button>
           <button @click="catBtnClick(1)" class="catBtn">포인트입력</button>
       </div>
       <div v-if="currnetCat===0" class="couponSection">
-          <div class="couponHeader">
+          <div class="couponHeader" v-if="coupons.length">
               적용할 쿠폰 1개를 선택해 주세요.
           </div>
-          <div class="selectCoupon">
+          <div class="selectCoupon" v-if="coupons.length">
 
               <div v-for="(c,idx) in coupons" :key="idx" class="coupons">
                 <div>
@@ -20,8 +20,12 @@
                   <div class="couponCondition">{{c.condition}}</div>
                   </label>
               </div>
-
           </div>
+
+          <div class="emptyCoupon" v-if="coupons.length===0">
+            적용할 쿠폰이 없습니다.
+          </div>
+
       </div>
 
       <div v-if="currnetCat===1" class="pointSection">
@@ -45,7 +49,7 @@ export default {
   props: ['coupons'],
   data () {
     return {
-      currnetCat: null,
+      currnetCat: 0,
       currentPoint: 10000,
       currentCoupon: null,
       discountPoint: 10000,
@@ -202,6 +206,13 @@ color: black;
     height: 40px;
     color: #fff;
     border-radius: 2px;
+}
+
+.couponDetailWrap .emptyCoupon{
+  text-align: center;
+  color:#666666;
+  font-size: 20px;
+  padding-top: 100px;
 }
 
 </style>
