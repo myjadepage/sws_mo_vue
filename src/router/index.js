@@ -30,20 +30,9 @@ export default new Router({
   base: '/',
   routes: [
     {
-      path: '/Login',
-      name: 'Login',
-      // beforeEnter: rejectAuthUser,
-      component: () => import('@/view/member/Login')
-    },
-    {
       path: '/',
       name: 'Home',
       component: () => import('@/view/Home')
-    },
-    {
-      path: '/RegStep04',
-      name: 'RegStep04',
-      component: () => import('@/view/member/RegStep04')
     },
     {
       path: '/category/패션',
@@ -51,14 +40,25 @@ export default new Router({
       component: () => import('@/view/subpage/Fashion/FashionMain')
     },
     {
-      path: '/About',
-      name: 'About',
-      component: () => import('@/view/menu/About')
-    },
-    {
       path: '/Product/:prdtSysId',
       name: 'ProductDetail',
       component: () => import('@/view/productDetail/ProductDetailMain')
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      // beforeEnter: rejectAuthUser,
+      component: () => import('@/view/member/Login')
+    },
+    {
+      path: '/RegStep04',
+      name: 'RegStep04',
+      component: () => import('@/view/member/RegStep04')
+    },
+    {
+      path: '/About',
+      name: 'About',
+      component: () => import('@/view/menu/About')
     },
     {
       path: '/search',

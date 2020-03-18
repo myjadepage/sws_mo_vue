@@ -71,6 +71,7 @@ export const store = new Vuex.Store({
           localStorage.setItem('accessToken', accessToken)
           localStorage.setItem('refreshToken', refreshToken)
           dispatch('getUserInfo')
+          router.push('/')
         })
         .catch(function (error) {
           console.log('ERROR', error)
@@ -79,7 +80,6 @@ export const store = new Vuex.Store({
     getUserInfo ({commit}) {
       return new Promise((resolve, reject) => {
         commit('loginSuccess')
-        // router.push('/')
         resolve()
       })
     }
