@@ -79,7 +79,7 @@ export const store = new Vuex.Store({
     getUserInfo ({commit}) {
       return new Promise((resolve, reject) => {
         commit('loginSuccess')
-        router.push('/')
+        // router.push('/')
         resolve()
       })
     }

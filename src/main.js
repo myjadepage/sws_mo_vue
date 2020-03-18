@@ -29,6 +29,7 @@ new Vue({
   store,
   beforeCreate () {
     this.$store.dispatch('getUserInfo')
+    // router.push('/')
   },
   components: { App },
   template: '<App/>'
