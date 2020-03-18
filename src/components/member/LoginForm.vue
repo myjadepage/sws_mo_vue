@@ -5,7 +5,8 @@
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>
         <div class="wrap-input100" >
-          <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
+          <input class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요"
+            v-model="id" required>
           <span class="focus-input100"></span>
         </div>
         <div class="wrap-input100">
@@ -33,7 +34,7 @@
               <label style="color:#666">자동 로그인</label>
             </li>
          </ul>
-         <button type="button" class="btn btn-block btn-main" @click="$store.dispatch('login({id, password})')">로그인</button>
+         <button type="button" class="btn btn-block btn-main" @click="$store.dispatch('login', {id, password})">로그인</button>
          <ul class="form_item_wrap login_service">
             <li><a href="/Searchid">아이디 찾기</a></li>
             <li><a href="/Searchpw">패스워드 찾기</a></li>
@@ -97,23 +98,6 @@ export default {
     }
   },
   methods: {
-    // login () {
-    //   userLogin(this.id, this.password)
-    //     .then(res => {
-    //       if (res.data.jsonData.resultCode === '0001') {
-    //         console.log('로그인성공?', res)
-    //         localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-    //         localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
-    //         localStorage.setItem('userSysId', res.data.jsonData.userSysId)
-    //         this.$router.push('/')
-    //       }
-    //     })
-    //     .catch(function (error) {
-    //       console.log('ERROR', error)
-    //     })
-    //   console.log(this.id, this.password)
-    // },
-
     // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.signIn()

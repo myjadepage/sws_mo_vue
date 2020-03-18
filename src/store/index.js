@@ -99,7 +99,7 @@ export const store = new Vuex.Store({
     // 로그아웃
     logOut ({commit}) {
       commit('logOut')
-      this.$router.push('/')
+      router.push('/')
     },
     // 로그인
     login ({dispatch}, loginObj) {
