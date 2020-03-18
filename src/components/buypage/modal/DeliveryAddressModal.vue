@@ -91,10 +91,14 @@ export default {
   },
   computed: {
     mainAddress () {
-      return this.searchResult.address
+      if (this.searchResult) {
+        return this.searchResult.address
+      }
     },
     jibunAddress () {
-      return this.searchResult.jibunAddress
+      if (this.searchResult) {
+        return this.searchResult.jibunAddress
+      }
     }
   }
 }

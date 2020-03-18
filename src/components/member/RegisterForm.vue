@@ -126,8 +126,6 @@ export default {
   }
 }
 // 해결해야할것
-// 패스워드 암호화!
-// 아이디 중복함수 필수 실행 체크????
 </script>
 
 <style scope>

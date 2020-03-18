@@ -52,15 +52,15 @@ export default {
       })
 
       console.log(item)
-
+      this.$router.push('/buycomplete')
       // postOrders(item)
       //   .then(res => { // 주문정보등록 성공 시
-      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+      //     sessionStorage.setItem('orderCode', res.data.jsonData.res.orderCode)
 
       //     this.$IMP().request_pay({ // 아임포트 호출
       //       pg: 'html5_inicis',
       //       pay_method: this.$store.getters.getPayMethod,
-      //       merchant_uid: res.data.jsonData.res.orderSysId,
+      //       merchant_uid: res.data.jsonData.res.orderCode,
       //       name: this.$store.getters.getProduct.name,
       //       amount: this.finalPrice,
       //       buyer_email: 'sarkh91@epiens.com',
