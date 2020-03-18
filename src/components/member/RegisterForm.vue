@@ -73,8 +73,20 @@ export default {
         return false
       } else {
       // 아이디중복체크
-        this.$store.state.userInfo.userId = this.id
-        this.$store.dispatch('CHECH_JOIN_ID')
+        checkJoinId(this.id)
+          .then(res => {
+            if (res.data.jsonData.resultCode === '0001') {
+              alert('사용가능한 아이디입니다.')
+            } else if (res.data.jsonData.resultCode === '0003') {
+              alert('중복 아이디가 있습니다.')
+              this.id = ''
+              return false
+            }
+          })
+          .catch(error => {
+            console.log('error', error)
+            alert('아이디체크 중 문제가 생겼습니다.')
+          })
       }
     },
     checkJoin: function () {

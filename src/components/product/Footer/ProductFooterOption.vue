@@ -67,7 +67,7 @@ export default {
 
       for (let i = 0; i < this.optionContents.length; i++) { // 빈 객체에 현재 선택된 값을 주입
         item.contentGroup.push(this.$refs['option' + i][0].value)
-        item.price
+        // item.price
       }
       console.log(item)
 
