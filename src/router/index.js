@@ -4,18 +4,21 @@ import { store } from '../store/index'
 
 Vue.use(Router)
 
-// const rejectAuthUser = (to, from, next) => {
-//   if (store.state.isLogin === true) {
-//     alert('이미 로그인을 하였습니다.')
-//     next('/')
-//   } else {
-//     next()
-//   }
-// }
-
 const isAuthUser = (to, from, next) => {
   console.log('store.state.isLogin', store.state.isLogin)
   store.dispatch('getUserInfo').then(() => {
+    if (store.state.isLogin === false) {
+      alert('로그인이 필요한 화면입니다.')
+      next('/Login')
+    } else {
+      next()
+    }
+  })
+}
+
+const isAuthUserGoogle = (to, from, next) => {
+  console.log('store.state.isLogin', store.state.isLogin)
+  store.dispatch('getUserInfoGoogle').then(() => {
     if (store.state.isLogin === false) {
       alert('로그인이 필요한 화면입니다.')
       next('/Login')
@@ -91,11 +94,6 @@ export default new Router({
       component: () => import('@/view/member/RegStep00')
     },
     {
-      path: '/RegStep00Naver',
-      name: 'RegStep00Naver',
-      component: () => import('@/view/member/RegStep00Naver')
-    },
-    {
       path: '/Terms/:num',
       name: 'Terms',
       component: () => import('@/view/member/Terms')
@@ -128,7 +126,10 @@ export default new Router({
     {
       path: '/MyPage',
       name: 'MyPage',
-      beforeEnter: isAuthUser,
+      beforeEach: {
+        isAuthUser,
+        isAuthUserGoogle
+      },
       component: () => import('@/view/mypage/MainPage')
     },
     {

@@ -65,6 +65,15 @@ export const store = new Vuex.Store({
         state.isLogin = false
       }
     },
+    loginSuccessGoogle (state) {
+      localStorage.getItem('accessTokenGoogle')
+      localStorage.getItem('refreshTokenGoogle')
+      if (localStorage.getItem('accessTokenGoogle')) {
+        state.isLogin = true
+      } else {
+        state.isLogin = false
+      }
+    },
     // 로그인 실패시
     loginError (state) {
       state.isLogin = false
@@ -75,7 +84,12 @@ export const store = new Vuex.Store({
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
     },
-    addPrdtToOrderData: (state, item) => state.orderData.jsonData.orderProducts.push(item),
+    logOutGoogle (state) {
+      state.isLogin = false
+      state.userInfo = null
+      localStorage.removeItem('accessTokenGoogle')
+      localStorage.removeItem('refreshTokenGoogle')
+    },
     addOption: (state, item) => state.selectedOptions.push(item),
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
     decreaseOptionCnt: (state, idx) => state.selectedOptions[idx].count--,
@@ -91,13 +105,18 @@ export const store = new Vuex.Store({
     login ({dispatch}, loginObj) {
       userLogin(loginObj.id, loginObj.password)
         .then(res => {
-          console.log('로그인성공?', res)
-          let accessToken = res.data.jsonData.accessToken
-          let refreshToken = res.data.jsonData.refreshToken
-          localStorage.setItem('accessToken', accessToken)
-          localStorage.setItem('refreshToken', refreshToken)
-          dispatch('getUserInfo')
-          // router.push('/')
+          if (res.data.jsonData.resultCode === '0001') {
+            console.log('로그인성공?', res)
+            let accessToken = res.data.jsonData.accessToken
+            let refreshToken = res.data.jsonData.refreshToken
+            localStorage.setItem('accessToken', accessToken)
+            localStorage.setItem('refreshToken', refreshToken)
+            dispatch('getUserInfo')
+            router.push('/')
+          } else {
+            alert('아이디나 패스워드가 다릅니다.')
+            return false
+          }
         })
         .catch(function (error) {
           console.log('ERROR', error)
@@ -106,6 +125,12 @@ export const store = new Vuex.Store({
     getUserInfo ({commit}) {
       return new Promise((resolve, reject) => {
         commit('loginSuccess')
+        resolve()
+      })
+    },
+    getUserInfoGoogle ({commit}) {
+      return new Promise((resolve, reject) => {
+        commit('loginSuccessGoogle')
         resolve()
       })
     }

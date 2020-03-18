@@ -1,9 +1,9 @@
 <template>
 <div id="swsHead" class="head_sws common-header">
     <div class="wrap_tit common-header-logo">
-        <a href="/" id="swsLogo" class="tit_main tit_main_logo" role="button">
+        <router-link to="/" id="swsLogo" class="tit_main tit_main_logo" role="button">
             <span class="screen_out">shallweshop</span>
-        </a>
+        </router-link>
     </div>
     <div class="wrap_tit common-header-title">
         <h2 class="tit_svc">

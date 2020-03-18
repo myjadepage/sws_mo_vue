@@ -34,6 +34,7 @@
 export default {
   created () {
     this.product = this.$store.getters.getProduct
+    console.log('상품정보', this.product)
   },
   // props: ['props'],
   data () {

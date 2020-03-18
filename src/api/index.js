@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 const config = {
-  baseUrl: 'http://shallwe.shop:3000/api/v1/',
+  baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http:///api.shallwe.shop/api/v1/',
-  iamport: 'https://api.iamport.kr/'
+  baseUrl: 'http://shallwe.shop:3000/api/v1/'
 }
 
 /**

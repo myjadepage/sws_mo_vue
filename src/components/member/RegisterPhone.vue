@@ -13,12 +13,12 @@
         <div class="wrap-input100">
           <input class="input100" type="text" v-model="phone" name="phone" placeholder=" -없이 번호를 입력해 주세요">
           <span class="focus-input100"></span>
-          <button type="button" class="btn_send" @click="sendPhone">전송</button>
+          <button type="button" class="btn_send" @click="sendPhone" :isClickedSend="false">전송</button>
         </div>
         <div class="wrap-input100 mb0">
           <input class="input100" type="text" v-model="authNo" name="authNo" placeholder="인증번호 입력(3분 이내)">
           <span class="focus-input100"></span>
-          <button type="button" class="btn_send color_main" @click="checkPhone">확인</button>
+          <button type="button" class="btn_send color_main" @click="checkPhone" :isClickedCheck="false">확인</button>
         </div>
         <ul class="info_text" :class="{hide: isHide}">
           <li><strong  class="color_main">제한시간 {{ countTime }}</strong></li>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-// import { EventBus } from './EventBus'
+import change from 'aes256'
 import { chkSmsAuth, sendSms, createtUser } from '../../api'
 
 export default {
@@ -45,33 +45,42 @@ export default {
       isHide: true,
       phone: null,
       authNo: null,
-      countTime: null
+      countTime: null,
+      isClickedSend: false,
+      isClickedCheck: false,
+      defaultText: 'SWS-AES256-2020!'
     }
   },
   methods: {
     // 1.문자본인인증
     sendPhone: function () {
-      this.isHide = false
-      // 전화번호 유효성검사
-      sendSms(0, 1, this.phone)
-        .then(res => {
-          console.log('sms전송성공', res.data.jsonData.res)
-          switch (res.data.jsonData.resultCode) {
-            case '1001' : alert('일 최대 5회로 전송횟수가 초과되었습니다.')
-              break
-            case '0002' : alert('전송에 실패하였습니다.')
-              break
-            case '0001' : alert('인증코드를 발송하였습니다.')
-              this.countTimeDown(res.data.jsonData.res.limitDate)
-              this.authNo = res.data.jsonData.res.authNo// 테스트 끝나면 지울것
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      if (this.phone === null) {
+        alert('번호를 입력해 주세요')
+      } else {
+        this.isClickedSend = true
+        this.isHide = false
+        // 전화번호 유효성검사
+        sendSms(0, 1, this.phone)
+          .then(res => {
+            console.log('sms전송성공', res.data.jsonData.res)
+            switch (res.data.jsonData.resultCode) {
+              case '1001' : alert('일 최대 5회로 전송횟수가 초과되었습니다.')
+                break
+              case '0002' : alert('전송에 실패하였습니다.')
+                break
+              case '0001' : alert('인증코드를 발송하였습니다.')
+                this.countTimeDown(res.data.jsonData.res.limitDate)
+                this.authNo = res.data.jsonData.res.authNo// 테스트 끝나면 지울것
+            }
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      }
     },
     // 2.인증번호입력확인
     checkPhone: function () {
+      this.isClickedCheck = true
       chkSmsAuth(0, 1, this.phone, this.authNo)
         .then(res => {
           console.log('인증번호입력확인', res)
@@ -81,7 +90,7 @@ export default {
             case '0002' : alert('인증에 실패하였습니다.')
               break
             case '0001' : alert('인증에 성공하였습니다.')
-              this.$store.state.userInfo.phone = this.phone
+              this.$store.state.userInfo.phone = change.encrypt(this.defaultText, this.phone)
           }
         })
         .catch(function (error) {
@@ -90,17 +99,28 @@ export default {
     },
     // 최종회원가입
     checkCertifyDone: function () {
-      var vm = this
-      createtUser(this.$store.state.userInfo)
-        .then(function (res) {
-          console.log('가입성공?', res)
-          if (res.data.jsonData.resultCode === '0001') {
-            vm.$router.push('/RegStep04')
-          }
-        })
-        .catch(function (error) {
-          console.log('ERROR', error)
-        })
+      if (this.isClickedSend === false || this.isClickedCheck === false) {
+        alert('인증번호 버튼을 눌러주세요')
+      } else {
+        var vm = this
+        if (this.$route.params.key === 'sns') { // 간편가입시, 아래 로직은 임시
+          console.log('간편가입')
+          this.$store.dispatch('getUserInfoGoogle')
+          console.log('aaaa', this.$store.state.isLogin)
+          vm.$router.push('/RegStep04')
+        } else {
+          createtUser(this.$store.state.userInfo) // 일반회원가입시
+            .then(function (res) {
+              console.log('가입성공?', res)
+              if (res.data.jsonData.resultCode === '0001') {
+                vm.$router.push('/RegStep04')
+              }
+            })
+            .catch(function (error) {
+              console.log('ERROR', error)
+            })
+        }
+      }
     },
     // 날짜 String -> Date 변환
     parse: function (str) {

@@ -16,7 +16,9 @@
          <ul class="form_item_wrap">
             <li>
               <div class="toggle-button toggle-button-save">
-                <input id="toggleButtonId" type="checkbox" :idSaveCheck="false">
+                <input id="toggleButtonId" type="checkbox"
+                  v-model="onCheck"
+                  :saveId="id">
                 <label for="toggleButtonId"></label>
                 <div class="toggle-button__icon"></div>
               </div>
@@ -91,7 +93,7 @@ export default {
     return {
       id: null,
       password: null,
-      idSaveCheck: false
+      onCheck: false
     }
   },
   methods: {
@@ -121,7 +123,11 @@ export default {
           snsLogin(3, GoogleUser.uc.access_token)
             .then(res => {
               console.log('acees', res)
-              this.$router.push('/RegStep00')
+              let accessToken = res.data.jsonData.accessToken
+              let refreshToken = res.data.jsonData.refreshToken
+              localStorage.setItem('accessTokenGoogle', accessToken)
+              localStorage.setItem('refreshTokenGoogle', refreshToken)
+              this.$router.push({name: 'RegStep00', params: {key: 'sns'}})
             })
             .catch(function (error) {
               console.log('ERROR', error)
