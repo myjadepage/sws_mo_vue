@@ -29,6 +29,7 @@ new Vue({
   store,
   beforeCreate () {
     this.$store.dispatch('getUserInfo')
+    this.$store.dispatch('getUserInfoGoogle')
   },
   components: { App },
   template: '<App/>'

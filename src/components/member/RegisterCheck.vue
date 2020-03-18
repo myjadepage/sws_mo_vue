@@ -77,7 +77,11 @@ export default {
       } else if (this.checked[1] !== '02') {
         alert('필수항목을 체크해 주세요')
       } else {
-        this.$router.push('/RegStep02')
+        if (this.$route.params.key === 'sns') { // sns간편가입시
+          this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
+        } else {
+          this.$router.push('/RegStep02')
+        }
       }
     }
   }

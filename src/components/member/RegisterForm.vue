@@ -15,7 +15,7 @@
                 <input class="input100" type="text" name="id" placeholder="아이디(6-12자)" maxlength="12"
                   v-model="id" required>
                 <span class="focus-input100"></span>
-                <button type="button" class="btn_send" @click="checkId">중복확인</button>
+                <button type="button" class="btn_send" @click="checkId" :isClicked='false'>중복확인</button>
             </div>
 
             <h4 class="small_title">비밀번호 입력</h4>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-// import changePw from 'aes256'
+import change from 'aes256'
 import { checkJoinId } from '../../api'
 
 export default {
@@ -53,13 +53,16 @@ export default {
       id: null,
       password: null,
       confirmpw: null,
-      email: null
+      email: null,
+      isClicked: false,
+      defaultText: 'SWS-AES256-2020!'
     }
   },
   methods: {
     /** 아이디 유효성Check
      * 영문, 숫자 6~12자 입력 */
     checkId: function () {
+      this.isClicked = true
       const regId = new RegExp('^[A-za-z0-9]{6,12}$')
       if (this.id === null) {
         alert('아이디를 입력해 주세요')
@@ -109,10 +112,11 @@ export default {
       } else if (!regEmail.exec(this.email)) {
         this.email = ''
         alert('올바른 이메일 주소를 입력하세요')
+      } else if (this.isClicked === false) {
+        alert('아이디 중복확인을 해주세요')
       } else {
-        // const pwChange = changePw.encrypt('SWS-AES256-2020!', this.password)
         this.$store.state.userInfo.userId = this.id
-        this.$store.state.userInfo.password = this.password
+        this.$store.state.userInfo.password = change.encrypt(this.defaultText, this.password)
         this.$store.state.userInfo.email = this.email
         console.log('this.$store.state.userInfo', this.$store.state.userInfo)
         this.$router.push('/RegStep03')
