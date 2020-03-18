@@ -1,6 +1,6 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-    <div @click="buyMode = false" v-if="buyMode" class="darkFilter"></div>
+    <div  v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info />
@@ -47,7 +47,7 @@ export default {
 .productDetailWrap{
     min-width: 360px;
 }
-.darkFilter{
+.productDetailWrap .darkFilter{
   position: fixed;
   top: 0;
   left: 0;

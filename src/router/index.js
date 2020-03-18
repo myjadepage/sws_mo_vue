@@ -4,14 +4,14 @@ import { store } from '../store/index'
 
 Vue.use(Router)
 
-const rejectAuthUser = (to, from, next) => {
-  if (store.state.isLogin === true) {
-    alert('이미 로그인을 하였습니다.')
-    next('/')
-  } else {
-    next()
-  }
-}
+// const rejectAuthUser = (to, from, next) => {
+//   if (store.state.isLogin === true) {
+//     alert('이미 로그인을 하였습니다.')
+//     next('/')
+//   } else {
+//     next()
+//   }
+// }
 
 const isAuthUser = (to, from, next) => {
   console.log('store.state.isLogin', store.state.isLogin)
@@ -30,21 +30,40 @@ export default new Router({
   base: '/',
   routes: [
     {
+      path: '/',
+      name: 'Home',
+      component: () => import('@/view/Home')
+    },
+    {
+      path: '/category/패션',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/Product/:prdtSysId',
+      name: 'ProductDetail',
+      component: () => import('@/view/productDetail/ProductDetailMain')
+    },
+    {
       path: '/Login',
       name: 'Login',
       // beforeEnter: rejectAuthUser,
       component: () => import('@/view/member/Login')
     },
     {
-      path: '/',
-      name: 'Home',
-      component: () => import('@/view/Home')
+      path: '/RegStep04',
+      name: 'RegStep04',
+      component: () => import('@/view/member/RegStep04')
     },
     {
-      path: '/Login',
-      name: 'Login',
-      beforeEnter: rejectAuthUser,
-      component: () => import('@/view/member/Login')
+      path: '/About',
+      name: 'About',
+      component: () => import('@/view/menu/About')
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: () => import('@/view/search/SearchPage')
     },
     {
       path: '/Searchid',

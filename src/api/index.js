@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const config = {
-  baseUrl: 'http://192.168.1.40:3000/api/v1/',
+  baseUrl: 'http://shallwe.shop:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http:///api.shallwe.shop/api/v1/',
   iamport: 'https://api.iamport.kr/'
@@ -39,7 +39,7 @@ function getBrandList () {
 
 // 라이브방송정보 리스트
 function getLiveProduct () {
-  return axios.get(`${config.baseUrl2}broadcasts/mainlists`)
+  return axios.get(`${config.baseUrl}broadcasts/mainlists`)
 }
 
 /*
@@ -50,7 +50,7 @@ function postOrders (jsonData) { // 주문정보등록
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post('http://shallwe.shop:3000/api/v1/orders', formdata)
+  return axios.post(`${config.baseUrl}orders`, formdata)
 }
 
 function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
@@ -58,7 +58,7 @@ function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
   formdata.set('jsonData', JSON.stringify(jsonData))
   formdata.set('orderSysId', orderSysId)
 
-  return axios.post(`http://shallwe.shop:3000/api/v1/orders/${orderSysId}/pays`, formdata)
+  return axios.post(`${config.baseUrl}${orderSysId}/pays`, formdata)
 }
 
 /**
@@ -101,7 +101,7 @@ function sendSms (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/sendauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/sendauthmine`, formdata)
 }
 
 // 본인인증확인
@@ -114,7 +114,7 @@ function chkSmsAuth (authType, authWay, authWayValue, authNo) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/chkauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
 }
 
 // 회원가입
@@ -127,7 +127,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/join`, formdata)
+  return axios.post(`${config.baseUrl}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -138,7 +138,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 본인인증결과

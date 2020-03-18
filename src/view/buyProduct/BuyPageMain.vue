@@ -3,7 +3,7 @@
   <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Delivery :member=member @deliveryBtnClick="addrModalVisibility = true" />
+    <Delivery :member=member @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
@@ -59,6 +59,10 @@ export default {
     }
   },
   methods: {
+    addrModalShow () {
+      this.addrModalVisibility = true
+    },
+
     addrModalClose () {
       this.addrModalVisibility = false
       this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
@@ -79,5 +83,16 @@ export default {
 <style>
 .buyPageMainWrap{
   background-color: #f3f3f3;
+}
+
+.buyPageMainWrap .darkFilter{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: black;
+  opacity: 50%;
+  width: 100%;
+  height: 100%;
 }
 </style>

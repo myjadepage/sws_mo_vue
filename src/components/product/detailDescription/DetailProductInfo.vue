@@ -1,6 +1,6 @@
 <template>
 <div class="detailInfoWrap">
-   <div ref="descSection" :style="maxHeight" class="descSection">
+   <div ref="descSection" class="descSection">
      <!-- <div class="testImg"></div> -->
    </div>
     <div class="spreadDetail">
@@ -18,7 +18,6 @@ export default {
   },
   data () {
     return {
-      maxHeight: 'maxHeight:800px;',
       btnText: '상세 정보 펼쳐보기',
       product: {},
       isSpreadable: false
@@ -27,20 +26,20 @@ export default {
   mounted () {
     this.$refs.descSection.innerHTML = this.product.detailDescription
     setTimeout(() => {
-      if (this.$refs.descSection.offsetHeight >= 800) {
+      if (this.$refs.descSection.clientHeight >= 800) {
         this.isSpreadable = true
       }
     }, 300)
   },
   methods: {
     clickSpread () {
-      if (this.maxHeight === 'maxHeight:fit-content;') {
-        this.maxHeight = 'maxHeight:800px;'
+      if (this.btnText === '상세 정보 접기') {
         this.btnText = '상세 정보 펼쳐보기'
+        this.$refs.descSection.style.maxHeight = '800px'
         window.scrollTo(0, 550)
       } else {
-        this.maxHeight = 'maxHeight:fit-content;'
         this.btnText = '상세 정보 접기'
+        this.$refs.descSection.style.maxHeight = '100%'
       }
     }
   }
@@ -49,6 +48,7 @@ export default {
 
 <style>
 .descSection{
+  max-height: 800px;
   display: inline-block;
   width: 100%;
   margin: 20px 0 ;

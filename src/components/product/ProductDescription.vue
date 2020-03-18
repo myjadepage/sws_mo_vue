@@ -50,7 +50,7 @@ export default {
       this.$el.getElementsByTagName('li')[this.selectedMenu].className = ''
       this.selectedMenu = x
       this.$el.getElementsByTagName('li')[this.selectedMenu].className = 'selected'
-      window.scrollTo(0, 500)
+      window.scrollTo(0, 0)
     }
   }
 }
@@ -62,7 +62,7 @@ export default {
   width: 100%;
   background-color: #fff;
   position: fixed;
-  opacity: 90%;
+  opacity: 0.9;
   left: 0;
   top: 0;
 }
