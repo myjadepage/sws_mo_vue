@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { checkJoinId, userLogin } from '../api'
+import router from '../router'
+import { userLogin } from '../api'
 
 Vue.use(Vuex)
 
@@ -56,7 +57,13 @@ export const store = new Vuex.Store({
   mutations: {
     // 로그인 성공시
     loginSuccess (state) {
-      state.isLogin = true
+      localStorage.getItem('accessToken')
+      localStorage.getItem('refreshToken')
+      if (localStorage.getItem('accessToken')) {
+        state.isLogin = true
+      } else {
+        state.isLogin = false
+      }
     },
     // 로그인 실패시
     loginError (state) {
@@ -65,6 +72,8 @@ export const store = new Vuex.Store({
     logOut (state) {
       state.isLogin = false
       state.userInfo = null
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
     },
     addPrdtToOrderData: (state, item) => state.orderData.jsonData.orderProducts.push(item),
     addOption: (state, item) => state.selectedOptions.push(item),
@@ -82,37 +91,23 @@ export const store = new Vuex.Store({
     login ({dispatch}, loginObj) {
       userLogin(loginObj.id, loginObj.password)
         .then(res => {
-          if (res.data.jsonData.resultCode === '0001') {
-            console.log('로그인성공?', res)
-            localStorage.setItem('accessToken', res.data.jsonData.accessToken)
-            localStorage.setItem('refreshToken', res.data.jsonData.accessToken)
-            localStorage.setItem('userSysId', res.data.jsonData.userSysId)
-            this.$router.push('/MyPage')
-          } else {
-            alert('없는 아이디 정보입니다.')
-          }
+          console.log('로그인성공?', res)
+          let accessToken = res.data.jsonData.accessToken
+          let refreshToken = res.data.jsonData.refreshToken
+          localStorage.setItem('accessToken', accessToken)
+          localStorage.setItem('refreshToken', refreshToken)
+          dispatch('getUserInfo')
         })
         .catch(function (error) {
           console.log('ERROR', error)
         })
     },
-    // 아이디중복체크
-    CHECH_JOIN_ID () {
-      checkJoinId(this.state.userInfo.userId)
-        .then(res => {
-          console.log('아이디체크성공!', res)
-          if (res.data.jsonData.resultCode === '0001') {
-            alert('사용가능한 아이디입니다.')
-          } else if (res.data.jsonData.resultCode === '0003') {
-            alert('중복 아이디가 있습니다.')
-            this.state.userInfo.userId = ''
-            return false
-          }
-        })
-        .catch(error => {
-          console.log('error', error)
-          alert('아이디체크 중 문제가 생겼습니다.')
-        })
+    getUserInfo ({commit}) {
+      return new Promise((resolve, reject) => {
+        commit('loginSuccess')
+        router.push('/')
+        resolve()
+      })
     }
   }
 })

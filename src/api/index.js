@@ -39,7 +39,7 @@ function getBrandList () {
 
 // 라이브방송정보 리스트
 function getLiveProduct () {
-  return axios.get(`${config.baseUrl2}broadcasts/lists`)
+  return axios.get(`${config.baseUrl2}broadcasts/mainlists`)
 }
 
 /*
@@ -61,13 +61,6 @@ function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
   return axios.post(`http://192.168.1.40:3800/api/v1/orders/${orderSysId}/pays`, formdata)
 }
 
-// function getIamportResData () {
-//   var formdata = new FormData()
-//   formdata.set('param', {imp_key: '2734728252534385', imp_secret: 'AgzBAqiSaGnXYaezrMWU6Lv0KZ5saV1KbBmM2FFcm29kdoUEaRzhC4in4nQeiRZuslgu0VHmYQHbfCQq'})
-
-//   return axios.post('https://api.iamport.kr/users/getToken', formdata)
-// }
-
 /**
  *
  * 상품 상세
@@ -75,6 +68,10 @@ function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
 // 단일 상품
 function getProduct (id) {
   return axios.get(`${config.baseUrl}products/${id}`)
+}
+
+function getBroadCast (id) {
+  return axios.get(`${config.baseUrl}broadcasts/${id}`)
 }
 
 /**
@@ -182,7 +179,7 @@ export {
   getProduct,
   snsLogin,
   getBrandList,
+  getBroadCast,
   postOrders,
   payOrders
-  // getIamportResData
 }

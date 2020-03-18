@@ -39,7 +39,7 @@ new Vue({
   router,
   store,
   beforeCreate () {
-    // this.$store.dispatch('getUserInfo')
+    this.$store.dispatch('getUserInfo')
   },
   components: { App },
   template: '<App/>'
