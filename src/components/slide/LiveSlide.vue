@@ -3,8 +3,8 @@
       <h4>Live <span>라이브 편성표 > </span></h4>
       <swiper :options="swiperOption">
         <swiper-slide v-for="item in items" :key="item.broadcastSysId">
-            <div class="img-area">
-                <router-link :to="'/product/' + item.broadcastSysId" style="height:251px">
+            <div class="img-area" v-for="id in item.broadcastPrdts" :key="id.prdtSysId">
+                <router-link :to="'/product/' + id.prdtSysId" style="height:251px">
                     <img :src="item.thumnailUrl" alt="청하의 선택">
                     <span class="circle-box"><i class="xi-play"></i></span>
                     <div class="live-info-top">
@@ -48,7 +48,7 @@ export default {
     var vm = this
     getLiveProduct()
       .then(function (res) {
-        console.log('라이브리스트?', res.data.jsonData)
+        console.log('라이브리스트?', res.data.jsonData.broadcasts)
         if (res.data.jsonData.resultCode === '0001') {
           vm.items = res.data.jsonData.broadcasts
         } else {
