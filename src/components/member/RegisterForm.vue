@@ -45,7 +45,7 @@
 
 <script>
 import change from 'aes256'
-import { checkJoinId } from '../../api'
+// import { checkJoinId } from '../../api'
 
 export default {
   data () {

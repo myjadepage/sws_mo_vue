@@ -3,14 +3,14 @@
     <div class="selectSection" v-if="options">
     <select @change="optionSelected" v-for="(o,idx) in optionContents" :key="o.prdtNormalOptionSysId" :name="o.name" :ref="'option'+idx">
       <option value="">{{options[idx].name}}</option>
-      <option v-for="(c,idx) in o" :key="idx" :value="c">{{c[0]}}</option>
+      <option v-for="(c,idx) in o" :key="idx" :value="[c[0]+'**'+c[1]]">{{c[0]}}</option>
     </select>
     </div>
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
-        <span v-for="(o,i) in optionContents" :key="i">
-          {{o.name}}
-        </span>
+        <div v-for="(o,i) in item.contentGroup" :key="i">
+          {{options[i].name}}{{o}}
+        </div>
         <br>
         <div class="countBtnSection">
         <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><span class="count">{{item.count}}</span>
@@ -62,14 +62,16 @@ export default {
       }
       // 빈 옵션 아이템 객체 생성
       let item = {
-        contentGroup: [], count: 1, price: 0
+        contentGroup: [], count: 1, price: 0, contentName: ''
       }
 
       for (let i = 0; i < this.optionContents.length; i++) { // 빈 객체에 현재 선택된 값을 주입
-        item.contentGroup.push(this.$refs['option' + i][0].value)
-        item.price
+        let o = this.$refs['option' + i][0].value.split('**')
+        item.contentGroup.push(o[0])
+        item.price += Number(o[1])
       }
-      console.log(item)
+      item.contentName = item.contentGroup.join(' ')
+      // console.log(item)
 
       this.$store.commit('addOption', item)
 
@@ -80,6 +82,13 @@ export default {
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
+    shortOptionName (name) {
+      // let x = name.substring()
+      console.log(name)
+
+      return name.substring(/[0123456789.]/, '')
+    },
+
     calcPrice (idx) {
       return this.$store.getters.getOptionPrice(idx) * this.$store.getters.getOptionCnt(idx)
     },
@@ -127,7 +136,7 @@ export default {
   margin: 0 3% 10px;
   padding: 10px;
   background-color: #eeeeee;
-  height: 65px;
+  /* height: 65px; */
   text-align: left;
 }
 
@@ -175,7 +184,6 @@ export default {
   display: inline-block;
   text-align: center;
   background-color: #fff;
-  margin-top: 10px;
   width: 100px;
   height: 35px;
 }

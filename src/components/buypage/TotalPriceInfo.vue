@@ -44,9 +44,10 @@ export default {
   computed: {
     prdPrice () {
       let optionPrice = 0
-
-      for (const o of this.options) {
-        optionPrice += (o.price * o.count)
+      if (this.options) {
+        for (const o of this.options) {
+          optionPrice += (o.price * o.count)
+        }
       }
       return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     },

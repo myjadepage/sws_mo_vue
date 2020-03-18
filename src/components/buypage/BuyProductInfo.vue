@@ -5,7 +5,7 @@
     <div class="prdTitle">[{{product.brandName}}] {{product.name}}</div>
     <div class="prdOptions" v-if="options">
       <span v-for="(o,idx) in options" :key="idx">
-        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.optionObj" :key="i">{{i}} {{oo}} </span>
+        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.contentGroup" :key="i">{{oo|shortString}} </span>
         </span>
     </div>
     <div class="prdPriceCnt">
@@ -19,27 +19,30 @@ export default {
   created () {
     this.product = JSON.parse(sessionStorage.getItem('product'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
+    console.log(this.options)
   },
   data () {
     return {
       product: {},
-      options: {}
+      options: []
     }
   },
   computed: {
     calcTotalPrice () {
       let optionPrice = 0
-
-      for (const o of this.options) {
-        optionPrice += (o.price * o.count)
+      if (this.options) {
+        for (const o of this.options) {
+          optionPrice += (o.price * o.count)
+        }
       }
-
       return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     },
     countPrductNum () {
       let val = 0
-      for (const i of this.options) {
-        val += i.count
+      if (this.options) {
+        for (const i of this.options) {
+          val += i.count
+        }
       }
       return val
     }
@@ -61,6 +64,7 @@ export default {
   width: 70px;
   margin-right: 10px;
   height: 70px;
+  margin-bottom: 30px;
 }
 
 .buyPrdInfoWrap .infoHeader{

@@ -24,13 +24,13 @@ export default {
       paidAmount: 0, totalAmount: 0, payTypeCode: 1, feeRate: 1, fee: 1, imp_uid: this.$route.query.imp_uid
     }
 
-    payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+    payOrders(item, sessionStorage.getItem('orderCode')).then(res => {
       console.log(res)
-      sessionStorage.removeItem('orderSysId')
+      sessionStorage.removeItem('orderCode')
     }).catch(err => {
       console.log(err)
 
-      sessionStorage.removeItem('orderSysId')
+      sessionStorage.removeItem('orderCode')
     })
 
     // console.log(this.$route.query)
