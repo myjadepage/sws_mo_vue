@@ -6,7 +6,7 @@
       <option v-for="(c, idx) in o.content" :key="idx" :value="c" >{{`0${idx+1}. ${c} ${o.price?formatPrice(o.price)+'원':''}`}}</option>
     </select>
     </div>
-    <div class="text-center" v-if="$store.getters.getSelectedOptions">
+    <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <span v-for="(o,i) in product.normalOptions" :key="i">
           {{o.name}} {{item.optionObj[o.name]}}
@@ -105,12 +105,13 @@ export default {
 
 <style>
 .productOptionWrap{
+    /* display: inline-block; */
     height: fit-content;
     text-align: center;
     user-select: none;
 }
 
-.productOptionWrap .text-center{
+.productOptionWrap .optionListSection{
   text-align: center;
 }
 .productOptionWrap select{

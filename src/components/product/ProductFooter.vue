@@ -1,7 +1,7 @@
 <template>
   <div ref="footerWrap" class="productFooterWrap">
-      <div class="text-center">
-      <span @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></span>
+      <div class="hideBtnDiv">
+      <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
       </div>
       <Option :buyMode="buyMode" />
       <button class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
@@ -45,7 +45,7 @@ export default {
 background-color: #fff;
 position: fixed;
 min-width: 100%;
-z-index: 999;
+z-index: 100;
 left: 0;
 bottom: 0;
 }
@@ -84,13 +84,11 @@ background-size: 100%;
   display: none;
 }
 
-.productFooterWrap .text-center{
-  position: absolute;
-  bottom: 236px;
-  left: 0;
+.productFooterWrap .hideBtnDiv{
+  position: relative;
+  bottom: 20px;
   width: 100%;
   height: 0;
-  background-color: transparent !important;
   text-align: center;
 }
 
@@ -105,6 +103,7 @@ background-size: 100%;
   text-align: center;
   display: inline-block;
   background: url('../../assets/img/buyHideBtn.png');
+  cursor: pointer;
   background-size: 100%;
   width: 70px;
   height: 20px;
