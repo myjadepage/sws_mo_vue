@@ -10,7 +10,7 @@ export default {
     getPostCode (res) {
       // this.$store.state.postCode = res
       localStorage.setItem('postCode', JSON.stringify(res))
-
+      sessionStorage.setItem('postCode', JSON.stringify(res))
       window.close()
     }
   }

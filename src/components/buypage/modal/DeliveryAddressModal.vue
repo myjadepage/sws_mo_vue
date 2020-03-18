@@ -52,8 +52,9 @@ export default {
     },
     searchAddrBtnClick () {
       this.searchWindow = window.open('/buyproduct/searchPost', '_blank', 'width=500, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=yes')
-      this.searchWindow.onbeforeunload = () => {
+      this.searchWindow.onunload = () => {
         this.searchResult = JSON.parse(localStorage.getItem('postCode'))
+        this.$forceUpdate()
         localStorage.removeItem('postCode')
       }
     },

@@ -3,7 +3,7 @@
       <div class="hideBtnDiv">
       <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
       </div>
-      <Option :buyMode="buyMode" />
+      <Option :options="options" :buyMode="buyMode" />
       <button class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
       <button @click="clickBuy" class="goBtn buy">구매하기</button>
   </div>
@@ -12,7 +12,7 @@
 <script>
 import Option from './Footer/ProductFooterOption'
 export default {
-  props: ['buyMode'],
+  props: ['buyMode', 'options'],
   components: {
     Option
   },

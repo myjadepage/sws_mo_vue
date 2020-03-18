@@ -1,15 +1,15 @@
 <template>
   <div class="productOptionWrap" v-if="buyMode">
-    <div class="selectSection">
-    <select @change="optionSelected" v-for="(o,idx) in product.normalOptions" :key="idx" :name="o.name" :ref="'option'+idx">
-      <option value="">{{o.name}}</option>
-      <option v-for="(c, idx) in o.content" :key="idx" :value="c" >{{`0${idx+1}. ${c} ${o.price?formatPrice(o.price)+'원':''}`}}</option>
+    <div class="selectSection" v-if="options">
+    <select @change="optionSelected" v-for="(o,idx) in optionContents" :key="o.prdtNormalOptionSysId" :name="o.name" :ref="'option'+idx">
+      <option value="">{{options[idx].name}}</option>
+      <option v-for="(c,idx) in o" :key="idx" :value="c">{{c[0]}}</option>
     </select>
     </div>
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
-        <span v-for="(o,i) in product.normalOptions" :key="i">
-          {{o.name}} {{item.optionObj[o.name]}}
+        <span v-for="(o,i) in optionContents" :key="i">
+          {{o.name}}
         </span>
         <br>
         <div class="countBtnSection">
@@ -26,23 +26,22 @@
 
 <script>
 export default {
-  props: ['buyMode'],
+  created () {
+    for (const o of this.options) {
+      let first = o.content.split(';')
+      let second = []
+      for (const f of first) {
+        if (!f.includes('품절')) {
+          second.push([f.split('^')[0], Number(f.split('^')[1])])
+        }
+      }
+      this.optionContents.push(second)
+    }
+  },
+  props: ['buyMode', 'options'],
   data () {
     return {
-      product: {'normalOptions': [
-        {
-          id: 1,
-          name: '사이즈',
-          content: [90, 95, 100],
-          price: 2000
-        },
-        {
-          id: 2,
-          name: '색상',
-          content: ['흰색', '핑크색', '노랑', '검정'],
-          price: 1000
-        }
-      ]}
+      optionContents: []
     }
   },
   methods: {
@@ -54,24 +53,27 @@ export default {
     countIncrease (idx) {
       this.$store.commit('increaseOptionCnt', idx)
     },
+
     optionSelected () {
-      for (let i = 0; i < this.product.normalOptions.length; i++) {
+      for (let i = 0; i < this.optionContents.length; i++) { // 선택 가능한 옵션 모두 선택했는지 체크
         if (!this.$refs['option' + i][0].value) {
           return
         }
       }
-      let item = {price: 0, count: 0, optionObj: {}}
-      item.price = 0
-      for (let i = 0; i < this.product.normalOptions.length; i++) {
-        item.price += this.product.normalOptions[i].price
-        item.optionObj[this.$refs['option' + i][0].name] = this.$refs['option' + i][0].value
+      // 빈 옵션 아이템 객체 생성
+      let item = {
+        contentGroup: [], count: 1, price: 0
       }
 
-      item.count = 1
+      for (let i = 0; i < this.optionContents.length; i++) { // 빈 객체에 현재 선택된 값을 주입
+        item.contentGroup.push(this.$refs['option' + i][0].value)
+        item.price
+      }
+      console.log(item)
 
       this.$store.commit('addOption', item)
 
-      for (let i = 0; i < this.product.normalOptions.length; i++) {
+      for (let i = 0; i < this.optionContents.length; i++) {
         this.$refs['option' + i][0].value = ''
       }
     },
@@ -87,7 +89,7 @@ export default {
   },
   computed: {
     isOptionSelected () {
-      return this.$store.getters.getSelectedOptionsLength === this.product.normalOptions.length
+      return this.$store.getters.getSelectedOptionsLength === this.optionContents.length
     },
     calcTotalPrice () {
       let o = this.$store.getters.getSelectedOptions

@@ -72,8 +72,9 @@ export default {
       //     }, (res) => {
       //       if (res.sucess) {
       //         console.log(res)
+      //         this.$router.push('/buycomplete/success')
       //       } else {
-      //         console.log(res)
+      //         this.$router.push('/buycomplete/failure')
       //       }
       //     })
       //   })

@@ -5,8 +5,7 @@
       <Media/>
       <Info />
       <Description />
-      <ProductFooter @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
-      <!-- Footer에게 normalOptions를 Prop으로 넘겨줘야함 -->
+      <ProductFooter :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
   </div>
 </template>
 
@@ -26,6 +25,7 @@ export default {
     getProduct(id).then((res) => {
       self.$store.state.product = res.data.jsonData.product
       self.product = res.data.jsonData.product
+      this.options = res.data.jsonData.normalOptions
     }
     ).catch((e) => console.log(e)
     )
@@ -34,7 +34,8 @@ export default {
     return {
       title: '상품상세',
       product: {},
-      buyMode: false
+      buyMode: false,
+      options: []
     }
   },
   components: {
