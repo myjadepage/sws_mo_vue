@@ -16,31 +16,10 @@ export const store = new Vuex.Store({
     payMethod: null,
     selectedOptions: [],
     searchCat: 0,
-    isAuth: false,
-    orderData: {jsonData: {
-      'amount': 0,
-      'totalAmount': 0,
-      'qty': 0,
-      'orderName': '',
-      'orderPostNumber': '',
-      'orderAddress1': '',
-      'orderAddress2': '',
-      'orderTel': '',
-      'orderMobile': '',
-      'orderEmail': '',
-      'receiverName': '',
-      'receiverPostNumber': '',
-      'receiverAddress1': '',
-      'receiverAddress2': '',
-      'receiverTel': '',
-      'receiverMobile': '',
-      'couponDiscount': 0,
-      'couponList': '',
-      'orderProducts': []
-    }}
+    isAuth: false
   },
   getters: {
-    getId: state => state.userId.userId,
+    getId: state => state.userInfo.userId,
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product,
     getOptionAddedPrice: state => state.optionAddedPrice,
@@ -51,8 +30,7 @@ export const store = new Vuex.Store({
     getOptionCnt: state => idx => state.selectedOptions[idx].count,
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
     getSearchCat: state => state.searchCat,
-    getPostCode: state => state.postCode,
-    getOrderData: state => state.orderData
+    getPostCode: state => state.postCode
   },
   mutations: {
     // 로그인 성공시

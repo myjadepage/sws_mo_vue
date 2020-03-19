@@ -15,9 +15,12 @@ export default {
       let options = JSON.parse(sessionStorage.getItem('selectedOptions'))
       let optionPrice = 0
       let optionQty = 0
-      for (const o of options) {
-        optionPrice += (o.price * o.count)
-        optionQty += o.count
+
+      if (options) {
+        for (const o of options) {
+          optionPrice += (o.price * o.count)
+          optionQty += o.count
+        }
       }
 
       let item = {
@@ -51,37 +54,40 @@ export default {
         // 'options': [{'prdtOptionSysId': 1, 'optionAmount': 2000}, {'prdtOptionSysId': 10, 'optionAmount': 1000}]
       })
 
-      console.log(item)
+      sessionStorage.setItem('payItem', JSON.stringify(item))
+      sessionStorage.setItem('orderCode', 'S20200306190346-0000003')
+
       this.$router.push('/buycomplete')
+
       // postOrders(item)
       //   .then(res => { // 주문정보등록 성공 시
-      //     sessionStorage.setItem('orderCode', res.data.jsonData.res.orderCode)
+      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
 
-      //     this.$IMP().request_pay({ // 아임포트 호출
-      //       pg: 'html5_inicis',
-      //       pay_method: this.$store.getters.getPayMethod,
-      //       merchant_uid: res.data.jsonData.res.orderCode,
-      //       name: this.$store.getters.getProduct.name,
-      //       amount: this.finalPrice,
-      //       buyer_email: 'sarkh91@epiens.com',
-      //       buyer_name: '천곤홍',
-      //       buyer_tel: '010-2675-0229',
-      //       buyer_addr: this.$store.getters.getPostCode.address,
-      //       buyer_postcode: this.$store.getters.getPostCode.zonecode,
-      //       m_redirect_url: 'm.shallwe.shop/buyComplete'
-      //     }, (res) => {
-      //       if (res.sucess) {
-      //         console.log(res)
-      //         this.$router.push('/buycomplete/success')
-      //       } else {
-      //         this.$router.push('/buycomplete/failure')
-      //       }
-      //     })
-      //   })
+    //   this.$IMP().request_pay({ // 아임포트 호출
+    //     pg: 'html5_inicis',
+    //     pay_method: this.$store.getters.getPayMethod,
+    //     merchant_uid: res.data.jsonData.res.orderCode,
+    //     name: this.$store.getters.getProduct.name,
+    //     amount: this.finalPrice,
+    //     buyer_email: 'sarkh91@epiens.com',
+    //     buyer_name: '천곤홍',
+    //     buyer_tel: '010-2675-0229',
+    //     buyer_addr: this.$store.getters.getPostCode.address,
+    //     buyer_postcode: this.$store.getters.getPostCode.zonecode,
+    //     m_redirect_url: 'm.shallwe.shop/buyComplete'
+    //   }, (res) => {
+    //     if (res.sucess) {
+    //       console.log(res)
+    //       this.$router.push('/buycomplete/success')
+    //     } else {
+    //       this.$router.push('/buycomplete/failure')
+    //     }
+    //   })
+    // }
 
-      //   .catch(error => { // 주문정보등록 실패
-      //     console.log(error)
-      //   })
+    // .catch(error => { // 주문정보등록 실패
+    //   console.log(error)
+    // })
     }
   }
 }

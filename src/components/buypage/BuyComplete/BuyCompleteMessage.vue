@@ -1,15 +1,15 @@
 <template>
   <div class="completeMessageWrap">
     <div class="message">주문이 정상적으로 접수되었습니다.</div>
-    <div class="orderNum">주문번호{{orderNum}}</div>
+    <div class="orderNum">주문번호 {{info.orderCode}}</div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['info'],
   data () {
     return {
-      orderNum: 12345567890
     }
   }
 }

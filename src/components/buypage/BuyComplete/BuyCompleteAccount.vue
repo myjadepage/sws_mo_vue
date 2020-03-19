@@ -7,11 +7,11 @@
     <table>
       <tr>
         <th>입금할 금액</th>
-        <td>{{accountInfo.price|makeComma}}원</td>
+        <td>{{info.amount|makeComma}}원</td>
       </tr>
       <tr>
         <th>입금은행</th>
-        <td>{{accountInfo.bank}}</td>
+        <td>{{info}}</td>
       </tr>
       <tr>
         <th>수취인</th>
@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  props: ['info'],
   data () {
     return {
       accountInfo: {
@@ -78,7 +79,7 @@ export default {
 
 .completeAccountWrap .accountTable th{
   font-size: 15px;
-  background-color: #eeeeee;
+  background-color: #f9f9f9;
   color: #666666;
   font-weight: normal;
   padding: 10px 20px 10px 10px;

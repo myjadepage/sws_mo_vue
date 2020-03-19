@@ -48,7 +48,7 @@ export default {
     price () {
       let price = 0
       for (const p of this.products) {
-        price += (p.price - (p.price * p.discountRate) - p.discount)
+        price += (p.price - (p.price * p.discountRate))
       }
       return price
     },

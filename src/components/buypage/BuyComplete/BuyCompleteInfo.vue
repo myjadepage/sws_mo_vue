@@ -6,7 +6,7 @@
     <table>
       <tr>
         <th>상품금액</th>
-        <td>{{this.PayInfo.prdPrice|makeComma}}원</td>
+        <td>{{info.amount|makeComma}}원</td>
       </tr>
       <tr>
         <th>배송비</th>
@@ -26,15 +26,10 @@
 
 <script>
 export default {
-  data () {
-    return {
-      PayInfo: {
-        prdPrice: 322500,
-        deliveryPrice: 2500,
-        discount: 5000
-      }
-    }
+  created () {
+    console.log(this.info)
   },
+  props: ['info'],
   computed: {
     totalPrice () {
       return this.PayInfo.prdPrice + this.PayInfo.deliveryPrice - this.PayInfo.discount
