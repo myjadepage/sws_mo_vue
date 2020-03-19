@@ -74,7 +74,7 @@ export default new Router({
     },
     {
       path: '/Product/:prdtSysId/:type',
-      name: 'ProductLiveDetail',
+      name: 'ProductDetail',
       component: () => import('@/view/productDetail/ProductDetailMain')
     },
     {

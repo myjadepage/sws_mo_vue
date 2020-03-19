@@ -14,6 +14,9 @@ export default {
     let aaa = document.createElement('script')
     aaa.setAttribute('src', '/static/js/hls.min.js')
     document.head.appendChild(aaa)
+    let aaaa = document.createElement('script')
+    aaaa.setAttribute('src', '/static/js/float-on-scroll.min.js')
+    document.head.appendChild(aaaa)
   }
 }
 </script>

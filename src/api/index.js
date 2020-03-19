@@ -39,7 +39,7 @@ function getBrandList () {
 
 // 라이브방송정보 리스트
 function getLiveProduct () {
-  return axios.get(`${config.baseUrl}broadcasts/mainlists`)
+  return axios.get(`${config.baseUrl2}broadcasts/mainlists`)
 }
 
 /*

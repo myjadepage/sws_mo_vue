@@ -2,7 +2,7 @@
   <div class="productMediaWrap">
     <div :style="mediaSize" class="mainMedia">
       <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
-      <div id="player_container" class="flowplayer"></div>
+      <div id="player_container" class="use-play-1 flowplayer"></div>
       <div class="layer-player">
           <!-- 하단 구매영역 -->
           <!-- <div class="buy-wrap">
@@ -56,21 +56,22 @@
 // import $ from 'jquery'
 import 'flowplayer-files/lib/styles/flowplayer.css'
 // import flowplayer from 'flowplayer-files'
+import { eventBus } from '../slide/EventBus'
 
 export default {
   data () {
     return {
       mediaDirection: 0,
-      mediaMode: 0
+      mediaMode: 0,
+      item: {}
     }
   },
+  created: function () {
+    eventBus.$on('item', function (value) {
+      console.log('item', value)
+    })
+  },
   mounted: function () {
-    // let aa = document.createElement('script')
-    // aa.setAttribute('src', '/static/js/flowplayer.min.js')
-    // document.head.appendChild(aa)
-    // let aaa = document.createElement('script')
-    // aaa.setAttribute('src', '/static/js/hls.min.js')
-    // document.head.appendChild(aaa)
     this.getVideoTypePlayer()
   },
   computed: {
@@ -80,18 +81,13 @@ export default {
     }
   },
   methods: {
-    makeScritFile () {
-      let aa = document.createElement('script')
-      aa.setAttribute('src', '/static/js/flowplayer.min.js')
-      document.head.appendChild(aa)
-      let aaa = document.createElement('script')
-      aaa.setAttribute('src', '/static/js/hls.min.js')
-      document.head.appendChild(aaa)
-    },
     getVideoTypePlayer () {
+      console.log(this.$route.params)
       if (this.$route.params.type === '1') {
         // eslint-disable-next-line no-undef
         flowplayer('#player_container', {
+          poster: 'http://cdn.shallwe.link/product/0/0/krill_oil_snapshot.jpg',
+          float_on_scroll: true,
           type: 'application/x-mpegurl',
           src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
           token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
@@ -99,6 +95,7 @@ export default {
       } else {
         // eslint-disable-next-line no-undef
         flowplayer('#player_container', {
+          poster: 'http://cdn.shallwe.link/product/0/0/krill_oil_snapshot.jpg',
           float_on_scroll: true,
           rewind: true,
           seekable: false,
