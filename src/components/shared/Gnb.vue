@@ -6,9 +6,6 @@
               <router-link to="/" class="link_gnb">
                  <span class="link_gnb_text">홈</span>
               </router-link>
-                <!-- <a href="/" class="link_gnb on">
-                    <span class="link_gnb_text">홈</span>
-                </a> -->
             </swiper-slide>
             <swiper-slide class="swiper-item" v-for="menu in category" :key="menu.categoryCode">
               <!-- 쿼리가 있으면, `/register?plan=private` 이 됩니다. -->

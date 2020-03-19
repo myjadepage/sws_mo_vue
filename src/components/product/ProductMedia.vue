@@ -1,7 +1,8 @@
 <template>
   <div class="productMediaWrap">
     <div :style="mediaSize" class="mainMedia">
-      <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div>
+      <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
+      <div id="player_container" class="flowplayer"></div>
       <div class="layer-player">
           <!-- 하단 구매영역 -->
           <!-- <div class="buy-wrap">
@@ -65,7 +66,7 @@ export default {
   },
   mounted: function () {
     flowplayer('#player_container', {
-      poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
+      // poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
       float_on_scroll: true,
       rewind: true,
       seekable: false,
@@ -76,8 +77,8 @@ export default {
   },
   computed: {
     mediaSize () {
-      // return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
-      return this.mediaDirection === 0 ? 'height:100%;' : 'height:40px;'
+      return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
+      // return this.mediaDirection === 0 ? 'height:100%;' : 'height:40px;'
     }
   },
   methods: {
@@ -91,6 +92,13 @@ export default {
 </script>
 
 <style>
+.flowplayer {
+  position: absolute;
+  min-width: 360px;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
 .productMediaWrap .mainMedia{
     background-color: gray;
 }

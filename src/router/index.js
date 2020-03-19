@@ -43,6 +43,31 @@ export default new Router({
       component: () => import('@/view/subpage/Fashion/FashionMain')
     },
     {
+      path: '/category/패션잡화',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/category/뷰티',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/category/유아',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/category/식품',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
+      path: '/category/리빙',
+      name: 'Fashion',
+      component: () => import('@/view/subpage/Fashion/FashionMain')
+    },
+    {
       path: '/Product/:prdtSysId',
       name: 'ProductDetail',
       component: () => import('@/view/productDetail/ProductDetailMain')

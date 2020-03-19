@@ -2,11 +2,16 @@
   <div class="subCatWrap">
     <swiper :options="swiperOption">
     <!-- slides -->
+        <swiper-slide class="swiper-item">
+              <router-link to="/" class="link_gnb">
+                 <span class="link_gnb_text">홈</span>
+              </router-link>
+            </swiper-slide>
         <swiper-slide  :class="selectedCat(idx)"  v-for="(c,idx) in category" :key="idx">
             <!-- <router-link :to="'/category/'+ c.name"> -->
-       <span @click="catClick(c.name)">
-       {{c.name}}
-       </span>
+          <span @click="catClick(c.name)">
+             {{c.name}}
+          </span>
        <!-- </router-link> -->
         </swiper-slide>
   </swiper>
@@ -55,6 +60,10 @@ export default {
 </script>
 
 <style>
+ .subCatWrap {
+   position: relative;
+   padding-top: 50px;
+ }
  .subCatWrap .swiper-slide{
      margin: 0 30px;
      width: fit-content;

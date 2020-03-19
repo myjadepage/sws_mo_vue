@@ -1,6 +1,6 @@
 <template>
   <div class="FashionMainWrap">
-      <Bar/>
+      <Header/>
       <Categories/>
       <SwipeSection/>
       <Tags/>
@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import Bar from '@/components/subpage/shared/Bar'
+// import Bar from '@/components/subpage/shared/Bar'
+import Header from '@/components/shared/Header'
 import Categories from '@/components/subpage/shared/Categories'
 import SwipeSection from '@/components/subpage/fashion/FashionSwipe'
 import Tags from '@/components/subpage/fashion/TagCategories'
@@ -19,7 +20,7 @@ import ScrollTopBtn from '@/components/subpage/shared/ScrollTopBtn'
 
 export default {
   components: {
-    Bar, Categories, SwipeSection, Tags, MediaSection, ScrollTopBtn
+    Header, Categories, SwipeSection, Tags, MediaSection, ScrollTopBtn
   }
 }
 </script>
