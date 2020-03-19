@@ -24,11 +24,10 @@ export default {
   created () {
     let m = JSON.parse(sessionStorage.getItem('memberInfo'))
     console.log(m)
-    if (m.name) {
-      this.member.name = m.name
-    } else {
-
-    }
+    this.member.name = m.name
+    this.member.address1 = m.address1
+    this.member.address2 = m.address2
+    this.member.mobile = m.mobile
   },
   data () {
     return {

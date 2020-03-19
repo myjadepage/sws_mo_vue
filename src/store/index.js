@@ -75,6 +75,9 @@ export const store = new Vuex.Store({
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
     decreaseOptionCnt: (state, idx) => state.selectedOptions[idx].count--,
     increaseOptionCnt: (state, idx) => state.selectedOptions[idx].count++,
+    setOptionCnt (state, [idx, num]) {
+      state.selectedOptions[idx].count = num
+    },
     updatePayPriceInfo (state, {name, price}) {
       state.payPriceInfo[name] = price
     }

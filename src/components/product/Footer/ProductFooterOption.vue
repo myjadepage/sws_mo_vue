@@ -13,7 +13,7 @@
         </div>
         <br>
         <div class="countBtnSection">
-        <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><span class="count">{{item.count}}</span>
+        <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><input @keypress.enter="countSet(idx)" @blur="countSet(idx)" class="count" type="number" min="0" max="999" :value="optionCnt(idx)">
         <button class="countBtn" @click="countIncrease(idx)"><span class="ico_plus"></span></button>
         </div>
         <div class="optionPrice">{{calcPrice(idx)|makeComma}}<span class="won">원</span> <span @click="deleteOption(idx)"  class="ico_times"></span></div>
@@ -45,6 +45,11 @@ export default {
     }
   },
   methods: {
+
+    optionCnt (idx) {
+      return this.$store.getters.getOptionCnt(idx)
+    },
+
     countDecraese (idx) {
       if (this.$store.getters.getOptionCnt(idx) !== 1) {
         this.$store.commit('decreaseOptionCnt', idx)
@@ -52,6 +57,9 @@ export default {
     },
     countIncrease (idx) {
       this.$store.commit('increaseOptionCnt', idx)
+    },
+    countSet (idx) {
+      this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
     },
 
     optionSelected () {
@@ -140,14 +148,6 @@ export default {
   text-align: left;
 }
 
-.productOptionWrap .count{
-  height: 100%;
-  line-height: 30px;
-  margin: 0 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
 .productOptionWrap .selectSection{
   margin-top: 15px;
 }
@@ -180,11 +180,23 @@ export default {
   font-size: 13px;
 }
 
+.productOptionWrap .count{
+border: none;
+width: 50px;
+height: 100%;
+text-align: center;
+font-weight: bold;
+}
+.productOptionWrap input[type=number].count::-webkit-outer-spin-button,.productOptionWrap input[type=number].count::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .productOptionWrap .countBtnSection{
   display: inline-block;
   text-align: center;
   background-color: #fff;
-  width: 100px;
+  width: 130px;
   height: 35px;
 }
 
@@ -192,7 +204,7 @@ export default {
   display: inline-block;
   text-align: center;
   height: 100%;
-  width: 30%;
+  width: 28%;
 }
 
 .productOptionWrap .ico_times{
