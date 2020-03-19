@@ -9,7 +9,7 @@
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <div v-for="(o,i) in item.contentGroup" :key="i">
-          {{options[i].name}}{{o}}
+          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o}}
         </div>
         <br>
         <div class="countBtnSection">
@@ -27,15 +27,29 @@
 <script>
 export default {
   created () {
-    for (const o of this.options) {
-      let first = o.content.split(';')
-      let second = []
-      for (const f of first) {
-        if (!f.includes('품절')) {
-          second.push([f.split('^')[0], Number(f.split('^')[1])])
+    if (this.options.length) {
+      for (const o of this.options) {
+        let first = o.content.split(';')
+        let second = []
+        for (const f of first) {
+          if (!f.includes('품절')) {
+            second.push([f.split('^')[0], Number(f.split('^')[1])])
+          }
         }
+        this.optionContents.push(second)
       }
-      this.optionContents.push(second)
+    } else {
+      let p = this.$store.getters.getProduct
+      let item = {
+        contentGroup: [p.name],
+        count: 1,
+        price: p.price - (p.price * p.discountRate),
+        contentName: ''
+      }
+
+      this.$store.state.selectedOptions = [item]
+
+      console.log(item)
     }
   },
   props: ['buyMode', 'options'],
@@ -109,13 +123,17 @@ export default {
       return this.$store.getters.getSelectedOptionsLength === this.optionContents.length
     },
     calcTotalPrice () {
-      let o = this.$store.getters.getSelectedOptions
-      let val = 0
-      for (const item of o) {
-        val += (item.count * item.price)
-      }
+      if (this.options.length) {
+        let o = this.$store.getters.getSelectedOptions
+        let val = 0
+        for (const item of o) {
+          val += (item.count * item.price)
+        }
 
-      return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+      } else {
+        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count
+      }
     }
   }
 

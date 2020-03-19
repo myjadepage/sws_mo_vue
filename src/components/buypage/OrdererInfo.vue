@@ -6,7 +6,7 @@
         <div class="buyDeliveryBody">
       <table>
         <tr>
-          <td>{{name}}</td>
+          <!-- <td>{{name}}</td> -->
         </tr>
         <tr>
           <td></td>

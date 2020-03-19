@@ -27,11 +27,6 @@ export default {
     clickBuy () {
       if (!this.buyMode) {
         this.$emit('buyModeClick')
-      } else if (this.buyMode && this.options.length === 0) {
-        sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-        sessionStorage.setItem('selectedOptions', null)
-
-        this.$router.push('/BuyProduct')
       } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
         sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
         sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
