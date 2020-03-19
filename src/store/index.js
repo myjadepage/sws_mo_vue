@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import { userLogin } from '../api'
+import { userLogin, getUserInfo } from '../api'
 
 Vue.use(Vuex)
 
@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
     payMethod: null,
     selectedOptions: [],
     searchCat: 0,
-    isAuth: false
+    isAuth: false,
+    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0}
   },
   getters: {
     getId: state => state.userInfo.userId,
@@ -30,7 +31,8 @@ export const store = new Vuex.Store({
     getOptionCnt: state => idx => state.selectedOptions[idx].count,
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
     getSearchCat: state => state.searchCat,
-    getPostCode: state => state.postCode
+    getPostCode: state => state.postCode,
+    getPayPriceInfo: state => state.payPriceInfo
   },
   mutations: {
     // 로그인 성공시
@@ -61,6 +63,7 @@ export const store = new Vuex.Store({
       state.userInfo = null
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
+      sessionStorage.removeItem('memberInfo')
     },
     logOutGoogle (state) {
       state.isLogin = false
@@ -71,7 +74,10 @@ export const store = new Vuex.Store({
     addOption: (state, item) => state.selectedOptions.push(item),
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
     decreaseOptionCnt: (state, idx) => state.selectedOptions[idx].count--,
-    increaseOptionCnt: (state, idx) => state.selectedOptions[idx].count++
+    increaseOptionCnt: (state, idx) => state.selectedOptions[idx].count++,
+    updatePayPriceInfo (state, {name, price}) {
+      state.payPriceInfo[name] = price
+    }
   },
   actions: {
     // 로그아웃
@@ -89,6 +95,13 @@ export const store = new Vuex.Store({
             let refreshToken = res.data.jsonData.refreshToken
             localStorage.setItem('accessToken', accessToken)
             localStorage.setItem('refreshToken', refreshToken)
+
+            getUserInfo(accessToken).then(r => {
+              sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
+            }).catch(err => {
+              console.log(err)
+            })
+
             dispatch('getUserInfo')
             router.push('/')
           } else {

@@ -46,19 +46,31 @@ function getLiveProduct () {
 주문
 */
 
-function postOrders (jsonData) { // 주문정보등록
+// 주문정보등록
+function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
   return axios.post(`${config.baseUrl}orders`, formdata)
 }
-
-function payOrders (jsonData, orderSysId) { // 주문결제정보 등록
+// 주문결제정보 등록
+function payOrders (jsonData, orderSysId) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
   formdata.set('orderSysId', orderSysId)
 
   return axios.post(`${config.baseUrl}${orderSysId}/pays`, formdata)
+}
+
+// 회원 정보 가져오기
+function getUserInfo (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
 }
 
 /**
@@ -164,6 +176,17 @@ function snsLogin (snsType, snsToken) {
   return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
 }
 
+// JWT 토큰 파싱 함수
+function parseJwt (token) {
+  var base64Url = token.split('.')[1]
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+  }).join(''))
+
+  return JSON.parse(jsonPayload)
+}
+
 export {
   getProductList,
   getCategoryList,
@@ -181,5 +204,6 @@ export {
   getBrandList,
   getBroadCast,
   postOrders,
-  payOrders
+  payOrders,
+  getUserInfo
 }

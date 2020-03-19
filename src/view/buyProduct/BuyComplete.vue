@@ -24,11 +24,15 @@ export default {
     let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
     this.info = payInfo
     this.info.orderCode = 'S20200306190346-0000003'
-
+    this.payMethod = this.$store.getters.getPayMethod
     let item = {
       paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: 1, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
     }
-
+    // console.log(this.payMethod)
+    sessionStorage.removeItem('payItem')
+    sessionStorage.removeItem('selectedOptions')
+    sessionStorage.removeItem('orderCode')
+    sessionStorage.removeItem('product')
     this.item = item
     // console.log(item)
 

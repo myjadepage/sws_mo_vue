@@ -24,7 +24,7 @@ export default {
       }
       this.currentMethod = idx
       this.$el.getElementsByClassName('methodBtn')[idx].classList.add('selected')
-
+      this.$store.state.payMethod = idx
       switch (idx) {
         case 0:
           this.$store.state.payMethod = 'card'

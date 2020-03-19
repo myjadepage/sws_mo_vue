@@ -19,7 +19,6 @@ export default {
   created () {
     this.product = JSON.parse(sessionStorage.getItem('product'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
-    console.log(this.options)
   },
   data () {
     return {
