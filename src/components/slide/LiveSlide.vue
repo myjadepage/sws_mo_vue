@@ -4,7 +4,8 @@
       <swiper :options="swiperOption">
         <swiper-slide v-for="item in items" :key="item.broadcastSysId">
             <div class="img-area" v-for="id in item.broadcastPrdts" :key="id.prdtSysId">
-                <router-link :to="'/product/' + id.prdtSysId" style="height:251px">
+                <!-- <router-link :to="'/product/' + id.prdtSysId" style="height:251px" @click="goDetail({id.prdtSysId, item.broadcastType}})"> -->
+                 <router-link :to="'/product/'+ id.prdtSysId + '/' + item.broadcastType" style="height:251px">
                     <img :src="item.thumnailUrl" alt="청하의 선택">
                     <span class="circle-box"><i class="xi-play"></i></span>
                     <div class="live-info-top">

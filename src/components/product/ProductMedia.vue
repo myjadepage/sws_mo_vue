@@ -55,7 +55,7 @@
 <script>
 // import $ from 'jquery'
 import 'flowplayer-files/lib/styles/flowplayer.css'
-import flowplayer from 'flowplayer-files'
+// import flowplayer from 'flowplayer-files'
 
 export default {
   data () {
@@ -65,23 +65,49 @@ export default {
     }
   },
   mounted: function () {
-    flowplayer('#player_container', {
-      // poster: 'http://jademy.cafe24.com/epiens/epiense.jpg',
-      float_on_scroll: true,
-      rewind: true,
-      seekable: false,
-      // type: 'video/mp4',
-      src: 'http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4',
-      token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
-    })
+    // let aa = document.createElement('script')
+    // aa.setAttribute('src', '/static/js/flowplayer.min.js')
+    // document.head.appendChild(aa)
+    // let aaa = document.createElement('script')
+    // aaa.setAttribute('src', '/static/js/hls.min.js')
+    // document.head.appendChild(aaa)
+    this.getVideoTypePlayer()
   },
   computed: {
     mediaSize () {
-      return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
-      // return this.mediaDirection === 0 ? 'height:100%;' : 'height:40px;'
+      // return this.mediaDirection === 0 ? 'padding-top:56.25%;' : 'padding-top:177.78%;'
+      return this.mediaDirection === 0 ? 'height:100%;' : 'height:40px;'
     }
   },
   methods: {
+    makeScritFile () {
+      let aa = document.createElement('script')
+      aa.setAttribute('src', '/static/js/flowplayer.min.js')
+      document.head.appendChild(aa)
+      let aaa = document.createElement('script')
+      aaa.setAttribute('src', '/static/js/hls.min.js')
+      document.head.appendChild(aaa)
+    },
+    getVideoTypePlayer () {
+      if (this.$route.params.type === '1') {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', {
+          type: 'application/x-mpegurl',
+          src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
+          token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
+        })
+      } else {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', {
+          float_on_scroll: true,
+          rewind: true,
+          seekable: false,
+          type: 'application/x-mpegurl',
+          src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
+          token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
+        })
+      }
+    },
     selectMediaMode (x) {
       this.$el.getElementsByTagName('li')[this.mediaMode].className = ''
       this.mediaMode = x
@@ -92,13 +118,6 @@ export default {
 </script>
 
 <style>
-.flowplayer {
-  position: absolute;
-  min-width: 360px;
-  z-index: -1;
-  top: 0;
-  left: 0;
-}
 .productMediaWrap .mainMedia{
     background-color: gray;
 }

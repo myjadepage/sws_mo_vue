@@ -362,7 +362,7 @@
   }
   /* 플레이어 컨트롤러 */
   
-  .fp-timeline {
+  /* .fp-timeline {
     bottom: 100px
   }
   .fp-small-switch,
@@ -376,7 +376,7 @@
   .fp-btns,
   .fp-volume {
     display: none;
-  }
+  } */
   /* 플레이어 오른쪽 아이콘 */
   /* 전체보기 */
   
@@ -385,10 +385,8 @@
     top: 50px;
     right: 20px;
   }
-  .fp-secondary .fp-fullscreen {}
-  .fp-secondary .fp-fullscreen-exit {}
-  /* 볼륨음소거 */
-  
+
+  /* 볼륨음소거 */  
   .fp-volumebtn {
     position: absolute;
     top: 100px;
@@ -401,19 +399,7 @@
     top: 100px;
     right: 10px;
   }
-  .fp-secondary .fp-share-menu .fp-share {}
-  /* 플레이버튼한가운데 */
-  
-  .fp-ui .fp-play-1 .fp-play {}
-  .fp-ui .fp-play-1 .fp-pause {}
-  /* 플레이어 states */
-  
-  .is-fullscreen {}
-  .is-hovered {}
-  .is-muted {}
-  .is-paused {}
-  .is-small {}
-  .is-starting {}
+
   /* 비디오메뉴선택 */
   
   .flowplayer+.layer-player .thumbs {
