@@ -46,7 +46,7 @@ export default {
 
 <style>
 .productDetailWrap{
-    min-width: 360px;
+  min-width: 360px;
 }
 .productDetailWrap .darkFilter{
   position: fixed;
