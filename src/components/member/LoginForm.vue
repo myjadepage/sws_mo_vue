@@ -1,6 +1,6 @@
 <template>
 <div class="sws_login">
-    <h1 class="logo"></h1>
+    <router-link to="/"><h1 class="logo"></h1></router-link>
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>

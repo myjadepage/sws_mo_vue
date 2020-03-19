@@ -109,21 +109,6 @@ export default new Router({
       component: () => import('@/view/member/RegStep03')
     },
     {
-      path: '/RegStep04',
-      name: 'RegStep04',
-      component: () => import('@/view/member/RegStep04')
-    },
-    {
-      path: '/category/패션',
-      name: 'Fashion',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/About',
-      name: 'About',
-      component: () => import('@/view/menu/About')
-    },
-    {
       path: '/MyPage',
       name: 'MyPage',
       beforeEach: {
@@ -151,16 +136,6 @@ export default new Router({
       path: '/Tracking/Detail',
       name: 'TrackingDetail',
       component: () => import('@/view/mypage/TrackingDetail')
-    },
-    {
-      path: '/Product/:prdtSysId',
-      name: 'ProductDetail',
-      component: () => import('@/view/productDetail/ProductDetailMain')
-    },
-    {
-      path: '/search',
-      name: 'Search',
-      component: () => import('@/view/search/SearchPage')
     },
     {
       path: '/BuyProduct',
