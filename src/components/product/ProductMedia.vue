@@ -65,12 +65,12 @@ export default {
     }
   },
   mounted: function () {
-    let aa = document.createElement('script')
-    aa.setAttribute('src', '/static/js/flowplayer.min.js')
-    document.head.appendChild(aa)
-    let aaa = document.createElement('script')
-    aaa.setAttribute('src', '/static/js/hls.min.js')
-    document.head.appendChild(aaa)
+    // let aa = document.createElement('script')
+    // aa.setAttribute('src', '/static/js/flowplayer.min.js')
+    // document.head.appendChild(aa)
+    // let aaa = document.createElement('script')
+    // aaa.setAttribute('src', '/static/js/hls.min.js')
+    // document.head.appendChild(aaa)
     this.getVideoTypePlayer()
   },
   computed: {
@@ -80,6 +80,14 @@ export default {
     }
   },
   methods: {
+    makeScritFile () {
+      let aa = document.createElement('script')
+      aa.setAttribute('src', '/static/js/flowplayer.min.js')
+      document.head.appendChild(aa)
+      let aaa = document.createElement('script')
+      aaa.setAttribute('src', '/static/js/hls.min.js')
+      document.head.appendChild(aaa)
+    },
     getVideoTypePlayer () {
       if (this.$route.params.type === '1') {
         // eslint-disable-next-line no-undef
@@ -88,17 +96,17 @@ export default {
           src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
           token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
         })
+      } else {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', {
+          float_on_scroll: true,
+          rewind: true,
+          seekable: false,
+          type: 'application/x-mpegurl',
+          src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
+          token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
+        })
       }
-      // else {
-      //   flowplayer('#player_container', {
-      //     float_on_scroll: true,
-      //     rewind: true,
-      //     seekable: false,
-      //     type: 'application/x-mpegurl',
-      //     src: 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8',
-      //     token: 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
-      //   })
-      // }
     },
     selectMediaMode (x) {
       this.$el.getElementsByTagName('li')[this.mediaMode].className = ''
