@@ -3,7 +3,7 @@
   <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer/>
+    <Orderer :member=member />
     <Delivery :member=member @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
@@ -34,6 +34,8 @@ import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
 
 export default {
   created () {
+    let m = JSON.parse(sessionStorage.getItem('memberInfo'))
+    this.member = m
     window.scrollTo(0, 0)
   },
   components: {
@@ -53,10 +55,6 @@ export default {
       finalPrice: 0,
       addrModalVisibility: false,
       member: {
-        orderPostNumber: 12345,
-        name: '임동욱',
-        phone: '010-1234-1234',
-        addr: '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'
       }
     }
   },

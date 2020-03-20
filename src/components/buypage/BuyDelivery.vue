@@ -5,7 +5,7 @@
       <button @click="deliveryBtnClick" class="deliveryConfigBtn">변경</button>
     </div>
     <div class="buyDeliveryBody">
-      <table>
+      <table v-if="member.addr">
         <tr>
           <td>{{member.name}}</td>
         </tr>

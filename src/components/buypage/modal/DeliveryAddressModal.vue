@@ -17,6 +17,7 @@
         <input type="text" ref="detailAddr" class="detailAddr" placeholder="상세주소">
         <div class="defualtAddrCheck">
         <input type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
+        <label class="checkmark" for="defaultAddrCheck"></label>
         </div>
       </div>
 
@@ -32,6 +33,9 @@ import ModalHeader from './ModalHeader'
 export default {
   components: {
     ModalHeader
+  },
+  created () {
+    // 비동기로 현재 회원 주소 목록 가져와서 data에 넣어줘야 함
   },
   data () {
     return {
@@ -59,6 +63,8 @@ export default {
       }
     },
     addAddrClick () {
+      // 비동기 주소 등록 로직 추가하기
+
       if (this.$refs.addr.value && this.$refs.jibun.value) {
         let item = {...this.searchResult}
         item.detail = this.$refs.detailAddr.value
@@ -179,6 +185,22 @@ export default {
 
   .deliveryAddrModal .searchAddrSection input[type='text'].detailAddr{
     margin-bottom: 10px;
+  }
+
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']{
+    all: unset;
+    display: inline-block;
+    border: 1.5px solid #cccccc;
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked{
+    border: 1.5px solid #e61754;
+  }
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked+.checkmark{
+    border: 1.5px solid #e61754;
   }
 
   .deliveryAddrModal .addressList{

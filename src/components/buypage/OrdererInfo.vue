@@ -4,7 +4,7 @@
           주문인 정보
       </div>
         <div class="buyDeliveryBody">
-      <table>
+      <table v-if="member.name">
         <tr>
           <!-- <td>{{name}}</td> -->
         </tr>
@@ -15,30 +15,14 @@
           <td></td>
         </tr>
       </table>
+      <button>주문인 정보를 입력 해주세요.</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  created () {
-    let m = JSON.parse(sessionStorage.getItem('memberInfo'))
-    console.log(m)
-    this.member.name = m.name
-    this.member.address1 = m.address1
-    this.member.address2 = m.address2
-    this.member.mobile = m.mobile
-  },
-  data () {
-    return {
-      member: {
-        name: '',
-        address1: '',
-        address2: '',
-        mobile: ''
-      }
-    }
-  }
+  props: ['member']
 }
 </script>
 

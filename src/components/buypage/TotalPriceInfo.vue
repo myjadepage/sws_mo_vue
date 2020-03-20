@@ -45,15 +45,23 @@ export default {
     prdPrice () {
       if (this.options[0].contentName !== '') {
         let optionPrice = 0
+        let oCnt = 0
         if (this.options) {
           for (const o of this.options) {
+            oCnt += o.count
             optionPrice += (o.price * o.count)
           }
         }
-        this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price * this.product.discountRate) + optionPrice})
-        return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
+
+        if (optionPrice) {
+          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price * this.product.discountRate) + optionPrice})
+          return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
+        } else {
+          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price - (this.product.price * this.product.discountRate)) * oCnt})
+          return (this.product.price - (this.product.price * this.product.discountRate)) * oCnt
+        }
       } else {
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.$store.getters.getSelectedOptions[0].count
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
     },
     deliveryPrice () {
