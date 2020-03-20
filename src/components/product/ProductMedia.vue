@@ -130,13 +130,13 @@ export default {
 
 <style>
 /* // 플레이어 설정 */
-#id>#flowplayer-floating-container {
-  height: 0;
+body>#flowplayer-floating-container {
   left: 65%;
+  margin-top: -130px;
 }
-/* .flowplayer {
+.flowplayer {
   height: 100%;
-} */
+}
 
 .productMediaWrap .mainMedia{
    background-color: gray;
