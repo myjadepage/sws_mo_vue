@@ -73,9 +73,9 @@ export default new Router({
       component: () => import('@/view/productDetail/ProductDetailMain')
     },
     {
-      path: '/Product/:prdtSysId/:type',
-      name: 'ProductDetail',
-      component: () => import('@/view/productDetail/ProductDetailMain')
+      path: '/Product/:prdtSysId/Live',
+      name: 'ProductDetailLive',
+      component: () => import('@/view/productDetail/ProductDetailMainLive')
     },
     {
       path: '/Login',

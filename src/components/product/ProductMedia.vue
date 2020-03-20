@@ -53,10 +53,7 @@
 </template>
 
 <script>
-// import $ from 'jquery'
 import 'flowplayer-files/lib/styles/flowplayer.css'
-// import flowplayer from 'flowplayer-files'
-import { eventBus } from '../slide/EventBus'
 
 export default {
   data () {
@@ -65,11 +62,6 @@ export default {
       mediaMode: 0,
       item: {}
     }
-  },
-  created: function () {
-    eventBus.$on('item', function (value) {
-      console.log('item', value)
-    })
   },
   mounted: function () {
     this.getVideoTypePlayer()
