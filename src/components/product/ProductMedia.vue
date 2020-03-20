@@ -129,15 +129,6 @@ export default {
 </script>
 
 <style>
-/* // 플레이어 설정 */
-body>#flowplayer-floating-container {
-  left: 65%;
-  margin-top: -130px;
-}
-.flowplayer {
-  height: 100%;
-}
-
 .productMediaWrap .mainMedia{
    background-color: gray;
 }

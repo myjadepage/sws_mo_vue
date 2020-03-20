@@ -360,8 +360,12 @@
     padding: 0;
     font-size: 13px;
   }
-  /* 플레이어 컨트롤러 */
-  
+
+/* 플레이어 컨트롤러 */
+body>#flowplayer-floating-container {
+  left: 65% !important;
+  margin-top: -140px;
+}
   /* .fp-timeline {
     bottom: 100px
   }
