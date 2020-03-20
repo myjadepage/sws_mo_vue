@@ -27,7 +27,7 @@ export default {
       for (const o of this.options) {
         optionPrice += o.price
       }
-      return this.product.price - (this.product.price * this.product.discountRate) - this.product.discount + optionPrice
+      return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     }
   },
   methods: {

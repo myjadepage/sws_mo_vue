@@ -19,7 +19,6 @@ export default {
   created () {
     this.product = JSON.parse(sessionStorage.getItem('product'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
-    console.log(this.options)
   },
   data () {
     return {
@@ -29,13 +28,17 @@ export default {
   },
   computed: {
     calcTotalPrice () {
-      let optionPrice = 0
-      if (this.options) {
-        for (const o of this.options) {
-          optionPrice += (o.price * o.count)
+      if (this.options[0].contentName !== '') {
+        let optionPrice = 0
+        if (this.options) {
+          for (const o of this.options) {
+            optionPrice += (o.price * o.count)
+          }
         }
+        return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
+      } else {
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
-      return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
     },
     countPrductNum () {
       let val = 0

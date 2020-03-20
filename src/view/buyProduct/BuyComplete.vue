@@ -1,9 +1,10 @@
 <template>
   <div class="buyCompleteWrap">
+    <div v-if="result" class="success"></div>
     <Bar val="구매완료" />
-    <Message/>
-    <Account/>
-    <Info/>
+    <Message :info="info" />
+    <Account v-if="payMethod===3" :info="info" />
+    <Info :info="info" />
     <Guides/>
     <Footer/>
   </div>
@@ -16,29 +17,44 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-import {payOrders} from '@/api/index.js'
+// import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
+    let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
+    this.info = payInfo
+    this.info.orderCode = 'S20200306190346-0000003'
+    this.payMethod = this.$store.getters.getPayMethod
     let item = {
-      paidAmount: 0, totalAmount: 0, payTypeCode: 1, feeRate: 1, fee: 1, imp_uid: this.$route.query.imp_uid
+      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: 1, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
     }
+    // console.log(this.payMethod)
+    sessionStorage.removeItem('payItem')
+    sessionStorage.removeItem('selectedOptions')
+    sessionStorage.removeItem('orderCode')
+    sessionStorage.removeItem('product')
+    this.item = item
+    // console.log(item)
 
-    payOrders(item, sessionStorage.getItem('orderCode')).then(res => {
-      console.log(res)
-      sessionStorage.removeItem('orderCode')
-    }).catch(err => {
-      console.log(err)
+    // payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+    //   console.log(res)
+    //   sessionStorage.removeItem('orderSysId')
+    // }).catch(err => {
+    //   console.log(err)
 
-      sessionStorage.removeItem('orderCode')
-    })
+    //   sessionStorage.removeItem('orderSysId')
+    // })
 
     // console.log(this.$route.query)
   },
 
   data () {
     return {
-      impResponse: null
+      result: true, // 성공 true / 실패 false
+      item: {},
+      info: {},
+      payMethod: 0
+
     }
   },
 

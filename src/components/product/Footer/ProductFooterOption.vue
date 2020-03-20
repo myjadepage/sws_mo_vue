@@ -9,11 +9,11 @@
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <div v-for="(o,i) in item.contentGroup" :key="i">
-          {{options[i].name}}{{o}}
+          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o}}
         </div>
         <br>
         <div class="countBtnSection">
-        <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><span class="count">{{item.count}}</span>
+        <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><input @keypress.enter="countSet(idx)" @blur="countSet(idx)" class="count" type="number" min="0" max="999" :value="optionCnt(idx)">
         <button class="countBtn" @click="countIncrease(idx)"><span class="ico_plus"></span></button>
         </div>
         <div class="optionPrice">{{calcPrice(idx)|makeComma}}<span class="won">원</span> <span @click="deleteOption(idx)"  class="ico_times"></span></div>
@@ -27,15 +27,29 @@
 <script>
 export default {
   created () {
-    for (const o of this.options) {
-      let first = o.content.split(';')
-      let second = []
-      for (const f of first) {
-        if (!f.includes('품절')) {
-          second.push([f.split('^')[0], Number(f.split('^')[1])])
+    if (this.options.length) {
+      for (const o of this.options) {
+        let first = o.content.split(';')
+        let second = []
+        for (const f of first) {
+          if (!f.includes('품절')) {
+            second.push([f.split('^')[0], Number(f.split('^')[1])])
+          }
         }
+        this.optionContents.push(second)
       }
-      this.optionContents.push(second)
+    } else {
+      let p = this.$store.getters.getProduct
+      let item = {
+        contentGroup: [p.name],
+        count: 1,
+        price: p.price - (p.price * p.discountRate),
+        contentName: ''
+      }
+
+      this.$store.state.selectedOptions = [item]
+
+      console.log(item)
     }
   },
   props: ['buyMode', 'options'],
@@ -45,6 +59,11 @@ export default {
     }
   },
   methods: {
+
+    optionCnt (idx) {
+      return this.$store.getters.getOptionCnt(idx)
+    },
+
     countDecraese (idx) {
       if (this.$store.getters.getOptionCnt(idx) !== 1) {
         this.$store.commit('decreaseOptionCnt', idx)
@@ -52,6 +71,9 @@ export default {
     },
     countIncrease (idx) {
       this.$store.commit('increaseOptionCnt', idx)
+    },
+    countSet (idx) {
+      this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
     },
 
     optionSelected () {
@@ -101,13 +123,17 @@ export default {
       return this.$store.getters.getSelectedOptionsLength === this.optionContents.length
     },
     calcTotalPrice () {
-      let o = this.$store.getters.getSelectedOptions
-      let val = 0
-      for (const item of o) {
-        val += (item.count * item.price)
-      }
+      if (this.options.length) {
+        let o = this.$store.getters.getSelectedOptions
+        let val = 0
+        for (const item of o) {
+          val += (item.count * item.price)
+        }
 
-      return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+      } else {
+        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count
+      }
     }
   }
 
@@ -138,14 +164,6 @@ export default {
   background-color: #eeeeee;
   /* height: 65px; */
   text-align: left;
-}
-
-.productOptionWrap .count{
-  height: 100%;
-  line-height: 30px;
-  margin: 0 10px;
-  text-align: center;
-  font-weight: bold;
 }
 
 .productOptionWrap .selectSection{
@@ -180,11 +198,23 @@ export default {
   font-size: 13px;
 }
 
+.productOptionWrap .count{
+border: none;
+width: 50px;
+height: 100%;
+text-align: center;
+font-weight: bold;
+}
+.productOptionWrap input[type=number].count::-webkit-outer-spin-button,.productOptionWrap input[type=number].count::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .productOptionWrap .countBtnSection{
   display: inline-block;
   text-align: center;
   background-color: #fff;
-  width: 100px;
+  width: 130px;
   height: 35px;
 }
 
@@ -192,7 +222,7 @@ export default {
   display: inline-block;
   text-align: center;
   height: 100%;
-  width: 30%;
+  width: 28%;
 }
 
 .productOptionWrap .ico_times{

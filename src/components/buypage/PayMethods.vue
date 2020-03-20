@@ -13,7 +13,7 @@
 export default {
   data () {
     return {
-      payMethod: ['신용카드', '실시간 계좌이체', '가상계좌', '휴대폰 소액결제', '삼성페이'],
+      payMethod: ['신용카드', '실시간 계좌이체', '가상계좌', '휴대폰 소액결제', '삼성페이', 'kPay', '컬쳐랜드', '스마트문화상품권', '해피머니', '도서문화상품권'],
       currentMethod: null
     }
   },
@@ -24,7 +24,7 @@ export default {
       }
       this.currentMethod = idx
       this.$el.getElementsByClassName('methodBtn')[idx].classList.add('selected')
-
+      this.$store.state.payMethod = idx
       switch (idx) {
         case 0:
           this.$store.state.payMethod = 'card'
@@ -40,6 +40,21 @@ export default {
           break
         case 4:
           this.$store.state.payMethod = 'samsung'
+          break
+        case 5:
+          this.$store.state.payMethod = 'kpay'
+          break
+        case 6:
+          this.$store.state.payMethod = 'cultureland'
+          break
+        case 7:
+          this.$store.state.payMethod = 'smartculture'
+          break
+        case 8:
+          this.$store.state.payMethod = 'happymoney'
+          break
+        case 9:
+          this.$store.state.payMethod = 'booknlife'
           break
         default:
           break

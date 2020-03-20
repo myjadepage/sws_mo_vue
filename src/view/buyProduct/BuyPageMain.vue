@@ -3,6 +3,7 @@
   <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
+    <Orderer/>
     <Delivery :member=member @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
@@ -20,6 +21,7 @@
 <script>
 import Bar from '@/components/shared/Bar'
 import ProductInfo from '@/components/buypage/BuyProductInfo'
+import Orderer from '@/components/buypage/OrdererInfo'
 import Delivery from '@/components/buypage/BuyDelivery'
 import Coupon from '@/components/buypage/BuyCoupon'
 import CouponDetail from '@/components/buypage/CouponDetail/CouponDetail'
@@ -35,7 +37,7 @@ export default {
     window.scrollTo(0, 0)
   },
   components: {
-    Bar, ProductInfo, Delivery, Coupon, PayMethods, CouponDetail, Term, TotalPriceInfo, BuyFooter, AddrModal, InfoModal
+    Bar, ProductInfo, Orderer, Delivery, Coupon, PayMethods, CouponDetail, Term, TotalPriceInfo, BuyFooter, AddrModal, InfoModal
   },
   data () {
     return {
