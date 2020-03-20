@@ -1,7 +1,7 @@
 <template>
   <div ref="footerWrap" class="productFooterWrap">
       <div class="hideBtnDiv">
-      <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
+        <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
       </div>
       <Option :options="options" :buyMode="buyMode" />
       <button class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
