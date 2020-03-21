@@ -53,23 +53,23 @@
                 </li>
                 <li>
                   <KakaoLogin
-                  api-key="78eed5dbee80e670a64a4e79c08ed7a9"
-                  :on-success=onSuccess
-                  :on-failure=onFailure
-                  class="btn btn-circle sws_icon btn-cacao"
+                    api-key="78eed5dbee80e670a64a4e79c08ed7a9"
+                    :on-success=onSuccess
+                    :on-failure=onFailure
+                    class="btn btn-circle sws_icon btn-cacao"
                   />
                   <span>카카오</span>
                 </li>
-                <!-- <li>
-                    <a href="/" class="btn btn-circle sws_icon btn-fb" @click="facebookLogin"></a>
-                    <span>페이스북</span>
-                </li>-->
+                <li>
+                  <v-facebook-login app-id="2810824608956950" class="btn btn-circle sws_icon btn-fb"></v-facebook-login>
+                  <span>페이스북</span>
+                </li>
                 <li>
                   <NaverLogin
-                  client-id="wot76zDwHaETcFxP4xEM"
-                  callback-url="http://localhost:8080/RegStep00Naver"
-                  :callback-function=callbackFunction
-                  class="btn btn-circle sws_icon btn-naver"
+                    client-id="wot76zDwHaETcFxP4xEM"
+                    callback-url="http://localhost:8080/RegStep00Naver"
+                    :callback-function=callbackFunction
+                    class="btn btn-circle sws_icon btn-naver"
                   />
                   <span>네이버</span>
                 </li>
@@ -83,12 +83,14 @@
 <script>
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
+import VFacebookLogin from 'vue-facebook-login-component'
 import { snsLogin } from '../../api'
 
 export default {
   components: {
     KakaoLogin,
-    NaverLogin
+    NaverLogin,
+    VFacebookLogin
   },
   data () {
     return {

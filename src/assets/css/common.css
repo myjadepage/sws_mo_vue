@@ -931,14 +931,17 @@ icon*/
 .btn-cacao{
   width: 30px;
   height: 30px;
+  margin-right: 5px;
   background-position: -62px -34px;
   background-color: #ffde00;
 }
 .btn-fb{
-  width: 20px;
-  height: 20px;
-  background-position: -125px -3px;
+  margin-left: 4px;
+  width: 55px;
+  height: 55px;
+  background-position: -124px -34px;  
   background-color: #4267b2;
+  border-radius: 2rem !important;
 }
 .btn-naver{
   width: 30px;

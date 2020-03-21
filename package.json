@@ -1,8 +1,8 @@
 {
   "name": "sws_mo",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "jadebe <myjade999@gmail.com>",
+  "description": "shallweshop mobile project",
+  "author": "shallweshop",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -19,6 +19,7 @@
     "vue-awesome-swiper": "^3.1.3",
     "vue-axios": "^2.1.5",
     "vue-daum-postcode": "^0.8.0",
+    "vue-facebook-login-component": "^2.1.6",
     "vue-google-oauth2": "^1.4.0",
     "vue-iamport": "^0.1.2",
     "vue-kakao-login": "^1.0.5",

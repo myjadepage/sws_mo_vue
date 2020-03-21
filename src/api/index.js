@@ -24,7 +24,7 @@ function getCategoryList () {
 
 // 상품세일
 function getSaleProduct () {
-  return axios.get(`${config.baseUrl}products/salelists`)
+  return axios.get(`${config.baseUrl}pbtn-fbroducts/salelists`)
 }
 
 // 주간베스트상품(Weekly)

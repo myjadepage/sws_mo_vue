@@ -13,7 +13,7 @@
             <h4 class="small_title">아이디 입력</h4>
             <div class="wrap-input100">
                 <input class="input100" type="text" name="id" placeholder="아이디(6-12자)" maxlength="12"
-                  v-model="id" required>
+                  v-model="formData.id" required>
                 <span class="focus-input100"></span>
                 <button type="button" class="btn_send" @click="checkId" :isClicked='false'>중복확인</button>
             </div>
@@ -21,7 +21,7 @@
             <h4 class="small_title">비밀번호 입력</h4>
             <div class="wrap-input100">
                 <input class="input100" type="password" name="password" placeholder="영문, 숫자, 특수문자 혼합 6-20자" maxlength="20"
-                  v-model="password" required>
+                  v-model="formData.password" required>
                 <span class="focus-input100"></span>
             </div>
             <div class="wrap-input100">
@@ -33,7 +33,7 @@
             <h4 class="small_title">이메일 입력</h4>
             <div class="wrap-input100">
                 <input class="input100" type="text" name="email" placeholder="이메일 형식에 맞게 입력해 주세요"
-                  v-model="email" required>
+                  v-model="formData.email" @input="checkConFirmPw" required>
                 <span class="focus-input100"></span>
             </div>
     </div>
@@ -50,36 +50,42 @@ import { checkJoinId } from '../../api'
 export default {
   data () {
     return {
-      id: null,
-      password: null,
+      formData: {},
+      // id: null,
+      // password: null,
       confirmpw: null,
-      email: null,
+      // email: null,
       isClicked: false,
       defaultText: 'SWS-AES256-2020!'
     }
   },
   methods: {
+    checkConFirmPw (e) {
+      if (this.confirmpw === null) {
+        alert('비밀번호를 한번 더 입력해 주세요')
+      }
+    },
     /** 아이디 유효성Check
      * 영문, 숫자 6~12자 입력 */
     checkId: function () {
       this.isClicked = true
       const regId = new RegExp('^[A-za-z0-9]{6,12}$')
-      if (this.id === null) {
+      if (this.formData.id === null) {
         alert('아이디를 입력해 주세요')
         return false
-      } else if (!regId.test(this.id)) {
+      } else if (!regId.test(this.formData.id)) {
         alert('영문, 숫자의 아이디 6-12자로 입력해 주세요')
-        this.id = ''
+        this.formData.id = ''
         return false
       } else {
       // 아이디중복체크
-        checkJoinId(this.id)
+        checkJoinId(this.formData.id)
           .then(res => {
             if (res.data.jsonData.resultCode === '0001') {
               alert('사용가능한 아이디입니다.')
             } else if (res.data.jsonData.resultCode === '0003') {
               alert('중복 아이디가 있습니다.')
-              this.id = ''
+              this.formData.id = ''
               return false
             }
           })
@@ -93,39 +99,38 @@ export default {
       // const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
       const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-      if (this.id === null) {
+      if (this.formData.id === null) {
         alert('아이디를 입력해 주세요')
-      } else if (this.password === null) {
-        alert('비밀번호를 입력해 주세요')
-      } else if (regPassword.test(this.password)) {
-        alert('영문,숫자 또는 특수문자로 입력해 주세요')
-        this.password = ''
-      } else if (this.password.length < 7 || this.password.length > 21) {
-        alert('비밀번호를 6-20자로 입력해 주세요')
-        this.password = ''
-      } else if (this.confirmpw === null) {
-        alert('비밀번호를 다시한번 입력해 주세요')
-      } else if (this.password !== this.confirmpw) {
-        alert('비밀번호가 다릅니다.')
-        this.confirmpw = ''
-      } else if (this.email === null) {
-        alert('이메일을 입력해 주세요')
-      } else if (!regEmail.exec(this.email)) {
-        this.email = ''
-        alert('올바른 이메일 주소를 입력하세요')
       } else if (this.isClicked === false) {
         alert('아이디 중복확인을 해주세요')
+      } else if (this.formData.password === null) {
+        alert('비밀번호를 입력해 주세요')
+      } else if (regPassword.test(this.formData.password)) {
+        alert('영문,숫자 또는 특수문자로 입력해 주세요')
+        this.formData.password = ''
+      } else if (this.formData.password.length < 7 || this.formData.password.length > 21) {
+        alert('비밀번호를 6-20자로 입력해 주세요')
+        this.formData.password = ''
+      } else if (this.confirmpw === null) {
+        alert('비밀번호를 다시한번 입력해 주세요')
+      } else if (this.formData.password !== this.confirmpw) {
+        alert('비밀번호가 다릅니다.')
+        this.confirmpw = ''
+      } else if (this.formData.email === null) {
+        alert('이메일을 입력해 주세요')
+      } else if (!regEmail.exec(this.formData.email)) {
+        this.formData.email = ''
+        alert('올바른 이메일 주소를 입력하세요')
       } else {
-        this.$store.state.userInfo.userId = this.id
-        this.$store.state.userInfo.password = change.encrypt(this.defaultText, this.password)
-        this.$store.state.userInfo.email = this.email
+        this.$store.state.userInfo.userId = this.formData.id
+        this.$store.state.userInfo.password = change.encrypt(this.defaultText, this.formData.password)
+        this.$store.state.userInfo.email = this.formData.email
         console.log('this.$store.state.userInfo', this.$store.state.userInfo)
         this.$router.push('/RegStep03')
       }
     }
   }
 }
-// 해결해야할것
 </script>
 
 <style scope>
