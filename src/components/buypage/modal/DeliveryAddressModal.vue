@@ -6,9 +6,9 @@
         <button @click="deliveryBtnClick(0)" class="selected">배송지 목록</button><button @click="deliveryBtnClick(1)">신규 배송지</button>
         </div>
       <ul v-if="currentCat===0" class="addressList">
-        <li v-for="(addr,idx) in addressList" :key="idx"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="addr">
+        <li v-for="(addr,idx) in addresses" :key="idx"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="addr.newAddress">
         <label class="checkmark" :for="'coupon'+idx"></label>
-        <label class="radioLabel" :for="'radio'+idx">{{addr}}</label></li>
+        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}}</label></li>
       </ul>
 
       <div v-if="currentCat===1" class="searchAddrSection">
@@ -16,7 +16,7 @@
         <input type="text" ref="jibun" readonly class="jibun" :value="jibunAddress">
         <input type="text" ref="detailAddr" class="detailAddr" placeholder="상세주소">
         <div class="defualtAddrCheck">
-        <input type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
+        <input ref="defaultAddrCheck" type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
         <label class="checkmark" for="defaultAddrCheck"></label>
         </div>
       </div>
@@ -29,23 +29,18 @@
 
 <script>
 import ModalHeader from './ModalHeader'
-import {getMemberAddrList} from '@/api/index.js'
+import {addMemberAddress} from '@/api/index.js'
 
 export default {
+  props: ['addresses'],
   components: {
     ModalHeader
   },
   created () {
-    // 비동기로 현재 회원 주소 목록 가져와서 data에 넣어줘야 함
-
-    getMemberAddrList(localStorage.getItem('accessToken'))
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
   },
   data () {
     return {
       currentCat: 0,
-      addressList: ['서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플', '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'],
       searchResult: {}
     }
   },
@@ -74,8 +69,19 @@ export default {
         let item = {...this.searchResult}
         item.detail = this.$refs.detailAddr.value
 
-        this.$store.state.postCode = item
-        this.$emit('addrModalClose')
+        let addrInfo = {
+          address: this.$refs.jibun.value,
+          newAddress: this.$refs.addr.value,
+          addressDetail: this.$refs.detailAddr.value,
+          initFlag: this.$refs.defaultAddrCheck.checked ? 1 : 0}
+
+        addMemberAddress(localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'), addrInfo).then(res => {
+          console.log(res)
+          this.$store.state.postCode = item
+          this.$emit('addrModalClose')
+        }).catch(err => {
+          console.log(err)
+        })
       }
     },
     selectAddrClick () {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {postOrders} from '@/api/index.js'
+// import {postOrders} from '@/api/index.js'
 
 export default {
   props: ['finalPrice', 'coupon'],
@@ -50,43 +50,62 @@ export default {
         'qty': optionQty,
         'price': product.price,
         'discount': product.discount,
-        'discountRate': product.discountRate
-        // 'options': [{'prdtOptionSysId': 1, 'optionAmount': 2000}, {'prdtOptionSysId': 10, 'optionAmount': 1000}]
+        'discountRate': product.discountRate,
+        'optionGroups': []
       })
+
+      let idx = 1
+      for (const o of options) {
+        let op = {
+          groupId: idx++, qty: o.count, options: []
+        }
+
+        for (const c of o.contentGroup) {
+          if (c.name === '선택없음') {
+            continue
+          }
+          op.options.push({prdtNormalOptionSysId: c.prdtNormalOptionSysId, optionKeyName: c.name, price: c.price})
+        }
+
+        item.orderProducts[0].optionGroups.push(op)
+      }
 
       sessionStorage.setItem('payItem', JSON.stringify(item))
       sessionStorage.setItem('orderCode', 'S20200306190346-0000003')
 
+      // console.log(item)
+      // console.log(product)
+
       // this.$router.push('/buycomplete')
 
-      postOrders(item)
-        .then(res => { // 주문정보등록 성공 시
-          sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+      // postOrders(item)
+      //   .then(res => { // 주문정보등록 성공 시
+      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
 
-          this.$IMP().request_pay({ // 아임포트 호출
-            pg: 'html5_inicis',
-            pay_method: this.$store.getters.getPayMethod,
-            merchant_uid: res.data.jsonData.res.orderCode,
-            name: this.$store.getters.getProduct.name,
-            amount: this.finalPrice,
-            buyer_email: 'sarkh91@epiens.com',
-            buyer_name: '천곤홍',
-            buyer_tel: '010-2675-0229',
-            buyer_addr: this.$store.getters.getPostCode.address,
-            buyer_postcode: this.$store.getters.getPostCode.zonecode,
-            m_redirect_url: 'm.shallwe.shop/buyComplete'
-          }, (res) => {
-            if (res.sucess) {
-              console.log(res)
-              this.$router.push('/buycomplete/success')
-            } else {
-              this.$router.push('/buycomplete/failure')
-            }
-          })
-        })
-        .catch(error => { // 주문정보등록 실패
-          console.log(error)
-        })
+      //     this.$IMP().request_pay({ // 아임포트 호출
+      //       pg: 'html5_inicis',
+      //       pay_method: this.$store.getters.getPayMethod,
+      //       merchant_uid: res.data.jsonData.res.orderCode,
+      //       name: this.$store.getters.getProduct.name,
+      //       amount: this.finalPrice,
+      //       buyer_email: 'sarkh91@epiens.com',
+      //       buyer_name: '천곤홍',
+      //       buyer_tel: '010-2675-0229',
+      //       buyer_addr: this.$store.getters.getPostCode.address,
+      //       buyer_postcode: this.$store.getters.getPostCode.zonecode,
+      //       m_redirect_url: 'm.shallwe.shop/buyComplete'
+      //     }, (res) => {
+      //       if (res.sucess) {
+      //         console.log(res)
+      //         this.$router.push('/buycomplete/success')
+      //       } else {
+      //         this.$router.push('/buycomplete/failure')
+      //       }
+      //     })
+      //   })
+      //   .catch(error => { // 주문정보등록 실패
+      //     console.log(error)
+      //   })
     }
   }
 }

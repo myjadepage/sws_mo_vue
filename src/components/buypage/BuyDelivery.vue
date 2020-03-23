@@ -10,7 +10,7 @@
           <td>{{ordererInfo.name}}</td>
         </tr>
         <tr>
-          <td>{{member.addr}}</td>
+          <td>{{address}}</td>
         </tr>
         <tr>
           <td>{{ordererInfo.phone}}</td>
@@ -22,10 +22,21 @@
 
 <script>
 export default {
-  props: ['member', 'ordererInfo'],
+  props: ['member', 'ordererInfo', 'addresses'],
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')
+    }
+  },
+  computed: {
+    address () {
+      for (const a of this.addresses) {
+        if (a.initFlag === 1) {
+          return a.newAddress
+        }
+      }
+
+      return this.addresses[0].newAddress
     }
   }
 }

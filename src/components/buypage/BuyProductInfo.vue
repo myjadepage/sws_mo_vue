@@ -3,9 +3,9 @@
     <div class="infoHeader">주문상품 정보</div>
     <div class="prdImg"><img :src="product.smallImageUrl" alt=""></div>
     <div class="prdTitle">[{{product.brandName}}] {{product.name}}</div>
-    <div class="prdOptions" v-if="options">
+    <div class="prdOptions" v-if="options[0].contentName">
       <div v-for="(o,idx) in options" :key="idx">
-        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.contentGroup" :key="i">{{oo|shortString}} </span>
+        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.contentGroup" :key="i">{{oo.name==='선택없음'?'':oo.name}} </span>
         </div>
     </div>
     <div class="prdPriceCnt">

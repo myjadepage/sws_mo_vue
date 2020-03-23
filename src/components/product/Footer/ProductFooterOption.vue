@@ -9,7 +9,7 @@
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <div v-for="(o,i) in item.contentGroup" :key="i">
-          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o}}
+          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o.name}}
         </div>
         <br>
         <div class="countBtnSection">
@@ -45,7 +45,7 @@ export default {
     } else { // 옵션이 없는 상품의 경우
       let p = this.$store.getters.getProduct
       let item = {
-        contentGroup: [p.name],
+        contentGroup: [{name: p.name, prdtNormalOptionSysId: null, price: null}],
         count: 1,
         price: p.price - (p.price * p.discountRate),
         contentName: ''
@@ -92,10 +92,16 @@ export default {
 
       for (let i = 0; i < this.optionContents.length; i++) { // 빈 객체에 현재 선택된 값을 주입
         let o = this.$refs['option' + i][0].value.split('**')
-        item.contentGroup.push(o[0])
+        item.contentGroup.push({name: o[0], prdtNormalOptionSysId: this.options[i].prdtNormalOptionSysId, price: Number(o[1])})
         item.price += Number(o[1])
       }
-      item.contentName = item.contentGroup.join(' ')
+      item.contentGroup.forEach(c => {
+        if (item.contentGroup[item.contentGroup.length - 1] === c) {
+          item.contentName += ' ' + c.name
+        } else {
+          item.contentName += c.name
+        }
+      })
 
       for (const o of this.$store.getters.getSelectedOptions) { // 옵션 중복 체크
         if (o.contentName === item.contentName) {
