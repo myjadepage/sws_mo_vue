@@ -1,6 +1,6 @@
 <template>
 <div class="buyPageMainWrap">
-  <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
+  <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
     <Orderer :member=member />
@@ -9,11 +9,11 @@
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
-    <TotalPriceInfo @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
+    <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
     <BuyFooter :coupon="discountCoupon" :finalPrice="finalPrice" />
 
     <AddrModal @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
-    <!-- <InfoModal @modalClose="modalVisibility = false" v-if="modalVisibility" /> -->
+    <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
 
 </div>
 </template>
@@ -54,6 +54,7 @@ export default {
       couponMode: false,
       finalPrice: 0,
       addrModalVisibility: false,
+      infoModalVisibility: false,
       member: {
       }
     }
@@ -66,6 +67,16 @@ export default {
     addrModalClose () {
       this.addrModalVisibility = false
       this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
+    },
+    infoModalShow () {
+      this.infoModalVisibility = true
+    },
+    infoModalClose () {
+      this.infoModalVisibility = false
+    },
+    allModalClose () {
+      this.infoModalVisibility = false
+      this.addrModalVisibility = false
     },
     discountByPoint (point) {
       this.discountPoint = point

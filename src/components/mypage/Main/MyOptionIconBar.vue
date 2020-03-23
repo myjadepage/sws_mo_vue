@@ -1,7 +1,7 @@
 <template>
   <div class="myOptionBarWrap">
     <span class="cartBtn">
-      <span v-if="cartCnt" class="cartBadge">{{cartCnt}}</span>
+      <span @click="cartBtnClick" v-if="cartCnt" class="cartBadge">{{cartCnt}}</span>
     </span>
     <span class="settingBtn"></span>
     <span class="qaBtn"></span>
@@ -13,6 +13,11 @@ export default {
   data () {
     return {
       cartCnt: 3
+    }
+  },
+  methods: {
+    cartBtnClick () {
+      this.$router.push('/cart')
     }
   }
 }

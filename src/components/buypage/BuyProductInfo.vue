@@ -4,9 +4,9 @@
     <div class="prdImg"><img :src="product.smallImageUrl" alt=""></div>
     <div class="prdTitle">[{{product.brandName}}] {{product.name}}</div>
     <div class="prdOptions" v-if="options">
-      <span v-for="(o,idx) in options" :key="idx">
+      <div v-for="(o,idx) in options" :key="idx">
         [옵션명{{idx+1}}] <span v-for="(oo, i) in o.contentGroup" :key="i">{{oo|shortString}} </span>
-        </span>
+        </div>
     </div>
     <div class="prdPriceCnt">
       {{calcTotalPrice|makeComma}}원 / 수량{{countPrductNum}}개

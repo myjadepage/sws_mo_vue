@@ -95,11 +95,17 @@ export default {
         item.contentGroup.push(o[0])
         item.price += Number(o[1])
       }
-      // if (item.price === 0) {
-      //   item.price = this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)
-      // }
       item.contentName = item.contentGroup.join(' ')
-      // console.log(item)
+
+      for (const o of this.$store.getters.getSelectedOptions) { // 옵션 중복 체크
+        if (o.contentName === item.contentName) {
+          alert('이미 선택된 옵션입니다.')
+          for (let i = 0; i < this.optionContents.length; i++) {
+            this.$refs['option' + i][0].value = ''
+          }
+          return
+        }
+      }
 
       this.$store.commit('addOption', item)
 

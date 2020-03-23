@@ -9,7 +9,7 @@
               <td>{{prdPrice|makeComma}}원</td>
           </tr>
           <tr>
-              <th>배송비</th>
+              <th>배송비<span @click="deliveryInfoClick" class="deliveryInfo">?</span></th>
               <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':'무료배송'}}</td>
           </tr>
           <tr v-if="discount">
@@ -39,6 +39,9 @@ export default {
   methods: {
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+    deliveryInfoClick () {
+      this.$emit('infoBtncilik')
     }
   },
   computed: {
@@ -106,7 +109,20 @@ export default {
 
 .totalPriceWrap table{
     width: 100%;
+}
 
+.totalPriceWrap .deliveryInfo{
+  cursor: pointer;
+  user-select: none;
+  margin-left: 2px;
+  display: inline-block;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  color: #999999;
+  border: 1px solid #999999;
+  border-radius: 15px;
+  line-height: 15px;
 }
 
 .totalPriceWrap th{

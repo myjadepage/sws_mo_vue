@@ -113,7 +113,7 @@ export default {
 <style>
 .deliveryAddrModal{
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 5%;
     width: 90%;
