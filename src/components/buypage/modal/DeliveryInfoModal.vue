@@ -71,7 +71,7 @@ export default {
     margin-bottom: 5px;
   }
 
-  .modalBody li::before{
+  .modalBody .priceInfo li::before,.modalBody .deliveryTypeInfo li::before{
     content: '- ';
   }
 

@@ -51,7 +51,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`${config.baseUrl}orders`, formdata)
+  return axios.post(`http://192.168.1.40:3000/api/v1/orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {
@@ -66,6 +66,17 @@ function payOrders (jsonData, orderSysId) {
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+// 회원 주소 목록 가져오기
+function getMemberAddrList (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`http://192.168.1.40:3000/api/v1/users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -205,5 +216,6 @@ export {
   getBroadCast,
   postOrders,
   payOrders,
-  getUserInfo
+  getUserInfo,
+  getMemberAddrList
 }

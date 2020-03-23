@@ -29,6 +29,7 @@
 
 <script>
 import ModalHeader from './ModalHeader'
+import {getMemberAddrList} from '@/api/index.js'
 
 export default {
   components: {
@@ -36,6 +37,10 @@ export default {
   },
   created () {
     // 비동기로 현재 회원 주소 목록 가져와서 data에 넣어줘야 함
+
+    getMemberAddrList(localStorage.getItem('accessToken'))
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   },
   data () {
     return {

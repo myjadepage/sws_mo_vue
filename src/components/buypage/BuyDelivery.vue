@@ -5,15 +5,15 @@
       <button @click="deliveryBtnClick" class="deliveryConfigBtn">변경</button>
     </div>
     <div class="buyDeliveryBody">
-      <table v-if="member.addr">
+      <table>
         <tr>
-          <td>{{member.name}}</td>
+          <td>{{ordererInfo.name}}</td>
         </tr>
         <tr>
           <td>{{member.addr}}</td>
         </tr>
         <tr>
-          <td>{{member.phone}}</td>
+          <td>{{ordererInfo.phone}}</td>
         </tr>
       </table>
     </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  props: ['member'],
+  props: ['member', 'ordererInfo'],
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')

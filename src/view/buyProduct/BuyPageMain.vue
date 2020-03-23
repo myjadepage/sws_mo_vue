@@ -3,8 +3,8 @@
   <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer :member=member />
-    <Delivery :member=member @deliveryBtnClick="addrModalShow" />
+    <Orderer @orderIsDestCheck="ordererDestChecked" :member=member />
+    <Delivery :ordererInfo="ordererInfo" :member=member @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
@@ -56,12 +56,16 @@ export default {
       addrModalVisibility: false,
       infoModalVisibility: false,
       member: {
-      }
+      },
+      ordererInfo: {}
     }
   },
   methods: {
     addrModalShow () {
       this.addrModalVisibility = true
+    },
+    ordererDestChecked (info) {
+      this.ordererInfo = info
     },
 
     addrModalClose () {
