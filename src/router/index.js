@@ -186,6 +186,41 @@ export default new Router({
       path: '/cart',
       name: 'Cart',
       component: () => import('@/view/cart/CartMain')
+    },
+    {
+      path: '/modifyProfile',
+      name: 'ModifyProfile',
+      component: () => import('@/view/mypage/ModifyProfile')
+    },
+    {
+      path: '/AlertSet',
+      name: 'AlertSet',
+      component: () => import('@/view/mypage/AlertSet')
+    },
+    {
+      path: '/VersionChk',
+      name: 'VersionChk',
+      component: () => import('@/view/mypage/VersionChk')
+    },
+    {
+      path: '/ChangePw',
+      name: 'ChangePw',
+      component: () => import('@/view/mypage/ChangePw')
+    },
+    {
+      path: '/Exchange',
+      name: 'Exchange',
+      component: () => import('@/view/mypage/Exchange')
+    },
+    {
+      path: '/ExchangeDetail',
+      name: 'ExchangeDetail',
+      component: () => import('@/view/mypage/ExchangeDetail')
+    },
+    {
+      path: '/BuyHistory',
+      name: 'BuyHistory',
+      component: () => import('@/view/mypage/BuyHistory')
     }
   ]
 })

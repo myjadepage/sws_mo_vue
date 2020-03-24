@@ -9,7 +9,7 @@
       <div class="profile_id">{{member.id}}</div>
       <div class="profile_name">{{member.name}}</div>
       </div>
-      <span class="ico_edit"></span>
+      <router-link to="/modifyProfile" class="ico_edit"></router-link>
     </div>
     <div class="infoFooter">
         팔로워 <span class="follower">{{formatFollwer}}</span>
