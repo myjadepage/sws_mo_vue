@@ -3,14 +3,14 @@
   <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer @orderIsDestCheck="ordererDestChecked" :member=member />
-    <Delivery :addresses="addresses" :ordererInfo="ordererInfo" :member=member @deliveryBtnClick="addrModalShow" />
+    <Orderer />
+    <Delivery :addresses="addresses" @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
     <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
-    <BuyFooter :coupon="discountCoupon" :finalPrice="finalPrice" />
+    <BuyFooter :addresses="addresses" :coupon="discountCoupon" :finalPrice="finalPrice" />
 
     <AddrModal :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
     <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
@@ -31,16 +31,30 @@ import TotalPriceInfo from '@/components/buypage/TotalPriceInfo'
 import BuyFooter from '@/components/buypage/BuyFooter'
 import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
 import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
-import {getMemberAddrList} from '@/api/index.js'
+import {getMemberAddrList, getAccessToken} from '@/api/index.js'
 
 export default {
   created () {
-    getMemberAddrList(localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'))
-      .then(res => { this.addresses = res.data.jsonData.addresses })
-      .catch(err => console.log(err))
-
-    let m = JSON.parse(sessionStorage.getItem('memberInfo'))
-    this.member = m
+    if (sessionStorage.getItem('accessToken')) {
+      getMemberAddrList(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          this.addresses = res.data.jsonData.addresses
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('accessToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
+    }
     window.scrollTo(0, 0)
   },
   components: {
@@ -60,9 +74,6 @@ export default {
       finalPrice: 0,
       addrModalVisibility: false,
       infoModalVisibility: false,
-      member: {
-      },
-      ordererInfo: {},
       addresses: []
     }
   },
@@ -70,13 +81,26 @@ export default {
     addrModalShow () {
       this.addrModalVisibility = true
     },
-    ordererDestChecked (info) {
-      this.ordererInfo = info
-    },
-
     addrModalClose () {
+      if (sessionStorage.getItem('accessToken')) {
+        getMemberAddrList(sessionStorage.getItem('accessToken'))
+          .then(res => { this.addresses = res.data.jsonData.addresses })
+          .catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('accessToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
+      }
       this.addrModalVisibility = false
-      this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
     },
     infoModalShow () {
       this.infoModalVisibility = true

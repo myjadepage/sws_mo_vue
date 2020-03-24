@@ -6,12 +6,13 @@
         <button @click="deliveryBtnClick(0)" class="selected">배송지 목록</button><button @click="deliveryBtnClick(1)">신규 배송지</button>
         </div>
       <ul v-if="currentCat===0" class="addressList">
-        <li v-for="(addr,idx) in addresses" :key="idx"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="addr.newAddress">
+        <li v-for="(addr,idx) in addresses" :key="addr.userAddressSysId"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="idx">
         <label class="checkmark" :for="'coupon'+idx"></label>
-        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}}</label></li>
+        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}} {{addr.addressDetail}}</label></li>
       </ul>
 
       <div v-if="currentCat===1" class="searchAddrSection">
+        <input type="text" ref="zipcode"  class="zipcode" :value="zipcode" hidden>
         <input type="text" ref="addr" readonly class="address" :value="mainAddress"><button @click="searchAddrBtnClick" class="searchAddrBtn">주소 검색</button>
         <input type="text" ref="jibun" readonly class="jibun" :value="jibunAddress">
         <input type="text" ref="detailAddr" class="detailAddr" placeholder="상세주소">
@@ -29,7 +30,7 @@
 
 <script>
 import ModalHeader from './ModalHeader'
-import {addMemberAddress} from '@/api/index.js'
+import {addMemberAddress, getAccessToken} from '@/api/index.js'
 
 export default {
   props: ['addresses'],
@@ -70,18 +71,31 @@ export default {
         item.detail = this.$refs.detailAddr.value
 
         let addrInfo = {
+          zipCode: this.$refs.zipcode.value,
           address: this.$refs.jibun.value,
           newAddress: this.$refs.addr.value,
           addressDetail: this.$refs.detailAddr.value,
           initFlag: this.$refs.defaultAddrCheck.checked ? 1 : 0}
 
-        addMemberAddress(localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'), addrInfo).then(res => {
-          console.log(res)
-          this.$store.state.postCode = item
-          this.$emit('addrModalClose')
-        }).catch(err => {
-          console.log(err)
-        })
+        if (sessionStorage.getItem('accessToken')) {
+          addMemberAddress(sessionStorage.getItem('accessToken'), addrInfo).then(res => {
+            this.$store.state.postCode = item
+            this.$emit('addrModalClose')
+          }).catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('accessToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
+        }
       }
     },
     selectAddrClick () {
@@ -96,12 +110,7 @@ export default {
         return
       }
 
-      this.$store.state.postCode = {
-        ...this.$store.state.postCode,
-        zonecode: '11111',
-        address: val,
-        detail: ''
-      }
+      this.$store.state.postCode = {address: this.addresses[val].newAddress, detail: this.addresses[val].addressDetail, zonecode: this.addresses[val].zipCode}
 
       this.$emit('addrModalClose')
     }
@@ -115,6 +124,11 @@ export default {
     jibunAddress () {
       if (this.searchResult) {
         return this.searchResult.jibunAddress
+      }
+    },
+    zipcode () {
+      if (this.searchResult) {
+        return this.searchResult.zonecode
       }
     }
   }
@@ -198,22 +212,6 @@ export default {
     margin-bottom: 10px;
   }
 
-  .deliveryAddrModal  .searchAddrSection input[type='checkbox']{
-    all: unset;
-    display: inline-block;
-    border: 1.5px solid #cccccc;
-    border-radius: 20px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked{
-    border: 1.5px solid #e61754;
-  }
-  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked+.checkmark{
-    border: 1.5px solid #e61754;
-  }
-
   .deliveryAddrModal .addressList{
     margin: 36px 5% 50px;
     text-align: left;
@@ -249,5 +247,46 @@ export default {
   .deliveryAddrModal .addressList li{
     margin-bottom: 30px;
   }
+
+  .deliveryAddrModal .modalBody .defualtAddrCheck input[type="checkbox"]{
+all: unset;
+display: inline-block;
+border: 1px solid #cccccc;
+width: 18px;
+height: 18px;
+border-radius: 20px;
+margin-right: 5px;
+}
+
+.deliveryAddrModal .modalBody .defualtAddrCheck input[type="checkbox"]::before{
+content: '';
+background: url('../../../assets/img/ico/ico_checkbox_label_un.png');
+background-size: 100%;
+float: right;
+width: 10px;
+height: 7px;
+position: relative;
+right: 4px;
+top: 6px;
+}
+
+.deliveryAddrModal .modalBody .defualtAddrCheck input[type="checkbox"]:checked{
+  border: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #e61754;
+}
+
+.deliveryAddrModal .modalBody .defualtAddrCheck input[type="checkbox"]:checked::before{
+  content: '';
+  background: url('../../../assets/img/ico/ico_checkbox_label.png');
+  background-size: 100%;
+  float: right;
+  width: 10px;
+  height: 7px;
+  position: relative;
+  right: 5px;
+  top: 7px;
+}
 
 </style>

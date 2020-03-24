@@ -17,6 +17,8 @@ export const store = new Vuex.Store({
     selectedOptions: [],
     searchCat: 0,
     isAuth: false,
+    ordererInfo: {name: '', phone: '', email: ''},
+    destInfo: {name: '', phone: ''},
     payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0}
   },
   getters: {
@@ -32,7 +34,9 @@ export const store = new Vuex.Store({
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
     getSearchCat: state => state.searchCat,
     getPostCode: state => state.postCode,
-    getPayPriceInfo: state => state.payPriceInfo
+    getPayPriceInfo: state => state.payPriceInfo,
+    getOrdererInfo: state => state.ordererInfo,
+    getDestInfo: state => state.destInfo
   },
   mutations: {
     // 로그인 성공시
@@ -80,6 +84,12 @@ export const store = new Vuex.Store({
     },
     updatePayPriceInfo (state, {name, price}) {
       state.payPriceInfo[name] = price
+    },
+    updateOrdererInfo (state, [name, value]) {
+      state.ordererInfo[name] = value
+    },
+    updateDestInfo (state, [name, value]) {
+      state.destInfo[name] = value
     }
   },
   actions: {
@@ -97,8 +107,8 @@ export const store = new Vuex.Store({
             let accessToken = res.data.jsonData.accessToken
             let refreshToken = res.data.jsonData.refreshToken
 
-            localStorage.setItem('accessToken', accessToken)
-            localStorage.setItem('refreshToken', refreshToken)
+            sessionStorage.setItem('accessToken', accessToken)
+            sessionStorage.setItem('refreshToken', refreshToken)
 
             getUserInfo(accessToken).then(r => {
               sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))

@@ -10,9 +10,9 @@
       </tr>
       <tr>
         <th>배송비</th>
-        <td>{{payInfo.deliveryPrice|makeComma}}원</td>
+        <td>{{payInfo.deliveryPrice?formatPrice(payInfo.deliveryPrice)+'원':'무료배송'}}</td>
       </tr>
-      <tr>
+      <tr v-if="payInfo.discount">
         <th>할인금액</th>
         <td>-{{payInfo.discount|makeComma}}원</td>
       </tr>
@@ -38,6 +38,11 @@ export default {
   computed: {
     totalPrice () {
       return this.payInfo.prdtPrice + this.payInfo.deliveryPrice - this.payInfo.discount
+    }
+  },
+  methods: {
+    formatPrice (money) {
+      return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 

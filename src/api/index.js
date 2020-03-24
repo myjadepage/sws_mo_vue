@@ -74,47 +74,30 @@ function getUserInfo (accessToken) {
 }
 
 // 회원 주소 목록 가져오기
-function getMemberAddrList (accessToken, refreshToken) {
-  if (!isTokenExpired(accessToken)) {
-    let userSysId = parseJwt(accessToken).authSysId
-    return axios.get(`http://192.168.1.20:3000/api/v1/users/${userSysId}/listaddress`, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-  } else {
-    getAccessToken(refreshToken).then(res => {
-      getMemberAddrList(res.data.jsonData.accessToken, refreshToken)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+function getMemberAddrList (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`http://192.168.1.20:3000/api/v1/users/${userSysId}/listaddress`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
 }
 
 // 회원 주소 등록
-function addMemberAddress (accessToken, refreshToken, addrInfo) {
-  if (!isTokenExpired(accessToken)) {
-    let userSysId = parseJwt(accessToken).authSysId
-    let formdata = new FormData()
-    formdata.set('jsonData', JSON.stringify(addrInfo))
-
-    return axios({
-      method: 'post',
-      url: `http://192.168.1.20:3000/api/v1/users/${userSysId}/address`,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${accessToken}`
-      },
-      data: formdata
-    })
-  } else {
-    getAccessToken(refreshToken).then(res => {
-      addMemberAddress(res.data.jsonData.accessToken, refreshToken)
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+function addMemberAddress (accessToken, addrInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addrInfo))
+  return axios({
+    method: 'post',
+    url: `http://192.168.1.20:3000/api/v1/users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
 }
 
 /**
@@ -232,7 +215,9 @@ function parseJwt (token) {
 }
 
 function getAccessToken (refreshToken) {
-  return axios.post(`http://192.168.1.20:3000/api/v1/auth/accesstoken`, {
+  return axios({
+    method: 'post',
+    url: `http://192.168.1.20:3000/api/v1/auth/accesstoken`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${refreshToken}`
@@ -241,17 +226,18 @@ function getAccessToken (refreshToken) {
 }
 
 // 토큰 만료 여부 확인 (true:만료 false:기한남음)
-function isTokenExpired (token) {
-  let tokenExp = parseJwt(token).exp * 1000
-  let now = new Date().getTime()
-  let timeDiff = tokenExp - now
+// function isTokenExpired (token) {
+//   let tokenExp = parseJwt(token).exp * 1000
+//   let now = new Date().getTime()
+//   let timeDiff = tokenExp - now
 
-  if (timeDiff < 0) {
-    return true
-  } else {
-    return false
-  }
-}
+//   if (timeDiff < 0) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
+
 // let dayDiff = Math.ceil(Math.abs(timeDiff) / (1000 * 60 * 60 * 24))
 export {
   getProductList,
@@ -273,5 +259,6 @@ export {
   payOrders,
   getUserInfo,
   getMemberAddrList,
-  addMemberAddress
+  addMemberAddress,
+  getAccessToken
 }

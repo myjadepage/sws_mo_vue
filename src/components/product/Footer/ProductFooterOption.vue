@@ -16,7 +16,7 @@
         <button class="countBtn" @click="countDecraese(idx)"><span class="ico_minus"></span></button><input @keypress.enter="countSet(idx)" @blur="countSet(idx)" class="count" type="number" min="0" max="999" :value="optionCnt(idx)">
         <button class="countBtn" @click="countIncrease(idx)"><span class="ico_plus"></span></button>
         </div>
-        <div class="optionPrice">{{calcPrice(idx)|makeComma}}<span class="won">원</span> <span @click="deleteOption(idx)"  class="ico_times"></span></div>
+        <div class="optionPrice">{{calcPrice(idx)|makeComma}}<span class="won">원</span> <span v-if="options.length > 0" @click="deleteOption(idx)"  class="ico_times"></span></div>
       </div>
     </div>
 

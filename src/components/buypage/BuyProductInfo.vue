@@ -66,6 +66,7 @@ export default {
   background-color: #fff;
   padding: 15px 12px;
   font-size: 15px;
+  min-height: 108px;
 }
 
 .buyPrdInfoWrap .prdImg img{

@@ -1,28 +1,32 @@
 <template>
   <div class="buyDeliveryWrap">
     <div class="buyDeliveryHeader">
-      배송정보
-      <button @click="deliveryBtnClick" class="deliveryConfigBtn">변경</button>
+      배송지 정보
+      <button @click="deliveryBtnClick" class="deliveryConfigBtn">주소선택</button>
     </div>
     <div class="buyDeliveryBody">
-      <table>
-        <tr>
-          <td>{{ordererInfo.name}}</td>
-        </tr>
-        <tr>
-          <td>{{address}}</td>
-        </tr>
-        <tr>
-          <td>{{ordererInfo.phone}}</td>
-        </tr>
-      </table>
+      <div class="form-group">
+        <label for="destName">배송자 이름</label>
+        <input v-model="name" id="destName" type="text">
+        </div>
+
+        <div class="form-group">
+        <label for="destPhone">휴대폰 번호</label>
+        <input v-model="phone" id="destPhone" type="text" placeholder="“-” 없이 입력">
+        </div>
+
+        <div class="address">
+        <label for="">주소</label>
+        <input type="text" :value="address" disabled>
+        <input type="text" :value="detailAddr" disabled>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['member', 'ordererInfo', 'addresses'],
+  props: ['addresses'],
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')
@@ -30,13 +34,30 @@ export default {
   },
   computed: {
     address () {
-      for (const a of this.addresses) {
-        if (a.initFlag === 1) {
-          return a.newAddress
-        }
+      if (this.$store.getters.getPostCode) {
+        return this.$store.getters.getPostCode.address
       }
-
-      return this.addresses[0].newAddress
+    },
+    detailAddr () {
+      if (this.$store.getters.getPostCode) {
+        return this.$store.getters.getPostCode.detail
+      }
+    },
+    name: {
+      get () {
+        return this.$store.getters.getDestInfo.name
+      },
+      set (value) {
+        this.$store.commit('updateDestInfo', ['name', value])
+      }
+    },
+    phone: {
+      get () {
+        return this.$store.getters.getDestInfo.phone
+      },
+      set (value) {
+        this.$store.commit('updateDestInfo', ['phone', value])
+      }
     }
   }
 }
@@ -57,19 +78,55 @@ export default {
 
 .buyDeliveryWrap .buyDeliveryHeader button{
   float: right;
-  width: 50px;
+  width: 70px;
   height: 30px;
   font-size: 13px;
   color: #666666;
   border: 1px solid #eeeeee;
   border-radius: 2px;
 }
-
-.buyDeliveryWrap .buyDeliveryBody table{
-  width: 100%;
+.buyDeliveryWrap .buyDeliveryBody .form-group{
+text-align: right;
+margin-bottom: 15px
 }
 
-.buyDeliveryWrap .buyDeliveryBody td{
-  font-size: 15px;
+.buyDeliveryWrap .buyDeliveryBody .address{
+text-align: right;
 }
+
+.buyDeliveryWrap .buyDeliveryBody input[type="text"]{
+  all: unset;
+  height: 30px;
+  border: 1px solid #eeeeee;
+  padding-left: 5px;
+  text-align: left;
+  width: 66%;
+}
+
+.buyDeliveryWrap .buyDeliveryBody input[type="text"]::placeholder{
+  font-size: 14px;
+  font-weight: normal;
+  color: #999999;
+}
+
+.buyDeliveryWrap .buyDeliveryBody .address input[type="text"]{
+  margin-bottom: 5px;
+  background-color: #f9f9f9;
+  color: #999999;
+}
+
+.buyDeliveryWrap .buyDeliveryBody label{
+text-align: left;
+line-height: 30px;
+float: left;
+width: 73px;
+font-size: 15px;
+margin-right: 33px;
+color: #111111;
+}
+
+.buyDeliveryWrap .buyDeliveryBody .address label{
+  margin-bottom: 20px;
+}
+
 </style>
