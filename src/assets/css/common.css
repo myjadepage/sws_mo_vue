@@ -2023,12 +2023,16 @@ html, body{
     float:left;
     width:70px;
     height:70px;
+    margin-bottom:10px;
     margin-right:10px;
     background:#f3f3f3;
 }
 .itemList .itemBody .txtBox{
     display:block;
     padding-left:80px;
+}
+.itemList .itemBody .txtBox.chngFin{
+  text-decoration:line-through;
 }
 .itemList .itemBody .itemTitle{
     font-size:14px;
@@ -2125,6 +2129,9 @@ html, body{
 }
 .itemList .ibBtns .col2{
     width:calc( (100% - 5px) / 2);
+}
+.itemList .ibBtns .col1{
+  width:100%;
 }
 .itemList .ibBtns .btn-first{
     margin-left:0;
@@ -2262,17 +2269,17 @@ html, body{
 
 
 
-.mypage .emptyBox{
+.exchange .emptyBox{
     padding-top:50%;
 }
-.mypage .emptyBox .txtBox{
+.exchange .emptyBox .txtBox{
     width:100%;
     text-align:center;
 }
-.mypage .emptyBox .txtBox img{
+.exchange .emptyBox .txtBox img{
     width:67px;
 }
-.mypage .emptyBox .txtBox p{
+.exchange .emptyBox .txtBox p{
     margin-top:25px;
     font-size:16px;
     font-weight:500;
@@ -2304,6 +2311,75 @@ html, body{
     font-weight:500;
     padding-bottom:4px;
     border-bottom:1px solid #eee;
+}
+
+
+
+.modalBg{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:100;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+}
+.modalBg .modalWrap{
+  overflow: hidden;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:80%;
+  background:#fff;
+  border-radius: 8px;
+  transform:translate(-50%, -50%);
+  -webkit-transform:translate(-50%, -50%);
+  -moz-transform:translate(-50%, -50%);
+}
+.modalBg .modalHeader{
+  margin:14px 0;
+  font-size:16px;
+  font-size:500;
+  color:#111;
+  text-align:center;
+}
+.modalBg .modalBody{
+  margin-bottom:30px;
+  padding:0 15px;
+  font-size:15px;
+  color:#111;
+  text-align:center;
+}
+.modalBg .btnsWrap{
+  font-size:0;
+}
+.modalBg .btnsWrap button{
+  display:inline-block;
+  width:100%;
+  height:45px;
+  margin:0;
+  border-top:1px solid #eee;
+  text-align:center;
+  font-size:15px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.modalBg .btnsWrap.col2 button{
+  width:50%;
+  border-left:1px solid #eee;
+}
+.modalBg .btnsWrap.col2 button:nth-of-type(1){
+  border-left:none;
+}
+.modalBg .btnsWrap.col2 button:nth-of-type(2){
+  margin:0;
+}
+.modalBg .btnsWrap .btn_cancle{
+  color:#111;
+}
+.modalBg .btnsWrap .btn_submit{
+  color:#fff;
+  background:#e61754;
 }
 
 
@@ -2504,6 +2580,7 @@ html, body{
     display:block;
     width:100%;
     padding:0 22px 10px 22px;
+    border-top:1px solid #eee;
     box-sizing: border-box;
 }
 .chngPw h2{
@@ -2605,6 +2682,7 @@ html, body{
 .itemList.recent .listHead{
     margin-top:0;
     padding-bottom:10px;
+    border-top:1px solid #eee;
 }
 .itemList.recent .listHead:after{
     display:none;
@@ -2637,6 +2715,189 @@ html, body{
     width:70px;
 }
  
+
+
+
+
+.myreview .tabBox{
+  padding:10px 22px 0;
+  font-size:0;
+  background:#fff;
+  border-top:1px solid #eee;
+}
+.myreview .tabBox button{
+  display:inline-block;
+  width:50%;
+  height:44px;
+  border-bottom:1px solid #eee;
+  color:#111;
+  font-size:16px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.myreview .tabBox button.on{
+  border-bottom:4px solid #d61754;
+  color:#d61754;
+  font-weight:500;
+}
+.myreview .reviewBox{
+  clear:both;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #eee;
+}
+.myreview .reviewBox .stars img{
+  width:12px;
+}
+.myreview .reviewBox .reviewPara{
+  margin:10px 0;
+  font-size:14px;
+  color:#111;
+}
+.myreview .reviewBox .icos{
+  overflow: hidden;
+  margin-top:10px;
+}
+.myreview .reviewBox .goodBox{
+  float:left;
+  font-size:0;
+}
+.myreview .reviewBox .goodBox p{
+  display:inline-block;
+  padding-left:20px;
+  font-size:12px;
+  color:#666;
+  vertical-align: middle;
+}
+.myreview .reviewBox .goodBox .good{
+  margin-right:15px;
+  background:url('../img/ico/like@3x.png') 0 50% no-repeat;
+  background-size:17px 15px;
+}
+.myreview .reviewBox .goodBox .bad{
+  background:url('../img/ico/like-copy@3x.png') 0 50% no-repeat;
+  background-size:17px 15px;
+}
+.myreview .reviewBox .meadiaBox{
+  float:right;
+  font-size:0;
+}
+.myreview .reviewBox .meadiaBox p{
+  display:inline-block;
+  height:20px;
+  padding-left:30px;
+  font-size:12px;
+  color:#666;
+  vertical-align: middle;
+}
+.myreview .reviewBox .meadiaBox span{
+  position: absolute;
+  z-index:-1;
+  font-size:1;
+}
+.myreview .reviewBox .meadiaBox .mov{
+  background:url('../img/ico/photo-copy@3x.png') 0 50% no-repeat;
+  background-size:26px 20px;
+}
+.myreview .reviewBox .meadiaBox .pic{
+  margin-left:10px;
+  background:url('../img/ico/photo@3x.png') 0 50% no-repeat;
+  background-size:26px 20px;
+}
+
+
+.followBlock{
+  padding:20px 12px;
+  border-top:1px solid #eee;
+}
+.searchBox{
+  overflow: hidden;
+  height:40px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:0;
+  box-sizing: border-box;
+}
+.searchBox .inputBox{
+  position: relative;
+  display:inline-block;
+  width:calc(100% - 40px);
+  height:100%;
+  font-size: 15px;
+  color:#111;
+  vertical-align: middle;
+}
+.searchBox .inputBox input{
+  border:none;
+  width:100%;
+  height:100%;
+  padding:0 40px 0 10px;
+  box-sizing: border-box;
+}
+.searchBox .inputBox .btn_remove{
+  position: absolute;
+  top:10px;
+  right:10px;
+  display:block;
+  width:18px;
+  height:18px;
+}
+.searchBox .inputBox .btn_remove img{
+  display:block;
+  width:100%;
+}
+.searchBox .search{
+  display:inline-block;
+  width:40px;
+  height:100%;
+  vertical-align: middle;
+}
+.searchBox .search img{
+  display:block;
+  width:21px;
+  margin:0 auto;
+}
+.followBlock  .userList{
+  margin:20px 0;
+}
+.followBlock  .userList .item{
+  margin-top:25px;
+  font-size:0;
+}
+.followBlock  .userList .proPic,
+.followBlock  .userList .center,
+.followBlock  .userList .btn_follow{
+  display:inline-block;
+  font-size:12px;
+  vertical-align: middle;
+}
+.followBlock  .userList .proPic{
+  width:45px;
+  height:45px;
+  border:1px solid #eee;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.followBlock  .userList .center{
+  width:calc(100% - 135px);
+  margin:0 10px;
+}
+.followBlock  .userList .center .userId{
+  font-size:14px;
+  color:#111;
+}
+.followBlock  .userList .center .userNick{
+  color:#666;
+}
+.followBlock  .userList .item:first-child{
+  margin-top:0;
+}
+.followBlock  .userList .btn_follow{
+  width:70px;
+  height:28px;
+  line-height:26px;
+  border-radius:14px;
+}
 
 
 

@@ -221,6 +221,26 @@ export default new Router({
       path: '/BuyHistory',
       name: 'BuyHistory',
       component: () => import('@/view/mypage/BuyHistory')
+    },
+    {
+      path: '/Basket',
+      name: 'Basket',
+      component: () => import('@/view/mypage/Basket')
+    },
+    {
+      path: '/ViewLog',
+      name: 'ViewLog',
+      component: () => import('@/view/mypage/ViewLog')
+    },
+    {
+      path: '/MyReview',
+      name: 'MyReview',
+      component: () => import('@/view/mypage/MyReview')
+    },
+    {
+      path: '/Following',
+      name: 'Following',
+      component: () => import('@/view/mypage/Following')
     }
   ]
 })
