@@ -10,13 +10,11 @@
     <div class="member_con">
         <!-- 일반로그인 -->
         <h2 class="title">기본정보 입력</h2>
-            <h4 class="small_title">아이디 입력</h4>
-<!-- rsa 테스트 -->
-            <!-- <button type="button" class="btn btn-dark" @click="testKey">테스트</button> -->
 
+            <h4 class="small_title">아이디 입력</h4>
             <div class="wrap-input100">
-                <input class="input100" type="text" name="id" placeholder="아이디(6-12자)" maxlength="12"
-                  v-model="formData.id" required>
+                <input class="input100" type="text" name="userId" placeholder="아이디(6-12자)" maxlength="12"
+                  v-model="formData.userId" required>
                 <span class="focus-input100"></span>
                 <button type="button" class="btn_send" @click="checkId" :isClicked='false'>중복확인</button>
             </div>
@@ -36,12 +34,13 @@
             <h4 class="small_title">이메일 입력</h4>
             <div class="wrap-input100">
                 <input class="input100" type="text" name="email" placeholder="이메일 형식에 맞게 입력해 주세요"
-                  v-model="formData.email" @input="checkConFirmPw" required>
+                  v-model="formData.email" @input="checkConfirmPw" required>
                 <span class="focus-input100"></span>
             </div>
     </div>
     <div class="member_foot">
       <button type="button" class="btn btn-block btn-dark" @click="checkJoin">다음</button>
+      <button type="button" class="btn btn-block btn-dark" @click="testKey">다음2</button>
     </div>
 </div>
 </template>
@@ -49,15 +48,15 @@
 <script>
 import { checkJoinId, getPublicKey, checkRSA } from '../../api'
 import JSEncrypt from 'jsencrypt/bin/jsencrypt'
+// const publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA27Bf/sFXPg8cXgLp/n3tqTfKIZ/lcxO3I4K0NfXTXNm49KDmUofzntTS8bPvgcX688ZJRYDwig6a5ZmFE8FFSCdqJuUQ1c9UjnlU4KA7ztHDdPgd+zxCn9+lfaYgDXvwjXQb0t53u001VX5s/eTxsFri9qvMmdDQT4McYN1nIAUsDBDxPAkBQy4+CEddqWCjPLptqdroEUIgQ6fxrVVVzhuIpiG9zcSr/1RLbw6YERBxbVk/Q/CrgC5fKXWYRI5T4+V9MX4BxVvpqR2B+KEfxYQsXvJ2nyV0tKtb+m2hu+HtE4onsoM/lbm0Hw6yMKp/P2MofIyFNTdWeBcyEI3aRwIDAQAB'
 
 export default {
   data () {
     return {
-      formData: {}, // id, password, email
+      formData: {}, // userId, password, email
       confirmpw: null,
-      isClicked: false,
-      publicKey: null,
-      rsaEncStr: null
+      isClicked: false
+      // rsaEncStr: null
     }
   },
   methods: {
@@ -83,7 +82,7 @@ export default {
           console.log('error', error)
         })
     },
-    checkConFirmPw (e) {
+    checkConfirmPw (e) {
       if (this.confirmpw === null) {
         alert('비밀번호를 한번 더 입력해 주세요')
       }
@@ -93,22 +92,22 @@ export default {
     checkId: function () {
       this.isClicked = true
       const regId = new RegExp('^[A-za-z0-9]{6,12}$')
-      if (this.formData.id === null) {
+      if (this.formData.userId === null) {
         alert('아이디를 입력해 주세요')
         return false
-      } else if (!regId.test(this.formData.id)) {
+      } else if (!regId.test(this.formData.userId)) {
         alert('영문, 숫자의 아이디 6-12자로 입력해 주세요')
-        this.formData.id = ''
+        this.formData.userId = ''
         return false
       } else {
       // 아이디중복체크
-        checkJoinId(this.formData.id)
+        checkJoinId(this.formData.userId)
           .then(res => {
             if (res.data.jsonData.resultCode === '0001') {
               alert('사용가능한 아이디입니다.')
             } else if (res.data.jsonData.resultCode === '0003') {
               alert('중복 아이디가 있습니다.')
-              this.formData.id = ''
+              this.formData.userId = ''
               return false
             }
           })
@@ -122,7 +121,7 @@ export default {
       // const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
       const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
-      if (this.formData.id === null) {
+      if (this.formData.userId === null) {
         alert('아이디를 입력해 주세요')
       } else if (this.isClicked === false) {
         alert('아이디 중복확인을 해주세요')
@@ -145,7 +144,7 @@ export default {
         this.formData.email = ''
         alert('올바른 이메일 주소를 입력하세요')
       } else {
-        this.$store.state.userInfo.userId = this.formData.id
+        this.$store.state.userInfo.userId = this.formData.userId
         this.$store.state.userInfo.password = this.formData.password
         this.$store.state.userInfo.email = this.formData.email
         console.log('this.$store.state.userInfo', this.$store.state.userInfo)

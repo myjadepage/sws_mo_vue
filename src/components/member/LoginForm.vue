@@ -42,7 +42,7 @@
           </ul>
             <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
             <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
-          <div class="socialTitle">SNS 간편 로그인</div>
+          <!-- <div class="socialTitle">SNS 간편 로그인</div> -->
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->

@@ -76,13 +76,20 @@ export default {
         alert('필수항목을 체크해 주세요')
       } else if (this.checked[1] !== '02') {
         alert('필수항목을 체크해 주세요')
+      } else if (this.checked[2] === '03') {
+        this.$store.state.userInfo.agreeSellection1 = 1
+      } else if (this.checked[3] === '04') {
+        this.$store.state.userInfo.agreeSellection2 = 1
+      } else if (this.checked[0] === '01' && this.checked[1] === '02') {
+        this.$router.push('/RegStep02')
       } else {
-        if (this.$route.params.key === 'sns') { // sns간편가입시
-          this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
-        } else {
-          this.$router.push('/RegStep02')
-        }
+        this.$router.push('/RegStep02')
       }
+      // if (this.$route.params.key === 'sns') { // sns간편가입시
+      //   this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
+      // } else {
+      //   this.$router.push('/RegStep02')
+      // }
     }
   }
 }
