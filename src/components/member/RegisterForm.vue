@@ -11,6 +11,9 @@
         <!-- 일반로그인 -->
         <h2 class="title">기본정보 입력</h2>
             <h4 class="small_title">아이디 입력</h4>
+<!-- rsa 테스트 -->
+            <!-- <button type="button" class="btn btn-dark" @click="testKey">테스트</button> -->
+
             <div class="wrap-input100">
                 <input class="input100" type="text" name="id" placeholder="아이디(6-12자)" maxlength="12"
                   v-model="formData.id" required>
@@ -44,22 +47,42 @@
 </template>
 
 <script>
-import change from 'aes256'
-import { checkJoinId } from '../../api'
+import { checkJoinId, getPublicKey, checkRSA } from '../../api'
+import JSEncrypt from 'jsencrypt/bin/jsencrypt'
 
 export default {
   data () {
     return {
-      formData: {},
-      // id: null,
-      // password: null,
+      formData: {}, // id, password, email
       confirmpw: null,
-      // email: null,
       isClicked: false,
-      defaultText: 'SWS-AES256-2020!'
+      publicKey: null,
+      rsaEncStr: null
     }
   },
   methods: {
+    testKey () {
+      // 암호화 하기
+      getPublicKey()
+        .then(res => {
+          this.publicKey = res.data.jsonData.res.publicKey
+          console.log('publicKey', this.publicKey)
+          let encryptor = new JSEncrypt()
+          encryptor.setPublicKey(this.publicKey)
+          this.rsaEncStr = encryptor.encrypt('123456789a')
+          console.log('rsapw', this.rsaEncStr)
+          checkRSA(this.rsaEncStr)
+            .then(res => {
+              console.log('암호화 화깅ㄴ', res)
+            })
+            .catch(error => {
+              console.log('error', error)
+            })
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+    },
     checkConFirmPw (e) {
       if (this.confirmpw === null) {
         alert('비밀번호를 한번 더 입력해 주세요')
@@ -123,7 +146,7 @@ export default {
         alert('올바른 이메일 주소를 입력하세요')
       } else {
         this.$store.state.userInfo.userId = this.formData.id
-        this.$store.state.userInfo.password = change.encrypt(this.defaultText, this.formData.password)
+        this.$store.state.userInfo.password = this.formData.password
         this.$store.state.userInfo.email = this.formData.email
         console.log('this.$store.state.userInfo', this.$store.state.userInfo)
         this.$router.push('/RegStep03')

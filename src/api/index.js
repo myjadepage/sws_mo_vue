@@ -90,6 +90,19 @@ function getBroadCast (id) {
  *
  * 회원가입
  */
+// 공개키 조회
+function getPublicKey () {
+  return axios.get(`${config.baseUrl2}auth/publickey`)
+}
+// RSA암호화 확인
+function checkRSA (rsaEncStr) {
+  const jsonData = {
+    'rsaEncStr': rsaEncStr
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl2}auth/chkrsa`, formdata)
+}
 // 아이디 중복확인
 function checkJoinId (id) {
   const jsonData = {
@@ -189,19 +202,21 @@ function parseJwt (token) {
 }
 
 export {
+  getPublicKey,
+  checkRSA,
+  snsLogin,
+  sendSms,
+  checkJoinId,
+  chkSmsAuth,
+  userLogin,
+  createtUser,
   getProductList,
   getCategoryList,
   getSaleProduct,
   getWeeklyProduct,
   getLiveProduct,
-  createtUser,
-  sendSms,
-  checkJoinId,
-  chkSmsAuth,
-  userLogin,
   retauthMine,
   getProduct,
-  snsLogin,
   getBrandList,
   getBroadCast,
   postOrders,

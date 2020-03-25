@@ -6,7 +6,7 @@
 
 <script>
 import MediaLive from '@/components/product/ProductMediaLive'
-import {getProduct} from '@/api/index'
+import { getProduct } from '@/api/index'
 
 export default {
   created () {

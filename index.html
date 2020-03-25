@@ -17,26 +17,23 @@
 
 <body>
     <div id="app"></div>
-    <a id="kakao-login-btn"></a>
+    <!-- <a id="kakao-login-btn"></a> -->
     <!-- built files will be auto injected -->    
     <script type='text/javascript'>
         //<![CDATA[
           // 사용할 앱의 JavaScript 키를 설정해 주세요.
-          Kakao.init('78eed5dbee80e670a64a4e79c08ed7a9');
+        //   Kakao.init('78eed5dbee80e670a64a4e79c08ed7a9');
           // 카카오 로그인 버튼을 생성합니다.
-          Kakao.Auth.createLoginButton({
-            container: '#kakao-login-btn',
-            success: function(authObj) {
-                console.log('성공', authObj)
-              alert(JSON.stringify(authObj));
-            },
-            fail: function(err) {
-                console.log('실패', err)
-               alert(JSON.stringify(err));
-            }
-          });
+        //   Kakao.Auth.createLoginButton({
+        //     container: '#kakao-login-btn',
+        //     success: function(authObj) {
+        //       alert(JSON.stringify(authObj));
+        //     },
+        //     fail: function(err) {
+        //        alert(JSON.stringify(err));
+        //     }
+        //   });
         //]]>
-      </script>
+    </script>
 </body>
-
 </html>

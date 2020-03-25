@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import change from 'aes256'
 import { chkSmsAuth, sendSms, createtUser } from '../../api'
 
 export default {
@@ -47,8 +46,7 @@ export default {
       authNo: null,
       countTime: null,
       isClickedSend: false,
-      isClickedCheck: false,
-      defaultText: 'SWS-AES256-2020!'
+      isClickedCheck: false
     }
   },
   methods: {
@@ -90,7 +88,7 @@ export default {
             case '0002' : alert('인증에 실패하였습니다.')
               break
             case '0001' : alert('인증에 성공하였습니다.')
-              this.$store.state.userInfo.phone = change.encrypt(this.defaultText, this.phone)
+              this.$store.state.userInfo.phone = this.phone
           }
         })
         .catch(function (error) {

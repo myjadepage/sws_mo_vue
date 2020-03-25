@@ -137,7 +137,8 @@ export default {
     onSuccess: function (data) {
       var vm = this
       console.log('success', data)
-      snsLogin(1, data.access_token, '000-000-000')
+
+      snsLogin(1, data.access_token)
         .then(res => {
           console.log('accees', res)
           vm.$router.push('/RegStep00')

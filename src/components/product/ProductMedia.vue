@@ -60,7 +60,7 @@ export default {
     return {
       mediaDirection: 0,
       mediaMode: 0,
-      item: {}
+      item: { }
     }
   },
   mounted: function () {

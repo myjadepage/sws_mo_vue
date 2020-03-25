@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
+  computed: {
+    ...mapState(['isLogin'])
+  },
   mounted: function () { // flowplayer 스크립트 넣기
     const flowplayer = document.createElement('script')
     flowplayer.setAttribute('src', '/static/js/flowplayer.min.js')

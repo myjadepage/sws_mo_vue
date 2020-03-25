@@ -16,17 +16,17 @@ const isAuthUser = (to, from, next) => {
   })
 }
 
-const isAuthUserGoogle = (to, from, next) => {
-  console.log('store.state.isLogin', store.state.isLogin)
-  store.dispatch('getUserInfoGoogle').then(() => {
-    if (store.state.isLogin === false) {
-      alert('로그인이 필요한 화면입니다.')
-      next('/Login')
-    } else {
-      next()
-    }
-  })
-}
+// const isAuthUserGoogle = (to, from, next) => {
+//   console.log('store.state.isLogin', store.state.isLogin)
+//   store.dispatch('getUserInfoGoogle').then(() => {
+//     if (store.state.isLogin === false) {
+//       alert('로그인이 필요한 화면입니다.')
+//       next('/Login')
+//     } else {
+//       next()
+//     }
+//   })
+// }
 
 export default new Router({
   mode: 'history',
@@ -142,8 +142,8 @@ export default new Router({
       path: '/MyPage',
       name: 'MyPage',
       beforeEach: {
-        isAuthUser,
-        isAuthUserGoogle
+        isAuthUser
+        // isAuthUserGoogle
       },
       component: () => import('@/view/mypage/MainPage')
     },
