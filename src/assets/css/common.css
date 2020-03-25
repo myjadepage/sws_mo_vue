@@ -216,7 +216,6 @@ button {
 }
 #swsContent {
   width: 100%;
-  padding-top: 55px
 }
 #swsHead .inner_head {
   position: relative;
@@ -233,11 +232,6 @@ button {
   min-width: 320px
 }
 .head_sws {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
   min-width: 320px;
   -webkit-transform: translate3d(0, 0, 0)
 }
@@ -249,7 +243,7 @@ button {
 .head_sws .common-header-logo,
 .common-header-title {
   position: relative;
-  height: 55px;
+  height: 45px;
   background-color: #fff
 }
 .head_sws .common-header-logo .tit_main_logo {
@@ -280,40 +274,55 @@ button {
   white-space: nowrap;
   text-overflow: ellipsis
 }
+.head_sws .wrap_util{
+  height:45px;
+  background:#fff;
+}
 .head_sws .box_menu_left {
   position: absolute;
   z-index: 20;
   top: 0;
-  left: 0
+  left: 14px
 }
 .head_sws .box_menu_left .btn_menu {
   float: left;
-  width: 43px;
-  height: 55px
+  width: 40px;
+  height: 45px
 }
 .head_sws .box_menu_left .btn_menu .ico_menu {
   display: block;
   width: 20px;
   height: 30px;
-  margin: 16px auto 0;
+  margin: 13px auto 0;
   background-position: -181px 0
 }
+.tit_main_logo{
+  float:left;
+  display:block;
+  width:50px;
+  height:19px;
+  margin-top:12px;
+  margin-left:5px;
+  background:url('../img/sws-bi-black@3x.png') 50% 50% no-repeat;
+  background-size:100%;
+}
+
 .head_sws .box_menu_right {
   position: absolute;
   top: 0;
-  right: 0
+  right: 6px;
 }
 .head_sws .box_menu_right .common-header-search {
   float: left;
   width: 53px;
-  height: 55px
+  height: 45px
 }
 .head_sws .box_menu_right .common-header-search .link_search {
   display: block;
   width: 21px;
   height: 21px;
   position: relative;
-  top: 14px;
+  top: 12px;
   left: 18px
 }
 
@@ -476,6 +485,12 @@ input[type="search"]::-webkit-search-cancel-button {
   height: 22px;
   background-position: -170px 0
 }
+
+
+
+
+
+
 
 /*----------------------------------------------
 member-----------------------------------------*/
@@ -1866,9 +1881,20 @@ html, body{
     width:calc(50% - 5px);
     vertical-align: middle;
 }
+.btnsWrap.col2.noGutter .btn_them{
+  width:50%;
+}
+.btnsWrap.col2 .btn_them.normal{
+  background:#fff;
+  color:#111;
+}
 .btnsWrap.col2 button:nth-of-type(2),
 .btnsWrap.col2 a:nth-of-type(2){
     margin-left:10px;
+}
+.btnsWrap.col2.noGutter button:nth-of-type(2),
+.btnsWrap.col2.noGutter a:nth-of-type(2){
+    margin-left:0;
 }
 .btn_them{
     height:42px;
@@ -2370,6 +2396,48 @@ html, body{
   font-size:15px;
   color:#111;
   text-align:center;
+}
+.modalBg .modalBody.exchangeModal{
+  margin-bottom:0;
+}
+.modalBg .modalBody .exchangeInfo{
+  padding:10px 0;
+  text-align:left;
+  font-size:0;
+}
+.modalBody .exchangeInfo dt,
+.modalBody .exchangeInfo dd{
+  display:inline-block;
+  margin:10px 0;
+  font-size:14px;
+  vertical-align: middle;
+}
+.modalBody .exchangeInfo dt{
+  width:55px;
+  margin-right:15px;
+  color:#666;
+}
+.modalBody .exchangeInfo dd{
+  width:calc(100% - 70px);
+  color:#111;
+}
+.modalBody .exchangeInfo select{
+  display:block;
+  width:140px;
+  height:40px;
+  padding:0 30px 0 10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  background:url('../img/ico/arrow_down.png') 120px 50% no-repeat;
+  background-size:7px auto;
+  line-height:38px;
+}
+.modalBody .modalNotice{
+  padding:10px 0;
+  font-size:14px;
+  text-align:left;
+  border-top:1px solid #eee;
 }
 .modalBg .btnsWrap{
   font-size:0;
@@ -2923,6 +2991,81 @@ html, body{
   height:28px;
   line-height:26px;
   border-radius:14px;
+}
+
+
+.exchangeForm .infoBox{
+  font-size:0;
+}
+.exchangeForm .infoBox dt,
+.exchangeForm .infoBox dd{
+  display:inline-block;
+  margin:5px 0;
+  font-size:14px;
+  vertical-align: middle;
+}
+.exchangeForm .infoBox dt{
+  width:55px;
+  margin-right:15px;
+  color:#666;
+}
+.exchangeForm .infoBox dd{
+  width:calc(100% - 70px);
+  color:#111;
+}
+.exchangeForm .infoBox dt.vt{
+  vertical-align: top;
+}
+.exchangeForm .infoBox select{
+  display:block;
+  width:100%;
+  height:40px;
+  padding:0 30px 0 10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  background:url('../img/ico/arrow_down.png') calc(100% - 15px) 50% no-repeat;
+  background-size:7px auto;
+  line-height:38px;
+}
+.exchangeForm .infoBox textarea{
+  display:block;
+  width:100%;
+  height:90px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  line-height:1.6;
+  resize:none;
+}
+.exchangeForm .infoBox .mt{
+  margin-top:10px;
+}
+.exchangeForm .infoBox .textlength{
+  float:right;
+  margin-top:5px;
+  font-size:12px;
+  color:#999;
+}
+.exchangeForm .noticeBox li{
+  position: relative;
+  margin:10px 0;
+  color:#666;
+  padding-left:10px;
+}
+.exchangeForm .noticeBox li:before{
+  content:'·';
+  position: absolute;
+  left:0;
+  top:0;
+  display:block;
+}
+.exchangeForm .btnsWrap{
+  margin-top:10px;
+}
+.exchangeForm .btnsWrap button{
+  height:50px;
 }
 
 

@@ -42,7 +42,7 @@
             <p class="price">32,500원<span class="orgPrice" v-if="type==='basket'">132,500</span></p>
           </div>
           <div class="row ibBtns"  v-if="type==='history'">
-            <router-link to="" class="btn_them border col3 btn-first">배송조회</router-link>
+            <router-link to="/tracking/detail" class="btn_them border col3 btn-first">배송조회</router-link>
           </div>
           <dl class="itemScore row" v-if="type==='basket'">
             <dt><img src="../../../assets/img/ico/rates.png" alt="별점" /></dt>
@@ -106,9 +106,9 @@
             <p class="price">32,500원</p>
           </div>
           <div class="row ibBtns"  v-if="type==='history'">
-            <router-link to="" class="btn_them border col3 btn-first">배송조회</router-link>
-            <router-link to="" class="btn_them border col3 gray">교환요청</router-link>
-            <router-link to="" class="btn_them border col3 btn-last gray">반품요청</router-link>
+            <router-link to="/tracking/detail" class="btn_them border col3 btn-first">배송조회</router-link>
+            <button class="btn_them border col3 gray" @click="exchangeReqOpen">교환요청</button>
+            <button class="btn_them border col3 btn-last gray">반품요청</button>
             <router-link to="" class="btn_them border col2 btn-first gray">받았습니다</router-link>
             <router-link to="" class="btn_them border col2 btn-last gray">리뷰작성</router-link>
           </div>
@@ -360,6 +360,9 @@ export default {
     },
     basketDeleteModalShow () {
       this.$emit('basketDeleteModalShow')
+    },
+    exchangeReqOpen () {
+      this.$emit('exchangeReqOpen')
     }
   }
 }

@@ -2,9 +2,9 @@
 <div id="swsContent" class="cont_sws">
   <BigSlide></BigSlide>
   <Gnb></Gnb>
-  <LiveSlide></LiveSlide>
-  <ProductSlide></ProductSlide>
-  <BrandSlide></BrandSlide>
+    <LiveSlide></LiveSlide>
+  <!-- <ProductSlide></ProductSlide> -->
+    <!-- <BrandSlide></BrandSlide> -->
   <WeeklyBest></WeeklyBest>
 </div>
 </template>
