@@ -80,7 +80,7 @@ export default {
 .reviewEntityWrap .photoSection{
   display: inline-block;
   width: 100%;
-  height: 230px;
+  padding-top: 56.26%;
   background-color: #ebd1c4;
 }
 
@@ -95,7 +95,7 @@ export default {
 .reviewEntityWrap .mediaSection{
   display: inline-block;
   width: 100%;
-  height: 230px;
+  padding-top: 56.26%;
   background-color: gray;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="searchHeaderWrap">
       <span @click="goBack" class="ico_back_arr"></span>
-      <input ref="input" @change="inputKeyPressed" @focus="enFocused" @blur="unFocused"  @keydown="inputKeyPressed" @keydown.enter="clickSearchBtn" v-model="keyword" type="text" placeholder="검색어를 입력해주세요.">
+      <input ref="input" @change="inputKeyPressed" @focus="enFocused"  @keydown="inputKeyPressed" @keydown.enter="clickSearchBtn" v-model="keyword" type="text" placeholder="검색어를 입력해주세요.">
       <span @click="clickSearchBtn" class="ico_search_btn"></span>
       <span v-if="keyword" @click="deleteInput" class="ico_delete_btn"></span>
-      <div>
+      <div class="searchList">
         <ul v-if="products && inputFocus" >
           <li @click="keywordClick(p)" v-for="p in products" :key="p.prdtSysId">
             {{p.name|shortString}}
@@ -147,14 +147,19 @@ export default {
 }
 
 .searchHeaderWrap li{
-  background-color:#fff;
+  background-color: #fff;
+  line-height: 45px;
   cursor: pointer;
   margin-left: 40px;
   font-size: 15px;
   width: 100%;
   height: 45px;
 }
-.searchHeaderWrap li:last-child{
-  height: 100%;
+.searchHeaderWrap li:hover{
+  border: 1px solid gray;
 }
+
+/* .searchHeaderWrap li:last-child{
+  height: 100%;
+} */
 </style>

@@ -28,9 +28,13 @@ export default {
       if (!this.buyMode) {
         this.$emit('buyModeClick')
       } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
-        sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-        sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
-        this.$router.push('/BuyProduct')
+        if (this.$store.state.isLogin) {
+          sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
+          sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
+          this.$router.push('/BuyProduct')
+        } else {
+          this.$router.push('/Login')
+        }
       }
     },
     clickHide () {

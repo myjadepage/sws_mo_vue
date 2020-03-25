@@ -216,7 +216,6 @@ button {
 }
 #swsContent {
   width: 100%;
-  padding-top: 55px
 }
 #swsHead .inner_head {
   position: relative;
@@ -233,11 +232,6 @@ button {
   min-width: 320px
 }
 .head_sws {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
   min-width: 320px;
   -webkit-transform: translate3d(0, 0, 0)
 }
@@ -249,7 +243,7 @@ button {
 .head_sws .common-header-logo,
 .common-header-title {
   position: relative;
-  height: 55px;
+  height: 45px;
   background-color: #fff
 }
 .head_sws .common-header-logo .tit_main_logo {
@@ -280,40 +274,55 @@ button {
   white-space: nowrap;
   text-overflow: ellipsis
 }
+.head_sws .wrap_util{
+  height:45px;
+  background:#fff;
+}
 .head_sws .box_menu_left {
   position: absolute;
   z-index: 20;
   top: 0;
-  left: 0
+  left: 14px
 }
 .head_sws .box_menu_left .btn_menu {
   float: left;
-  width: 43px;
-  height: 55px
+  width: 40px;
+  height: 45px
 }
 .head_sws .box_menu_left .btn_menu .ico_menu {
   display: block;
   width: 20px;
   height: 30px;
-  margin: 16px auto 0;
+  margin: 13px auto 0;
   background-position: -181px 0
 }
+.tit_main_logo{
+  float:left;
+  display:block;
+  width:50px;
+  height:19px;
+  margin-top:12px;
+  margin-left:5px;
+  background:url('../img/sws-bi-black@3x.png') 50% 50% no-repeat;
+  background-size:100%;
+}
+
 .head_sws .box_menu_right {
   position: absolute;
   top: 0;
-  right: 0
+  right: 6px;
 }
 .head_sws .box_menu_right .common-header-search {
   float: left;
   width: 53px;
-  height: 55px
+  height: 45px
 }
 .head_sws .box_menu_right .common-header-search .link_search {
   display: block;
   width: 21px;
   height: 21px;
   position: relative;
-  top: 14px;
+  top: 12px;
   left: 18px
 }
 
@@ -477,6 +486,12 @@ input[type="search"]::-webkit-search-cancel-button {
   background-position: -170px 0
 }
 
+
+
+
+
+
+
 /*----------------------------------------------
 member-----------------------------------------*/
 .memberWrap {
@@ -500,7 +515,7 @@ member-----------------------------------------*/
   top: 17px;
 }
 .member_con{ 
-  height: 390px;
+  /* height: 390px; */
   padding: 30px 30px 0;
 }
 .member_con h2 {
@@ -599,6 +614,13 @@ member-----------------------------------------*/
 .login_service{
   padding-top: 20px;
 }
+
+.socialTitle{
+  margin: 50px 0 24px;
+  font-size: 22px;
+  font-weight: 500;
+}
+
 .login_service li:not(:last-child):after{
   content: '|'; 
   padding-left: 5px;
@@ -809,6 +831,14 @@ input[type="button"].btn-block {
   background-color: #6c757d;
   border-color: #6c757d;
 }
+
+.btn-sub{
+  border: 1px solid #e61754;
+  color: #e61754;
+  border-radius: 4px;
+}
+
+
 .btn-secondary:focus, .btn-secondary.focus {
   box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
@@ -1116,6 +1146,9 @@ Mypage > Main
 
 .myInfoWrap .follower,.following,.point{
   font-weight: 500;
+}
+.myInfoWrap .infoFooter a{
+  color:inherit;
 }
 
 .myInfoWrap .point{
@@ -1805,3 +1838,1324 @@ Product > Description > Review
   height: 20px;
 }
 
+
+
+
+
+
+
+/* ****************************************************** */
+/* ****************************************************** */
+/* ****************************************************** */
+
+
+
+
+
+
+/* *******          ******* */
+/* *******  Global  ******* */
+/* *******          ******* */
+
+html, body{
+    width:100%;
+    height:100%;
+}
+
+.bgGray{
+    background:#f3f3f3;
+}
+.subHeader{
+    border-bottom:1px solid #f3f3f3;
+}
+.subHeader h1{
+    font-size:16px;
+    font-weight:500;
+}
+
+.btnsWrap.col2{
+    font-size:0;
+}
+.btnsWrap.col2 .btn_them{
+    display:inline-block;
+    width:calc(50% - 5px);
+    vertical-align: middle;
+}
+.btnsWrap.col2.noGutter .btn_them{
+  width:50%;
+}
+.btnsWrap.col2 .btn_them.normal{
+  background:#fff;
+  color:#111;
+}
+.btnsWrap.col2 button:nth-of-type(2),
+.btnsWrap.col2 a:nth-of-type(2){
+    margin-left:10px;
+}
+.btnsWrap.col2.noGutter button:nth-of-type(2),
+.btnsWrap.col2.noGutter a:nth-of-type(2){
+    margin-left:0;
+}
+.btn_them{
+    height:42px;
+    border-radius:2px;
+    color:#fff;
+    font-size:14px;
+    font-weight:400;
+    background:#e61754;
+    line-height:40px;
+}
+.btn_them.border{
+    color:#e61754;
+    border:1px solid #e61754;
+    background:transparent;
+}
+.btn_them.border.gray{
+    color:#111;
+    border:1px solid #ccc;
+    background:transparent;
+}
+.c_them{
+    color:#e61754;
+}
+
+.detailPayWrap .payBody .underline.dark{
+    border-bottom:1px solid #000;
+}
+
+
+
+.itemList input[type="checkbox"]{
+    display:none;
+}
+.itemList .listHead input[type="checkbox"]+label:before,
+.itemList .item input[type="checkbox"]+label{
+    content:'';
+    display:inline-block;
+    width:26px;
+    height:26px;
+    margin-right:10px;
+    border:1px solid #eee;
+    box-sizing:border-box;
+    background:#fff url('../img/ico/chk_gray.png') 50% 50% no-repeat;
+    background-size:14px auto;
+    vertical-align: middle;
+}
+.itemList .listHead input[type="checkbox"]:checked+label:before,
+.itemList .item input[type="checkbox"]:checked+label{
+    background:#e61754 url('../img/ico/chk_white.png') 50% 50% no-repeat;
+    background-size:14px auto;
+}
+.itemList .item input[type="checkbox"]+label{
+    display:none;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.itemList .listHead{
+    overflow: hidden;
+    margin-top:5px;
+    padding:20px 12px 0;
+    background:#fff;
+}
+.itemList .listHead label,
+.itemList .listHead p{
+    font-size:16px;
+    font-weight:500;
+    color:#111;
+}
+.itemList .listHead label span{
+    color:#d61754;
+}
+.itemList .listHead:after{
+    content:'';
+    display:block;
+    width:100%;
+    height:1px;
+    margin-top:10px;
+    background:#eee;
+}
+.itemList .listHead .btnsWrap{
+    float:right;
+    font-size:0;
+}
+.itemList .listHead .btnsWrap button{
+    display:inline-block;
+    width:60px;
+    height:30px;
+    font-size:13px;
+    border-radius:2px;
+    line-height:28px;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+.itemList .listHead .btnsWrap .remove{
+    color:#e61754;
+    border:1px solid #e61754;
+}
+.itemList .listHead .btnsWrap .cancle{
+    margin-left:5px;
+    color:#111;
+    border:1px solid #ccc;
+}
+.itemList .listHead .nor{
+    display:inline-block;
+}
+.itemList .listHead .modi{
+    display:none;
+}
+.itemList.modifyMode .listHead .modi,
+.itemList.modifyMode .item input[type="checkbox"]+label{
+    display:inline-block;
+}
+.itemList.modifyMode .listHead .nor{
+    display:none;
+}
+
+
+
+
+.itemList .item{
+    margin-top:5px;
+    padding:20px 12px;
+    background:#fff;
+    font-size:16px;
+    color:#1a1a1a;
+}
+
+.itemList .itemHead,
+.itemList .itembody{
+    overflow:hidden;
+}
+.itemList .itemHead{
+    margin-bottom:10px;
+    padding-bottom:5px;
+    border-bottom:1px solid #f3f3f3;
+}
+.itemList .itemHead .date{
+    float:left;
+    font-family:'Roboto';
+    font-weight:500;
+}
+.itemList .itemHead .state{
+    float:right;
+    margin-top:1px;
+    font-size:14px;
+    font-weight:500;
+    color:#111;
+}
+.itemList .itemHead .state.c_them{
+    color:#e61754;
+}
+
+.itemList .itemMeta{
+    overflow: hidden;
+    margin-bottom:10px;
+    padding-bottom:10px;
+    border-bottom:1px solid #eee;
+    font-size:13px;
+    color:#666;
+}
+.itemList .itemMeta .orderNum{
+    float:left;
+}
+.itemList .itemMeta .metaDate{
+    float:right;
+}
+.itemList .itemBody{
+    overflow: hidden;
+}
+.itemList .itemBody .imgBox{
+    position: relative;
+    float:left;
+    width:70px;
+    height:70px;
+    margin-bottom:10px;
+    margin-right:10px;
+    background:#f3f3f3;
+}
+.itemList .itemBody .txtBox{
+    display:block;
+    padding-left:80px;
+}
+.itemList .itemBody .txtBox.chngFin{
+  text-decoration:line-through;
+}
+.itemList .itemBody .itemTitle{
+    font-size:14px;
+    font-weight:400;
+    color:#333;
+}
+.itemList .itemBody .itemOption{
+    margin-top:5px;
+    font-size:14px;
+    color:#666;
+}
+.itemList .itemAmount{
+    overflow: hidden;
+    width:calc(100% - 80px);
+    margin-top:10px;
+    margin-left:80px;
+    font-size:0;
+}
+.itemList .itemAmount .amount{
+    display:inline-block;
+    width:60px;
+    height:30px;
+    margin-right:13px;
+    padding:0 10px;
+    border:1px solid #ccc;
+    border-radius:2px;
+    box-sizing: border-box;
+    font-size:14px;
+    color:#111;
+    line-height:28px;
+    vertical-align: middle;
+    background:url('../img/ico/arrow_down.png') 40px 50% no-repeat;
+    background-size:10px;
+}
+.itemList .itemAmount .sale{
+    display:inline-block;
+    margin-right:5px;
+    font-size:14px;
+    font-weight:500;
+    color:#e61754;
+    line-height:30px;
+    vertical-align: middle;
+}
+.itemList .itemAmount .sale:after{
+    content:'%';
+}
+.itemList .itemAmount .price{
+    display:inline-block;
+    font-size:14px;
+    font-weight:500;
+    color:#111;
+    line-height:30px;
+    vertical-align: middle;
+}
+.itemList .itemAmount .price .orgPrice{
+    display:inline-block;
+    margin-left:5px;
+    font-size:13px;
+    color:#999;
+    text-decoration: line-through;
+}
+.itemList .itemAmount .itemRemove{
+    display:inline-block;
+    float:right;
+    width:11px;
+    margin-top:5px;
+}
+.itemList .itemAmount .itemRemove img{
+    width:100%;
+}
+
+.itemList .row{
+    margin-top:5px;
+    padding-left:80px;
+}
+.itemList .fullRow{
+    padding-left:0;
+}
+.itemList .ibBtns{
+    font-size:0;
+}
+.itemList .ibBtns .btn_them{
+    display:inline-block;
+    font-size:13px;
+    height:30px;
+    margin:5px 2.5px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    text-align: center;
+    line-height:28px;
+}
+.itemList .ibBtns .col3{
+    width:calc( (100% - 10px) / 3);
+}
+.itemList .ibBtns .col2{
+    width:calc( (100% - 5px) / 2);
+}
+.itemList .ibBtns .col1{
+  width:100%;
+}
+.itemList .ibBtns .btn-first{
+    margin-left:0;
+}
+.itemList .ibBtns .btn-last{
+    margin-right:0;
+}
+
+.itemList .buyLog{
+    font-size:0;
+}
+.itemList .buyLog .price{
+    display:inline-block;
+    font-size:14px;
+    vertical-align: middle;
+}
+.itemList .buyLog .btn_sDown{
+    display:inline-block;
+    margin-left:20px;
+    padding:0 2px;
+    font-size:13px;
+    color:#666;
+    border-bottom:1px solid #666;
+    vertical-align: middle;
+}
+.itemList .buyLog .btn_sDown:after{
+    content:'';
+    display:inline-block;
+    width:13px;
+    height:8px;
+    margin-left:7px;
+    background:url('../img/ico/arrow_down.png') 50% 50% no-repeat;
+    background-size:100%;
+}
+.itemList .on .buyLog .btn_sDown:after{
+    transform:rotate(180deg);
+}
+.itemList .item.group{
+    padding:10px 12px;
+}
+.itemList .group .item{
+    display:none;
+    margin-top:0;
+    padding:10px 0;
+    border-top:1px solid #eee;
+}
+.itemList .group .item:first-child {
+    display:block;
+    border-top:none;
+}
+.itemList .group.on .item{
+    display:block;
+}
+.itemList .itemScore{
+    font-size:0;
+}
+.itemList .itemScore dt,
+.itemList .itemScore dd{
+    display:inline-block;
+    font-size:12px;
+    color:#999;
+    font-family: 'Roboto';
+    vertical-align: middle;
+}
+.itemList .itemScore dt{
+    margin-right:2px;
+}
+.itemList .itemScore dt img{
+    display:block;
+    width:13px;
+}
+.itemList .itemScore dd{
+    margin-right:30px;
+}
+.itemList .fullRow{
+    overflow: hidden;
+    margin-top:10px;
+    padding:10px 0 0;
+    border-top:1px solid #eee;
+}
+.itemList .fullRow .tags{
+    float:left;
+    font-size:0;
+}
+.itemList .fullRow .tags .btn_them{
+    display:inline-block;
+    height:auto;
+    margin-left:5px;
+    padding:2px 5px;
+    font-size:12px;
+    font-weight:500;
+    line-height:1;
+    vertical-align: middle;
+}
+.itemList .fullRow .tags .btn_them:first-child{
+    margin-left:0;
+}
+.itemList .fullRow .recentBtns{
+    float:right;
+    font-size:0;
+}
+.itemList .fullRow .recentBtns button{
+    display:inline-block;
+    font-size:10px;
+    vertical-align: middle;
+}
+.itemList .fullRow .recentBtns .btn_like{
+    width:19px;
+    height:17px;
+    background:url('../img/ico/ico_unlike_search.png') 50% 50% no-repeat;
+    background-size:contain;
+}
+.itemList .fullRow .recentBtns .btn_cart{
+    width:17px;
+    height:19px;
+    margin-right:10px;
+    margin-left:30px;
+    background:url('../img/ico/uncart.png') 50% 50% no-repeat;
+    background-size:contain;
+}
+.itemList .fullRow .recentBtns .btn_like.on{
+    background:url('../img/ico/ico_like_search.png') 50% 50% no-repeat;
+    background-size:contain;
+}
+.itemList .fullRow .recentBtns .btn_cart.on{
+    background:url('../img/ico/cart.png') 50% 50% no-repeat;
+    background-size:contain;
+}
+.itemList .fullRow .recentBtns button span{
+    position: relative;
+    z-index:-1;
+    font-size:8px;
+}
+
+
+
+
+.exchange .emptyBox{
+    padding-top:50%;
+}
+.exchange .emptyBox .txtBox{
+    width:100%;
+    text-align:center;
+}
+.exchange .emptyBox .txtBox img{
+    width:67px;
+}
+.exchange .emptyBox .txtBox p{
+    margin-top:25px;
+    font-size:16px;
+    font-weight:500;
+    color:#666;
+}
+.detailPayWrap.exchange .payBody th{
+    width:auto;
+}
+.detailPayWrap.exchange .payBody th,
+.detailPayWrap.exchange .payBody td{
+  padding:4px 0;
+}
+
+
+
+
+
+.compBlock{
+    width:100%;
+    margin:5px 0;
+    padding:15px 12px;
+    background:#fff;
+    box-sizing: border-box;
+}
+
+.compBlock h2{
+    margin-bottom:10px;
+    font-size:16px;
+    font-weight:500;
+    padding-bottom:4px;
+    border-bottom:1px solid #eee;
+}
+
+
+
+.modalBg{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:100;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+}
+.modalBg .modalWrap{
+  overflow: hidden;
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:80%;
+  background:#fff;
+  border-radius: 8px;
+  transform:translate(-50%, -50%);
+  -webkit-transform:translate(-50%, -50%);
+  -moz-transform:translate(-50%, -50%);
+}
+.modalBg .modalHeader{
+  margin:14px 0;
+  font-size:16px;
+  font-size:500;
+  color:#111;
+  text-align:center;
+}
+.modalBg .modalBody{
+  margin-bottom:30px;
+  padding:0 15px;
+  font-size:15px;
+  color:#111;
+  text-align:center;
+}
+.modalBg .modalBody.exchangeModal{
+  margin-bottom:0;
+}
+.modalBg .modalBody .exchangeInfo{
+  padding:10px 0;
+  text-align:left;
+  font-size:0;
+}
+.modalBody .exchangeInfo dt,
+.modalBody .exchangeInfo dd{
+  display:inline-block;
+  margin:10px 0;
+  font-size:14px;
+  vertical-align: middle;
+}
+.modalBody .exchangeInfo dt{
+  width:55px;
+  margin-right:15px;
+  color:#666;
+}
+.modalBody .exchangeInfo dd{
+  width:calc(100% - 70px);
+  color:#111;
+}
+.modalBody .exchangeInfo select{
+  display:block;
+  width:140px;
+  height:40px;
+  padding:0 30px 0 10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  background:url('../img/ico/arrow_down.png') 120px 50% no-repeat;
+  background-size:7px auto;
+  line-height:38px;
+}
+.modalBody .modalNotice{
+  padding:10px 0;
+  font-size:14px;
+  text-align:left;
+  border-top:1px solid #eee;
+}
+.modalBg .btnsWrap{
+  font-size:0;
+}
+.modalBg .btnsWrap button{
+  display:inline-block;
+  width:100%;
+  height:45px;
+  margin:0;
+  border:none;
+  border-top:1px solid #eee;
+  text-align:center;
+  font-size:15px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.modalBg .btnsWrap.col2 button{
+  width:50%;
+  border-left:1px solid #eee;
+}
+.modalBg .btnsWrap.col2 button:nth-of-type(1){
+  border:none;
+  border-top:1px solid #eee;
+}
+.modalBg .btnsWrap.col2 button:nth-of-type(2){
+  margin:0;
+  border:none;
+  border-top:1px solid #eee;
+  border-left:1px solid #eee;
+}
+.modalBg .btnsWrap .btn_cancle{
+  color:#111;
+}
+.modalBg .btnsWrap .btn_submit{
+  color:#fff;
+  background:#e61754;
+}
+
+
+
+
+/* *******              ******* */
+/* *******  !!Global!!  ******* */
+/* *******              ******* */
+
+
+
+
+
+
+
+
+/* *******          ******* */
+/* *******  mypage  ******* */
+/* *******          ******* */
+#app{
+  min-height: 100%;
+}
+/* .mypage{
+  height:100%;
+} */
+
+.profilePic{
+    height:220px;
+    background:#282a34;
+    text-align:center;
+}
+.profilePic .picBox{
+    position: relative;
+    display:inline-block;
+    margin-top:45px;
+}
+.profilePic .prImage{
+    display:block;
+    width:100px;
+    height:100px;
+    clip-path:circle(50%);
+    -webkit-clip-path:circle(50%);
+    background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
+    background-size:cover;
+}
+.profilePic .prImage.default{
+  background:url('../img/ico/ico_member.png') 50% 50% no-repeat;
+  background-size:cover;
+}
+.profilePic input[type="file"]{
+    display:none;
+}
+.profilePic .btnModifyPic{
+    overflow: hidden;
+    position: absolute;
+    bottom:2px;
+    right:-8px;
+    display:block;
+    width:30px;
+    height:30px;
+    background:url('../img/ico/camera@3x.png') 50% 50% no-repeat;
+    background-size:cover;
+    text-indent: -999px;
+
+}
+.profilePic h2{
+    margin-top:20px;
+    font-size:16px;
+    font-weight:400;
+    color:#fff;
+}
+
+
+.profileInfo{
+    padding:30px 22px;
+    background:#fff;
+}
+.profileInfo .row{
+    margin:25px 0;
+    font-size:0;
+}
+.profileInfo .row label,
+.profileInfo .row input{
+    display:inline-block;
+    font-size:15px;
+    vertical-align: middle;
+}
+.profileInfo .row label{
+    width:56px;
+    margin-right:10px;
+    color:#666;
+}
+.profileInfo .row input{
+    width:calc(100% - 66px);
+    height:30px;
+    padding:0 10px;
+    box-sizing: border-box;
+    border:none;
+    border-bottom:1px solid #eee;
+    color:#111;
+}
+.profileInfo .row input::placeholder,
+.profileInfo .row input::-webkit-placeholder,
+.profileInfo .row input:-ms-input-placeholder{
+    color:#999;
+}
+.profileForm .btn_submit{
+    display:block;
+    width:100%;
+    height:50px;
+    background:#e61754;
+    font-size:15px;
+    color:#fff;
+    text-align:center;
+    line-height:50px;
+}
+
+
+
+.fNotiBox{
+    padding:15px 12px;
+    background:#f3f3f3;
+    color:#666;
+    font-size:14px;
+}
+.emptyBox + .fNotiBox{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+}
+.fNotiBox .noti{
+    position: relative;
+    padding-left:23px;
+    line-height:1.5;
+}
+.fNotiBox .noti:before{
+    content:'!';
+    position: absolute;
+    top:1px;
+    left:0;
+    display:inline-block;
+    width:18px;
+    height:18px;
+    margin-right:5px;
+    border:1px solid #999;
+    border-radius:50%;
+    box-sizing: border-box;
+    color:#999;
+    font-size:12px;
+    line-height:15px;
+    font-weight:700;
+    text-align: center;
+}
+.fNotiBox ul li{
+    position: relative;
+    margin:10px 0;
+    padding-left:10px;
+}
+.fNotiBox ul li:before{
+    content:'';
+    position: absolute;
+    top:9px;
+    left:0;
+    display:block;
+    width:3px;
+    height:3px;
+    border-radius: 50%;
+    background:#666;
+}
+
+
+
+
+.versionBox{
+    width:100%;
+    padding-top:80px;
+    text-align: center;
+}
+.versionBox .logo{
+    width:80px;
+    margin-bottom:60px;
+}
+.versionBox .btn_them{
+    display:block;
+    width:50%;
+    height:45px;
+    margin:20px auto;
+    border-radius:4px;
+    box-sizing: border-box;
+}
+.versionBox .update{
+    font-weight:500;
+}
+
+
+.chngPw{
+    display:block;
+    width:100%;
+    padding:0 22px 10px 22px;
+    border-top:1px solid #eee;
+    box-sizing: border-box;
+}
+.chngPw h2{
+    margin-top:20px;
+    font-size:16px;
+    font-weight:400;
+    color:#111;
+}
+.chngPw h2:nth-of-type(2){
+    margin-top:30px;
+}
+.chngPw input{
+    width:100%;
+    height:30px;
+    margin-top:20px;
+    border:none;
+    border-bottom:1px solid #eee;
+    font-size:14px;
+    color:#999;
+    letter-spacing: 2px;
+}
+.chngPw input::placeholder,
+.chngPw input::-webkit-placeholder,
+.chngPw input:-ms-input-placeholder{
+    color:#999;
+    font-size:inherit;
+    font-weight:inherit;
+}
+.chngPw p{
+    margin-top:5px;
+    color:#666;
+}
+.chngPw .btnsWrap{
+    margin-top:65px;
+    font-size:0;
+}
+.chngPw .btnsWrap .btn_them{
+    display:inline-block;
+    width:calc( (100% - 10px) / 2);
+    height:50px;
+    border-radius:4px;
+    font-size:16px;
+    vertical-align: middle;
+}
+.chngPw .btnsWrap .btn_them.gray{
+    margin-right:10px;
+}
+
+.setBox{
+    padding:20px 12px;
+    border-top:1px solid #eee;
+}
+.setBox .row{
+    overflow: hidden;
+    margin-bottom:20px;
+}
+.setBox input{
+    display:none;
+}
+.setBox .row p{
+    float:left;
+    font-size:15px;
+    color:#111;
+    line-height:22px;
+}
+.setBox .row label{
+    float:right;
+    display:inline-block;
+    width:44px;
+    height:22px;
+    padding:2px;
+    background:#ccc;
+    border-radius: 11px;
+    box-sizing: border-box;
+    -webkit-transition:background-color 0.3s ease;
+    -moz-transition:background-color 0.3s ease;
+    transition:background-color 0.3s ease;
+}
+.setBox .row label:after{
+    content:'';
+    display:inline-block;
+    width:18px;
+    height:18px;
+    border-radius: 50%;
+    background:#fff;
+    transform: translateX(0);
+    -webkit-transition:transform 0.3s ease;
+    -moz-transition:transform 0.3s ease;
+    transition:transform 0.3s ease;
+}
+.setBox .row input:checked+label{
+    background:#e61754;
+}
+.setBox .row input:checked+label:after{
+    transform: translateX(22px);
+}
+
+
+.itemList.recent .listHead{
+    margin-top:0;
+    padding-bottom:10px;
+    border-top:1px solid #eee;
+}
+.itemList.recent .listHead:after{
+    display:none;
+}
+.itemList.recent .item{
+    padding:20px 12px 10px;
+}
+
+
+
+.deliveryBlock th,
+.paymentInfo th{
+    width:50px;
+    padding:3px 0;
+    padding-right:10px;
+    font-size:14px;
+    font-weight:400;
+    color:#666;
+    vertical-align: top;
+    text-align:left;
+}
+.deliveryBlock td,
+.paymentInfo td{
+    padding:3px 0;
+    font-size:14px;
+    color:#111;
+    vertical-align: top;
+}
+.paymentInfo th{
+    width:70px;
+}
+ 
+
+
+
+
+.myreview .tabBox{
+  padding:10px 22px 0;
+  font-size:0;
+  background:#fff;
+  border-top:1px solid #eee;
+}
+.myreview .tabBox button{
+  display:inline-block;
+  width:50%;
+  height:44px;
+  border-bottom:1px solid #eee;
+  color:#111;
+  font-size:16px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.myreview .tabBox button.on{
+  border-bottom:4px solid #d61754;
+  color:#d61754;
+  font-weight:500;
+}
+.myreview .reviewBox{
+  clear:both;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #eee;
+}
+.myreview .reviewBox .stars img{
+  width:12px;
+}
+.myreview .reviewBox .reviewPara{
+  margin:10px 0;
+  font-size:14px;
+  color:#111;
+}
+.myreview .reviewBox .icos{
+  overflow: hidden;
+  margin-top:10px;
+}
+.myreview .reviewBox .goodBox{
+  float:left;
+  font-size:0;
+}
+.myreview .reviewBox .goodBox p{
+  display:inline-block;
+  padding-left:20px;
+  font-size:12px;
+  color:#666;
+  vertical-align: middle;
+}
+.myreview .reviewBox .goodBox .good{
+  margin-right:15px;
+  background:url('../img/ico/like@3x.png') 0 50% no-repeat;
+  background-size:17px 15px;
+}
+.myreview .reviewBox .goodBox .bad{
+  background:url('../img/ico/like-copy@3x.png') 0 50% no-repeat;
+  background-size:17px 15px;
+}
+.myreview .reviewBox .meadiaBox{
+  float:right;
+  font-size:0;
+}
+.myreview .reviewBox .meadiaBox p{
+  display:inline-block;
+  height:20px;
+  padding-left:30px;
+  font-size:12px;
+  color:#666;
+  vertical-align: middle;
+}
+.myreview .reviewBox .meadiaBox span{
+  position: absolute;
+  z-index:-1;
+  font-size:1;
+}
+.myreview .reviewBox .meadiaBox .mov{
+  background:url('../img/ico/photo-copy@3x.png') 0 50% no-repeat;
+  background-size:26px 20px;
+}
+.myreview .reviewBox .meadiaBox .pic{
+  margin-left:10px;
+  background:url('../img/ico/photo@3x.png') 0 50% no-repeat;
+  background-size:26px 20px;
+}
+
+
+.followBlock{
+  padding:20px 12px;
+  border-top:1px solid #eee;
+}
+.searchBox{
+  overflow: hidden;
+  height:40px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:0;
+  box-sizing: border-box;
+}
+.searchBox .inputBox{
+  position: relative;
+  display:inline-block;
+  width:calc(100% - 40px);
+  height:100%;
+  font-size: 15px;
+  color:#111;
+  vertical-align: middle;
+}
+.searchBox .inputBox input{
+  border:none;
+  width:100%;
+  height:100%;
+  padding:0 40px 0 10px;
+  box-sizing: border-box;
+}
+.searchBox .inputBox .btn_remove{
+  position: absolute;
+  top:10px;
+  right:10px;
+  display:block;
+  width:18px;
+  height:18px;
+}
+.searchBox .inputBox .btn_remove img{
+  display:block;
+  width:100%;
+}
+.searchBox .search{
+  display:inline-block;
+  width:40px;
+  height:100%;
+  vertical-align: middle;
+}
+.searchBox .search img{
+  display:block;
+  width:21px;
+  margin:0 auto;
+}
+.followBlock  .userList{
+  margin:20px 0;
+}
+.followBlock  .userList .item{
+  margin-top:25px;
+  font-size:0;
+}
+.followBlock  .userList .proPic,
+.followBlock  .userList .center,
+.followBlock  .userList .btn_follow{
+  display:inline-block;
+  font-size:12px;
+  vertical-align: middle;
+}
+.followBlock  .userList .proPic{
+  width:45px;
+  height:45px;
+  border:1px solid #eee;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.followBlock  .userList .center{
+  width:calc(100% - 135px);
+  margin:0 10px;
+}
+.followBlock  .userList .center .userId{
+  font-size:14px;
+  color:#111;
+}
+.followBlock  .userList .center .userNick{
+  color:#666;
+}
+.followBlock  .userList .item:first-child{
+  margin-top:0;
+}
+.followBlock  .userList .btn_follow{
+  width:70px;
+  height:28px;
+  line-height:26px;
+  border-radius:14px;
+}
+
+
+.exchangeForm .infoBox{
+  font-size:0;
+}
+.exchangeForm .infoBox dt,
+.exchangeForm .infoBox dd{
+  display:inline-block;
+  margin:5px 0;
+  font-size:14px;
+  vertical-align: middle;
+}
+.exchangeForm .infoBox dt{
+  width:55px;
+  margin-right:15px;
+  color:#666;
+}
+.exchangeForm .infoBox dd{
+  width:calc(100% - 70px);
+  color:#111;
+}
+.exchangeForm .infoBox dt.vt{
+  vertical-align: top;
+}
+.exchangeForm .infoBox select{
+  display:block;
+  width:100%;
+  height:40px;
+  padding:0 30px 0 10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  background:url('../img/ico/arrow_down.png') calc(100% - 15px) 50% no-repeat;
+  background-size:7px auto;
+  line-height:38px;
+}
+.exchangeForm .infoBox textarea{
+  display:block;
+  width:100%;
+  height:90px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:2px;
+  box-sizing: border-box;
+  line-height:1.6;
+  resize:none;
+}
+.exchangeForm .infoBox .mt{
+  margin-top:10px;
+}
+.exchangeForm .infoBox .textlength{
+  float:right;
+  margin-top:5px;
+  font-size:12px;
+  color:#999;
+}
+.exchangeForm .noticeBox li{
+  position: relative;
+  margin:10px 0;
+  color:#666;
+  padding-left:10px;
+}
+.exchangeForm .noticeBox li:before{
+  content:'·';
+  position: absolute;
+  left:0;
+  top:0;
+  display:block;
+}
+.exchangeForm .btnsWrap{
+  margin-top:10px;
+}
+.exchangeForm .btnsWrap button{
+  height:50px;
+}
+
+
+
+
+
+/* *******              ******* */
+/* *******  !!mypage!!  ******* */
+/* *******              ******* */
+
+
+
+/* *******          ******* */
+/* *******  cart  ******* */
+/* *******          ******* */
+
+
+.cart{
+    height:100%;
+}
+
+.cart .btn_shoping{
+    display:inline-block;
+    width:153px;
+    margin-top:35px;
+}
+.cart .itemList .item{
+    margin-top:0;
+    border-top:1px solid #eee;
+}
+.cart .itemList ul{
+    padding:0 12px;
+    background:#fff;
+}
+.cart .itemList ul .item{
+    padding:20px 0;
+}
+.cart .itemList .listHead + ul li:first-child{
+    border-top:none;
+}
+
+.cart .detailPayWrap table{
+    margin-top:10px;
+}
+.cart .detailPayWrap .payBody th,
+.cart .detailPayWrap .payBody td{
+    padding:5px 0;
+}
+
+.cart .btnsWrap.col2{
+    margin-top:30px;
+}
+
+.cart .notice{
+    padding:5px 12px;
+    background:#f3f3f3;
+}
+.cart .notice li{
+    position: relative;
+    margin:10px 0;
+    padding-left:10px;
+    color:#666;
+    font-size:14px;
+    word-break:keep-all;
+}
+.cart .notice li:before{
+    content:'';
+    position: absolute;
+    top:9px;
+    left:0;
+    display:block;
+    width:3px;
+    height:3px;
+    border-radius: 50%;
+    background:#666;
+}
+
+.cart .small.tag{
+    display:inline-block;
+    width:11px;
+    height:11px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background:#666;
+    font-size:9;
+    color:#fff;
+    text-align: center;
+}
+
+
+/* *******              ******* */
+/* *******  !!cart!!  ******* */
+/* *******              ******* */

@@ -29,8 +29,9 @@ export default {
       if (this.$refs.descSection.clientHeight >= 800) {
         this.isSpreadable = true
       }
-    }, 300)
+    }, 500)
   },
+
   methods: {
     clickSpread () {
       if (this.btnText === '상세 정보 접기') {

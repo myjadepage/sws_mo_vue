@@ -1,12 +1,19 @@
 <template>
   <div class="completeFooterWrap">
-    <button class="orderDetailBtn">주문 상세보기</button><button class="orderContinueBtn">쇼핑 계속하기</button>
+    <button @click="orderDetailBtnClick" class="orderDetailBtn">주문 상세보기</button><button @click="orderContinueBtnClick" class="orderContinueBtn">쇼핑 계속하기</button>
   </div>
 </template>
 
 <script>
-export default {
 
+export default {
+  methods: {
+    orderDetailBtnClick () {
+    },
+    orderContinueBtnClick () {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

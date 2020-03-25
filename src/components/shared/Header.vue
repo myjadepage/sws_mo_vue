@@ -1,10 +1,5 @@
 <template>
 <div id="swsHead" class="head_sws common-header">
-    <div class="wrap_tit common-header-logo">
-        <router-link to="/" id="swsLogo" class="tit_main tit_main_logo" role="button">
-            <span class="screen_out">shallweshop</span>
-        </router-link>
-    </div>
     <div class="wrap_tit common-header-title">
         <h2 class="tit_svc">
             <span class="txt_svc" id="textHeaderTitle"></span>
@@ -20,6 +15,9 @@
                v-else>
                 <span class="sws_icon ico_menu">메뉴</span>
             </router-link>
+            <router-link to="/" id="swsLogo" class="tit_main tit_main_logo" role="button">
+                <span class="screen_out">shallweshop</span>
+            </router-link>
         </div>
         <div class="box_menu_right">
             <div class="wrap_btn_search common-header-search">
@@ -28,7 +26,7 @@
                 </router-link>
             </div>
             <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true">
-                 <router-link to="/MyPage" id="btnSearchTop" class="link_search" role="button">
+                 <router-link to="/cart" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_basket">장바구니</span>
                 </router-link>
             </div>
