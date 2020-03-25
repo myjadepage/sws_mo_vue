@@ -25,11 +25,13 @@ export default {
   },
   mounted () {
     this.$refs.descSection.innerHTML = this.product.detailDescription
-    if (this.$refs.descSection.clientHeight >= 800) {
-      this.isSpreadable = true
-      this.$forceUpdate()
-    }
+    setTimeout(() => {
+      if (this.$refs.descSection.clientHeight >= 800) {
+        this.isSpreadable = true
+      }
+    }, 500)
   },
+
   methods: {
     clickSpread () {
       if (this.btnText === '상세 정보 접기') {

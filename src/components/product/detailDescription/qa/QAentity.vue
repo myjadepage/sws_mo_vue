@@ -4,15 +4,17 @@
           <span class="date">{{qa.date}}</span> {{qa.writer}}
       </div>
       <div class="qaBody" @click="entityClick">
-        <span class="title">{{qa.title}}</span>
+        <span v-if="!qaVisibility" class="title">{{title}}</span>
         <span :class="qa.status===0?'status':'status complete'">{{qa.status===0?'답변대기':'답변완료'}}</span>
         <div v-if="qaVisibility" class="qaContent">
+            <div class="contentTitle">상품문의</div>
             {{qa.content}}
         </div>
 
-        <!-- <div v-if="" class="replyBody">
+        <div v-if="qaVisibility && qa.reply" class="replyBody">
+          <div class="contentTitle">답변</div>
             {{qa.reply}}
-        </div> -->
+        </div>
       </div>
   </div>
 </template>
@@ -29,6 +31,15 @@ export default {
     return {
       qaVisibility: false
     }
+  },
+  computed: {
+    title () {
+      if (this.qa.content.length > 30) {
+        return this.qa.content.replace(this.qa.content.substring(29), '...')
+      } else {
+        return this.qa.content
+      }
+    }
   }
 }
 </script>
@@ -42,6 +53,7 @@ export default {
 .qaEntityWrap .dateAndWriter{
     font-size: 13px;
     color:#666666;
+    margin-bottom: 10px;
 }
 
 .qaEntityWrap .dateAndWriter .date{
@@ -55,6 +67,18 @@ export default {
 
 .qaEntityWrap .qaBody .status.complete{
     color: #e61754;
+}
+
+.qaEntityWrap .replyBody{
+    margin-top: 15px;
+}
+
+.qaEntityWrap .qaBody .replyBody .contentTitle{
+  color: #e61754;
+}
+.qaEntityWrap .qaBody .contentTitle{
+  font-size: 15px;
+  font-weight: 500;
 }
 
 </style>

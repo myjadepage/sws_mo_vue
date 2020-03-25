@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'App',
   mounted: function () { // flowplayer 스크립트 넣기
@@ -17,6 +18,9 @@ export default {
     let aaaa = document.createElement('script')
     aaaa.setAttribute('src', '/static/js/float-on-scroll.min.js')
     document.head.appendChild(aaaa)
+  },
+  computed: {
+    ...mapState(['isLogin'])
   }
 }
 </script>

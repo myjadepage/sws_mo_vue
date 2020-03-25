@@ -21,41 +21,44 @@ import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
-    let payInfo = JSON.parse(localStorage.getItem('payItem'))
+    let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
 
     this.info = payInfo
-    this.info.orderCode = JSON.parse(localStorage.getItem('orderRes')).jsonData.res.orderCode
+    this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
+    sessionStorage.removeItem('orderRes')
+    sessionStorage.removeItem('product')
+    sessionStorage.removeItem('payItem')
 
     switch (this.$store.getters.getPayMethod) {
       case 'card':
-        this.payMethod = 0
-        break
-      case 'trans':
         this.payMethod = 1
         break
-      case 'vbank':
+      case 'trans':
         this.payMethod = 2
         break
-      case 'phone':
+      case 'vbank':
         this.payMethod = 3
         break
-      case 'samsung':
+      case 'phone':
         this.payMethod = 4
         break
-      case 'kpay':
+      case 'samsung':
         this.payMethod = 5
         break
-      case 'cultureland':
+      case 'kpay':
         this.payMethod = 6
         break
-      case 'smartculture':
+      case 'cultureland':
         this.payMethod = 7
         break
-      case 'happymoney':
+      case 'smartculture':
         this.payMethod = 8
         break
-      case 'booknlife':
+      case 'happymoney':
         this.payMethod = 9
+        break
+      case 'booknlife':
+        this.payMethod = 10
         break
       default:
         break
@@ -65,24 +68,15 @@ export default {
       paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
     }
 
-    console.log(item)
-    console.log(this.info)
-
-    // console.log(this.payMethod)
-    // sessionStorage.removeItem('payItem')
-    // sessionStorage.removeItem('selectedOptions')
-    // sessionStorage.removeItem('orderCode')
-    // sessionStorage.removeItem('product')
-
-    payOrders(item, localStorage.getItem('orderSysId')).then(res => {
-      console.log(res)
-      localStorage.removeItem('orderSysId')
-    }).catch(err => {
-      console.log(err)
-      localStorage.removeItem('orderSysId')
-    })
-
-    // console.log(this.$route.query)
+    if (localStorage.getItem('orderSysId')) {
+      payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+        console.log(res)
+        sessionStorage.removeItem('orderSysId')
+      }).catch(err => {
+        console.log(err)
+        sessionStorage.removeItem('orderSysId')
+      })
+    }
   },
 
   data () {
@@ -97,6 +91,10 @@ export default {
 
   components: {
     Bar, Message, Account, Info, Guides, Footer
+  },
+
+  beforeDestroy () {
+    sessionStorage.removeItem('selectedOptions')
   }
 }
 </script>

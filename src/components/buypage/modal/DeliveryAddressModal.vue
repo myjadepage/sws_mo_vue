@@ -37,8 +37,6 @@ export default {
   components: {
     ModalHeader
   },
-  created () {
-  },
   data () {
     return {
       currentCat: 0,
@@ -67,34 +65,41 @@ export default {
       // 비동기 주소 등록 로직 추가하기
 
       if (this.$refs.addr.value && this.$refs.jibun.value) {
-        let item = {...this.searchResult}
-        item.detail = this.$refs.detailAddr.value
+        if (this.$store.state.isLogin) {
+          let item = {...this.searchResult}
+          item.detail = this.$refs.detailAddr.value
 
-        let addrInfo = {
-          zipCode: this.$refs.zipcode.value,
-          address: this.$refs.jibun.value,
-          newAddress: this.$refs.addr.value,
-          addressDetail: this.$refs.detailAddr.value,
-          initFlag: this.$refs.defaultAddrCheck.checked ? 1 : 0}
+          let addrInfo = {
+            zipCode: this.$refs.zipcode.value,
+            address: this.$refs.jibun.value,
+            newAddress: this.$refs.addr.value,
+            addressDetail: this.$refs.detailAddr.value,
+            initFlag: this.$refs.defaultAddrCheck.checked ? 1 : 0}
 
-        if (sessionStorage.getItem('accessToken')) {
-          addMemberAddress(sessionStorage.getItem('accessToken'), addrInfo).then(res => {
-            this.$store.state.postCode = item
-            this.$emit('addrModalClose')
-          }).catch(err => {
-            if (err.response.status === 401) {
-              getAccessToken(sessionStorage.getItem('accessToken'))
-                .then(res => {
-                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                })
-                .catch(err => {
-                  if (err.response.status === 401) {
-                    this.$store.dispatch('logOut')
-                    this.$router.push('/Login')
-                  }
-                })
-            }
-          })
+          if (sessionStorage.getItem('accessToken')) {
+            addMemberAddress(sessionStorage.getItem('accessToken'), addrInfo).then(res => {
+              this.$store.state.postCode = item
+              this.$emit('addrModalClose')
+            }).catch(err => {
+              if (err.response.status === 401) {
+                getAccessToken(sessionStorage.getItem('accessToken'))
+                  .then(res => {
+                    sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                  })
+                  .catch(err => {
+                    if (err.response.status === 401) {
+                      this.$store.dispatch('logOut')
+                      this.$router.push('/Login')
+                    }
+                  })
+              }
+            })
+          }
+        } else {
+          let item = {...this.searchResult}
+          item.detail = this.$refs.detailAddr.value
+          this.$store.state.postCode = item
+          this.$emit('addrModalClose')
         }
       }
     },

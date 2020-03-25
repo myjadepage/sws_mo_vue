@@ -40,7 +40,9 @@
             <li><a href="/Searchpw">패스워드 찾기</a></li>
             <li><a href="/RegStep00">회원가입</a></li>
           </ul>
-
+            <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
+            <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
+          <div class="socialTitle">SNS 간편 로그인</div>
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
@@ -109,8 +111,8 @@ export default {
               console.log('acees', res)
               let accessToken = res.data.jsonData.accessToken
               let refreshToken = res.data.jsonData.refreshToken
-              localStorage.setItem('accessTokenGoogle', accessToken)
-              localStorage.setItem('refreshTokenGoogle', refreshToken)
+              sessionStorage.setItem('accessTokenGoogle', accessToken)
+              sessionStorage.setItem('refreshTokenGoogle', refreshToken)
               this.$router.push({name: 'RegStep00', params: {key: 'sns'}})
             })
             .catch(function (error) {
@@ -152,7 +154,17 @@ export default {
     // 네이버로그인시 콜백함수
     callbackFunction: function (status) {
       alert('들어왔니')
+    },
+
+    noMemberBuyClick () {
+      sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
+      sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
+      this.$router.push('/BuyProduct')
+    },
+    noMemeberOrderClick () {
+      this.$router.push('/nonMemberOrder')
     }
+
   }
 }
 </script>

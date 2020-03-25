@@ -41,18 +41,18 @@ export const store = new Vuex.Store({
   mutations: {
     // 로그인 성공시
     loginSuccess (state) {
-      localStorage.getItem('accessToken')
-      localStorage.getItem('refreshToken')
-      if (localStorage.getItem('accessToken')) {
+      sessionStorage.getItem('accessToken')
+      sessionStorage.getItem('refreshToken')
+      if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
       } else {
         state.isLogin = false
       }
     },
     loginSuccessGoogle (state) {
-      localStorage.getItem('accessTokenGoogle')
-      localStorage.getItem('refreshTokenGoogle')
-      if (localStorage.getItem('accessTokenGoogle')) {
+      sessionStorage.getItem('accessTokenGoogle')
+      sessionStorage.getItem('refreshTokenGoogle')
+      if (sessionStorage.getItem('accessTokenGoogle')) {
         state.isLogin = true
       } else {
         state.isLogin = false
@@ -65,15 +65,15 @@ export const store = new Vuex.Store({
     logOut (state) {
       state.isLogin = false
       state.userInfo = null
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
+      sessionStorage.removeItem('accessToken')
+      sessionStorage.removeItem('refreshToken')
       sessionStorage.removeItem('memberInfo')
     },
     logOutGoogle (state) {
       state.isLogin = false
       state.userInfo = null
-      localStorage.removeItem('accessTokenGoogle')
-      localStorage.removeItem('refreshTokenGoogle')
+      sessionStorage.removeItem('accessTokenGoogle')
+      sessionStorage.removeItem('refreshTokenGoogle')
     },
     addOption: (state, item) => state.selectedOptions.push(item),
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
