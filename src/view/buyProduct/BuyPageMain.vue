@@ -1,19 +1,19 @@
 <template>
 <div class="buyPageMainWrap">
-  <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
+  <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer/>
-    <Delivery :member=member @deliveryBtnClick="addrModalShow" />
+    <Orderer @orderIsDestCheck="ordererDestChecked" :member=member />
+    <Delivery :addresses="addresses" :ordererInfo="ordererInfo" :member=member @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
-    <TotalPriceInfo @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
+    <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
     <BuyFooter :coupon="discountCoupon" :finalPrice="finalPrice" />
 
-    <AddrModal @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
-    <!-- <InfoModal @modalClose="modalVisibility = false" v-if="modalVisibility" /> -->
+    <AddrModal :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
+    <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
 
 </div>
 </template>
@@ -31,9 +31,16 @@ import TotalPriceInfo from '@/components/buypage/TotalPriceInfo'
 import BuyFooter from '@/components/buypage/BuyFooter'
 import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
 import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
+import {getMemberAddrList} from '@/api/index.js'
 
 export default {
   created () {
+    getMemberAddrList(localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'))
+      .then(res => { this.addresses = res.data.jsonData.addresses })
+      .catch(err => console.log(err))
+
+    let m = JSON.parse(sessionStorage.getItem('memberInfo'))
+    this.member = m
     window.scrollTo(0, 0)
   },
   components: {
@@ -52,22 +59,34 @@ export default {
       couponMode: false,
       finalPrice: 0,
       addrModalVisibility: false,
+      infoModalVisibility: false,
       member: {
-        orderPostNumber: 12345,
-        name: '임동욱',
-        phone: '010-1234-1234',
-        addr: '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'
-      }
+      },
+      ordererInfo: {},
+      addresses: []
     }
   },
   methods: {
     addrModalShow () {
       this.addrModalVisibility = true
     },
+    ordererDestChecked (info) {
+      this.ordererInfo = info
+    },
 
     addrModalClose () {
       this.addrModalVisibility = false
       this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
+    },
+    infoModalShow () {
+      this.infoModalVisibility = true
+    },
+    infoModalClose () {
+      this.infoModalVisibility = false
+    },
+    allModalClose () {
+      this.infoModalVisibility = false
+      this.addrModalVisibility = false
     },
     discountByPoint (point) {
       this.discountPoint = point

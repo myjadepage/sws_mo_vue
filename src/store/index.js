@@ -96,6 +96,7 @@ export const store = new Vuex.Store({
             console.log('로그인성공?', res)
             let accessToken = res.data.jsonData.accessToken
             let refreshToken = res.data.jsonData.refreshToken
+
             localStorage.setItem('accessToken', accessToken)
             localStorage.setItem('refreshToken', refreshToken)
 

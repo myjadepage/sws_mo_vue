@@ -6,9 +6,9 @@
         <button @click="deliveryBtnClick(0)" class="selected">배송지 목록</button><button @click="deliveryBtnClick(1)">신규 배송지</button>
         </div>
       <ul v-if="currentCat===0" class="addressList">
-        <li v-for="(addr,idx) in addressList" :key="idx"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="addr">
+        <li v-for="(addr,idx) in addresses" :key="idx"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="addr.newAddress">
         <label class="checkmark" :for="'coupon'+idx"></label>
-        <label class="radioLabel" :for="'radio'+idx">{{addr}}</label></li>
+        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}}</label></li>
       </ul>
 
       <div v-if="currentCat===1" class="searchAddrSection">
@@ -16,7 +16,8 @@
         <input type="text" ref="jibun" readonly class="jibun" :value="jibunAddress">
         <input type="text" ref="detailAddr" class="detailAddr" placeholder="상세주소">
         <div class="defualtAddrCheck">
-        <input type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
+        <input ref="defaultAddrCheck" type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
+        <label class="checkmark" for="defaultAddrCheck"></label>
         </div>
       </div>
 
@@ -28,15 +29,18 @@
 
 <script>
 import ModalHeader from './ModalHeader'
+import {addMemberAddress} from '@/api/index.js'
 
 export default {
+  props: ['addresses'],
   components: {
     ModalHeader
+  },
+  created () {
   },
   data () {
     return {
       currentCat: 0,
-      addressList: ['서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플', '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'],
       searchResult: {}
     }
   },
@@ -59,12 +63,25 @@ export default {
       }
     },
     addAddrClick () {
+      // 비동기 주소 등록 로직 추가하기
+
       if (this.$refs.addr.value && this.$refs.jibun.value) {
         let item = {...this.searchResult}
         item.detail = this.$refs.detailAddr.value
 
-        this.$store.state.postCode = item
-        this.$emit('addrModalClose')
+        let addrInfo = {
+          address: this.$refs.jibun.value,
+          newAddress: this.$refs.addr.value,
+          addressDetail: this.$refs.detailAddr.value,
+          initFlag: this.$refs.defaultAddrCheck.checked ? 1 : 0}
+
+        addMemberAddress(localStorage.getItem('accessToken'), localStorage.getItem('refreshToken'), addrInfo).then(res => {
+          console.log(res)
+          this.$store.state.postCode = item
+          this.$emit('addrModalClose')
+        }).catch(err => {
+          console.log(err)
+        })
       }
     },
     selectAddrClick () {
@@ -107,7 +124,7 @@ export default {
 <style>
 .deliveryAddrModal{
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 5%;
     width: 90%;
@@ -179,6 +196,22 @@ export default {
 
   .deliveryAddrModal .searchAddrSection input[type='text'].detailAddr{
     margin-bottom: 10px;
+  }
+
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']{
+    all: unset;
+    display: inline-block;
+    border: 1.5px solid #cccccc;
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked{
+    border: 1.5px solid #e61754;
+  }
+  .deliveryAddrModal  .searchAddrSection input[type='checkbox']:checked+.checkmark{
+    border: 1.5px solid #e61754;
   }
 
   .deliveryAddrModal .addressList{

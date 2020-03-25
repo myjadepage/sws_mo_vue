@@ -9,7 +9,7 @@
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <div v-for="(o,i) in item.contentGroup" :key="i">
-          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o}}
+          <span v-if="options.legnth>0">{{options[i].name}}</span>{{o.name}}
         </div>
         <br>
         <div class="countBtnSection">
@@ -27,7 +27,7 @@
 <script>
 export default {
   created () {
-    if (this.options.length) {
+    if (this.options.length) { // 옵션이 있는 상품의 경우
       for (const o of this.options) {
         let first = o.content.split(';')
         let second = []
@@ -36,26 +36,29 @@ export default {
             second.push([f.split('^')[0], Number(f.split('^')[1])])
           }
         }
+        if (o.content.includes('선택') && !second[0].includes('선택없음')) {
+          second.splice(0, 0,
+            ['선택없음', 0])
+        }
         this.optionContents.push(second)
       }
-    } else {
+    } else { // 옵션이 없는 상품의 경우
       let p = this.$store.getters.getProduct
       let item = {
-        contentGroup: [p.name],
+        contentGroup: [{name: p.name, prdtNormalOptionSysId: null, price: null}],
         count: 1,
         price: p.price - (p.price * p.discountRate),
         contentName: ''
       }
 
       this.$store.state.selectedOptions = [item]
-
-      console.log(item)
     }
   },
   props: ['buyMode', 'options'],
   data () {
     return {
-      optionContents: []
+      optionContents: [],
+      isListContainsOptional: false
     }
   },
   methods: {
@@ -77,7 +80,7 @@ export default {
     },
 
     optionSelected () {
-      for (let i = 0; i < this.optionContents.length; i++) { // 선택 가능한 옵션 모두 선택했는지 체크
+      for (let i = 0; i < this.optionContents.length; i++) { // 선택 가능한 필수옵션 모두 선택했는지 체크
         if (!this.$refs['option' + i][0].value) {
           return
         }
@@ -89,11 +92,26 @@ export default {
 
       for (let i = 0; i < this.optionContents.length; i++) { // 빈 객체에 현재 선택된 값을 주입
         let o = this.$refs['option' + i][0].value.split('**')
-        item.contentGroup.push(o[0])
+        item.contentGroup.push({name: o[0], prdtNormalOptionSysId: this.options[i].prdtNormalOptionSysId, price: Number(o[1])})
         item.price += Number(o[1])
       }
-      item.contentName = item.contentGroup.join(' ')
-      // console.log(item)
+      item.contentGroup.forEach(c => {
+        if (item.contentGroup[item.contentGroup.length - 1] === c) {
+          item.contentName += ' ' + c.name
+        } else {
+          item.contentName += c.name
+        }
+      })
+
+      for (const o of this.$store.getters.getSelectedOptions) { // 옵션 중복 체크
+        if (o.contentName === item.contentName) {
+          alert('이미 선택된 옵션입니다.')
+          for (let i = 0; i < this.optionContents.length; i++) {
+            this.$refs['option' + i][0].value = ''
+          }
+          return
+        }
+      }
 
       this.$store.commit('addOption', item)
 
@@ -103,12 +121,6 @@ export default {
     },
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    },
-    shortOptionName (name) {
-      // let x = name.substring()
-      console.log(name)
-
-      return name.substring(/[0123456789.]/, '')
     },
 
     calcPrice (idx) {
@@ -126,11 +138,17 @@ export default {
       if (this.options.length) {
         let o = this.$store.getters.getSelectedOptions
         let val = 0
+        let cnt = 0
         for (const item of o) {
+          cnt += item.count
           val += (item.count * item.price)
         }
 
-        return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        if (val) {
+          return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        } else {
+          return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt
+        }
       } else {
         return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count
       }

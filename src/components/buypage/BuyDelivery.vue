@@ -7,13 +7,13 @@
     <div class="buyDeliveryBody">
       <table>
         <tr>
-          <td>{{member.name}}</td>
+          <td>{{ordererInfo.name}}</td>
         </tr>
         <tr>
-          <td>{{member.addr}}</td>
+          <td>{{address}}</td>
         </tr>
         <tr>
-          <td>{{member.phone}}</td>
+          <td>{{ordererInfo.phone}}</td>
         </tr>
       </table>
     </div>
@@ -22,10 +22,21 @@
 
 <script>
 export default {
-  props: ['member'],
+  props: ['member', 'ordererInfo', 'addresses'],
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')
+    }
+  },
+  computed: {
+    address () {
+      for (const a of this.addresses) {
+        if (a.initFlag === 1) {
+          return a.newAddress
+        }
+      }
+
+      return this.addresses[0].newAddress
     }
   }
 }

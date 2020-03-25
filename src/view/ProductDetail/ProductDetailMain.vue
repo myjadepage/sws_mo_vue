@@ -20,11 +20,10 @@ import {getProduct} from '@/api/index'
 export default {
   created () {
     let id = this.$route.params.prdtSysId
-    let self = this
 
     getProduct(id).then((res) => {
-      self.$store.state.product = res.data.jsonData.product
-      self.product = res.data.jsonData.product
+      this.$store.state.product = res.data.jsonData.product
+      this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
     }
     ).catch((e) => console.log(e)
