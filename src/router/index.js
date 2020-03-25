@@ -191,6 +191,66 @@ export default new Router({
       path: '/nonMemberOrder',
       name: 'NonMemberOrder',
       component: () => import('@/view/nonMemberOrderSearch/NonMemberOrder')
+    },
+    {
+      path: '/modifyProfile',
+      name: 'ModifyProfile',
+      component: () => import('@/view/mypage/ModifyProfile')
+    },
+    {
+      path: '/AlertSet',
+      name: 'AlertSet',
+      component: () => import('@/view/mypage/AlertSet')
+    },
+    {
+      path: '/VersionChk',
+      name: 'VersionChk',
+      component: () => import('@/view/mypage/VersionChk')
+    },
+    {
+      path: '/ChangePw',
+      name: 'ChangePw',
+      component: () => import('@/view/mypage/ChangePw')
+    },
+    {
+      path: '/Exchange',
+      name: 'Exchange',
+      component: () => import('@/view/mypage/Exchange')
+    },
+    {
+      path: '/ExchangeDetail',
+      name: 'ExchangeDetail',
+      component: () => import('@/view/mypage/ExchangeDetail')
+    },
+    {
+      path: '/BuyHistory',
+      name: 'BuyHistory',
+      component: () => import('@/view/mypage/BuyHistory')
+    },
+    {
+      path: '/Basket',
+      name: 'Basket',
+      component: () => import('@/view/mypage/Basket')
+    },
+    {
+      path: '/ViewLog',
+      name: 'ViewLog',
+      component: () => import('@/view/mypage/ViewLog')
+    },
+    {
+      path: '/MyReview',
+      name: 'MyReview',
+      component: () => import('@/view/mypage/MyReview')
+    },
+    {
+      path: '/Following',
+      name: 'Following',
+      component: () => import('@/view/mypage/Following')
+    },
+    {
+      path: '/Follower',
+      name: 'Follower',
+      component: () => import('@/view/mypage/Follower')
     }
   ]
 })
