@@ -136,10 +136,10 @@ export default {
     // 카카오로그인 성공시
     onSuccess: function (data) {
       var vm = this
-      console.log('success')
-      snsLogin(1, data.access_token)
+      console.log('success', data)
+      snsLogin(1, data.access_token, '000-000-000')
         .then(res => {
-          console.log('acees', res)
+          console.log('accees', res)
           vm.$router.push('/RegStep00')
         })
         .catch(function (error) {
@@ -147,8 +147,7 @@ export default {
         })
     },
     onFailure: (data) => {
-      console.log(data)
-      console.log('failure')
+      console.log('failure', data)
     },
 
     // 네이버로그인시 콜백함수

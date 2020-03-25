@@ -24,7 +24,7 @@ function getCategoryList () {
 
 // 상품세일
 function getSaleProduct () {
-  return axios.get(`${config.baseUrl}pbtn-fbroducts/salelists`)
+  return axios.get(`${config.baseUrl}products/salelists`)
 }
 
 // 주간베스트상품(Weekly)
@@ -166,10 +166,11 @@ function retauthMine (authType, authWay, authWayValue) {
 }
 
 // 간편로그인
-function snsLogin (snsType, snsToken) {
+function snsLogin (snsType, snsToken, mobile) {
   let jsonData = {
     'snsType': snsType,
-    'snsToken': snsToken
+    'snsToken': snsToken,
+    'mobile': mobile
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
