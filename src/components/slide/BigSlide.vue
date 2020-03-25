@@ -1,43 +1,43 @@
 <template>
 <div class="big_slide">
-    <swiper :options="swiperOption">
+    <swiper :options="swiperOption" ref="bigSwiper">
         <swiper-slide>
-          <img src="/static/images/slide01.jpg">
+          <img src="../../assets/img/main-01.png">
           <div class="title">
-            <h4>소녀들이 열광하는 LOVEMARK</h4>
-            <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
+            <p class="smallText">AROMATICA</p>
+            <p class="bigText">민감성 피부를 위한<br/>비건 스킨케어 세트</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="/static/images/slide01.jpg">
+          <img src="../../assets/img/main-02.png">
           <div class="title">
-            <h4>소녀들이 열광하는 LOVEMARK</h4>
-            <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
+            <p class="smallText">WOMEN ESSENTAIL</p>
+            <p class="bigText">우먼 에센셜 20SS<br/>상품 증정 이벤트</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="/static/images/slide01.jpg">
+          <img src="../../assets/img/main-03.png">
           <div class="title">
-            <h4>소녀들이 열광하는 LOVEMARK</h4>
-            <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
+            <p class="smallText">COSRX</p>
+            <p class="bigText">피부 고민 해결사<br/>코스알엑스</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="/static/images/slide01.jpg">
+          <img src="../../assets/img/main-04.png">
           <div class="title">
-            <h4>소녀들이 열광하는 LOVEMARK</h4>
-            <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
+            <p class="smallText">POSITIVE OVER NEGATIVE</p>
+            <p class="bigText">360도 실시간 오염<br/>감지 공기청정기</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="/static/images/slide01.jpg">
+          <img src="../../assets/img/main-05.png">
           <div class="title">
-            <h4>소녀들이 열광하는 LOVEMARK</h4>
-            <span class="tag_title">#마뜨여신 나은이와 페리페라가 함께한 NEW 영상</span>
+            <p class="smallText">SERENDIV</p>
+            <p class="bigText">오늘은 밥대신,<br/>컬리플라워라이스</p>
           </div>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
+      <div class="swiper-pagination"><span>{{activePage}}</span>/5</div>
 </div>
 </template>
 
@@ -53,12 +53,30 @@ export default {
   data () {
     return {
       swiperOption: {
-        pagination: {
-          el: '.swiper-pagination',
-          dynamicBullets: true
+        autoplay: {
+          delay: 5000
+        },
+        onSlideChangeEnd: function () {
+          this.onSwipe()
         }
-      }
+      },
+      activePage: 1
     }
+  },
+  methods: {
+    onSwipe (varuable) {
+      this.activePage = varuable.swiper.activeIndex + 1
+    }
+  },
+  computed: {
+    swiper () {
+      return this.$refs.bigSwiper.swiper
+    }
+  },
+  mounted () {
+    this.swiper.on('slideChange', () => {
+      this.onSwipe(this)
+    })
   }
 }
 </script>

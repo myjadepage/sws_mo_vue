@@ -1,24 +1,51 @@
 <template>
-  <div class="live_slide pbottom">
+  <div class="live_slide">
       <h4>Live <span>라이브 편성표 > </span></h4>
       <swiper :options="swiperOption">
-        <swiper-slide v-for="item in items" :key="item.broadcastSysId">
-            <div class="img-area" v-for="id in item.broadcastPrdts" :key="id.prdtSysId">
-                 <!-- <router-link :to="'/product/'+ id.prdtSysId + '/' + item.broadcastType" style="height:251px"> -->
-                 <router-link :to="{ path: '/product/' + id.prdtSysId + '/Live'}" style="height:251px">
-                    <img :src="item.thumnailUrl" alt="청하의 선택">
-                    <span class="circle-box"><i class="xi-play"></i></span>
-                    <div class="live-info-top">
-                        <span class="ic-live-wrap status-vod">{{ item.broadcastType === '1' ? 'VOD': 'LIVE'  }}</span>
-                    </div>
-                    <ul class="brand-icon">
-                        <li class="brand-logo"><i class="img-circle" style="background-image: url('static/brand/logo-lf.png')"></i></li>
-                        <li class="brand-name">리아</li>
-                        <li class="brand-view">{{ item.viewCnt | makeComma }} 시청함</li>
-                    </ul>
-                </router-link>
+        <!-- live 시에 item에 클래스만 붙여주면 됩니다. -->
+        <swiper-slide class="item live">
+          <router-link to="" >
+            <div class="imgBox">
+              <img src="../../assets/img/temp_main_live_01.png" alt="엘에프몰 이미지" />
             </div>
-            <div class="desc-area">{{ item.briefComment }}</div>
+            <div class="btn_movie">
+              <img src="../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
+            </div>
+            <p class="txtBox">몰상식? LF몰(엘에프몰)<br/>상식 총집합! 브랜드가 천지!</p>
+          </router-link>
+        </swiper-slide>
+        <swiper-slide class="item">
+          <router-link to="" >
+            <div class="imgBox">
+              <img src="../../assets/img/temp_main_live_01.png" alt="엘에프몰 이미지" />
+            </div>
+            <div class="btn_movie">
+              <img src="../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
+            </div>
+            <p class="txtBox">몰상식? LF몰(엘에프몰)<br/>상식 총집합! 브랜드가 천지!</p>
+          </router-link>
+        </swiper-slide>
+        <swiper-slide class="item live">
+          <router-link to="" >
+            <div class="imgBox">
+              <img src="../../assets/img/temp_main_live_01.png" alt="엘에프몰 이미지" />
+            </div>
+            <div class="btn_movie">
+              <img src="../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
+            </div>
+            <p class="txtBox">몰상식? LF몰(엘에프몰)<br/>상식 총집합! 브랜드가 천지!</p>
+          </router-link>
+        </swiper-slide>
+        <swiper-slide class="item">
+          <router-link to="" >
+            <div class="imgBox">
+              <img src="../../assets/img/temp_main_live_01.png" alt="엘에프몰 이미지" />
+            </div>
+            <div class="btn_movie">
+              <img src="../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
+            </div>
+            <p class="txtBox">몰상식? LF몰(엘에프몰)<br/>상식 총집합! 브랜드가 천지!</p>
+          </router-link>
         </swiper-slide>
       </swiper>
   </div>
@@ -40,7 +67,8 @@ export default {
       items: [ ],
       broadcastType: null,
       swiperOption: {
-        slidesPerView: 1
+        slidesPerView: 'auto',
+        spaceBetween: 10
         // loop: true
       }
     }
