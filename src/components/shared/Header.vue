@@ -28,7 +28,7 @@
                 </router-link>
             </div>
             <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true">
-                 <router-link to="/MyPage" id="btnSearchTop" class="link_search" role="button">
+                 <router-link to="/cart" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_basket">장바구니</span>
                 </router-link>
             </div>

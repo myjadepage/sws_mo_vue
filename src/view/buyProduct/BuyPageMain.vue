@@ -1,19 +1,19 @@
 <template>
 <div class="buyPageMainWrap">
-  <div @click="addrModalVisibility = false" v-if="addrModalVisibility" class="darkFilter"></div>
+  <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer/>
-    <Delivery :member=member @deliveryBtnClick="addrModalShow" />
+    <Orderer />
+    <Delivery :addresses="addresses" @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
-    <TotalPriceInfo @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
-    <BuyFooter :coupon="discountCoupon" :finalPrice="finalPrice" />
+    <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
+    <BuyFooter :addresses="addresses" :coupon="discountCoupon" :finalPrice="finalPrice" />
 
-    <AddrModal @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
-    <!-- <InfoModal @modalClose="modalVisibility = false" v-if="modalVisibility" /> -->
+    <AddrModal :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
+    <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
 
 </div>
 </template>
@@ -31,9 +31,30 @@ import TotalPriceInfo from '@/components/buypage/TotalPriceInfo'
 import BuyFooter from '@/components/buypage/BuyFooter'
 import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
 import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
+import {getMemberAddrList, getAccessToken} from '@/api/index.js'
 
 export default {
   created () {
+    if (sessionStorage.getItem('accessToken')) {
+      getMemberAddrList(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          this.addresses = res.data.jsonData.addresses
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('accessToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
+    }
     window.scrollTo(0, 0)
   },
   components: {
@@ -52,22 +73,44 @@ export default {
       couponMode: false,
       finalPrice: 0,
       addrModalVisibility: false,
-      member: {
-        orderPostNumber: 12345,
-        name: '임동욱',
-        phone: '010-1234-1234',
-        addr: '서울특별시 구로구 디지털로 272 (구로동 한신아이티타워) 201호 인라이플'
-      }
+      infoModalVisibility: false,
+      addresses: []
     }
   },
   methods: {
     addrModalShow () {
       this.addrModalVisibility = true
     },
-
     addrModalClose () {
+      if (sessionStorage.getItem('accessToken')) {
+        getMemberAddrList(sessionStorage.getItem('accessToken'))
+          .then(res => { this.addresses = res.data.jsonData.addresses })
+          .catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('accessToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
+      }
       this.addrModalVisibility = false
-      this.member.addr = this.$store.getters.getPostCode.address + ' ' + this.$store.getters.getPostCode.detail
+    },
+    infoModalShow () {
+      this.infoModalVisibility = true
+    },
+    infoModalClose () {
+      this.infoModalVisibility = false
+    },
+    allModalClose () {
+      this.infoModalVisibility = false
+      this.addrModalVisibility = false
     },
     discountByPoint (point) {
       this.discountPoint = point

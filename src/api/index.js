@@ -51,7 +51,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`${config.baseUrl}orders`, formdata)
+  return axios.post(`http://192.168.1.40:3000/api/v1/orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {
@@ -70,6 +70,33 @@ function getUserInfo (accessToken) {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
     }
+  })
+}
+
+// 회원 주소 목록 가져오기
+function getMemberAddrList (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`http://192.168.1.20:3000/api/v1/users/${userSysId}/listaddress`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+// 회원 주소 등록
+function addMemberAddress (accessToken, addrInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addrInfo))
+  return axios({
+    method: 'post',
+    url: `http://192.168.1.20:3000/api/v1/users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -201,6 +228,31 @@ function parseJwt (token) {
   return JSON.parse(jsonPayload)
 }
 
+function getAccessToken (refreshToken) {
+  return axios({
+    method: 'post',
+    url: `http://192.168.1.20:3000/api/v1/auth/accesstoken`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${refreshToken}`
+    }
+  })
+}
+
+// 토큰 만료 여부 확인 (true:만료 false:기한남음)
+// function isTokenExpired (token) {
+//   let tokenExp = parseJwt(token).exp * 1000
+//   let now = new Date().getTime()
+//   let timeDiff = tokenExp - now
+
+//   if (timeDiff < 0) {
+//     return true
+//   } else {
+//     return false
+//   }
+// }
+
+// let dayDiff = Math.ceil(Math.abs(timeDiff) / (1000 * 60 * 60 * 24))
 export {
   getPublicKey,
   checkRSA,
@@ -221,5 +273,8 @@ export {
   getBroadCast,
   postOrders,
   payOrders,
-  getUserInfo
+  getUserInfo,
+  getMemberAddrList,
+  addMemberAddress,
+  getAccessToken
 }

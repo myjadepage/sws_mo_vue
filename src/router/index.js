@@ -186,6 +186,11 @@ export default new Router({
       path: '/cart',
       name: 'Cart',
       component: () => import('@/view/cart/CartMain')
+    },
+    {
+      path: '/nonMemberOrder',
+      name: 'NonMemberOrder',
+      component: () => import('@/view/nonMemberOrderSearch/NonMemberOrder')
     }
   ]
 })

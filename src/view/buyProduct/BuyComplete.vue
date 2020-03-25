@@ -17,35 +17,66 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-// import {payOrders} from '@/api/index.js'
+import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
     let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
+
     this.info = payInfo
-    this.info.orderCode = 'S20200306190346-0000003'
-    this.payMethod = this.$store.getters.getPayMethod
-    let item = {
-      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: 1, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
-    }
-    // console.log(this.payMethod)
-    sessionStorage.removeItem('payItem')
-    sessionStorage.removeItem('selectedOptions')
-    sessionStorage.removeItem('orderCode')
+    this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
+    sessionStorage.removeItem('orderRes')
     sessionStorage.removeItem('product')
-    this.item = item
-    // console.log(item)
+    sessionStorage.removeItem('payItem')
 
-    // payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-    //   console.log(res)
-    //   sessionStorage.removeItem('orderSysId')
-    // }).catch(err => {
-    //   console.log(err)
+    switch (this.$store.getters.getPayMethod) {
+      case 'card':
+        this.payMethod = 1
+        break
+      case 'trans':
+        this.payMethod = 2
+        break
+      case 'vbank':
+        this.payMethod = 3
+        break
+      case 'phone':
+        this.payMethod = 4
+        break
+      case 'samsung':
+        this.payMethod = 5
+        break
+      case 'kpay':
+        this.payMethod = 6
+        break
+      case 'cultureland':
+        this.payMethod = 7
+        break
+      case 'smartculture':
+        this.payMethod = 8
+        break
+      case 'happymoney':
+        this.payMethod = 9
+        break
+      case 'booknlife':
+        this.payMethod = 10
+        break
+      default:
+        break
+    }
 
-    //   sessionStorage.removeItem('orderSysId')
-    // })
+    let item = {
+      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
+    }
 
-    // console.log(this.$route.query)
+    if (localStorage.getItem('orderSysId')) {
+      payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+        console.log(res)
+        sessionStorage.removeItem('orderSysId')
+      }).catch(err => {
+        console.log(err)
+        sessionStorage.removeItem('orderSysId')
+      })
+    }
   },
 
   data () {
@@ -60,6 +91,10 @@ export default {
 
   components: {
     Bar, Message, Account, Info, Guides, Footer
+  },
+
+  beforeDestroy () {
+    sessionStorage.removeItem('selectedOptions')
   }
 }
 </script>

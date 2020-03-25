@@ -17,6 +17,8 @@ export const store = new Vuex.Store({
     selectedOptions: [],
     searchCat: 0,
     isAuth: false,
+    ordererInfo: {name: '', phone: '', email: ''},
+    destInfo: {name: '', phone: ''},
     payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0}
   },
   getters: {
@@ -32,23 +34,25 @@ export const store = new Vuex.Store({
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
     getSearchCat: state => state.searchCat,
     getPostCode: state => state.postCode,
-    getPayPriceInfo: state => state.payPriceInfo
+    getPayPriceInfo: state => state.payPriceInfo,
+    getOrdererInfo: state => state.ordererInfo,
+    getDestInfo: state => state.destInfo
   },
   mutations: {
     // 로그인 성공시
     loginSuccess (state) {
-      localStorage.getItem('accessToken')
-      localStorage.getItem('refreshToken')
-      if (localStorage.getItem('accessToken')) {
+      sessionStorage.getItem('accessToken')
+      sessionStorage.getItem('refreshToken')
+      if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
       } else {
         state.isLogin = false
       }
     },
     loginSuccessGoogle (state) {
-      localStorage.getItem('accessTokenGoogle')
-      localStorage.getItem('refreshTokenGoogle')
-      if (localStorage.getItem('accessTokenGoogle')) {
+      sessionStorage.getItem('accessTokenGoogle')
+      sessionStorage.getItem('refreshTokenGoogle')
+      if (sessionStorage.getItem('accessTokenGoogle')) {
         state.isLogin = true
       } else {
         state.isLogin = false
@@ -61,15 +65,15 @@ export const store = new Vuex.Store({
     logOut (state) {
       state.isLogin = false
       state.userInfo = null
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
+      sessionStorage.removeItem('accessToken')
+      sessionStorage.removeItem('refreshToken')
       sessionStorage.removeItem('memberInfo')
     },
     logOutGoogle (state) {
       state.isLogin = false
       state.userInfo = null
-      localStorage.removeItem('accessTokenGoogle')
-      localStorage.removeItem('refreshTokenGoogle')
+      sessionStorage.removeItem('accessTokenGoogle')
+      sessionStorage.removeItem('refreshTokenGoogle')
     },
     addOption: (state, item) => state.selectedOptions.push(item),
     deleteOption: (state, idx) => state.selectedOptions.splice(idx, 1),
@@ -80,6 +84,12 @@ export const store = new Vuex.Store({
     },
     updatePayPriceInfo (state, {name, price}) {
       state.payPriceInfo[name] = price
+    },
+    updateOrdererInfo (state, [name, value]) {
+      state.ordererInfo[name] = value
+    },
+    updateDestInfo (state, [name, value]) {
+      state.destInfo[name] = value
     }
   },
   actions: {
@@ -96,8 +106,9 @@ export const store = new Vuex.Store({
             console.log('로그인성공?', res)
             let accessToken = res.data.jsonData.accessToken
             let refreshToken = res.data.jsonData.refreshToken
-            localStorage.setItem('accessToken', accessToken)
-            localStorage.setItem('refreshToken', refreshToken)
+
+            sessionStorage.setItem('accessToken', accessToken)
+            sessionStorage.setItem('refreshToken', refreshToken)
 
             getUserInfo(accessToken).then(r => {
               sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))

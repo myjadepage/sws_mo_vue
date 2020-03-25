@@ -9,7 +9,7 @@
               <td>{{prdPrice|makeComma}}원</td>
           </tr>
           <tr>
-              <th>배송비</th>
+              <th>배송비<span @click="deliveryInfoClick" class="deliveryInfo">?</span></th>
               <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':'무료배송'}}</td>
           </tr>
           <tr v-if="discount">
@@ -39,21 +39,32 @@ export default {
   methods: {
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    },
+    deliveryInfoClick () {
+      this.$emit('infoBtncilik')
     }
   },
   computed: {
     prdPrice () {
       if (this.options[0].contentName !== '') {
         let optionPrice = 0
+        let oCnt = 0
         if (this.options) {
           for (const o of this.options) {
+            oCnt += o.count
             optionPrice += (o.price * o.count)
           }
         }
-        this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price * this.product.discountRate) + optionPrice})
-        return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
+
+        if (optionPrice) {
+          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price * this.product.discountRate) + optionPrice})
+          return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
+        } else {
+          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price - (this.product.price * this.product.discountRate)) * oCnt})
+          return (this.product.price - (this.product.price * this.product.discountRate)) * oCnt
+        }
       } else {
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.$store.getters.getSelectedOptions[0].count
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
     },
     deliveryPrice () {
@@ -98,7 +109,20 @@ export default {
 
 .totalPriceWrap table{
     width: 100%;
+}
 
+.totalPriceWrap .deliveryInfo{
+  cursor: pointer;
+  user-select: none;
+  margin-left: 2px;
+  display: inline-block;
+  text-align: center;
+  width: 15px;
+  height: 15px;
+  color: #999999;
+  border: 1px solid #999999;
+  border-radius: 15px;
+  line-height: 15px;
 }
 
 .totalPriceWrap th{
