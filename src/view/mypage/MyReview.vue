@@ -3,8 +3,8 @@
   <Bar :val="title" />
   <ReviewTab :reviews="reviews" :tabState="tabState" @tabSwitch="tabSwitch" />
   <ExchangeEmpty :param="'리뷰를 작성하지 않은 상품 내역'" v-if="products.length === 0"  />
-  <ExchangeList v-bind:pageType="pageType" :tabState="tabState" v-if="products.length > 0 && !tabState" @basketDeleteModalShow="basketDeleteModalShow"  />
-  <ExchangeList v-bind:pageType="pageType" :tabState="tabState" v-if="products.length > 0 && tabState" @basketDeleteModalShow="basketDeleteModalShow"  />
+  <ExchangeList v-bind:pageType="pageType" :tabState="tabState" v-if="products.length > 0 && !tabState" />
+  <ExchangeList v-bind:pageType="pageType" :tabState="tabState" v-if="products.length > 0 && tabState" />
 
   </div>
 </template>

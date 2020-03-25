@@ -3,7 +3,7 @@
     <img src="../../../assets/img/sws-bi-black@3x.png" alt="SWS 로고"  class="logo"/>
 
     <p class="btn_them border gray">현재버전 {{version.now}}</p>
-    <a href="" class="btn_them border update" v-if="version.new > version.now">최신버전 {{version.new}} 업데이트</a>
+    <router-link to="" class="btn_them border update" v-if="version.new > version.now">최신버전 {{version.new}} 업데이트</router-link>
     <p v-else>최신 버전입니다.</p>
 
   </div>

@@ -33,16 +33,16 @@
             <input type="checkbox" name="item_0" id="item_0" v-model="products.a.checked" />
             <label for="item_0"></label>
           </div>
-          <a href="/ExchangeDetail" class="txtBox">
+          <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호 + 클렌징 오일 정품 50ml 추가증정</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
-          </a>
+          </router-link>
           <div class="itemAmount"  v-if="type!='exchange' && type!='review'">
             <p class="sale" v-if="type==='basket'">25</p>
             <p class="price">32,500원<span class="orgPrice" v-if="type==='basket'">132,500</span></p>
           </div>
           <div class="row ibBtns"  v-if="type==='history'">
-            <a href="" class="btn_them border col3 btn-first">배송조회</a>
+            <router-link to="" class="btn_them border col3 btn-first">배송조회</router-link>
           </div>
           <dl class="itemScore row" v-if="type==='basket'">
             <dt><img src="../../../assets/img/ico/rates.png" alt="별점" /></dt>
@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <a href="" class="btn_them border col1 btn-first">리뷰작성</a>
+            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">
@@ -98,19 +98,19 @@
             <input type="checkbox" name="item_1" id="item_1" v-model="products.b.checked" />
             <label for="item_1"></label>
           </div>
-          <a href="/ExchangeDetail" class="txtBox">
+          <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-          </a>
+          </router-link>
           <div class="itemAmount"  v-if="type!='exchange' && type!='review'">
             <p class="price">32,500원</p>
           </div>
           <div class="row ibBtns"  v-if="type==='history'">
-            <a href="" class="btn_them border col3 btn-first">배송조회</a>
-            <a href="" class="btn_them border col3 gray">교환요청</a>
-            <a href="" class="btn_them border col3 btn-last gray">반품요청</a>
-            <a href="" class="btn_them border col2 btn-first gray">받았습니다</a>
-            <a href="" class="btn_them border col2 btn-last gray">리뷰작성</a>
+            <router-link to="" class="btn_them border col3 btn-first">배송조회</router-link>
+            <router-link to="" class="btn_them border col3 gray">교환요청</router-link>
+            <router-link to="" class="btn_them border col3 btn-last gray">반품요청</router-link>
+            <router-link to="" class="btn_them border col2 btn-first gray">받았습니다</router-link>
+            <router-link to="" class="btn_them border col2 btn-last gray">리뷰작성</router-link>
           </div>
           <dl class="itemScore row" v-if="type==='basket'">
             <dt><img src="../../../assets/img/ico/rates.png" alt="별점" /></dt>
@@ -130,7 +130,7 @@
             </div>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <a href="" class="btn_them border col1 btn-first">리뷰작성</a>
+            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">
@@ -163,15 +163,15 @@
         </div>
         <div class="itemBody">
           <div class="imgBox"></div>
-          <a href="/ExchangeDetail" class="txtBox">
+          <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-          </a>
+          </router-link>
           <div class="itemAmount" v-if="type==='history'">
             <p class="price">32,500원 / 1개</p>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <a href="" class="btn_them border col1 btn-first">리뷰작성</a>
+            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">
@@ -201,46 +201,46 @@
           </div>
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-            </a>
+            </router-link>
             <div class="itemAmount buyLog">
               <p class="price">32,500원 / 1개</p>
               <button class="btn_sDown" @click="itemGroupFlag.group1 = !itemGroupFlag.group1">외 2개</button>
             </div>
             <div class="row ibBtns" >
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <router-link to="" class="btn_them border col3 btn-first gray">구매취소</router-link>
             </div>
           </div>
         </section>
         <section class="item">
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호 + 클렌징 오일 정품 50ml 추가증정</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
-            </a>
+            </router-link>
             <div class="itemAmount buyLog">
               <p class="price">32,500원 / 1개</p>
             </div>
             <div class="row ibBtns">
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <router-link to="" class="btn_them border col3 btn-first gray">구매취소</router-link>
             </div>
           </div>
         </section>
         <section class="item">
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-            </a>
+            </router-link>
             <div class="row buyLog">
               <p class="price">32,500원 / 1개</p>
             </div>
             <div class="row ibBtns">
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <a class="btn_them border col3 btn-first gray">구매취소</a>
             </div>
           </div>
         </section>
@@ -254,46 +254,46 @@
           </div>
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-            </a>
+            </router-link>
             <div class="itemAmount buyLog">
               <p class="price">32,500원 / 1개</p>
               <button class="btn_sDown"  @click="itemGroupFlag.group2 = !itemGroupFlag.group2">외 2개</button>
             </div>
             <div class="row ibBtns" v-if="type==='history'">
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <router-link to="" class="btn_them border col3 btn-first gray">구매취소</router-link>
             </div>
           </div>
         </section>
         <section class="item">
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호 + 클렌징 오일 정품 50ml 추가증정</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
-            </a>
+            </router-link>
             <div class="itemAmount buyLog">
               <p class="price">32,500원 / 1개</p>
             </div>
             <div class="row ibBtns">
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <a class="btn_them border col3 btn-first gray">구매취소</a>
             </div>
           </div>
         </section>
         <section class="item">
           <div class="itemBody">
             <div class="imgBox"></div>
-            <a href="/ExchangeDetail" class="txtBox">
+            <router-link to="/ExchangeDetail" class="txtBox">
               <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
               <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
-            </a>
+            </router-link>
             <div class="row buyLog">
               <p class="price">32,500원 / 1개</p>
             </div>
             <div class="row ibBtns">
-              <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+              <router-link to="" class="btn_them border col3 btn-first gray">구매취소</router-link>
             </div>
           </div>
         </section>
@@ -306,15 +306,15 @@
         </div>
         <div class="itemBody">
           <div class="imgBox"></div>
-          <a href="/ExchangeDetail" class="txtBox">
+          <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호 + 클렌징 오일 정품 50ml 추가증정</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
-          </a>
+          </router-link>
           <div class="itemAmount">
             <p class="price">32,500원 / 1개</p>
           </div>
           <div class="row ibBtns">
-            <a href="" class="btn_them border col3 btn-first gray">구매취소</a>
+            <router-link to="" class="btn_them border col3 btn-first gray">구매취소</router-link>
           </div>
         </div>
       </li>
