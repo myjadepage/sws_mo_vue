@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import {postOrders} from '@/api/index.js'
+import {postOrders} from '@/api/index.js'
 
 export default {
   props: ['finalPrice', 'coupon', 'addresses'],
@@ -98,41 +98,41 @@ export default {
         'code': 200
       }}
 
-      sessionStorage.setItem('payItem', JSON.stringify(item))
-      sessionStorage.setItem('orderRes', JSON.stringify(res))
+      localStorage.setItem('payItem', JSON.stringify(item))
+      localStorage.setItem('orderRes', JSON.stringify(res))
 
-      this.$router.push('/buycomplete?imp_uid=imp1234567890&merchant_uid=order12345')
+      // this.$router.push('/buycomplete?imp_uid=imp1234567890&merchant_uid=order12345')
 
-      // postOrders(item)
-      //   .then(res => { // 주문정보등록 성공 시
-      //     console.log(res)
+      postOrders(item)
+        .then(res => { // 주문정보등록 성공 시
+          console.log(res)
 
-      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+          localStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
 
-      //     this.$IMP().request_pay({ // 아임포트 호출
-      //       pg: 'html5_inicis',
-      //       pay_method: this.$store.getters.getPayMethod,
-      //       merchant_uid: res.data.jsonData.res.orderCode,
-      //       name: this.$store.getters.getProduct.name,
-      //       amount: this.finalPrice,
-      //       buyer_email: item.orderEmail,
-      //       buyer_name: item.orderName,
-      //       buyer_tel: item.orderMobile,
-      //       buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
-      //       buyer_postcode: item.receiverPostNumber,
-      //       m_redirect_url: 'm.shallwe.shop/buyComplete'
-      //     }, (res) => {
-      //       if (res.sucess) {
-      //         console.log(res)
-      //         this.$router.push('/buycomplete/success')
-      //       } else {
-      //         this.$router.push('/buycomplete/failure')
-      //       }
-      //     })
-      //   })
-      //   .catch(error => { // 주문정보등록 실패
-      //     console.log(error)
-      //   })
+          this.$IMP().request_pay({ // 아임포트 호출
+            pg: 'html5_inicis',
+            pay_method: this.$store.getters.getPayMethod,
+            merchant_uid: res.data.jsonData.res.orderCode,
+            name: product.name,
+            amount: this.finalPrice,
+            buyer_email: item.orderEmail,
+            buyer_name: item.orderName,
+            buyer_tel: item.orderMobile,
+            buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
+            buyer_postcode: item.receiverPostNumber,
+            m_redirect_url: 'http://192.168.1.82:8080/buyComplete'
+          }, (res) => {
+            if (res.sucess) {
+              console.log(res)
+              this.$router.push('/buycomplete/success')
+            } else {
+              this.$router.push('/buycomplete/failure')
+            }
+          })
+        })
+        .catch(error => { // 주문정보등록 실패
+          console.log(error)
+        })
     }
   }
 }

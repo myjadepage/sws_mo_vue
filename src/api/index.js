@@ -51,7 +51,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`http://192.168.1.40:3800/api/v1/orders`, formdata)
+  return axios.post(`http://192.168.1.40:3000/api/v1/orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {

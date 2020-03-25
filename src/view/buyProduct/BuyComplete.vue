@@ -17,14 +17,14 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-// import {payOrders} from '@/api/index.js'
+import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
-    let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
+    let payInfo = JSON.parse(localStorage.getItem('payItem'))
 
     this.info = payInfo
-    this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
+    this.info.orderCode = JSON.parse(localStorage.getItem('orderRes')).jsonData.res.orderCode
 
     switch (this.$store.getters.getPayMethod) {
       case 'card':
@@ -74,14 +74,13 @@ export default {
     // sessionStorage.removeItem('orderCode')
     // sessionStorage.removeItem('product')
 
-    // payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-    //   console.log(res)
-    //   sessionStorage.removeItem('orderSysId')
-    // }).catch(err => {
-    //   console.log(err)
-
-    //   sessionStorage.removeItem('orderSysId')
-    // })
+    payOrders(item, localStorage.getItem('orderSysId')).then(res => {
+      console.log(res)
+      localStorage.removeItem('orderSysId')
+    }).catch(err => {
+      console.log(err)
+      localStorage.removeItem('orderSysId')
+    })
 
     // console.log(this.$route.query)
   },

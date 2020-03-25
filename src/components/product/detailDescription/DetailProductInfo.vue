@@ -25,11 +25,10 @@ export default {
   },
   mounted () {
     this.$refs.descSection.innerHTML = this.product.detailDescription
-    setTimeout(() => {
-      if (this.$refs.descSection.clientHeight >= 800) {
-        this.isSpreadable = true
-      }
-    }, 300)
+    if (this.$refs.descSection.clientHeight >= 800) {
+      this.isSpreadable = true
+      this.$forceUpdate()
+    }
   },
   methods: {
     clickSpread () {
