@@ -1,9 +1,9 @@
 <template>
   <div>
     <Bar :val="title" />
-    <Follow :users="users" :phase="phase" @follow="stateSwitch" />
+    <Follow :users="users" :phase="phase" @select="select" />
     <section v-if="removeConfirm" class="modalBg" >
-      <RemoveModal  @close="removedClose" @remove="removeFollowing" />
+      <RemoveFolloerModal  @close="removedClose" @remove="removeFollower" />
     </section>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 import Bar from '@/components/shared/Bar'
 import Follow from '@/components/mypage/Follow/Follow'
-import RemoveModal from '@/components/mypage/Follow/Modal/RemoveModal'
+import RemoveFolloerModal from '@/components/mypage/Follow/Modal/RemoveFolloerModal'
 import profile1 from '@/assets/img/temp_profile1.jpg'
 import profile2 from '@/assets/img/temp_profile2.jpg'
 import profile3 from '@/assets/img/temp_profile3.jpg'
@@ -20,7 +20,7 @@ import profile4 from '@/assets/img/temp_profile4.jpg'
 export default {
   data () {
     return {
-      title: '팔로잉',
+      title: '팔로워',
       users: [
         {
           id: 'lovely123',
@@ -51,29 +51,25 @@ export default {
           idx: 3
         }
       ],
-      phase: 'following',
+      phase: 'follower',
       selected: 0,
       removeConfirm: false
     }
   },
   components: {
-    Bar, Follow, RemoveModal
+    Bar, Follow, RemoveFolloerModal
   },
   methods: {
-    stateSwitch (idx) {
-      if (this.users[idx].state === true) {
-        this.selected = idx
-        this.removeConfirm = true
-        return
-      }
-      this.users[idx].state = !this.users[idx].state
+    select (idx) {
+      this.selected = idx
+      this.removeConfirm = true
     },
     removedClose () {
       this.removeConfirm = false
     },
-    removeFollowing () {
+    removeFollower () {
       this.removedClose()
-      this.users[this.selected].state = !this.users[this.selected].state
+      this.users.splice(this.selected, 1)
     }
   }
 }

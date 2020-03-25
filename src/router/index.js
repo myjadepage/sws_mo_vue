@@ -241,6 +241,11 @@ export default new Router({
       path: '/Following',
       name: 'Following',
       component: () => import('@/view/mypage/Following')
+    },
+    {
+      path: '/Follower',
+      name: 'Follower',
+      component: () => import('@/view/mypage/Follower')
     }
   ]
 })
