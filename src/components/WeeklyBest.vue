@@ -2,8 +2,8 @@
   <div class="section_ITEM weekly_best_main">
     <h4>Weekly Best</h4>
     <ul class="box_best_item">
+      <Entity v-for="(i,idx) in items" :key="idx" :product="i" />
       <li class="item">
-        <!-- like에 on 클래스가 붙으면 좋아요 상태가 됩니다. -->
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
           <div class="img_box">
@@ -135,7 +135,11 @@
 
 <script>
 import { getWeeklyProduct } from '../api/index'
+import Entity from '@/components/mainpage/WeeklyBestEntity'
 export default {
+  components: {
+    Entity
+  },
   name: 'WeeklyBest',
   data () {
     return {

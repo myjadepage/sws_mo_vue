@@ -149,6 +149,7 @@ export default {
     width: 90%;
     height: 95%;
     background-color: #fff;
+    overflow: scroll;
   }
 
   .deliveryAddrModal .modalBody{

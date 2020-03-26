@@ -51,7 +51,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`http://192.168.1.40:3000/api/v1/orders`, formdata)
+  return axios.post(`${config.baseUrl}orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {
@@ -65,7 +65,7 @@ function payOrders (jsonData, orderSysId) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -76,7 +76,7 @@ function getUserInfo (accessToken) {
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`http://192.168.1.20:3000/api/v1/users/${userSysId}/listaddress`, {
+  return axios.get(`${config.baseUrl2}users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -91,7 +91,7 @@ function addMemberAddress (accessToken, addrInfo) {
   formdata.set('jsonData', JSON.stringify(addrInfo))
   return axios({
     method: 'post',
-    url: `http://192.168.1.20:3000/api/v1/users/${userSysId}/address`,
+    url: `${config.baseUrl2}users/${userSysId}/address`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
