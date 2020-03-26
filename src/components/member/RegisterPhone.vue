@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { makeRsa, parseDate } from '@/assets/js/common.js'
 import { chkSmsAuth, sendSms, createtUser } from '../../api'
 
 export default {
@@ -46,19 +47,24 @@ export default {
       authNo: null,
       countTime: null,
       isClickedSend: false,
-      isClickedCheck: false
+      isClickedCheck: false,
+      pwPhone: null
     }
   },
   methods: {
     // 1.문자본인인증
     sendPhone: function () {
+      let regPhone = /(01[0|1|6|9|7]\d{3}|\d{4}\d{4}$)/g
       if (this.phone === null) {
         alert('번호를 입력해 주세요')
+      } else if (!regPhone.test(this.phone)) {
+        alert('잘못된 휴대폰 번호입니다.')
+        this.phone = ''
       } else {
         this.isClickedSend = true
-        this.isHide = false
-        // 전화번호 유효성검사
-        sendSms(0, 1, this.phone)
+        // 전화번호 유효성검사 api
+        this.pwPhone = makeRsa(this.phone)
+        sendSms(0, 1, this.pwPhone)
           .then(res => {
             console.log('sms전송성공', res.data.jsonData.res)
             switch (res.data.jsonData.resultCode) {
@@ -68,6 +74,7 @@ export default {
                 break
               case '0001' : alert('인증코드를 발송하였습니다.')
                 this.countTimeDown(res.data.jsonData.res.limitDate)
+                this.isHide = false
                 this.authNo = res.data.jsonData.res.authNo// 테스트 끝나면 지울것
             }
           })
@@ -79,7 +86,8 @@ export default {
     // 2.인증번호입력확인
     checkPhone: function () {
       this.isClickedCheck = true
-      chkSmsAuth(0, 1, this.phone, this.authNo)
+      console.log('this.pwPhone', this.pwPhone)
+      chkSmsAuth(0, 1, this.pwPhone, this.authNo)
         .then(res => {
           console.log('인증번호입력확인', res)
           switch (res.data.jsonData.resultCode) {
@@ -88,7 +96,7 @@ export default {
             case '0002' : alert('인증에 실패하였습니다.')
               break
             case '0001' : alert('인증에 성공하였습니다.')
-              this.$store.state.userInfo.phone = this.phone
+              this.$store.state.userInfo.phone = this.pwPhone
           }
         })
         .catch(function (error) {
@@ -97,58 +105,49 @@ export default {
     },
     // 최종회원가입
     checkCertifyDone: function () {
+      var vm = this
       if (this.isClickedSend === false || this.isClickedCheck === false) {
         alert('인증번호 버튼을 눌러주세요')
       } else {
-        var vm = this
-        if (this.$route.params.key === 'sns') { // 간편가입시, 아래 로직은 임시
-          console.log('간편가입')
-          this.$store.dispatch('getUserInfoGoogle')
-          console.log('aaaa', this.$store.state.isLogin)
-          vm.$router.push('/RegStep04')
-        } else {
-          createtUser(this.$store.state.userInfo) // 일반회원가입시
-            .then(function (res) {
-              console.log('가입성공?', res)
-              if (res.data.jsonData.resultCode === '0001') {
-                vm.$router.push('/RegStep04')
-              }
-            })
-            .catch(function (error) {
-              console.log('ERROR', error)
-            })
-        }
+        // if (this.$route.params.key === 'sns') { // 간편가입시, 아래 로직은 임시
+        //   console.log('간편가입')
+        //   this.$store.dispatch('getUserInfoGoogle')
+        //   vm.$router.push('/RegStep04')
+        // } else {
+        createtUser(this.$store.state.userInfo) // 일반회원가입시
+          .then(function (res) {
+            console.log('가입성공?', res)
+            if (res.data.jsonData.resultCode === '0001') {
+              vm.$router.push('/RegStep04')
+            } else {
+              alert('회원가입에 실패하였습니다.')
+              vm.$router.push('/')
+            }
+          })
+          .catch(function (error) {
+            console.log('ERROR', error)
+          })
+        // }
       }
     },
-    // 날짜 String -> Date 변환
-    parse: function (str) {
-      var y = str.substr(0, 4)
-      var m = str.substr(4, 2)
-      var d = str.substr(6, 2)
-      var h = str.substr(8, 2)
-      var mm = str.substr(10, 2)
-      var ss = str.substr(12, 2)
-      return new Date(y, m - 1, d, h, mm, ss)
-    },
-    // 인증 10분제한시간
     countTimeDown: function (limitTime) {
-      // 인증번호 입력시간 카운트
-      let date = this.parse(limitTime)
-      let endSeconds = Math.floor(date / 1000)
-      let startSeconds = Math.floor(Date.now() / 1000)
-      let limitDate = endSeconds - startSeconds
-      console.log('limitDate', limitDate)
-      if (limitDate > 0) {
-        var timer = setInterval(() => {
-          this.countTime = Math.floor(limitDate / 60) + ' : ' + (limitDate % 60)
-          if (this.countTime <= 0) {
-            clearInterval(timer)
-            this.countTime = 0
-          }
-          limitDate--
-          console.log(limitDate)
-        }, 1000)
-      }
+      let date = parseDate(limitTime)
+      let endSeconds = Math.floor(date / 10)
+      let startSeconds = Math.floor(Date.now() / 10)
+      let limitDate = startSeconds - endSeconds
+
+      var timer = setInterval(() => {
+        this.countTime = Math.floor(limitDate / 60) + '분 ' + (limitDate % 60) + '초'
+        if (limitDate <= 0) {
+          clearInterval(timer)
+          this.countTime = '0분 0초'
+        }
+        if (this.isClickedCheck === true) {
+          this.isHide = true
+          clearInterval(timer)
+        }
+        limitDate--
+      }, 1000)
     }
   }
 }
