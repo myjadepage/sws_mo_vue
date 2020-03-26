@@ -1,6 +1,9 @@
 <template>
   <div class="productEntityWrap">
+    <div ref="imgBox" @click="selectBtnClick" :class="isChecked?'imgBox selected':'imgBox'">
+    <div class="checkBox"><span class="check"></span></div>
     <img :src="product.smallImageUrl">
+    </div>
     <div class="title">{{product.name}}</div>
     <div class="option" v-for="(o,idx) in options" :key="idx">{{o.name}}</div>
     <select @change="prdtQtyCheck" name="" id="">
@@ -14,27 +17,31 @@
 
 <script>
 export default {
-  props: ['product', 'index'],
+  props: ['product', 'index', 'isChecked'],
   data () {
     return {
       options: [{name: '[옵션명1] LRS200007G 작은원석 [원석 컬러] 06월 라벤더', price: 25000}],
       cnt: 25
     }
   },
-  computed: {
-    totalPrice () {
-      let optionPrice = 0
-      for (const o of this.options) {
-        optionPrice += o.price
+  computed:
+    {
+      totalPrice () {
+        let optionPrice = 0
+        for (const o of this.options) {
+          optionPrice += o.price
+        }
+        return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
       }
-      return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
-    }
-  },
-  methods: {
-    removeBtnClick () {
-      this.$emit('remove', this.index)
     },
 
+  methods: {
+    removeBtnClick () {
+      this.$emit('removeItem')
+    },
+    selectBtnClick () {
+      this.$emit('selectItem', this.index)
+    },
     prdtQtyCheck (x) {
       if (this.product.isSoldout) {
         this.$emit('soldOut')
@@ -58,6 +65,7 @@ export default {
 }
 
 .productEntityWrap img{
+  border: 1px solid #eeeeee;
 float: left;
  width: 70px;
  height: 70px;
@@ -100,6 +108,55 @@ float: left;
 .ico_times.removeBtn{
   position: relative;
   top: 12px;
+}
+
+.imgBox{
+  position: relative;
+  user-select: none;
+}
+
+.productEntityWrap .imgBox .checkBox{
+  display: block;
+  position: absolute;
+  top: 1px;
+  left:1px;
+  z-index: 100;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.productEntityWrap .imgBox .check{
+  display: inline-block;
+  background: url('../../assets/img/ico/ico_checkbox_label_un.png');
+  background-size: 100%;
+  width:14px;
+  height: 11px;
+  position: relative;
+  top: 4px;
+}
+
+.productEntityWrap .imgBox.selected .checkBox{
+display: block;
+position: absolute;
+top: 1px;
+left:1px;
+z-index: 100;
+width: 26px;
+height: 26px;
+text-align: center;
+background-color: #e61754;
+}
+
+.productEntityWrap .imgBox.selected .check{
+  display: inline-block;
+  background: url('../../assets/img/ico/ico_checkbox_label.png');
+  background-size: 100%;
+  width:14px;
+  height: 11px;
+  position: relative;
+  top: 4px;
 }
 
 </style>

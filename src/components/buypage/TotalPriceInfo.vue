@@ -112,17 +112,20 @@ export default {
 }
 
 .totalPriceWrap .deliveryInfo{
-  cursor: pointer;
-  user-select: none;
-  margin-left: 2px;
-  display: inline-block;
-  text-align: center;
-  width: 15px;
-  height: 15px;
-  color: #999999;
-  border: 1px solid #999999;
-  border-radius: 15px;
-  line-height: 15px;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    bottom: 10px;
+    left: 2px;
+    display: inline-block;
+    text-align: center;
+    width: 12px;
+    height: 12px;
+    line-height: 12px;
+    font-size: 1px;
+    background-color: #666666;
+    border-radius: 20px;
+    color: white;
 }
 
 .totalPriceWrap th{

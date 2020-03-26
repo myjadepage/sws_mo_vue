@@ -4,13 +4,15 @@
         <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
       </div>
       <Option :options="options" :buyMode="buyMode" />
-      <button class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
+      <button @click="clickCart" class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
       <button @click="clickBuy" class="goBtn buy">구매하기</button>
   </div>
 </template>
 
 <script>
 import Option from './Footer/ProductFooterOption'
+import {postCartItem} from '@/api/index.js'
+
 export default {
   props: ['buyMode', 'options'],
   components: {
@@ -39,7 +41,50 @@ export default {
     },
     clickHide () {
       this.$emit('hideClick')
+    },
+    clickCart () {
+      if (!this.buyMode) {
+        this.$emit('buyModeClick')
+      } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
+        if (this.$store.state.isLogin) {
+        // 회원 장바구니 등록
+
+          let cartItem = {
+            prdtSysId: this.$store.getters.getProduct.prdtSysId,
+            basketQty: 0,
+            isOptionNormal: 0,
+            isAddingProduct: 0,
+            productOptions: []
+            // addingProductsoptional: []
+          }
+
+          console.log(this.$store.getters.getSelectedOptions)
+
+          // if(this.$store.getters.getSelectedOptions)
+
+          // postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+        } else {
+        // 비회원 장바구니는 쿠키에 등록
+          let item = {
+            product: this.$store.getters.getProduct,
+            options: this.$store.getters.getSelectedOptions
+          }
+
+          if (!this.$cookies.get('nonMemberCartList')) {
+            console.log('first')
+            this.$cookies.set('nonMemberCartList', [item], '30D')
+          } else {
+            console.log('exist')
+            let x = this.$cookies.get('nonMemberCartList')
+            console.log(x)
+            this.$cookies.set('nonMemberCartList', x, '30D')
+          }
+
+          // console.log(JSON.parse(this.$cookies.get('nonMemberCartList')))
+        }
+      }
     }
+
   }
 }
 </script>

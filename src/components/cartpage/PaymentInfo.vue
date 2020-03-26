@@ -121,7 +121,7 @@ export default {
     position: relative;
     user-select: none;
     cursor: pointer;
-    bottom: 1px;
+    bottom: 10px;
     display: inline-block;
     text-align: center;
     width: 12px;

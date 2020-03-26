@@ -2,8 +2,19 @@
 <div class="cartMainWrap">
     <Bar :val="'장바구니'" />
     <EmptyCart v-if="products.length===0" />
-    <CartCount v-if="products.length > 0" :propsdata="[selectedProductCnt,products.length]" />
-    <Product @salesLimitOver="PrdtLimitModalShow" @soldOut="StockOutModalShow" v-for="(p,idx) in products" :key="idx" @remove="removeItem" :index="idx" :product="p" />
+    <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" v-if="products.length > 0" :cntInfo="[selectedItem,products.length,isCheckAll]" />
+    <Product
+    v-for="(p,idx) in products"
+    :key="idx"
+    @removeItem="removeItem"
+    @selectItem="selectItem"
+    @salesLimitOver="PrdtLimitModalShow"
+    @soldOut="StockOutModalShow"
+    :index="idx"
+    :product="p"
+    :isChecked="selectedItem[idx]"
+     />
+
     <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" v-if="products.length > 0" :products="products" />
 
     <div v-if="modalVisiblity" class="modalSection">
@@ -31,10 +42,13 @@ import {getProductList} from '@/api/index.js'
 
 export default {
   created () {
+    // 장바구니 목록 가져와야함
     getProductList()
       .then(res => {
         this.products = res.data.jsonData.products
-        console.log(this.products)
+        for (let i = 0; i < res.data.jsonData.products.length; i++) {
+          this.selectedItem.push(false)
+        }
       })
       .catch(err => {
         console.log(err)
@@ -43,12 +57,13 @@ export default {
   data () {
     return {
       products: [],
-      selectedProductCnt: 0,
+      selectedItem: [],
       modalVisiblity: false,
       DeliveryModal: false,
       CartLimitModal: false,
       PrdtLimitModal: false,
-      StockOutModal: false
+      StockOutModal: false,
+      isCheckAll: false
     }
   },
   components: {
@@ -57,6 +72,31 @@ export default {
   methods: {
     removeItem (idx) {
       this.products.splice(idx, 1)
+    },
+
+    selectItem (idx) {
+      if (this.isCheckAll === true) {
+        this.isCheckAll = false
+      }
+
+      this.selectedItem[idx] = !this.selectedItem[idx]
+      this.$forceUpdate()
+    },
+
+    selectAll (status) {
+      for (let i = 0; i < this.selectedItem.length; i++) {
+        this.selectedItem[i] = true
+      }
+      this.isCheckAll = status
+      this.$forceUpdate()
+    },
+
+    deSelectAll (status) {
+      for (let i = 0; i < this.selectedItem.length; i++) {
+        this.selectedItem[i] = false
+      }
+      this.isCheckAll = status
+      this.$forceUpdate()
     },
 
     DeliveryModalShow () {
