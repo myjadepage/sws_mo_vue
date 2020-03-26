@@ -11,7 +11,7 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
-import {postCartItem} from '@/api/index.js'
+// import {postCartItem} from '@/api/index.js'
 
 export default {
   props: ['buyMode', 'options'],
@@ -49,6 +49,25 @@ export default {
         if (this.$store.state.isLogin) {
         // 회원 장바구니 등록
 
+          // let cartItem = {
+          //   prdtSysId: this.$store.getters.getProduct.prdtSysId,
+          //   basketQty: 0,
+          //   isOptionNormal: 0,
+          //   isAddingProduct: 0,
+          //   productOptions: []
+          //   // addingProductsoptional: []
+          // }
+
+          // console.log(this.$store.getters.getSelectedOptions)
+
+          // if (this.$store.getters.getSelectedOptions) {
+          //   postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+          // }
+          console.log('aaa')
+        } else {
+        // 비회원 장바구니는 쿠키에 등록
+          console.log('bbb')
+
           let cartItem = {
             prdtSysId: this.$store.getters.getProduct.prdtSysId,
             basketQty: 0,
@@ -58,33 +77,47 @@ export default {
             // addingProductsoptional: []
           }
 
-          console.log(this.$store.getters.getSelectedOptions)
+          if (this.$store.getters.getSelectedOptions[0].contentName !== '') { // 옵션이 있는 경우
+            cartItem.isOptionNormal = 1
+            for (const o of this.$store.getters.getSelectedOptions) {
+              let option = {
+                prdtNormalOptionSysId: 0,
+                optionKeyName: '',
+                optionQty: o.count
+              }
 
-          // if(this.$store.getters.getSelectedOptions)
+              for (const c of o.contentGroup) {
+                option.prdtNormalOptionSysId = c.prdtNormalOptionSysId
+                option.optionKeyName = c.name
+              }
+              cartItem.productOptions.push(option)
+            }
 
-          // postCartItem(sessionStorage.getItem('accessToken'), cartItem)
-        } else {
-        // 비회원 장바구니는 쿠키에 등록
-          let item = {
-            product: this.$store.getters.getProduct,
-            options: this.$store.getters.getSelectedOptions
+            console.log(cartItem)
+          } else { // 옵션이 없는 경우
+
+            //   let item = {
+            //     product: this.$store.getters.getProduct,
+            //     options: this.$store.getters.getSelectedOptions
+            //   }
+
+            //   if (!sessionStorage.getItem('nonMemberCartList')) {
+            //     sessionStorage.setItem('nonMemberCartList', JSON.stringify([item]))
+            //   } else {
+            //     let x = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+            //     if (x.includes(item)) {
+            //       return
+            //     }
+
+            //     x.push(item)
+            //     sessionStorage.setItem('nonMemberCartList', JSON.stringify(x))
+            //   }
+            //   console.log(JSON.parse(sessionStorage.getItem('nonMemberCartList')))
+            // }
           }
-
-          if (!this.$cookies.get('nonMemberCartList')) {
-            console.log('first')
-            this.$cookies.set('nonMemberCartList', [item], '30D')
-          } else {
-            console.log('exist')
-            let x = this.$cookies.get('nonMemberCartList')
-            console.log(x)
-            this.$cookies.set('nonMemberCartList', x, '30D')
-          }
-
-          // console.log(JSON.parse(this.$cookies.get('nonMemberCartList')))
         }
       }
     }
-
   }
 }
 </script>
