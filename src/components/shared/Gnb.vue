@@ -38,8 +38,7 @@ export default {
   data () {
     return {
       swiperOption: {
-        slidesPerView: 4.5,
-        spaceBetween: 10
+        slidesPerView: 'auto'
       },
       category: []
     }
@@ -63,17 +62,17 @@ export default {
 @media (orientation: landscape) {
     .gnb_main{max-width:640px;margin:0 auto}
 }
-.gnb_main{position: relative;z-index:99;padding:30px 0 10px; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
+.gnb_main{position: relative;z-index:99; margin-bottom: 40px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9}
 /* .gnb_main li{float:left;text-align:center}
 .gnb_main .gnb_main_li_tmoticon{display:none} */
-.gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%}
-.gnb_main .link_gnb.router-link-exact-active {color: #e61654}
+.gnb_main .link_gnb{position:relative;display:inline-block;color:#000;width:100%; padding-bottom: 10px;}
+.gnb_main .link_gnb.router-link-exact-active {color: #e61654; border-bottom: 2px solid #e61654;}
 .gnb_main .active .link_gnb{position:relative;}
 .gnb_main .active .link_gnb_text{color: #e61654}
 .gnb_main .link_gnb .link_gnb_text{position:relative;display:inline-block;padding:8px 0;letter-spacing:.6px}
 .gnb_main .link_active .link_gnb_text:after{content:' ';position:absolute;top:8px;right:-10px;width:6px;height:6px;-webkit-border-radius:50%;border-radius:50%;background-color:#db635d}
 .gnb_main .link_gnb_my.link_active:after{right:-11px}
-.swiper-box {
+/* .swiper-box {
     width: 100%;
     height: 100%;
     margin: 0 auto;
@@ -82,7 +81,7 @@ export default {
     height: 100%;
     text-align: center;
     background: #fff;
-    /* Center slide text vertically */
+    Center slide text vertically
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -102,5 +101,12 @@ export default {
   }
   .gnb_main .swiper-item:nth-child(14) {
     width: 120px !important;
-  }
+  } */
+
+.swiper-item{
+  text-align: center;
+  width:100px;
+  margin: 30px 0 0;
+}
+
 </style>
