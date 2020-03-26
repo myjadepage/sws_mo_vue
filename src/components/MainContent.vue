@@ -6,6 +6,7 @@
   <!-- <ProductSlide></ProductSlide> -->
     <!-- <BrandSlide></BrandSlide> -->
   <WeeklyBest></WeeklyBest>
+  <ScrollTopBtn />
 </div>
 </template>
 
@@ -16,6 +17,7 @@ import BigSlide from './slide/BigSlide'
 import WeeklyBest from './WeeklyBest'
 import ProductSlide from './slide/ProductSlide'
 import BrandSlide from './slide/BrandSlide'
+import ScrollTopBtn from '@/components/subpage/shared/ScrollTopBtn'
 import {getProductList} from '../api/index'
 
 export default {
@@ -30,7 +32,8 @@ export default {
     WeeklyBest,
     ProductSlide,
     BrandSlide,
-    LiveSlide
+    LiveSlide,
+    ScrollTopBtn
   }
 }
 </script>

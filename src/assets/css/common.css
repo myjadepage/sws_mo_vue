@@ -77,8 +77,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0
 }
-body {
+html{
+  text-size-adjust: none;
   -webkit-text-size-adjust: none;
+}
+body {
   color: #111;
 }
 input:checked[type='checkbox'] {
@@ -291,10 +294,11 @@ button {
 }
 .head_sws .box_menu_left .btn_menu .ico_menu {
   display: block;
-  width: 20px;
+  width: 19px;
   height: 30px;
-  margin: 13px auto 0;
-  background-position: -181px 0
+  margin: 8px auto 0;
+  background:url('../img/ico/menu.png') 50% 50% no-repeat;
+  background-size:100% auto;
 }
 .tit_main_logo{
   float:left;
@@ -328,19 +332,19 @@ button {
 
 .head_sws .box_menu_right .common-header-search .link_search .ico_search {
   display: block;
-  width: 20px;
+  width: 21px;
   height: 20px;
   position: relative;
   top: 1px;
-  left: 2px;
-  background-position: -200px 0
+  left: 0;
+  background:url('../img/ico/search_b.png') 0 0 / 21px auto no-repeat;
 }
 .head_sws .box_menu_right .common-header-search .link_search .ico_basket {
   display: block;
-  width: 20px;
+  width: 21px;
   height: 20px;
   position: relative;
-  background-position: -138px 0px
+  background:url('../img/ico/uncart.png') 50% 50% / 17px auto no-repeat;
 }
 .head_sws .box_menu_right .common-header-search .link_search .ico_login {
   display: block;

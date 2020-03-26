@@ -2,38 +2,38 @@
 <div class="big_slide">
     <swiper :options="swiperOption" ref="bigSwiper">
         <swiper-slide>
-          <img src="../../assets/img/main-01.png">
+          <img src="../../assets/img/sub-01.png">
           <div class="title">
             <p class="smallText">AROMATICA</p>
-            <p class="bigText">민감성 피부를 위한<br/>비건 스킨케어 세트</p>
+            <p class="bigText">Blooming<br/>in your Skin</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="../../assets/img/main-02.png">
+          <img src="../../assets/img/sub-02.png">
           <div class="title">
-            <p class="smallText">WOMEN ESSENTAIL</p>
-            <p class="bigText">우먼 에센셜 20SS<br/>상품 증정 이벤트</p>
+            <p class="smallText">MARMAR</p>
+            <p class="bigText">마르마르<br/>바디미스트 5종 모음전</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="../../assets/img/main-03.png">
+          <img src="../../assets/img/sub-03.png">
           <div class="title">
-            <p class="smallText">COSRX</p>
-            <p class="bigText">피부 고민 해결사<br/>코스알엑스</p>
+            <p class="smallText">BARR</p>
+            <p class="bigText">성분이 말해주는<br/>미니멀리즘 브랜드 바르</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="../../assets/img/main-04.png">
+          <img src="../../assets/img/sub-04.png">
           <div class="title">
-            <p class="smallText">POSITIVE OVER NEGATIVE</p>
-            <p class="bigText">360도 실시간 오염<br/>감지 공기청정기</p>
+            <p class="smallText">AROMATICA</p>
+            <p class="bigText">Blooming<br/>in your Nail</p>
           </div>
         </swiper-slide>
         <swiper-slide>
-          <img src="../../assets/img/main-05.png">
+          <img src="../../assets/img/sub-05.png">
           <div class="title">
-            <p class="smallText">SERENDIV</p>
-            <p class="bigText">오늘은 밥대신,<br/>컬리플라워라이스</p>
+            <p class="smallText">CHRISTAINLENART</p>
+            <p class="bigText">파란 병 안에 숨겨진<br/>식물수의 비밀</p>
           </div>
         </swiper-slide>
       </swiper>

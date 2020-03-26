@@ -251,6 +251,11 @@ export default new Router({
       path: '/Follower',
       name: 'Follower',
       component: () => import('@/view/mypage/Follower')
+    },
+    {
+      path: '/ExchangeReq',
+      name: 'ExchangeReq',
+      component: () => import('@/view/mypage/ExchangeReq')
     }
   ]
 })

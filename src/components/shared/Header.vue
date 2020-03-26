@@ -25,16 +25,17 @@
                     <span class="sws_icon ico_search">검색</span>
                 </router-link>
             </div>
-            <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true">
+            <!-- <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true"> -->
+            <div class="wrap_btn_search common-header-search" >
                  <router-link to="/cart" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_basket">장바구니</span>
                 </router-link>
             </div>
-            <div class="wrap_btn_search common-header-search" v-else>
+            <!-- <div class="wrap_btn_search common-header-search" v-else>
                  <router-link to="/Login" id="btnSearchTop" class="link_search" role="button">
                     <span class="sws_icon ico_login">로그인</span>
                 </router-link>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
