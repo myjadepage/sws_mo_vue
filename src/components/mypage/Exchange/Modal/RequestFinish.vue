@@ -1,43 +1,21 @@
 <template>
   <div class="modalWrap">
-    <h1 class="modalHeader">교환 상품 정보</h1>
+    <h1 class="modalHeader">교환 요청이 접수되었습니다.</h1>
     <div class="modalBody exchangeModal">
-      <form>
-        <dl class="exchangeInfo">
-          <dt>상품명</dt>
-          <dd>완벽 커버 블리블리 수분광 쿠션</dd>
-          <dt>구매옵션</dt>
-          <dd>21호</dd>
-          <dt>수량선택</dt>
-          <dd>
-            <select name="amount">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-            </select>
-          </dd>
-        </dl>
-      </form>
-      <p class="modalNotice">
-        <span class="c_them">재고가 품절인 경우 환불될 수 있습니다.</span><br/>
-        계속 진행을 원하실 경우<br/>
-        [선택완료] 버튼을 클릭해주세요.
-      </p>
+      <p class="c_them">판매자가 교환 가능 상태 여부를 확인하여 처리하므로 완료까지 다소 시간이 거릴 수 있는 점 양해부탁드립니다.</p>
+      <p class="mb">배송 및 교환 진행 상태는 [마이]탭에서 확인해 주세요.</p>
     </div>
-    <div class="btnsWrap col2">
-      <button @click="close" class="btn_cancle">취소</button>
+    <div class="btnsWrap col1">
+      <button @click="modalClose" class="btn_submit">확인</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['title'],
   methods: {
-    close () {
+    modalClose () {
       this.$emit('close')
     }
   }

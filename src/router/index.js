@@ -256,6 +256,11 @@ export default new Router({
       path: '/ExchangeReq',
       name: 'ExchangeReq',
       component: () => import('@/view/mypage/ExchangeReq')
+    },
+    {
+      path: '/ReviewWrite',
+      name: 'ReviewWrite',
+      component: () => import('@/view/mypage/ReviewWrite')
     }
   ]
 })

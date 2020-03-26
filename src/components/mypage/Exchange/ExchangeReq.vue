@@ -16,12 +16,8 @@
       <dl class="infoBox">
         <dt class="vt">교환사유</dt>
         <dd>
-          <select name="exchangeReason">
-            <option value="0">선택해주세요.</option>
-            <option value="1">제품상태 불량</option>
-            <option value="2">주문 상품과 상이</option>
-            <option value="3">단순변심</option>
-          </select>
+          <input type="hidden" name="reason" v-model="selectedReason" />
+          <button class="btn_select" @click.stop.prevent="selectModalOpen">{{selectedReason=== !''?'선택해주세요':selectedReason}}</button>
           <textarea name="detailReason" v-model="detailText" class="mt" placeholder="교환 사유를 상세히 입력해 주세요."></textarea>
           <p class="textlength"><span :class="{'c_them': detailText.length>50}">{{detailText.length}}</span>/50</p>
         </dd>
@@ -47,24 +43,54 @@
       <button class="btn_submit btn_them" @click.stop.prevent="submit">교환요청하기</button>
     </div>
 
+    <section v-if="subModalBg" class="modalBg">
+      <RequestSelect v-if="selectModal" @close="closeSelectModal" @select="selectReason" :selectedReason="selectedReason" />
+    </section>
+
   </form>
 </template>
 
 <script>
+import RequestSelect from '@/components/mypage/Exchange/Modal/RequestSelect'
+
 export default {
   data () {
     return {
-      detailText: ''
+      detailText: '',
+      selectedReason: '',
+      selectModal: false,
+      subModalBg: false
     }
+  },
+  components: {
+    RequestSelect
   },
   methods: {
     goBack () {
       this.$router.go(-1)
     },
     submit () {
+      if (this.detailText.length > 50) {
+        return alert('50자 이상 입력할 수 없습니다.')
+      } else if (this.selectedReason === '') {
+        return alert('이유를 선택해 주세요')
+      }
       // 유효성검사 후 send
 
       this.$emit('sent')
+    },
+    closeSelectModal () {
+      this.subModalBg = false
+      this.selectModal = false
+    },
+    selectModalOpen () {
+      this.subModalBg = true
+      this.selectModal = true
+    },
+    selectReason (res) {
+      this.subModalBg = false
+      this.selectModal = false
+      this.selectedReason = res
     }
   }
 }

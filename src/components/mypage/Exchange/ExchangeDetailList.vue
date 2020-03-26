@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
+            <router-link to="/ReviewWrite" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">
@@ -110,7 +110,7 @@
             <button class="btn_them border col3 gray" @click="exchangeReqOpen">교환요청</button>
             <button class="btn_them border col3 btn-last gray">반품요청</button>
             <router-link to="" class="btn_them border col2 btn-first gray">받았습니다</router-link>
-            <router-link to="" class="btn_them border col2 btn-last gray">리뷰작성</router-link>
+            <router-link to="/ReviewWrite" class="btn_them border col2 btn-last gray">리뷰작성</router-link>
           </div>
           <dl class="itemScore row" v-if="type==='basket'">
             <dt><img src="../../../assets/img/ico/rates.png" alt="별점" /></dt>
@@ -130,7 +130,7 @@
             </div>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
+            <router-link to="/ReviewWrite" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">
@@ -171,7 +171,7 @@
             <p class="price">32,500원 / 1개</p>
           </div>
           <div class="row ibBtns"  v-if="type==='review' && !tabState">
-            <router-link to="" class="btn_them border col1 btn-first">리뷰작성</router-link>
+            <router-link to="/ReviewWrite" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="type==='review' && tabState">
             <div class="stars">

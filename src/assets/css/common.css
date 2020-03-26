@@ -2404,6 +2404,14 @@ html, body{
 .modalBg .modalBody.exchangeModal{
   margin-bottom:0;
 }
+.modalBg .modalBody.exchangeModal p{
+  margin:15px 0;
+  padding:0 20px;
+  word-break:keep-all;
+}
+.modalBg .modalBody.exchangeModal .mb{
+  margin-bottom:30px;
+}
 .modalBg .modalBody .exchangeInfo{
   padding:10px 0;
   text-align:left;
@@ -3020,7 +3028,7 @@ html, body{
 .exchangeForm .infoBox dt.vt{
   vertical-align: top;
 }
-.exchangeForm .infoBox select{
+.exchangeForm .infoBox .btn_select{
   display:block;
   width:100%;
   height:40px;
@@ -3031,6 +3039,7 @@ html, body{
   background:url('../img/ico/arrow_down.png') calc(100% - 15px) 50% no-repeat;
   background-size:7px auto;
   line-height:38px;
+  text-align:left;
 }
 .exchangeForm .infoBox textarea{
   display:block;
@@ -3071,6 +3080,131 @@ html, body{
 .exchangeForm .btnsWrap button{
   height:50px;
 }
+
+.modalBg .modalBody.exchangeModal.radioWrap{
+  margin:20px 0 30px;
+}
+.radioWrap label{
+  overflow: hidden;
+  display:block;
+  margin:15px 0;
+  padding:0 15px;
+  font-size:15px;
+  text-align:left;
+} 
+.radioWrap input[type="radio"]{
+  display:none;
+}
+.radioWrap label:after{
+  content:'';
+  float:right;
+  display:block;
+  width:21px;
+  height:21px;
+  border:1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 50%;
+  text-align:center;
+  line-height:17px;
+}
+.radioWrap input:checked+label:after{
+  content:'●';
+  font-size:10px;
+  color:#e61754;
+  border:1px solid #e61754;
+}
+
+
+.scoreBlock h2{
+  margin:0;
+  padding:0;
+  border:none;
+  font-size:14px;
+  font-weight:400;
+}
+.scoreBlock .starsWrap{
+  margin:20px 0;
+  font-size:0;
+  text-align: center;
+}
+.scoreBlock .starsWrap button{
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin:0 2.5px;
+  vertical-align: middle;
+}
+.scoreBlock .starsWrap button img{
+  width:100%;
+}
+.textBlock{
+  text-align:right;
+}
+.textBlock .onlyText input{
+  display:block;
+  width:100%;
+  height:40px;
+  padding:0 10px;
+  border:1px solid #ccc;
+  box-sizing: border-box;
+}
+.textBlock .btn_photo{
+  display:inline-block;
+  margin-top:15px;
+  padding:8px;
+  padding-left:29px;
+  border:1px solid #111;
+  border-radius: 2px;
+  background:url('../img/ico/ico_camera.png') 8px 8px / 17px auto no-repeat;
+  font-size:13px;
+  box-sizing: border-box;
+  line-height:1;
+}
+.textBlock .onlyText .preViewBox{
+  padding:10px;
+  border:1px solid #ccc;
+}
+.textBlock .onlyText .preViewBox textarea{
+  width:100%;
+  height:100px;
+  border:none;
+  resize:none;
+  line-height:1.5;
+  font-size:inherit;
+  color:inherit;
+}
+.textBlock .onlyText .photoList{
+  padding-top:6px;
+  font-size:0;
+  text-align:left;
+}
+.textBlock .onlyText .photoList li{
+  position: relative;
+  display: inline-block;
+  width:50px;
+  height:50px;
+  margin-right:10px;
+  border:1px solid #eee;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+.textBlock .onlyText .remove{
+  position: absolute;
+  top:-6px;
+  right:-6px;
+  display:block;
+  width:18px;
+  height:18px;
+}
+.textBlock .onlyText .remove img{
+  width:100%;
+}
+.textBlock .onlyText #fileUpload{
+  display:none;
+}
+
+
 
 
 

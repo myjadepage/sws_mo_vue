@@ -27,12 +27,13 @@ export default {
   },
   methods: {
     finishModalOpen () {
-      this.modalVisiblity = false
-      this.finishModal = false
-    },
-    closeFinish () {
       this.modalVisiblity = true
       this.finishModal = true
+    },
+    closeFinish () {
+      this.modalVisiblity = false
+      this.finishModal = false
+      this.$router.push('/BuyHistory')
     }
   }
 }
