@@ -121,6 +121,16 @@
 }
 
 
+/* 서브 메인 슬라이드 */
+.subSlide .big_slide .swiper-slide {
+  height:240px;
+}
+
+
+
+
+
+
 /* 메인 브랜드 슬라이드 */
 
 .brand_slide {
@@ -295,24 +305,34 @@
 }
 
 
+
+/* 서브 라이브 슬라이드 */
+.live_slide.subSlide{
+  margin-top:50px;
+}
+
+
+
+
 .weekly_best_main .item{
   position: relative;
   margin-bottom:50px;
 }
 .weekly_best_main .like{
   position: absolute;
-  top:16px;
-  left:20px;
+  top:11px;
+  left:15px;
   z-index:100;
   display:block;
-  width:21px;
-  height:18px;
+  width:30px;
+  height:30px;
+  padding:10px;
   background:url('../img/ico/ico_like_search_empty.png') 50% 50% no-repeat;
-  background-size:contain;
+  background-size:20px auto;
 }
 .weekly_best_main .like.on{
   background:url('../img/ico/ico_like_search.png') 50% 50% no-repeat;
-  background-size:contain;
+  background-size:20px auto;
 }
 .weekly_best_main .like .ir{
   display:block;
@@ -377,6 +397,142 @@
 .weekly_best_main .link_goods > .txtBox dd span{
   margin-left:5px;
 }
+
+
+/* 서브페이지 카테고리 슬라이더 */
+
+.cateogry_slide{
+  overflow-x: auto;
+  margin:20px 0;
+  padding:0 7px;
+}
+.cateogry_slide .item{
+  position: relative;
+  width:88px;
+  height:88px;
+  margin:0 2px;
+  line-height:1;
+} 
+.cateogry_slide .item.on:after{
+  content:'';
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:2px solid #e61654;
+  box-sizing: border-box;
+}
+.cateogry_slide .item img{
+  position: absolute;
+  top:4px;
+  left:4px;
+  z-index:1;
+  display:block;
+  width:80px;
+  height:80px;
+}
+.cateogry_slide .item p{
+  position: absolute;
+  bottom:15px;
+  left:0;
+  z-index:2;
+  width:100%;
+  text-align: center;
+  color:#fff;
+  font-size:15px;
+  font-weight:500;
+}
+
+
+
+
+/* 서브페이지 공용 */
+.brandMargin{
+  margin-top:50px;
+}
+.subBlock h1{
+  margin-bottom:15px;
+  padding:0 12px;
+  font-size:22px;
+  font-weight:500;
+}
+.subBlock h2{
+  font-size:18px;
+  font-weight:500;
+  line-height:1.5;
+}
+.subBlock h2+p{
+  color:#666;
+  font-size:14px;
+  font-weight:400;
+  line-height:1.5;
+}
+.subBlock .bgBox{
+  display:block;
+  width:100%;
+  height:210px;
+}
+.subBlock .itemList{
+  position: relative;
+  top:-20px;
+  left:12px;
+  width:calc(100% - 12px);
+  padding:20px 32px 20px 20px;
+  box-sizing: border-box;
+  background:#fff;
+}
+.subBlock .itemList .item{
+  width:100%;
+  margin:30px 0;
+  padding:0;
+}
+.subBlock .itemList .item >a{
+  display:block;
+  font-size:0;
+}
+.subBlock .itemList .imgBox{
+  position: relative;
+  display:inline-block;
+  width:100px;
+  height:100px;
+  margin-right:15px;
+  vertical-align: middle;
+}
+.subBlock .itemList .imgBox.mov:after{
+  content:'';
+  position: absolute;
+  right:0;
+  bottom:0;
+  display:block;
+  width:30px;
+  height:30px;
+  background:rgba(255,255,255,0.5) url('../img/ico/btn_play.png') 11px 50% / 10px auto no-repeat;
+
+}
+.subBlock .itemList .imgBox img{
+  width:100%;
+}
+.subBlock .itemList .txtBox{
+  display:inline-block;
+  width:calc(100% - 125px);
+  vertical-align: middle;
+}
+.subBlock .itemList .itemName{
+  font-size:14px;
+} 
+.subBlock .itemList .price{
+  font-size:15px;
+  font-weight:500;
+} 
+.subBlock .itemList .price span{
+  margin-left:5px;
+}
+
+
+
+/* top버튼 */
+
 
 
 

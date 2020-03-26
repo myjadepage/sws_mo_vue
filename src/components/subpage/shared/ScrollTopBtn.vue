@@ -17,23 +17,24 @@ export default {
 <style>
     .scrollTop{
         text-align: center;
-        background-color: #fff;
+        background-color: rgba(255,255,255,.9);
         display: inline-block;
         position: fixed;
         top: 90%;
         left: 80%;
-        border:1px solid #cccccc;
+        z-index:105;
+        border:1px solid rgba(204, 204, 204,.9);
         border-radius: 30px;
         width: 45px;
         height: 45px;
-        line-height: 60px;
     }
 
     .scrollTop .ico_top_arr{
       display: inline-block;
-      background: url('../../../assets/img/ico/ico_top_arr.png');
+      background: url('../../../assets/img/ico/arrow_top.png');
       background-size: 100%;
-      width: 20px;
-      height: 25px;
+      width: 17px;
+      height: 21px;
+      margin-top:12px;
     }
 </style>
