@@ -3,7 +3,7 @@
     <h4>Weekly Best</h4>
     <ul class="box_best_item">
       <!-- 임시주석 -->
-      <!-- <Entity v-for="(i,idx) in items" :key="idx" :product="i" /> -->
+      <Entity v-for="(i,idx) in items" :key="idx" :product="i" />
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">

@@ -113,6 +113,39 @@ function getBroadCast (id) {
   return axios.get(`${config.baseUrl}broadcasts/${id}`)
 }
 
+// 회원 장바구니 등록
+function postCartItem (accessToken, cartItem) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(cartItem))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}users/${userSysId}/basket`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// // 비회원 장바구니 등록
+// function nonMemberCart (cartData) {
+//   let exp = new Date()
+//   exp.setDate(exp.getDate() + 30)
+//   let value = []
+//   value.push(JSON.stringify(cartData))
+//   let name = 'nonMemberCartData'
+
+//   document.cookie = `${name}=${value};Expires=${exp.toUTCString()};`
+// }
+
+// // 비회원 장바구니 가져오기
+// function getNonMemberCart () {
+//   var value = document.cookie.match('(^|;) ?' + 'nonMemberCartData' + '=([^;]*)(;|$)')
+//   return value ? JSON.parse(value[2]) : null
+// }
+
 /**
  *
  * 회원가입
@@ -276,5 +309,8 @@ export {
   getUserInfo,
   getMemberAddrList,
   addMemberAddress,
-  getAccessToken
+  getAccessToken,
+  postCartItem
+  // nonMemberCart,
+  // getNonMemberCart
 }

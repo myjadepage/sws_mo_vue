@@ -12,8 +12,6 @@ Vue.use(IMP, 'imp99407185') // 아임포트 회원가입 후 발급된 가맹점
 Vue.IMP().load()
 Vue.use(VueDaumPostcode)
 
-Vue.use(IMP)
-
 // 구글로그인 관련
 Vue.use(GAuth, {'client_id': '64392911625-v0krge4vu1k02v5mv4dvdpj67ei9jh2v.apps.googleusercontent.com'})
 

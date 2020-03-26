@@ -2,6 +2,8 @@
   <div class="section_ITEM weekly_best_main">
     <h4>Sale</h4>
     <ul class="box_best_item">
+      <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" />
+
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
@@ -133,7 +135,28 @@
 </template>
 
 <script>
+import SaleEntity from './SaleEntity'
+import {getSaleProduct} from '@/api/index.js'
+
 export default {
+  created () {
+    getSaleProduct()
+      .then(res => {
+        this.products = res.data.jsonData.products
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  components: {
+    SaleEntity
+  },
+  data () {
+    return {
+      products: []
+    }
+  },
+
   name: 'Sale'
 }
 </script>

@@ -47,6 +47,19 @@
             <p class="txtBox">몰상식? LF몰(엘에프몰)<br/>상식 총집합! 브랜드가 천지!</p>
           </router-link>
         </swiper-slide>
+
+ <swiper-slide class="item live" v-for="(i,idx) in items" :key="idx">
+          <router-link to="" >
+            <div class="imgBox">
+              <img :src="i.thumnailUrl" alt="엘에프몰 이미지" />
+            </div>
+            <div class="btn_movie">
+              <img src="../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
+            </div>
+            <p class="txtBox">{{i.briefComment}}<br/>{{i.title}}</p>
+          </router-link>
+        </swiper-slide>
+
       </swiper>
   </div>
 </template>
