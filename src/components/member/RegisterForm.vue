@@ -40,15 +40,14 @@
     </div>
     <div class="member_foot">
       <button type="button" class="btn btn-block btn-dark" @click="checkJoin">다음</button>
-      <button type="button" class="btn btn-block btn-dark" @click="testKey">다음2</button>
+      <!-- <button type="button" class="btn btn-block btn-dark" @click="testKey">다음2</button> -->
     </div>
 </div>
 </template>
 
 <script>
-import { checkJoinId, getPublicKey, checkRSA } from '../../api'
-import JSEncrypt from 'jsencrypt/bin/jsencrypt'
-// const publicKey = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA27Bf/sFXPg8cXgLp/n3tqTfKIZ/lcxO3I4K0NfXTXNm49KDmUofzntTS8bPvgcX688ZJRYDwig6a5ZmFE8FFSCdqJuUQ1c9UjnlU4KA7ztHDdPgd+zxCn9+lfaYgDXvwjXQb0t53u001VX5s/eTxsFri9qvMmdDQT4McYN1nIAUsDBDxPAkBQy4+CEddqWCjPLptqdroEUIgQ6fxrVVVzhuIpiG9zcSr/1RLbw6YERBxbVk/Q/CrgC5fKXWYRI5T4+V9MX4BxVvpqR2B+KEfxYQsXvJ2nyV0tKtb+m2hu+HtE4onsoM/lbm0Hw6yMKp/P2MofIyFNTdWeBcyEI3aRwIDAQAB'
+import { makeRsa } from '@/assets/js/common.js'
+import { checkJoinId } from '../../api'
 
 export default {
   data () {
@@ -56,32 +55,30 @@ export default {
       formData: {}, // userId, password, email
       confirmpw: null,
       isClicked: false
-      // rsaEncStr: null
     }
   },
   methods: {
-    testKey () {
-      // 암호화 하기
-      getPublicKey()
-        .then(res => {
-          this.publicKey = res.data.jsonData.res.publicKey
-          console.log('publicKey', this.publicKey)
-          let encryptor = new JSEncrypt()
-          encryptor.setPublicKey(this.publicKey)
-          this.rsaEncStr = encryptor.encrypt('123456789a')
-          console.log('rsapw', this.rsaEncStr)
-          checkRSA(this.rsaEncStr)
-            .then(res => {
-              console.log('암호화 화깅ㄴ', res)
-            })
-            .catch(error => {
-              console.log('error', error)
-            })
-        })
-        .catch(error => {
-          console.log('error', error)
-        })
-    },
+    // testKey () {
+    //   getPublicKey()
+    //     .then(res => {
+    //       this.publicKey = res.data.jsonData.res.publicKey
+    //       console.log('publicKey', this.publicKey)
+    //       let encryptor = new JSEncrypt()
+    //       encryptor.setPublicKey(this.publicKey)
+    //       this.rsaEncStr = encryptor.encrypt('123456789a')
+    //       console.log('rsapw', this.rsaEncStr)
+    //       checkRSA(this.rsaEncStr)
+    //         .then(res => {
+    //           console.log('암호화 화깅ㄴ', res)
+    //         })
+    //         .catch(error => {
+    //           console.log('error', error)
+    //         })
+    //     })
+    //     .catch(error => {
+    //       console.log('error', error)
+    //     })
+    // },
     checkConfirmPw (e) {
       if (this.confirmpw === null) {
         alert('비밀번호를 한번 더 입력해 주세요')
@@ -145,7 +142,7 @@ export default {
         alert('올바른 이메일 주소를 입력하세요')
       } else {
         this.$store.state.userInfo.userId = this.formData.userId
-        this.$store.state.userInfo.password = this.formData.password
+        this.$store.state.userInfo.password = makeRsa(this.formData.password)
         this.$store.state.userInfo.email = this.formData.email
         console.log('this.$store.state.userInfo', this.$store.state.userInfo)
         this.$router.push('/RegStep03')

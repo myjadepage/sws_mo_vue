@@ -18,8 +18,7 @@
             <li>
               <div class="toggle-button toggle-button-save">
                 <input id="toggleButtonId" type="checkbox"
-                  v-model="onCheck"
-                  :saveId="id">
+                  v-model="checkedId" @change="checkSaveId($event)">
                 <label for="toggleButtonId"></label>
                 <div class="toggle-button__icon"></div>
               </div>
@@ -42,7 +41,6 @@
           </ul>
             <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
             <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
-          <!-- <div class="socialTitle">SNS 간편 로그인</div> -->
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
@@ -86,6 +84,7 @@
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
 import VFacebookLogin from 'vue-facebook-login-component'
+import { makeRsa } from '@/assets/js/common.js'
 import { snsLogin } from '../../api'
 
 export default {
@@ -98,10 +97,35 @@ export default {
     return {
       id: null,
       password: null,
-      onCheck: false
+      checkedId: false
+    }
+  },
+  mounted () {
+    // 아이디 저장체크시 아이디 보이기
+    if (localStorage.getItem('swsId')) {
+      this.id = localStorage.getItem('swsId')
+      this.checkedId = true
+    } else {
+      this.id = ''
+      this.checkedId = false
     }
   },
   methods: {
+    // 아이디 저장
+    checkSaveId (e) {
+      if (this.checkedId === true) {
+        localStorage.setItem('swsId', this.id)
+      } else {
+        localStorage.removeItem('swsId')
+      }
+    },
+    loginBtnClick () {
+      let self = this
+      let password = makeRsa(self.password)
+      this.$store.dispatch('login', {id: self.id, password: password})
+      this.id = ''
+      this.password = ''
+    },
     // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.signIn()
@@ -128,18 +152,9 @@ export default {
           console.log('error', error)
         })
     },
-    loginBtnClick () {
-      let self = this
-      this.$store.dispatch('login', {id: self.id, password: self.password})
-      this.id = ''
-      this.password = ''
-    },
-
     // 카카오로그인 성공시
     onSuccess: function (data) {
       var vm = this
-      console.log('success', data)
-
       snsLogin(1, data.access_token)
         .then(res => {
           console.log('accees', res)
@@ -166,7 +181,6 @@ export default {
     noMemeberOrderClick () {
       this.$router.push('/nonMemberOrder')
     }
-
   }
 }
 </script>

@@ -76,7 +76,7 @@ function getUserInfo (accessToken) {
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/listaddress`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -120,7 +120,7 @@ function getBroadCast (id) {
 
 // 공개키 조회
 function getPublicKey () {
-  return axios.get(`${config.baseUrl2}auth/publickey`)
+  return axios.get(`${config.baseUrl}auth/publickey`)
 }
 
 // RSA암호화 확인
@@ -130,7 +130,7 @@ function checkRSA (rsaEncStr) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/chkrsa`, formdata)
+  return axios.post(`${config.baseUrl}auth/chkrsa`, formdata)
 }
 
 // 아이디 중복확인
@@ -138,9 +138,6 @@ function checkJoinId (id) {
   const jsonData = {
     'userId': id
   }
-  // var fordata = new FormData()
-  // fordata.set('jsonData', JSON.stringify(jsonData))
-  // console.log(fordata.get('jsonData'))
   console.log(JSON.stringify(jsonData))
   return axios.get(`${config.baseUrl}users/chkdupid`, {
     params: jsonData
@@ -156,7 +153,7 @@ function sendSms (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/sendauthmine`, formdata)
+  return axios.post(`${config.baseUrl2}auth/sendauthmine`, formdata)
 }
 
 // 본인인증확인
@@ -169,7 +166,7 @@ function chkSmsAuth (authType, authWay, authWayValue, authNo) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
+  return axios.post(`${config.baseUrl2}auth/chkauthmine`, formdata)
 }
 
 // 회원가입
@@ -182,7 +179,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/join`, formdata)
+  return axios.post(`${config.baseUrl2}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -193,7 +190,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/login`, formdata)
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
 
 // 본인인증결과

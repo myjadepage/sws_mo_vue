@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
 import { userLogin, getUserInfo } from '../api'
-
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -103,10 +102,8 @@ export const store = new Vuex.Store({
       userLogin(loginObj.id, loginObj.password)
         .then(res => {
           if (res.data.jsonData.resultCode === '0001') {
-            console.log('로그인성공?', res)
             let accessToken = res.data.jsonData.accessToken
             let refreshToken = res.data.jsonData.refreshToken
-
             sessionStorage.setItem('accessToken', accessToken)
             sessionStorage.setItem('refreshToken', refreshToken)
 
