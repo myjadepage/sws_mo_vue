@@ -2030,6 +2030,12 @@ html, body{
 .itemList .item:first-child{
   border-top:5px solid #f3f3f3;
 }
+.brandBlock .itemList .item{
+  border-bottom:none;
+}
+.brandBlock .itemList .item:first-child{
+  border-top:none;
+}
 
 .itemList .itemHead,
 .itemList .itembody{
