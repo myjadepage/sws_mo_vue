@@ -12,6 +12,9 @@ import Footer from '@/components/shared/Footer'
 import MainContent from '@/components/MainContent'
 
 export default {
+  created () {
+    window.scrollTo(0, 0)
+  },
   name: 'Home',
   data () {
     return {
