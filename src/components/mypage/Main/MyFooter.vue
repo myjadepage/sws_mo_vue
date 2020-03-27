@@ -1,8 +1,8 @@
 <template>
   <div class="myFooterWrap">
-      <span class="footerText">개인정보 처리방침</span>
-      <span class="footerText center">서비스 이용약관</span>
-      <span class="footerText">회원탈퇴</span>
+      <router-link to="/Privacy" class="footerText">개인정보 처리방침</router-link>
+      <router-link to="/TermsService" class="footerText center">서비스 이용약관</router-link>
+      <router-link to="/Withdraw" class="footerText">회원탈퇴</router-link>
   </div>
 </template>
 

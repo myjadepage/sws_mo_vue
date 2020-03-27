@@ -7,8 +7,7 @@
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_01.png" alt="[삭스어필] INAP artist 이미지" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_01.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
@@ -28,8 +27,7 @@
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_02.png" alt="[웨이크메이크] 센슈얼 립 세럼 글로우1호 이미지" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_02.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
@@ -49,8 +47,7 @@
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_03.png" alt="[하루노유키] 겹겹이 구워낸 바움쿠헨 사진" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_03.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
@@ -70,8 +67,7 @@
       <li class="item">
         <button class="like on"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_04.png" alt="[벤시몽] B LOGO OVER MTM (UNISEX) - VIOLET 사진" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_04.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
@@ -91,8 +87,7 @@
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_05.png" alt="[삭스어필] INAP artist 사진" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_05.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
@@ -112,8 +107,7 @@
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
-          <div class="img_box">
-            <img src="../../../assets/img/temp_weekly_06.png" alt="[삭스어필] INAP artist 사진" />
+          <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_06.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />

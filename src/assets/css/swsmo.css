@@ -347,9 +347,8 @@
 }
 .weekly_best_main .img_box{
   position: relative;
-}
-.weekly_best_main .img_box > img{
   width:100%;
+  padding-top:88.88%;
 }
 .weekly_best_main .img_box .txtBox{
   position: absolute;

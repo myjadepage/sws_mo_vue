@@ -1,16 +1,19 @@
 <template>
-  <div class="bgGray">
+  <div class="bgGray reviewBlock">
   <Bar :val="title" />
   <DetailItem />
   <PhotoReview />
-
+  <MovieReview />
+  <BuyDecision />
   </div>
 </template>
 
 <script>
 import Bar from '@/components/shared/Bar'
-import DetailItem from '@/components/mypage/Exchange/DetailItem'
+import DetailItem from '@/components/mypage/MyReview/DetailItem'
 import PhotoReview from '@/components/mypage/MyReview/PhotoReview'
+import MovieReview from '@/components/mypage/MyReview/MovieReview'
+import BuyDecision from '@/components/mypage/MyReview/BuyDecision'
 
 export default {
   name: 'ReviewWrite',
@@ -20,7 +23,7 @@ export default {
     }
   },
   components: {
-    Bar, DetailItem, PhotoReview
+    Bar, DetailItem, PhotoReview, MovieReview, BuyDecision
   }
 }
 </script>
