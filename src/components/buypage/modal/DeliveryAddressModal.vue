@@ -30,7 +30,7 @@
 
 <script>
 import ModalHeader from './ModalHeader'
-import {addMemberAddress, getAccessToken} from '@/api/index.js'
+import {addMemberAddress, getAccessToken, getAddingCosts} from '@/api/index.js'
 
 export default {
   props: ['addresses'],
@@ -57,6 +57,19 @@ export default {
       this.searchWindow = window.open('/buyproduct/searchPost', '_blank', 'width=500, height=500, toolbar=no, menubar=no, scrollbars=no, resizable=yes')
       this.searchWindow.onunload = () => {
         this.searchResult = JSON.parse(localStorage.getItem('postCode'))
+
+        if (this.searchResult) { // 산간지역 추가배송비 확인
+          getAddingCosts(Number(this.searchResult.zonecode))
+            .then(res => {
+              if (res.data.jsonData.addingDeliveryAmount) {
+                this.$store.commit('updateAddDeliveryCost', res.data.jsonData.addingDeliveryAmount)
+              }
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        }
+
         this.$forceUpdate()
         localStorage.removeItem('postCode')
       }
@@ -64,7 +77,7 @@ export default {
     addAddrClick () {
       // 비동기 주소 등록 로직 추가하기
 
-      if (this.$refs.addr.value && this.$refs.jibun.value) {
+      if (this.$refs.addr.value || this.$refs.jibun.value) {
         if (this.$store.state.isLogin) {
           let item = {...this.searchResult}
           item.detail = this.$refs.detailAddr.value

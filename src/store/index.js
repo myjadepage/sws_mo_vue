@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
     isAuth: false,
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
-    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0}
+    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0}
   },
   getters: {
     getId: state => state.userInfo.userId,
@@ -89,6 +89,9 @@ export const store = new Vuex.Store({
     },
     updateDestInfo (state, [name, value]) {
       state.destInfo[name] = value
+    },
+    updateAddDeliveryCost (state, cost) {
+      state.payPriceInfo.addDeliveryCost = cost
     }
   },
   actions: {

@@ -12,6 +12,10 @@
               <th>배송비<span @click="deliveryInfoClick" class="deliveryInfo">?</span></th>
               <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':'무료배송'}}</td>
           </tr>
+          <tr v-if="addDeliveryCost">
+              <th>추가배송비</th>
+              <td>{{addDeliveryCost|makeComma}}원</td>
+          </tr>
           <tr v-if="discount">
               <th>할인금액</th>
               <td>-{{discount|makeComma}}원</td>
@@ -68,6 +72,11 @@ export default {
         return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
     },
+
+    addDeliveryCost () {
+      return this.$store.getters.getPayPriceInfo.addDeliveryCost
+    },
+
     deliveryPrice () {
       switch (this.product.deliveryPriceTypeCode) {
         case 1: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: 0})
@@ -85,9 +94,9 @@ export default {
       }
     },
     payFinalPrice () {
-      this.$emit('finalPrice', this.prdPrice + this.deliveryPrice - this.discount)
+      this.$emit('finalPrice', this.prdPrice + this.deliveryPrice + this.addDeliveryCost - this.discount)
       this.$store.commit('updatePayPriceInfo', {name: 'discount', price: this.discount})
-      return this.prdPrice + this.deliveryPrice - this.discount
+      return this.prdPrice + this.deliveryPrice + this.addDeliveryCost - this.discount
     }
   }
 
