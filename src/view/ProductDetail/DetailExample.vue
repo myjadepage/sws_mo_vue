@@ -1,13 +1,14 @@
 <template>
-  <div class="productDetailWrap" v-if="product.prdtSysId">
+  <div class="productDetailWrap">
     <div  v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <Media/>
+      <img class="mainMedia" src="static\images\DetailExamThumbNail.png" alt="상세 예시 썸네일">
+
       <Info :product="product" />
       <SubMedia />
       <Info2 :product="product" />
       <Description />
-      <ProductFooter :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
+      <ProductFooter  :options="options"  />
   </div>
 </template>
 
@@ -19,20 +20,25 @@ import SubMedia from '@/components/product/SubMedia'
 import Info2 from '@/components/product/ProductInfo2'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
-import {getProduct} from '@/api/index'
 
 export default {
   created () {
     window.scrollTo(0, 0)
-    let id = this.$route.params.prdtSysId
-
-    getProduct(id).then((res) => {
-      this.$store.state.product = res.data.jsonData.product
-      this.product = res.data.jsonData.product
-      this.options = res.data.jsonData.normalOptions
+    this.product = {
+      brandName: '클리오',
+      name: '킬커버 광채쿠션 타마누 카밍 세럼 (50ml) 킬커버 광채쿠션 타마누 카밍 세럼 (50ml)',
+      discountRate: 0.25,
+      price: 132500,
+      deliveryPriceTypeCode: 5,
+      debitAmount: 2500,
+      prepaymentAmount: 2500,
+      deliveryCommentHTML: '(50,000원 이상 구매시 무료 배송) 3일 이내 발송 예정(주말/공휴일 제외)',
+      point: 240,
+      pointRate: 1,
+      detailDescription: '<p><img src="static\\images\\detailExamDesc.png"></p>'
     }
-    ).catch((e) => console.log(e)
-    )
+
+    this.$store.state.product = this.product
   },
   data () {
     return {
@@ -52,6 +58,11 @@ export default {
 .productDetailWrap{
   min-width: 360px;
 }
+
+.productDetailWrap .mainMedia{
+ width: 100%;
+}
+
 .productDetailWrap .darkFilter{
   position: fixed;
   top: 0;

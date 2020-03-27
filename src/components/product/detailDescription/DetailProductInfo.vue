@@ -1,11 +1,10 @@
 <template>
 <div class="detailInfoWrap">
+  <div class="infoSection">
    <div ref="descSection" class="descSection">
-     <!-- <div class="testImg"></div> -->
    </div>
-    <div class="spreadDetail">
-      <button v-if="isSpreadable" @click="clickSpread">{{btnText}}</button>
-    </div>
+     <button ref="spreadBtn" v-if="isSpreadable"  @click="clickSpread">{{btnText}}</button>
+   </div>
 </div>
 </template>
 
@@ -28,6 +27,7 @@ export default {
     setTimeout(() => {
       if (this.$refs.descSection.clientHeight >= 800) {
         this.isSpreadable = true
+        this.$forceUpdate()
       }
     }, 500)
   },
@@ -37,9 +37,11 @@ export default {
       if (this.btnText === '상세 정보 접기') {
         this.btnText = '상세 정보 펼쳐보기'
         this.$refs.descSection.style.maxHeight = '800px'
+        this.$refs.spreadBtn.style.position = 'absolute'
         window.scrollTo(0, 550)
       } else {
         this.btnText = '상세 정보 접기'
+        this.$refs.spreadBtn.style.position = 'static'
         this.$refs.descSection.style.maxHeight = '100%'
       }
     }
@@ -48,30 +50,38 @@ export default {
 </script>
 
 <style>
+.detailInfoWrap{
+  text-align: center;
+}
+
 .descSection{
   max-height: 800px;
   display: inline-block;
   width: 100%;
-  margin: 20px 0 ;
+  margin: 20px 0 0;
   text-align: center;
   overflow: hidden;
+}
+
+.detailInfoWrap .infoSection{
+  position: relative;
 }
 
 .descSection p img{
   width: 100%;
 }
 
-.spreadDetail{
-  padding: 0 15px 0;
-  height: 95px;
-  text-align: center;
-}
-
-.spreadDetail button{
-  width: 95%;
+.detailInfoWrap button{
+  position: absolute;
+  left: 5%;
+  bottom: 30px;
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 90%;
   height: 44px;
   border: 1px solid #e61754;
   color: #e61754;
+  background-color: #fff;
   font-size: 15px;
 }
 </style>

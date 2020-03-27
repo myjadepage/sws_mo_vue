@@ -263,6 +263,7 @@ export default new Router({
       component: () => import('@/view/mypage/ReviewWrite')
     },
     {
+<<<<<<< HEAD
       path: '/MypageSetting',
       name: 'MypageSetting',
       component: () => import('@/view/mypage/MypageSetting')
@@ -301,6 +302,11 @@ export default new Router({
       path: '/Withdraw',
       name: 'Withdraw',
       component: () => import('@/view/member/Withdraw')
+=======
+      path: '/detailExam',
+      name: 'DetailExam',
+      component: () => import('@/view/ProductDetail/DetailExample')
+>>>>>>> feature/Buypage
     }
   ]
 })

@@ -247,9 +247,12 @@ font-weight: bold;
   display: inline-block;
   background: url('../../../assets/img/ico/ico_times.png');
   background-size: 100%;
+  margin-left: 10px;
   cursor: pointer;
   width: 9px;
   height: 9px;
+  position: relative;
+  top: 10px;
 }
 .productOptionWrap .ico_plus{
   display: inline-block;

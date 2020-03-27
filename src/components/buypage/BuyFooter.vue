@@ -13,19 +13,17 @@ export default {
     payBtnClick () {
       let product = JSON.parse(sessionStorage.getItem('product'))
       let options = JSON.parse(sessionStorage.getItem('selectedOptions'))
-      let optionPrice = 0
       let optionQty = 0
 
       if (options) {
         for (const o of options) {
-          optionPrice += (o.price * o.count)
           optionQty += o.count
         }
       }
 
       let item = {
-        'amount': product.price - (product.price * product.discountRate) + optionPrice,
-        'totalAmount': this.finalPrice,
+        'amount': this.finalPrice,
+        'totalAmount': this.$store.getters.getPayPriceInfo.prdtPrice,
         'qty': optionQty,
         'orderName': this.$store.getters.getOrdererInfo.name,
         'orderPostNumber': this.$store.getters.getPostCode.zonecode,

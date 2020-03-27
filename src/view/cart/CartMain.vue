@@ -38,21 +38,59 @@ import DeliveryModal from '@/components/cartpage/Modal/DeliveryModal'
 import CartLimitModal from '@/components/cartpage/Modal/CartLimitOver'
 import PrdtLimitModal from '@/components/cartpage/Modal/PrdtLimitOver'
 import StockOutModal from '@/components/cartpage/Modal/StockOut'
-import {getProductList} from '@/api/index.js'
+import {getProduct, getCartItem, getAccessToken} from '@/api/index.js'
 
 export default {
   created () {
-    // 장바구니 목록 가져와야함
-    getProductList()
-      .then(res => {
-        this.products = res.data.jsonData.products
-        for (let i = 0; i < res.data.jsonData.products.length; i++) {
+    if (this.$store.state.isLogin) {
+      // 장바구니 목록 가져와야함
+      getCartItem(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          this.products = res.data.jsonData.baskets
+          console.log(res.data.jsonData.baskets)
+
+          for (let i = 0; i < res.data.jsonData.baskets.length; i++) {
+            this.selectedItem.push(false)
+          }
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
+    } else {
+      let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+      if (cartList) {
+        for (const c of cartList) {
           this.selectedItem.push(false)
+          getProduct(c.prdtSysId)
+            .then(res => {
+              let item = {...res.data.jsonData.product, optioninfo: res.data.jsonData.normalOptions, productOptions: c.productOptions, cnt: 0}
+              if (c.basketQty === 0) {
+                for (const o of c.productOptions) {
+                  item.cnt += o.optionQty
+                }
+              } else {
+                item.cnt = c.basketQty
+              }
+
+              this.products.push(item)
+            })
+            .catch(err => {
+              console.log(err)
+            })
         }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      }
+    }
   },
   data () {
     return {
@@ -72,6 +110,20 @@ export default {
   methods: {
     removeItem (idx) {
       this.products.splice(idx, 1)
+      this.selectedItem.splice(idx, 1)
+
+      if (this.$store.state.isLogin) {
+
+      } else {
+        let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+        console.log(sessionStorage.getItem('nonMemberCartList'))
+        cartList.splice(idx, 1)
+        if (cartList.length > 0) {
+          sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+        } else {
+          sessionStorage.removeItem('nonMemberCartList')
+        }
+      }
     },
 
     selectItem (idx) {

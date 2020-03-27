@@ -129,22 +129,18 @@ function postCartItem (accessToken, cartItem) {
   })
 }
 
-// // 비회원 장바구니 등록
-// function nonMemberCart (cartData) {
-//   let exp = new Date()
-//   exp.setDate(exp.getDate() + 30)
-//   let value = []
-//   value.push(JSON.stringify(cartData))
-//   let name = 'nonMemberCartData'
-
-//   document.cookie = `${name}=${value};Expires=${exp.toUTCString()};`
-// }
-
-// // 비회원 장바구니 가져오기
-// function getNonMemberCart () {
-//   var value = document.cookie.match('(^|;) ?' + 'nonMemberCartData' + '=([^;]*)(;|$)')
-//   return value ? JSON.parse(value[2]) : null
-// }
+// 회원 장바구니 가져오기
+function getCartItem (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/listbasket`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
 
 /**
  *
@@ -329,7 +325,6 @@ export {
   getUserInfo,
   getMemberAddrList,
   addMemberAddress,
-  postCartItem
-  // nonMemberCart,
-  // getNonMemberCart
+  postCartItem,
+  getCartItem
 }
