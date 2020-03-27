@@ -35,7 +35,7 @@
          </ul>
          <button type="button" class="btn btn-block btn-main" @click="loginBtnClick">로그인</button>
          <ul class="form_item_wrap login_service">
-            <li><a href="/Searchid">아이디 찾기</a></li>
+            <li><a href="/Searchid">아이디 찾기 테스트테스트테스느</a></li>
             <li><a href="/Searchpw">패스워드 찾기</a></li>
             <li><a href="/RegStep00">회원가입</a></li>
           </ul>
