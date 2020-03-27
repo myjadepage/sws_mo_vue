@@ -21,9 +21,9 @@ export default {
       if (!this.timer) {
         this.timer = setTimeout(function () {
           self.timer = null
-          if (window.scrollY >= 600 && !self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
+          if (window.scrollY >= 900 && !self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
             self.$el.getElementsByClassName('descMenu')[0].classList.add('scrolling')
-          } else if (window.scrollY < 600 && self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
+          } else if (window.scrollY < 900 && self.$el.getElementsByClassName('descMenu')[0].classList.contains('scrolling')) {
             self.$el.getElementsByClassName('descMenu')[0].classList.remove('scrolling')
           }
         }, 300)
@@ -59,6 +59,7 @@ export default {
 <style>
 
 .productDescWrap .descMenu.scrolling{
+  z-index: 100;
   width: 100%;
   background-color: #fff;
   position: fixed;

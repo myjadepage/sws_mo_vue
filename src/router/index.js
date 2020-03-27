@@ -261,6 +261,11 @@ export default new Router({
       path: '/ReviewWrite',
       name: 'ReviewWrite',
       component: () => import('@/view/mypage/ReviewWrite')
+    },
+    {
+      path: '/detailExam',
+      name: 'DetailExam',
+      component: () => import('@/view/ProductDetail/DetailExample')
     }
   ]
 })

@@ -6,7 +6,7 @@
       <Entity v-for="(i,idx) in items" :key="idx" :product="i" />
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
-        <router-link to=""  class="link_goods">
+        <router-link to="/detailExam"  class="link_goods">
           <div class="img_box">
             <img src="../assets/img/temp_weekly_01.png" alt="[삭스어필] INAP artist 이미지" />
             <div class="txtBox">

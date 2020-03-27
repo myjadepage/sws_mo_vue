@@ -1,42 +1,28 @@
 <template>
   <div class="productInfoWrap">
-      <div class="productTitle">{{product.name}}</div>
+      <div class="productTitle">[{{product.brandName}}] {{product.name}}</div>
 
       <div class="discountSection">
-      <span v-if="additionalInfo.isLive" class="onair">
+      <!-- <span v-if="additionalInfo.isLive" class="onair">
           라이브가
-      </span>
+      </span> -->
       <span v-if="product.discountRate" class="productDiscount">{{product.discountRate * 100}}%</span>
       <span class="won"><span class="saleProductPrice">{{formatPrice(calcPrice)}}</span>원</span>
         <span v-if="product.discountRate" class="orProductPrice">{{formatPrice(product.price)}}</span>
         </div>
 
-        <div class="utilSection">
+        <!-- <div class="utilSection">
             <span class="icoBtn"><span class="ico ico_share"></span>공유하기</span>
             <span @click="toggleAlarm" class="icoBtn" v-if="additionalInfo.isAlarm"><span class="ico ico_bell"></span>방송알림ON</span>
             <span @click="toggleAlarm" class="icoBtn" v-if="additionalInfo.isAlarm===false"><span class="ico ico_no_bell"></span>방송알림OFF</span>
-        </div>
-
-        <div class="deliveryPriceSection">
-            <span class="sectionHead dp">배송비</span>
-            <span>{{calcDeliveryPrice===0?'무료':formatPrice(calcDeliveryPrice)+'원'}}<span class="policy"> {{product.deliveryCommentHTML}}</span></span>
-        </div>
-
-        <div class="pointSection">
-            <span class="sectionHead pt">적립혜택</span>
-            <span>{{formatPrice(product.point)}}원<span v-if="product.pointRate" class="sectionBody pt">({{product.pointRate}}% 적립)</span></span>
-        </div>
-
+        </div> -->
   </div>
 </template>
 
 <script>
+
 export default {
-  created () {
-    this.product = this.$store.getters.getProduct
-    console.log('상품정보', this.product)
-  },
-  // props: ['props'],
+  props: ['product'],
   data () {
     return {
       additionalInfo: {
@@ -86,6 +72,7 @@ export default {
 <style>
     .productInfoWrap{
         margin: 15px 12px 0;
+        padding-bottom: 15px;
     }
 
     .productInfoWrap .productTitle{
@@ -95,36 +82,6 @@ export default {
 
     .productInfoWrap .won,.orProductPrice{
         font-size: 13px;
-    }
-
-    .productInfoWrap .deliveryPriceSection{
-        margin: 15px 0;
-        padding: 15px 0;
-        border-top: 1px solid #eeeeee;
-        border-bottom: 1px solid #eeeeee;
-    }
-
-    .productInfoWrap .policy{
-        color: #666666;
-    }
-
-    .productInfoWrap .sectionHead.dp{
-        font-weight: 500;
-        margin: 0 30px 35px 0;
-    }
-
-    .productInfoWrap .sectionHead.pt{
-        font-weight: 500;
-        margin: 0 16px 0 0;
-    }
-
-    .productInfoWrap .pointSection{
-        padding-bottom: 15px;
-        border-bottom: 1px solid #eeeeee;
-    }
-
-    .productInfoWrap .sectionBody.pt{
-        color: #666666;
     }
 
     .productInfoWrap .orProductPrice{
@@ -192,7 +149,6 @@ export default {
     width: 16px;
     height: 17px;
     background-size: 100%;
-
     }
 
 </style>

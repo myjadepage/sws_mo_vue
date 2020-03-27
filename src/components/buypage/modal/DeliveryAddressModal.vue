@@ -82,7 +82,7 @@ export default {
               this.$emit('addrModalClose')
             }).catch(err => {
               if (err.response.status === 401) {
-                getAccessToken(sessionStorage.getItem('accessToken'))
+                getAccessToken(sessionStorage.getItem('refreshToken'))
                   .then(res => {
                     sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
                   })

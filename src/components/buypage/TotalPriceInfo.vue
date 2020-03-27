@@ -64,6 +64,7 @@ export default {
           return (this.product.price - (this.product.price * this.product.discountRate)) * oCnt
         }
       } else {
+        this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count})
         return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
     },

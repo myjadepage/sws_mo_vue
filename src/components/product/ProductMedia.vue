@@ -42,13 +42,13 @@
         </div>
     </div>
 
-    <ul class="mediaMenu">
+    <!-- <ul class="mediaMenu">
       <li @click="selectMediaMode(0)" class="selected"><div class="dot">·</div>제품뷰티</li>
       <li @click="selectMediaMode(1)"><div class="dot">·</div>언박싱</li>
       <li @click="selectMediaMode(2)"><div class="dot">·</div>설명</li>
       <li @click="selectMediaMode(3)"><div class="dot">·</div>제품특장점</li>
       <li @click="selectMediaMode(4)"><div class="dot">·</div>비교</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

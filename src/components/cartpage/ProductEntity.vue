@@ -4,11 +4,11 @@
     <div class="checkBox"><span class="check"></span></div>
     <img :src="product.smallImageUrl">
     </div>
-    <div class="title">{{product.name}}</div>
-    <div class="option" v-for="(o,idx) in options" :key="idx">{{o.name}}</div>
-    <select @change="prdtQtyCheck" name="" id="">
+    <div class="title">[{{product.brandName}}]{{product.name}}</div>
+    <div class="option" v-for="(o,idx) in product.productOptions" :key="idx">{{o.optionKeyName}}</div>
+    <select :value="product.cnt" @change="prdtQtyCheck" name="" id="">
         <option value="0">0</option>
-        <option v-for="x in cnt" :value="x" :key="x">{{x}}</option>
+        <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
     </select>
     <span class="price">{{totalPrice|makeComma}}원</span> <span class="prdPrice">{{product.price|makeComma}}</span>
     <span @click="removeBtnClick" class="ico_times removeBtn"></span>
@@ -20,17 +20,14 @@ export default {
   props: ['product', 'index', 'isChecked'],
   data () {
     return {
-      options: [{name: '[옵션명1] LRS200007G 작은원석 [원석 컬러] 06월 라벤더', price: 25000}],
-      cnt: 25
+      options: []
     }
   },
   computed:
     {
       totalPrice () {
-        let optionPrice = 0
-        for (const o of this.options) {
-          optionPrice += o.price
-        }
+        let optionPrice = 0 // 옵션 가격 정보 api로 받아와서 추가해야함
+
         return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
       }
     },

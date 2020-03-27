@@ -42,7 +42,7 @@ export default {
         })
         .catch(err => {
           if (err.response.status === 401) {
-            getAccessToken(sessionStorage.getItem('accessToken'))
+            getAccessToken(sessionStorage.getItem('refreshToken'))
               .then(res => {
                 sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
               })
@@ -87,7 +87,7 @@ export default {
           .then(res => { this.addresses = res.data.jsonData.addresses })
           .catch(err => {
             if (err.response.status === 401) {
-              getAccessToken(sessionStorage.getItem('accessToken'))
+              getAccessToken(sessionStorage.getItem('refreshToken'))
                 .then(res => {
                   sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
                 })
