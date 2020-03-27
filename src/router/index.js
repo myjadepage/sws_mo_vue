@@ -261,6 +261,46 @@ export default new Router({
       path: '/ReviewWrite',
       name: 'ReviewWrite',
       component: () => import('@/view/mypage/ReviewWrite')
+    },
+    {
+      path: '/MypageSetting',
+      name: 'MypageSetting',
+      component: () => import('@/view/mypage/MypageSetting')
+    },
+    {
+      path: '/BlackList',
+      name: 'BlackList',
+      component: () => import('@/view/mypage/BlackList')
+    },
+    {
+      path: '/ReportLog',
+      name: 'ReportLog',
+      component: () => import('@/view/mypage/ReportLog')
+    },
+    {
+      path: '/SanctionLog',
+      name: 'SanctionLog',
+      component: () => import('@/view/mypage/SanctionLog')
+    },
+    {
+      path: '/MovieSetting',
+      name: 'MovieSetting',
+      component: () => import('@/view/mypage/MovieSetting')
+    },
+    {
+      path: '/Privacy',
+      name: 'Privacy',
+      component: () => import('@/view/menu/Privacy')
+    },
+    {
+      path: '/TermsService',
+      name: 'TermsService',
+      component: () => import('@/view/menu/TermsService')
+    },
+    {
+      path: '/Withdraw',
+      name: 'Withdraw',
+      component: () => import('@/view/member/Withdraw')
     }
   ]
 })

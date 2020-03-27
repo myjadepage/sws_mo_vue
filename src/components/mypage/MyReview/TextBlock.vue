@@ -9,16 +9,21 @@
       <div class="preViewBox">
         <textarea placeholder="포토리뷰를 작성해 주세요." v-model="reviewText"></textarea>
         <ul class="photoList">
-          <li class="item" :style="{'background':'url('+imgSrc+')'}">
+          <li class="item" style="background:url('/static/images/1.jpg') 50% 50% / cover no-repeat;">
             <button class="remove"><img src="../../../assets/img/ico/btn_remove.png" alt="이미지 삭제" /></button>
           </li>
-          <li class="item">
+          <li class="item" style="background:url('/static/images/2.jpg') 50% 50% / cover no-repeat;">
             <button class="remove"><img src="../../../assets/img/ico/btn_remove.png" alt="이미지 삭제" /></button>
           </li>
         </ul>
       </div>
-      <input type="file" name="photoUpload" id="fileUpload" v-on:change="setphotos" ref="file" multiple />
+      <input type="file" name="photoUpload" id="fileUpload" v-on:change="setphotos($event)" ref="file" multiple />
       <label for="fileUpload" class="btn_photo" >사진첨부</label>
+    </div>
+
+    <div class="btnsWrap">
+      <button class="btn_them gray border">취소</button>
+      <button class="btn_them ">확인</button>
     </div>
   </div>
 
@@ -30,25 +35,16 @@ export default {
   props: ['reviewText', 'photos'],
   data () {
     return {
-      // mode: 'text'
-      mode: 'photo',
-      imgSrc: ''
+      mode: 'text',
+      imgSrc: []
     }
   },
   methods: {
     modeSwitch () {
       this.mode = 'photo'
     },
-    setphotos () {
-      // console.log(this.$refs.file.files[0])
-      if (this.$refs.file.files[0]) {
-        let reader = new FileReader()
-        reader.onload = function (e) {
-          console.log(e.target.result)
-          this.imgSrc = e.target.result
-        }
-        reader.readAsDataURL(this.$refs.file.files[0])
-      }
+    setphotos (event) {
+      this.imgSrc = event.target.files
     }
   }
 }
