@@ -677,9 +677,15 @@ member-----------------------------------------*/
  border-bottom: 0;
  margin-bottom: 10px;
 }
+.social ul {
+  position: relative;
+  float: right;
+  left: -50%;
+}
 .social li{  
-  display: inline-block;
-  width: 20%;  
+  position: relative;
+  float: left;
+  left: 50%;
 }
 .social li a,
 .social li span {
@@ -938,12 +944,11 @@ input[type="button"].btn-block {
 }
 .toggle-button-save .toggle-button__icon:before,
 .toggle-button-save .toggle-button__icon:after {
-  width: 10px;
+  width: 8px;
   height: 2px;
   border-radius: 3px;
-  background: #ccc;  
-  margin-left: -10%;
-  top: 55%;
+  background: #ccc;
+  /* top: 55%; */
 }
 .toggle-button-save input[type=checkbox]:checked~.toggle-button__icon:before,
 .toggle-button-save input[type=checkbox]:checked~.toggle-button__icon:after{
@@ -960,31 +965,27 @@ icon*/
   width: 30px;
   height: 30px;
   background-position: -3px -34px;
-  background-color: #f4f4f4;
 }
 .btn-cacao{
   width: 30px;
   height: 30px;
   margin-right: 5px;
   background-position: -62px -34px;
-  background-color: #ffde00;
 }
 .btn-fb{
   margin-left: 4px;
-  width: 55px;
-  height: 55px;
+  width: 56px;
+  height: 56px;
   background-position: -124px -34px;  
-  background-color: #4267b2;
   border-radius: 2rem !important;
 }
 .btn-naver{
   width: 30px;
   height: 30px;
   background-position: -182px -34px;
-  background-color: #00c73c;
 }
 .icon_close{
-  background-position: -252px 0;
+  background-position: -120px 0;
   width: 14px;
   height: 14px;
 }

@@ -54,6 +54,9 @@ export default {
     }
   },
   computed: {
+    checkedTerms () {
+      return this.checked.filter((item, i) => this.checked.indexOf(item) === i).sort()
+    },
     isCheckAll: {
       get: function () {
         if ((this.checked.length !== this.terms.length) || this.terms.length === 0) return false
@@ -72,18 +75,25 @@ export default {
   },
   methods: {
     checkForm (e) {
-      if (this.checked[0] !== '01') {
+      if (this.checkedTerms[0] !== '01') {
         alert('필수항목을 체크해 주세요')
-      } else if (this.checked[1] !== '02') {
+        return false
+      }
+      if (this.checkedTerms[1] !== '02') {
         alert('필수항목을 체크해 주세요')
+        return false
+      }
+      if (this.checkedTerms[2] === '03') {
+        this.$store.state.userInfo.agreeSellection1 = 1
+      }
+      if (this.checkedTerms[3] === '04') {
+        this.$store.state.userInfo.agreeSellection2 = 1
+      }
+      if (this.$route.params.key === 'sns') { // sns간편가입시
+        this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
       } else {
         this.$router.push('/RegStep02')
       }
-      // if (this.$route.params.key === 'sns') { // sns간편가입시
-      //   this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
-      // } else {
-      //   this.$router.push('/RegStep02')
-      // }
     }
   }
 }

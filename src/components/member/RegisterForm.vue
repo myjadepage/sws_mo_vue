@@ -115,7 +115,6 @@ export default {
       }
     },
     checkJoin: function () {
-      // const regPassword = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/
       const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
       if (this.formData.userId === null) {

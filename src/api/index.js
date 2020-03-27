@@ -186,7 +186,7 @@ function sendSms (authType, authWay, authWayValue) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/sendauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/sendauthmine`, formdata)
 }
 
 // 본인인증확인
@@ -199,7 +199,7 @@ function chkSmsAuth (authType, authWay, authWayValue, authNo) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/chkauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
 }
 
 // 회원가입
@@ -208,11 +208,13 @@ function createtUser (user) {
     'userId': user.userId,
     'password': user.password,
     'mobile': user.phone,
-    'email': user.email
+    'email': user.email,
+    'agreeSellection1': user.agreeSellection1,
+    'agreeSellection2': user.agreeSellection2
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/join`, formdata)
+  return axios.post(`${config.baseUrl}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -223,7 +225,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 본인인증결과
@@ -261,16 +263,32 @@ function parseJwt (token) {
   return JSON.parse(jsonPayload)
 }
 
+// access토큰 발급
 function getAccessToken (refreshToken) {
   return axios({
     method: 'post',
-    url: `http://192.168.1.20:3000/api/v1/auth/accesstoken`,
+    url: `${config.baseUrl2}auth/accesstoken`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${refreshToken}`
     }
   })
 }
+
+// refresh토큰 갱신
+function getRefressToken (refreshToken) {
+  let header = {
+    'Authorization': `Bearer ${refreshToken}`
+  }
+  return axios.post(`${config.baseUrl}auth/refresh`, header)
+}
+
+// function getAccessToken (refreshToken) {
+//   let header = {
+//     'Authorization': `Bearer ${refreshToken}`
+//   }
+//   return axios.post(`${config.baseUrl}auth/accesstoken`, '', header)
+// }
 
 // 토큰 만료 여부 확인 (true:만료 false:기한남음)
 // function isTokenExpired (token) {
@@ -287,6 +305,8 @@ function getAccessToken (refreshToken) {
 
 // let dayDiff = Math.ceil(Math.abs(timeDiff) / (1000 * 60 * 60 * 24))
 export {
+  getAccessToken,
+  getRefressToken,
   getPublicKey,
   checkRSA,
   snsLogin,
@@ -309,7 +329,6 @@ export {
   getUserInfo,
   getMemberAddrList,
   addMemberAddress,
-  getAccessToken,
   postCartItem
   // nonMemberCart,
   // getNonMemberCart

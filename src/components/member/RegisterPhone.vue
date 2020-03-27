@@ -86,7 +86,6 @@ export default {
     // 2.인증번호입력확인
     checkPhone: function () {
       this.isClickedCheck = true
-      console.log('this.pwPhone', this.pwPhone)
       chkSmsAuth(0, 1, this.pwPhone, this.authNo)
         .then(res => {
           console.log('인증번호입력확인', res)
