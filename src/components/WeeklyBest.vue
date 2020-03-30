@@ -6,14 +6,8 @@
       <Entity v-for="(i,idx) in items" :key="idx" :product="i" />
       <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
-<<<<<<< HEAD
         <router-link to=""  class="link_goods">
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_01.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
-=======
-        <router-link to="/detailExam"  class="link_goods">
-          <div class="img_box">
-            <img src="../assets/img/temp_weekly_01.png" alt="[삭스어필] INAP artist 이미지" />
->>>>>>> feature/Buypage
             <div class="txtBox">
               <div class="btn_movie">
                 <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
