@@ -16,7 +16,7 @@
         <span class="dot">·</span>
         <router-link to="/Following">팔로잉 <span class="following">{{formatFollwer(member.following)}}</span></router-link>
         <span class="dot">·</span>
-        포인트 <span class="point">{{formatPoint}}</span>
+        <router-link to="/MyPoint">포인트 <span class="point">{{formatPoint}}</span></router-link>
     </div>
   </div>
 </template>

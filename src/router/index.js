@@ -306,6 +306,31 @@ export default new Router({
       path: '/detailExam',
       name: 'DetailExam',
       component: () => import('@/view/ProductDetail/DetailExample')
+    },
+    {
+      path: '/Calendar',
+      name: 'Calendar',
+      component: () => import('@/view/calendar/Calendar')
+    },
+    {
+      path: '/CalendarReserved',
+      name: 'CalendarReserved',
+      component: () => import('@/view/calendar/CalendarReserved')
+    },
+    {
+      path: '/MyPoint',
+      name: 'MyPoint',
+      component: () => import('@/view/mypage/MyPoint')
+    },
+    {
+      path: '/CustomerMain',
+      name: 'CustomerMain',
+      component: () => import('@/view/customer/CustomerMain')
+    },
+    {
+      path: '/myQna',
+      name: 'myQna',
+      component: () => import('@/view/customer/myQna')
     }
   ]
 })

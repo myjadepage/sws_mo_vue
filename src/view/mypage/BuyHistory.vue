@@ -1,7 +1,7 @@
 <template>
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
-  <ExchangeEmpty :param="title" v-if="products.length === 0"  />
+  <EmptyBlock :param="emptyMessage" v-if="products.length === 0"  />
   <ExchangeList v-bind:pageType="pageType" v-if="products.length > 0" @exchangeReqOpen="exchangeReqOpen"  />
 
   <section v-if="modalVisiblity" class="modalBg">
@@ -14,7 +14,7 @@
 <script>
 import Bar from '@/components/shared/Bar'
 import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
-import ExchangeEmpty from '@/components/mypage/Exchange/ExchangeEmpty'
+import EmptyBlock from '@/components/shared/EmptyBlock'
 import ExchangeInfo from '@/components/mypage/Exchange/Modal/ExchangeRequest'
 
 export default {
@@ -22,6 +22,7 @@ export default {
     return {
       title: '구매 내역',
       pageType: 'history',
+      emptyMessage: '구매 내역이 없습니다.',
       products: [
         'a', 'b'
       ],
@@ -30,7 +31,7 @@ export default {
     }
   },
   components: {
-    Bar, ExchangeList, ExchangeEmpty, ExchangeInfo
+    Bar, ExchangeList, EmptyBlock, ExchangeInfo
   },
   methods: {
     closeRequest () {

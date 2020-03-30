@@ -1,7 +1,7 @@
 <template>
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
-  <ExchangeEmpty :param="title" v-if="products.length === 0"  />
+  <EmptyBlock :param="emptyMeasse" v-if="products.length === 0"  />
   <ExchangeList v-bind:pageType="pageType" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
 
   <section v-if="modalVisiblity" class="modalBg">
@@ -14,7 +14,7 @@
 <script>
 import Bar from '@/components/shared/Bar'
 import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
-import ExchangeEmpty from '@/components/mypage/Exchange/ExchangeEmpty'
+import EmptyBlock from '@/components/shared/EmptyBlock'
 import BasketDeleteModal from '@/components/mypage/Exchange/Modal/BasketDeleteModal'
 import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
 
@@ -23,6 +23,7 @@ export default {
     return {
       title: '최근 본 상품',
       pageType: 'basket',
+      emptyMeasse: '최근 본 상품이 없습니다.',
       products: [
         'a', 'b'
       ],
@@ -32,7 +33,7 @@ export default {
     }
   },
   components: {
-    Bar, ExchangeList, ExchangeEmpty, BasketDeleteModal, RemovedModal
+    Bar, ExchangeList, EmptyBlock, BasketDeleteModal, RemovedModal
   },
   methods: {
     basketDeleteModalShow () {
