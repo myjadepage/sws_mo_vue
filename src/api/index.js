@@ -100,13 +100,18 @@ function addMemberAddress (accessToken, addrInfo) {
   })
 }
 
+// 추가 배송비 조회
+function getAddingCosts (postNumber) {
+  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
+}
+
 /**
  *
  * 상품 상세
  */
 // 단일 상품
 function getProduct (id) {
-  return axios.get(`${config.baseUrl}products/${id}`)
+  return axios.get(`${config.baseUrl2}products/${id}`)
 }
 
 function getBroadCast (id) {
@@ -326,5 +331,6 @@ export {
   getMemberAddrList,
   addMemberAddress,
   postCartItem,
-  getCartItem
+  getCartItem,
+  getAddingCosts
 }
