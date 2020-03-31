@@ -107,12 +107,13 @@ export default {
       var vm = this
       if (this.isClickedSend === false || this.isClickedCheck === false) {
         alert('인증번호 버튼을 눌러주세요')
+      } else if (this.$route.params.key === 'google') { // 구글간편가입시, 아래 로직은 임시
+        this.$store.dispatch('getUserInfoGoogle')
+        vm.$router.push('/RegStep04')
+      } else if (this.$route.params.key === 'kakao') { // 카카오간편가입시
+        this.$store.dispatch('getUserInfoKakao')
+        vm.$router.push('/RegStep04')
       } else {
-        // if (this.$route.params.key === 'sns') { // 간편가입시, 아래 로직은 임시
-        //   console.log('간편가입')
-        //   this.$store.dispatch('getUserInfoGoogle')
-        //   vm.$router.push('/RegStep04')
-        // } else {
         createtUser(this.$store.state.userInfo) // 일반회원가입시
           .then(function (res) {
             console.log('가입성공?', res)
@@ -126,14 +127,13 @@ export default {
           .catch(function (error) {
             console.log('ERROR', error)
           })
-        // }
       }
     },
     countTimeDown: function (limitTime) {
       let date = parseDate(limitTime)
-      let endSeconds = Math.floor(date / 10)
-      let startSeconds = Math.floor(Date.now() / 10)
-      let limitDate = startSeconds - endSeconds
+      let endSeconds = Math.floor(date / 1000)
+      let startSeconds = Math.floor(Date.now() / 1000)
+      let limitDate = endSeconds - startSeconds
 
       var timer = setInterval(() => {
         this.countTime = Math.floor(limitDate / 60) + '분 ' + (limitDate % 60) + '초'

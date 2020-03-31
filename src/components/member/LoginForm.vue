@@ -14,7 +14,7 @@
             v-model="password" required>
           <span class="focus-input100"></span>
          </div>
-         <ul class="form_item_wrap">
+         <ul class="form_item_wrap" style="text-align:right">
             <li>
               <div class="toggle-button toggle-button-save">
                 <input id="toggleButtonId" type="checkbox"
@@ -24,14 +24,15 @@
               </div>
               <label style="color:#666">아이디 저장</label>
             </li>
-            <li>
+            <!-- <li>
               <div class="toggle-button toggle-button-save">
-                <input id="toggleButtonAutoId" type="checkbox">
+                <input id="toggleButtonAutoId" type="checkbox"
+                  v-model="checkedAuto" @change="checkAutoLogin($event)">
                 <label for="toggleButtonAutoId"></label>
                 <div class="toggle-button__icon"></div>
               </div>
               <label style="color:#666">자동 로그인</label>
-            </li>
+            </li> -->
          </ul>
          <button type="button" class="btn btn-block btn-main" @click="loginBtnClick">로그인</button>
          <ul class="form_item_wrap login_service">
@@ -39,8 +40,8 @@
             <li><a href="/Searchpw">패스워드 찾기</a></li>
             <li><a href="/RegStep00">회원가입</a></li>
           </ul>
-            <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
-            <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
+          <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
+          <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
@@ -61,13 +62,15 @@
                   <span>카카오</span>
                 </li>
                 <li>
-                  <v-facebook-login app-id="2810824608956950" class="btn btn-circle sws_icon btn-fb"></v-facebook-login>
+                  <v-facebook-login
+                    app-id="2810824608956950"
+                    class="btn btn-circle sws_icon btn-fb"/>
                   <span>페이스북</span>
                 </li>
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-                    callback-url="http://localhost:8080/RegStep00Naver"
+                    callback-url="http://localhost:8080/Login"
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -81,11 +84,12 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
 import VFacebookLogin from 'vue-facebook-login-component'
 import { makeRsa } from '@/assets/js/common.js'
-import { snsLogin } from '../../api'
+import { snsLogin, getUserInfo } from '../../api'
 
 export default {
   components: {
@@ -97,7 +101,8 @@ export default {
     return {
       id: null,
       password: null,
-      checkedId: false
+      checkedId: false,
+      checkedAuto: false
     }
   },
   mounted () {
@@ -109,6 +114,19 @@ export default {
       this.id = ''
       this.checkedId = false
     }
+    // 네이버 로그인
+    var params = {}
+    var param = $(location).attr('href')
+    param.replace(/[#&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value })
+    console.log('param', params.access_token)
+    snsLogin(2, params.access_token)
+      .then(res => {
+        console.log('res', res)
+        this.snsSuccessDoing(res, 'naver')
+      })
+      .catch(function (error) {
+        console.log('ERROR', error)
+      })
   },
   methods: {
     // 아이디 저장
@@ -126,27 +144,57 @@ export default {
       this.id = ''
       this.password = ''
     },
+    // sns가입시 공통로직
+    snsSuccessDoing (res, snsParam) {
+      let accessToken = res.data.jsonData.accessToken
+      let refreshToken = res.data.jsonData.refreshToken
+      let snsAddInfoFlag = res.data.jsonData.snsAddInfoFlag
+      switch (snsParam) {
+        case 'google' :
+          sessionStorage.setItem('accessTokenGoogle', accessToken)
+          sessionStorage.setItem('refreshTokenGoogle', refreshToken)
+          break
+        case 'naver' :
+          sessionStorage.setItem('accessTokenNaver', accessToken)
+          sessionStorage.setItem('refreshTokenNaver', refreshToken)
+          break
+        case 'kakao' :
+          sessionStorage.setItem('accessTokenKakao', accessToken)
+          sessionStorage.setItem('refreshTokenKakao', refreshToken)
+          break
+      }
+      getUserInfo(accessToken).then(r => {
+        sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
+      }).catch(err => {
+        console.log(err)
+      })
+      // 회원가입
+      if (res.data.jsonData.snsLoginType === 0) {
+        switch (snsAddInfoFlag) { // 0:추가정보 미존재=>정보받아야함   1:추가정보존재
+          case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
+          case 1 : this.$router.push('/'); break
+        }
+      } else { // 로그인
+        switch (snsParam) {
+          case 'google': this.$store.dispatch('getUserInfoGoogle'); break
+          case 'naver': this.$store.dispatch('getUserInfoNaver'); break
+          case 'kakao': this.$store.dispatch('getUserInfoKakao'); break
+        }
+        this.$router.push('/')
+      }
+    },
     // 구글로그인
     handleClickGetAuth () {
       this.$gAuth.signIn()
         .then(GoogleUser => {
-          console.log('GoogleUser', GoogleUser.uc.access_token)
           this.isSignIn = this.$gAuth.isAuthorized
           snsLogin(3, GoogleUser.uc.access_token)
             .then(res => {
-              console.log('acees', res)
-              let accessToken = res.data.jsonData.accessToken
-              let refreshToken = res.data.jsonData.refreshToken
-              sessionStorage.setItem('accessTokenGoogle', accessToken)
-              sessionStorage.setItem('refreshTokenGoogle', refreshToken)
-              this.$router.push({name: 'RegStep00', params: {key: 'sns'}})
+              this.snsSuccessDoing(res, 'google')
             })
             .catch(function (error) {
               console.log('ERROR', error)
             })
-        })
-        .then(response => {
-          console.log('response', response)
         })
         .catch(error => {
           console.log('error', error)
@@ -154,11 +202,9 @@ export default {
     },
     // 카카오로그인 성공시
     onSuccess: function (data) {
-      var vm = this
       snsLogin(1, data.access_token)
         .then(res => {
-          console.log('accees', res)
-          vm.$router.push('/RegStep00')
+          this.snsSuccessDoing(res, 'kakao')
         })
         .catch(function (error) {
           console.log('ERROR', error)
@@ -168,11 +214,10 @@ export default {
       console.log('failure', data)
     },
 
-    // 네이버로그인시 콜백함수
-    callbackFunction: function (status) {
-      alert('들어왔니')
-    },
+    // 네이버로그인시 콜백함수인데 여기서 처리안함!
+    callbackFunction: function () {},
 
+    // 비회원구매하기
     noMemberBuyClick () {
       sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
       sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))

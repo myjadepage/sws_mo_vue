@@ -11,7 +11,7 @@
                v-if="$store.state.isLogin === true">
                 <span class="sws_icon ico_menu">메뉴</span>
             </router-link>
-            <router-link to="Login" id="btnSideMenu" class="btn_menu common-header-menu" role="button"
+            <router-link to="/Login" id="btnSideMenu" class="btn_menu common-header-menu" role="button"
                v-else>
                 <span class="sws_icon ico_menu">메뉴</span>
             </router-link>

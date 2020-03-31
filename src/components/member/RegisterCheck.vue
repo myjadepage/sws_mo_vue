@@ -89,10 +89,11 @@ export default {
       if (this.checkedTerms[3] === '04') {
         this.$store.state.userInfo.agreeSellection2 = 1
       }
-      if (this.$route.params.key === 'sns') { // sns간편가입시
-        this.$router.push({name: 'RegStep03', params: {key: 'sns'}})
-      } else {
-        this.$router.push('/RegStep02')
+
+      switch (this.$route.params.key) {
+        case 'google': this.$router.push({name: 'RegStep03', params: {key: 'google'}}); break
+        case 'kakao': this.$router.push({name: 'RegStep03', params: {key: 'kakao'}}); break
+        default: this.$router.push('/RegStep02'); break
       }
     }
   }

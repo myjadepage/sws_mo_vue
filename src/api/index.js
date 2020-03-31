@@ -4,7 +4,8 @@ const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http:///api.shallwe.shop/api/v1/',
-  baseUrl: 'http://shallwe.shop:3000/api/v1/'
+  // baseUrl: 'http://shallwe.shop:3000/api/v1/' // 개발
+  baseUrl: 'http://shallwe.shop/api/v1/' // 배포
 }
 
 /**
@@ -38,8 +39,15 @@ function getBrandList () {
 }
 
 // 라이브방송정보 리스트
-function getLiveProduct () {
-  return axios.get(`${config.baseUrl2}broadcasts/mainlists`)
+function getLiveProductList () {
+  return axios.get(`${config.baseUrl}broadcasts/mainlists`)
+}
+
+/**
+ * 라이브 방송정보
+ */
+function getLiveProduct (broadcastSysId) {
+  return axios.get(`${config.baseUrl2}broadcasts/${broadcastSysId}/medialists`)
 }
 
 /*
@@ -91,7 +99,7 @@ function addMemberAddress (accessToken, addrInfo) {
   formdata.set('jsonData', JSON.stringify(addrInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/address`,
+    url: `${config.baseUrl}users/${userSysId}/address`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -111,7 +119,7 @@ function getAddingCosts (postNumber) {
  */
 // 단일 상품
 function getProduct (id) {
-  return axios.get(`${config.baseUrl2}products/${id}`)
+  return axios.get(`${config.baseUrl}products/${id}`)
 }
 
 function getBroadCast (id) {
@@ -125,7 +133,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/basket`,
+    url: `${config.baseUrl}users/${userSysId}/basket`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -139,7 +147,7 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/listbasket`,
+    url: `${config.baseUrl}users/${userSysId}/listbasket`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -226,7 +234,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 본인인증결과
@@ -268,7 +276,7 @@ function parseJwt (token) {
 function getAccessToken (refreshToken) {
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}auth/accesstoken`,
+    url: `${config.baseUrl}auth/accesstoken`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${refreshToken}`
@@ -320,6 +328,7 @@ export {
   getCategoryList,
   getSaleProduct,
   getWeeklyProduct,
+  getLiveProductList,
   getLiveProduct,
   retauthMine,
   getProduct,

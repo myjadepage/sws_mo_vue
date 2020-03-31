@@ -3,43 +3,6 @@
     <div :style="mediaSize" class="mainMedia">
       <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
       <div id="player_container" class="use-play-1 flowplayer"></div>
-      <div class="layer-player">
-          <!-- 하단 구매영역 -->
-          <!-- <div class="buy-wrap">
-              <h2 class="title">
-                  [클리오] 킬커버 광채쿠션 타마누 카밍 세럼 (50ml)
-              </h2>
-              <p class="price-title">
-                  <span>
-                      <strong>25% <em>32,500</em></strong>
-                      <del>132,500</del>
-                  </span>
-                  <button type="button" class="btn btn-sm btn-main">구매하기</button>
-              </p>
-          </div> -->
-          <!-- <div class="thumbs">
-              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
-                <img src="https://flowplayer.com/demos/images/agency/2-thumb.jpeg">
-                <p class="thumb-title">제품뷰티</p>
-              </span>
-              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
-                <img src="https://flowplayer.com/demos/images/agency/6-thumb.jpeg">
-                <p class="thumb-title">언박싱</p>
-              </span>
-              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
-                <img src="https://flowplayer.com/demos/images/agency/5-thumb.jpeg">
-                <p class="thumb-title">설명</p>
-              </span>
-              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
-                <img src="https://flowplayer.com/demos/images/agency/3-thumb.jpeg">
-                <p class="thumb-title">제품특장점</p>
-              </span>
-              <span data-video="http://cache.midibus.kinxcdn.com/name/ch_1648a4c9/16b0d38f948f6a8c_original.mp4">
-                <img src="https://flowplayer.com/demos/images/agency/6-thumb.jpeg">
-                <p class="thumb-title">비교</p>
-              </span>
-          </div> -->
-        </div>
     </div>
 
     <!-- <ul class="mediaMenu">
@@ -103,7 +66,6 @@ export default {
             twitter: false
           },
           rewind: true,
-          seekable: false,
           type: 'application/x-mpegurl',
           src: VIDEOSRC,
           poster: POSTER,
