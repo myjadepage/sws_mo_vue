@@ -111,7 +111,7 @@ function getAddingCosts (postNumber) {
  */
 // 단일 상품
 function getProduct (id) {
-  return axios.get(`${config.baseUrl2}products/${id}`)
+  return axios.get(`${config.baseUrl}products/${id}`)
 }
 
 function getBroadCast (id) {
@@ -144,6 +144,22 @@ function getCartItem (accessToken) {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
     }
+  })
+}
+
+function removeCartItem (accessToken, basketSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify({basketSysId}))
+
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/basket`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -332,5 +348,6 @@ export {
   addMemberAddress,
   postCartItem,
   getCartItem,
-  getAddingCosts
+  getAddingCosts,
+  removeCartItem
 }

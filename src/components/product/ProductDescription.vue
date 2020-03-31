@@ -30,12 +30,6 @@ export default {
       }
     })
   },
-  beforeDestroy () {
-    if (this.timer) {
-      this.timer.clearTimeout()
-      this.timer = null
-    }
-  },
   components: {
     DetailDesc
   },

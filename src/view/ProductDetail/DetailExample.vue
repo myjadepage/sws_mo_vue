@@ -50,6 +50,9 @@ export default {
   },
   components: {
     Bar, Media, SubMedia, Info, Info2, Description, ProductFooter
+  },
+  beforeDestroy () {
+    this.$store.commit('deleteAllOption')
   }
 }
 </script>
