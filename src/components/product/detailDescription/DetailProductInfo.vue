@@ -71,6 +71,11 @@ export default {
   width: 100%;
 }
 
+.descSection p{
+  margin: 0;
+  padding: 0;
+}
+
 .detailInfoWrap button{
   position: absolute;
   left: 5%;

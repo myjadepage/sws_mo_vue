@@ -11,7 +11,8 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
-import {postCartItem, getAccessToken} from '@/api/index.js'
+import {postCartItem, getAccessToken, getCartItem} from '@/api/index.js'
+import {isEquals} from '@/assets/js/common.js'
 
 export default {
   props: ['buyMode', 'options'],
@@ -51,27 +52,30 @@ export default {
           basketQty: 0,
           isOptionNormal: 0,
           isAddingProduct: 0
-          // productOptions: []
-          // addingProductsoptional: []
+          // optionGroups: []
+          // addingProducts: []
         }
 
         if (this.$store.getters.getSelectedOptions[0].contentName !== '') { // 옵션이 있는 경우
           cartItem.isOptionNormal = 1
-          cartItem.productOptions = []
+          cartItem.optionGroups = []
           for (const o of this.$store.getters.getSelectedOptions) {
             let option = {
-              prdtNormalOptionSysId: 0,
-              optionKeyName: o.contentName,
-              optionQty: o.count
+              optionQty: o.count,
+              productOptions: []
             }
 
             for (const c of o.contentGroup) {
               if (c.name === '선택없음') {
                 continue
               }
-              option.prdtNormalOptionSysId = c.prdtNormalOptionSysId
+
+              option.productOptions.push({
+                prdtNormalOptionSysId: c.prdtNormalOptionSysId,
+                optionKeyName: c.name
+              })
             }
-            cartItem.productOptions.push(option)
+            cartItem.optionGroups.push(option)
           }
         } else { // 옵션이 없는 경우
           cartItem.basketQty = this.$store.getters.getSelectedOptions[0].count
@@ -79,12 +83,24 @@ export default {
 
         if (this.$store.state.isLogin) {
         // 회원 장바구니 등록
-
-          console.log(cartItem)
-
-          postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+          getCartItem(sessionStorage.getItem('accessToken'))
             .then(res => {
-              console.log(res)
+              for (const b of res.data.jsonData.baskets) {
+                // let compare = {
+                //   prdtSysId: b.prdtSysId,
+                //   basketQty: b.basketQty,
+                //   isOptionNormal: b.isOptionNormal,
+                //   isAddingProduct: b.isAddingProduct,
+                //   productOptions: b.productOptions
+                // }
+
+                // if (isEquals(compare, cartItem)) {
+                //   console.log('중복')
+                // }
+                console.log(b, cartItem)
+              }
+
+              // console.log(res.data.jsonData.baskets)
             })
             .catch(err => {
               if (err.response.status === 401) {
@@ -100,6 +116,25 @@ export default {
                   })
               }
             })
+
+          // postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+          //   .then(res => {
+          //     console.log(res)
+          //   })
+          //   .catch(err => {
+          //     if (err.response.status === 401) {
+          //       getAccessToken(sessionStorage.getItem('refreshToken'))
+          //         .then(res => {
+          //           sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+          //         })
+          //         .catch(err => {
+          //           if (err.response.status === 401) {
+          //             this.$store.dispatch('logOut')
+          //             this.$router.push('/Login')
+          //           }
+          //         })
+          //     }
+          //   })
         } else {
           // 비회원 장바구니 등록
 
@@ -109,7 +144,7 @@ export default {
             cartList = JSON.parse(cartList)
 
             for (const p of cartList) { // 중복 체크
-              if (this.isEquals(p, cartItem)) {
+              if (isEquals(p, cartItem)) {
                 return
               }
             }
@@ -119,24 +154,8 @@ export default {
             sessionStorage.setItem('nonMemberCartList', JSON.stringify([cartItem]))
           }
         }
+        this.$emit('addedCartItem')
       }
-    },
-
-    isEquals (x, y) { // 객체 값 동일 비교 함수
-      if (x === y) return true
-      if (!(x instanceof Object) || !(y instanceof Object)) return false
-      if (x.constructor !== y.constructor) return false
-      for (var p in x) {
-        if (!x.hasOwnProperty(p)) continue
-        if (!y.hasOwnProperty(p)) return false
-        if (x[p] === y[p]) continue
-        if (typeof (x[p]) !== 'object') return false
-        if (!this.isEquals(x[p], y[p])) return false
-      }
-      for (p in y) {
-        if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false
-      }
-      return true
     }
 
   }

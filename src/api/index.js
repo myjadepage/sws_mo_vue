@@ -155,6 +155,22 @@ function getCartItem (accessToken) {
   })
 }
 
+function removeCartItem (accessToken, basketSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify({basketSysId}))
+
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/basket`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 /**
  *
  * 회원가입
@@ -341,5 +357,6 @@ export {
   addMemberAddress,
   postCartItem,
   getCartItem,
-  getAddingCosts
+  getAddingCosts,
+  removeCartItem
 }
