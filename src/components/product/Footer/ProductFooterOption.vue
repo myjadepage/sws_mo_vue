@@ -124,7 +124,11 @@ export default {
     },
 
     calcPrice (idx) {
-      return this.$store.getters.getOptionPrice(idx) * this.$store.getters.getOptionCnt(idx)
+      if (this.$store.getters.getSelectedOptions[idx].contentName) {
+        return this.$store.getters.getOptionPrice(idx) * this.$store.getters.getOptionCnt(idx) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)
+      } else {
+        return this.$store.getters.getOptionCnt(idx) * (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+      }
     },
     deleteOption (idx) {
       this.$store.commit('deleteOption', idx)
@@ -141,11 +145,11 @@ export default {
         let cnt = 0
         for (const item of o) {
           cnt += item.count
-          val += (item.count * item.price)
+          val += (item.count * item.price) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)
         }
 
         if (val) {
-          return val + (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+          return val
         } else {
           return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt
         }

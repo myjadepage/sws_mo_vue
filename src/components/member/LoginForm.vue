@@ -219,8 +219,6 @@ export default {
 
     // 비회원구매하기
     noMemberBuyClick () {
-      sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-      sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
       this.$router.push('/BuyProduct')
     },
     noMemeberOrderClick () {

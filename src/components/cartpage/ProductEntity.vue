@@ -4,16 +4,21 @@
     <div class="checkBox"><span class="check"></span></div>
     <img :src="product.smallImageUrl">
     </div>
+    <div class="entityBody">
     <div class="title">[{{product.brandName}}]{{product.name}}</div>
-    <div class="option" v-for="(o,idx) in cartItem.optionGroups" :key="idx">
-      <div v-for="(c,idx) in o.productOptions" :key="idx">{{c.optionKeyName}}</div>
-      </div>
+    <div v-if="cartItem.isOptionNormal">
+    <div class="option" v-for="(o,idx) in cartItem.productOptions" :key="idx">
+      {{o.optionKeyName}}
+      <!-- <div v-for="(c,idx) in o.productOptions" :key="idx">{{c.optionKeyName}}</div> -->
+    </div>
+    </div>
     <select ref="prdtCnt" :value="prdtCnt" @change="prdtQtyCheck">
         <option value="0">0</option>
         <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
     </select>
     <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
     <span @click="removeBtnClick" class="ico_times removeBtn"></span>
+    </div>
   </div>
 </template>
 
@@ -29,9 +34,9 @@ export default {
       for (let oo of o) {
         oo = oo.split('^')
 
-        for (const og of this.cartItem.optionGroups) {
-          for (const po of og.productOptions) {
-            if (oo[0] === po.optionKeyName) {
+        if (this.cartItem.productOptions) {
+          for (const og of this.cartItem.productOptions) {
+            if (oo[0] === og.optionKeyName) {
               this.optionPrice += Number(oo[1])
             }
           }
@@ -58,7 +63,7 @@ export default {
           return this.cartItem.basketQty
         } else {
           let cnt = 0
-          for (const o of this.cartItem.optionGroups) {
+          for (const o of this.cartItem.productOptions) {
             cnt += o.optionQty
           }
           return cnt
@@ -82,7 +87,11 @@ export default {
       //   x.target.value = '0'
       // }
 
-      this.$emit('prdtCntChange', [this.index, this.$refs.prdtCnt.value])
+      if (this.$store.state.isLogin) {
+        this.$emit('prdtCntChange', [this.cartItem.basketSysId, this.index, this.$refs.prdtCnt.value])
+      } else {
+        this.$emit('prdtCntChange', [this.index, this.$refs.prdtCnt.value])
+      }
     }
   }
 }
@@ -97,13 +106,16 @@ export default {
     padding: 15px 12px;
 }
 
+.productEntityWrap .entityBody{
+  margin-left: 80px;
+}
+
 .productEntityWrap img{
   border: 1px solid #eeeeee;
-float: left;
+/* float: left; */
  width: 70px;
  height: 70px;
  margin-right: 10px;
- margin-bottom: 20px;
 }
 
 .productEntityWrap .option{
@@ -147,6 +159,7 @@ float: left;
 .imgBox{
   position: relative;
   user-select: none;
+  float: left;
 }
 
 .productEntityWrap .imgBox .checkBox{
