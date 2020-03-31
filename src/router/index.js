@@ -331,6 +331,21 @@ export default new Router({
       path: '/myQna',
       name: 'myQna',
       component: () => import('@/view/customer/myQna')
+    },
+    {
+      path: '/WriteQna',
+      name: 'WriteQna',
+      component: () => import('@/view/customer/WriteQna')
+    },
+    {
+      path: '/BrandProfile',
+      name: 'BrandProfile',
+      component: () => import('@/view/mypage/BrandProfile')
+    },
+    {
+      path: '/CustomerSearch',
+      name: 'CustomerSearch',
+      component: () => import('@/view/customer/CustomerSearch')
     }
   ]
 })

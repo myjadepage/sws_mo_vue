@@ -59,7 +59,8 @@ button {
   vertical-align: middle;
   font-size: 100%
 }
-input::placeholder { 
+input::placeholder,
+textarea::placeholder { 
   color: #999;
 } 
 label{
@@ -144,6 +145,9 @@ var {
 a,
 button {
   -webkit-tap-highlight-color: rgba(0, 0, 0, .2)
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px inherit inset;
 }
 
 @media (orientation: landscape) {
@@ -2103,13 +2107,13 @@ html, body{
 }
 .itemList .itemBody .itemOption{
     margin-top:5px;
+    margin-bottom:10px;
     font-size:14px;
     color:#666;
 }
 .itemList .itemAmount{
     overflow: hidden;
     width:calc(100% - 80px);
-    margin-top:10px;
     margin-left:80px;
     font-size:0;
 }
@@ -2239,6 +2243,7 @@ html, body{
     margin-top:0;
     padding:10px 0;
     border-top:1px solid #eee;
+    border-bottom:none;
 }
 .itemList .group .item:first-child {
     display:block;
@@ -3571,6 +3576,286 @@ html, body{
   width:67px;
   margin-bottom:25px;
 }
+.prDetail{
+  background:#282a34;
+}
+.prDetail .util{
+  position: relative;
+  height:45px;
+  padding:0 15px 0;
+  font-size:0;
+}
+.prDetail .util .back{
+  display:inline-block;
+  width:16px;
+  height:20px;
+  margin-top:12px;
+  padding:5px;
+  background-repeat:no-repeat;
+  background-position:50%;
+  background-size:16px auto;
+  vertical-align: middle;
+}
+.prDetail .util .tools{
+  display:inline-block;
+  width:calc(100% - 16px);
+  margin-top:12px;
+  font-size:0;
+  text-align: right;
+  vertical-align: middle;
+}
+.prDetail .util .tools button{
+  display:inline-block;
+  width:30px;
+  height:20px;
+  margin:0 12px;
+  vertical-align: middle;
+}
+.prDetail .util .tools .btn_follow{
+  background:url('../img/ico/follow_add.png') 50% 50% / 23px auto no-repeat;
+}
+.prDetail .util .tools .btn_follow .ir_pm:after{
+  content:'팔로우 하기'
+}
+.prDetail .util .tools .btn_follow.ed{
+  background:url('../img/ico/followed.png') 50% 50% / 23px auto no-repeat;
+}
+.prDetail .util .tools .btn_follow.ed .ir_pm:after{
+  content:'팔로우 취소하기'
+}
+
+.prDetail .util .tools .btn_like{
+  background:url('../img/ico/combined.png') 50% 50% / 20px auto no-repeat;
+}
+.prDetail .util .tools .btn_like .ir_pm:after{
+  content:'좋아요 누르기'
+}
+.prDetail .util .tools .btn_like.ed{
+  background:url('../img/ico/ico_like_search.png') 50% 50% / 20px auto no-repeat;
+}
+.prDetail .util .tools .btn_like.ed .ir_pm:after{
+  content:'좋아요 취소하기'
+}
+.prDetail .util .tools .btn_etc{
+  margin-right:0;
+  background:url('../img/ico/ico_more.png') 50% 50% / 3px auto no-repeat;
+}
+.prDetail .util .etc_menu{
+  position: absolute;
+  top:35px;
+  right:12px;
+  display:block;
+  width:150px;
+  padding:7.5px 0;
+  border:1px solid #999;
+  background:#fff;
+}
+.prDetail .util .etc_menu a,
+.prDetail .util .etc_menu button{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0;
+  padding:7.5px;
+  font-size:14px;
+  text-align:left;
+}
+
+.prDetail .pic{
+  padding-bottom:34px;
+  text-align: center;
+}
+.prDetail .pic .imgBox{
+  overflow: hidden;
+  width:100px;
+  height:100px;
+  margin:0 auto;
+  border-radius: 50%;
+}
+.prDetail .pic h2{
+  margin-top:20px;
+  font-size:16px;
+  font-weight:500;
+  color:#fff;
+}
+.prDetail .followInfo{
+  padding:13px 0;
+  font-size:0;
+  text-align: center;
+  color:#fff;
+  background:rgba(255,255,255,0.07)
+}
+.prDetail .followInfo a{
+  display:inline-block;
+  margin:0 15px;
+  font-size:13px;
+  vertical-align: middle;
+  color:inherit;
+}
+.prDetail .profileInfo{
+  padding:15px 12px;
+}
+.prDetail .profileInfo h3{
+  font-size:16px;
+  font-weight:500;
+}
+.hashTags{
+  margin:7.5px 0 12.5px;
+  font-size:0;
+}
+.hashTags li{
+  display:inline-block;
+  margin:2.5px;
+  padding:3px 5px;
+  font-size:13px;
+  color:#666;
+  line-height:1.5;
+  background:#f3f3f3;
+  vertical-align: middle;
+}
+.hashTags li:first-child{
+  margin-left:0;
+}
+.hashTags li:before{
+  content:'#';
+}
+.prDetail .profileInfo p{
+  font-size:13px;
+  color:#666;
+}
+.prDetail .profileInfo p a{
+  color:#0091ff;
+}
+.prList{
+  font-size:0;
+  border-top:5px solid #f3f3f3;
+}
+.prList input[type="radio"]{
+  display:none;
+}
+.prList > label{
+  position: relative;
+  display:inline-block;
+  width:50%;
+  padding:21px 0 9px 0;
+  font-size:16px;
+  text-align: center;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.prList > label:nth-of-type(1){
+  padding-left:12px;
+}
+.prList > label:nth-of-type(2){
+  padding-right:12px;
+}
+.prList > input:checked+label{
+  font-weight:500;
+  color:#e61754;
+}
+.prList > input:checked+label:after{
+  content:'';
+  position: absolute;
+  left:0;
+  bottom:0;
+  display:block;
+  width:100%;
+  height:4px;
+  background:#e61754;
+}
+.prList .tabCont{
+  display:none;
+}
+.prList #btn_movie:checked ~ .cont_movie,
+.prList #btn_prd:checked ~ .cont_product{
+  display:block;
+}
+
+.prList .listTop{
+  overflow: hidden;
+  padding:20px 12px 10px;
+  border-bottom:5px solid #f3f3f3;
+}
+.prList .listTop .count{
+  float:left;
+  font-size:15px;
+  font-weight:500;
+}
+.prList .listTop .sortWrap{
+  float:right;
+  font-size:0;
+}
+.prList .listTop .sortWrap button{
+  display:inline-block;
+  padding:0 8px;
+  font-size:14px;
+  color:#999;
+  vertical-align:middle;
+}
+.prList .listTop .sortWrap button.on{
+  color:#111;
+}
+.prList .listTop .sortWrap .likes{
+  padding-right:0;
+  border-left:1px solid #ccc;
+}
+.prList .list .item{
+  font-size:14px;
+  border-bottom:5px solid #f3f3f3;
+} 
+.prList .list .item .imgBox{
+  position:relative;
+  display:block;
+  width:100%;
+  padding-top:56.3%;
+}
+.prList .list .item .imgBox:after{
+  content:'';
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  display:block;
+  width:58px;
+  height:58px;
+  border-radius: 50%;
+  background:url('../img/ico/btn_play_2.png') 50% 50% / cover no-repeat;
+}
+.prList .list .item .txtBox{
+  padding:15px 12px;
+}
+.prList .list .item .txtBox .description{
+  font-size:15px;
+  font-weight:500;
+}
+.prList .list .item .infoBox{
+  overflow: hidden;
+  margin:7.5px 0 5px;
+}
+.prList .list .item .infoBox .price{
+  float:left;
+  font-size:15px;
+  font-weight:700;
+}
+.prList .list .item .infoBox .stateBox{
+  overflow: hidden;
+  float:right;
+  margin-top:2px;
+  font-size: 12px;
+  color:#999;
+}
+.prList .list .item .infoBox .stateBox p{
+  float:left;
+}
+.prList .list .item .infoBox .stateBox .likes{
+  padding-left:16px;
+  background:url('../img/ico/ico_likes.png') 0 50% / 14px auto no-repeat;
+}
+.prList .list .item .infoBox .stateBox .views{
+  margin-left:27px;
+  padding-left:22px;
+  background:url('../img/ico/ico_views.png') 0 50% / 20px auto no-repeat;
+}
 
 
 
@@ -3971,8 +4256,12 @@ html, body{
   margin-bottom:20px;
   background:#eee;
 }
+.qnaList .item:first-child:before{
+  display:none;
+}
 .qnaList .item:first-child{
   border-top:none;
+  padding-top:20px;
 }
 .qnaList .item h3{
   position: relative;
@@ -3994,12 +4283,44 @@ html, body{
 .qnaList .item p{
   padding-left:14px;
 }
-.qnaList .item h3 span{
+.qnaList .item h3 .num{
   position: absolute;
   left:0;
   top:0;
 }
-
+.qnaList .searchResult{
+  position: relative;
+  padding:20px 12px 10px;
+  font-size:15px;
+  font-weight:500;
+}
+.qnaList .searchResult:after{
+  content:'';
+  position: absolute;
+  left:12px;
+  bottom:0;
+  display:block;
+  width:calc(100% - 24px);
+  height:1px;
+  background:#eee;
+}
+.qnaList .btn_more{
+  display:block;
+  width:calc(100% - 46px);
+  height:44px;
+  margin-bottom:20px;
+  margin-left:23px;
+  border:1px solid #ccc;
+  box-sizing: border-box;
+}
+.qnaList .btn_more:after{
+  content:'';
+  display:inline-block;
+  width:13px;
+  height:8px;
+  margin-left:5px;
+  background:url('../img/ico/arrow_down.png') 50% 50% / cover no-repeat;
+}
 .csCenter dl{
   font-size:0;
 }
@@ -4129,6 +4450,173 @@ html, body{
   color:#666;
 }
 
+
+.qnaForm{
+  padding:10px 12px;
+  border-top:1px solid #eee;
+}
+.qnaForm h2{
+  margin-left:10px;
+  font-size:15px;
+  font-weight:400;
+}
+.qnaForm select{
+  display:block;
+  width:100%;
+  height:40px;
+  border-radius: 2px;
+  border:1px solid #eee;
+  margin:10px 0;
+  padding:0 10px;
+  line-height:38px;
+  box-sizing: border-box;
+  background:url('../img/ico/arrow_down.png') calc(100% - 20px) 50% /13px auto no-repeat;
+}
+.qnaForm .row{
+  font-size:0;
+}
+.qnaForm input[type="text"]{
+  display:inline-block;
+  width: calc(100% - 110px);
+  height:40px;
+  padding:0 10px;
+  border:1px solid #eee;
+  border-radius: 2px;
+  margin-right:10px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.qnaForm .btn_search{
+  display:inline-block;
+  width: 100px;
+  height:40px;
+  border-radius: 2px;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.qnaForm textarea{
+  width:100%;
+  height:150px;
+  margin-top:10px;
+  border:1px solid #eee;
+  border-radius: 2px;
+  padding:10px;
+  box-sizing: border-box;
+  resize:none;
+  font-family: inherit;
+}
+.qnaForm .btnsWrap{
+  margin-top:35px;
+  font-size:0;
+}
+.qnaForm .btnsWrap button{
+  width:calc((100% - 30px) / 2);
+  margin:0 10px;
+}
+.qnaForm .btnsWrap .btn_cancle{
+  margin-right:0;
+}
+.customerBlock .selectPop .modalBody{
+  padding:0 15px;
+}
+.customerBlock .selectPop .item{
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+.customerBlock .selectPop .item:first-child{
+  border-top:1px solid #eee;
+}
+.customerBlock .selectPop .item input{
+  display:none;
+}
+.customerBlock .selectPop .item label{
+  display:block;
+  font-size:0;
+  text-align: left;
+}
+.customerBlock .selectPop .item .row{
+  display:inline-block;
+  width:calc(100% - 30px);
+  vertical-align: middle;
+}
+.customerBlock .selectPop .item .circle{
+  display:inline-block;
+  width:20px;
+  height:20px;
+  margin-left:10px;
+  border:1px solid #e61754;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.customerBlock .selectPop .item input:checked+label .circle:after{
+  content:'';
+  display:inline-block;
+  width:8px;
+  height:8px;
+  margin-top:5px;
+  margin-left:5px;
+  border-radius: 50%;
+  background:#e61754;
+}
+.customerBlock .selectPop .item .date{
+  margin-bottom:3px;
+  font-size:13px;
+  font-weight:500;
+  color:#666;
+}
+.customerBlock .selectPop .item .name{
+  font-size:14px;
+}
+.customerBlock.search .qnsSearchBlock{
+  border-top:1px solid #eee;
+}
+
+
+
+.prList .itemList .itemBody .imgBox{
+  width:100px;
+  height:100px;
+}
+.prList .itemList .itemBody .txtBox{
+  padding-left:110px;
+}
+.prList .itemList .itemAmount{
+  width:calc(100% - 110px);
+  margin-left:110px;
+  margin-top:2px;
+}
+.prList .itemList .row{
+  margin-top:7px;
+  padding-left:110px;
+}
+.prList .itemList .fullRow{
+  clear:both;
+  padding-left:0;
+}
+.prList .itemList .item:first-child{
+  border-top:none;
+}
+
+.prList .emptyBox{
+  padding:80px 0;
+  background:#f3f3f3;
+}
+
+
+.customerBlock .reportBlock{
+  overflow: hidden;
+  font-size:15px;
+}
+.customerBlock .reportBlock p{
+  float:left;
+}
+.customerBlock .reportBlock a{
+  float:right;
+  font-size:13px;
+  text-decoration: underline;
+  line-height:22px;
+}
 
 
 
