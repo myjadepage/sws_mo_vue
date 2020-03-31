@@ -6,7 +6,7 @@
       <qnaSearchBlock />
       <IconBlcok />
     </section>
-    <qnaList />
+    <qnaList :list="list" :pageType="pageType" :keyword="null" />
     <csCenter />
 </div>
 </template>
@@ -22,7 +22,11 @@ import IconBlcok from '@/components/customer/qnaIconBlock'
 export default {
   data () {
     return {
-      title: '고객센터'
+      title: '고객센터',
+      pageType: 'main',
+      list: [
+        'a', 'b', 'c', 'd', 'e'
+      ]
     }
   },
   components: {

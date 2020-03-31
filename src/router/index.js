@@ -1,14 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { store } from '../store/index'
+// import { store } from '../store/index'
 
 Vue.use(Router)
 
 const isAuthUser = (to, from, next) => {
-  console.log('store.state.isLogin', store.state.isLogin)
-  store.dispatch('getUserInfo').then(() => {
-    if (store.state.isLogin === false) {
-      alert('로그인이 필요한 화면입니다.')
+  this.$store.dispatch('getUserInfo').then(() => {
+    if (this.$store.state.isLogin === false) {
+      alert('로그인이 필요한 메뉴입니다.')
       next('/Login')
     } else {
       next()
@@ -331,6 +330,21 @@ export default new Router({
       path: '/myQna',
       name: 'myQna',
       component: () => import('@/view/customer/myQna')
+    },
+    {
+      path: '/WriteQna',
+      name: 'WriteQna',
+      component: () => import('@/view/customer/WriteQna')
+    },
+    {
+      path: '/BrandProfile',
+      name: 'BrandProfile',
+      component: () => import('@/view/mypage/BrandProfile')
+    },
+    {
+      path: '/CustomerSearch',
+      name: 'CustomerSearch',
+      component: () => import('@/view/customer/CustomerSearch')
     }
   ]
 })

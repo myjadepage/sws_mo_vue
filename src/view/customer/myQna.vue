@@ -19,6 +19,18 @@ export default {
       list: [
         {
           viewAble: false
+        },
+        {
+          viewAble: false
+        },
+        {
+          viewAble: false
+        },
+        {
+          viewAble: false
+        },
+        {
+          viewAble: false
         }
       ]
     }
