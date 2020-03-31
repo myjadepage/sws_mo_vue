@@ -3587,18 +3587,19 @@ html, body{
 }
 .prDetail .util .back{
   display:inline-block;
-  width:16px;
-  height:20px;
-  margin-top:12px;
+  width:27px;
+  height:23px;
+  margin-top:11px;
   padding:5px;
   background-repeat:no-repeat;
   background-position:50%;
-  background-size:16px auto;
+  background-size:17px auto;
   vertical-align: middle;
+  background-image:url('../img/ico/back_arrow_w.png');
 }
 .prDetail .util .tools{
   display:inline-block;
-  width:calc(100% - 16px);
+  width:calc(100% - 27px);
   margin-top:12px;
   font-size:0;
   text-align: right;
