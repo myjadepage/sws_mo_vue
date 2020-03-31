@@ -73,7 +73,7 @@ function payOrders (jsonData, orderSysId) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -223,7 +223,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/join`, formdata)
+  return axios.post(`${config.baseUrl2}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -234,7 +234,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/login`, formdata)
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
 
 // 본인인증결과

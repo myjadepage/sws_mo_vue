@@ -1105,19 +1105,28 @@ Mypage > Main
   height: 65px;
   background: url('../img/ico/ico_member.png');
   background-size: 100%;
-  margin-top: 10px;
   margin-right: 15px;
-  float: left;
 }
 
 .myInfoWrap .infoHeader{
+  overflow: hidden;
+  width:100%;
   height: 120px;
-  padding:28px 22px 0px;
+  padding:24px 22px 0px;
   color: white;
   background-color: #282a34;
+  box-sizing: border-box;
+}
+.myInfoWrap .profile_pic,
+.myInfoWrap .profile_text{
+  float:left;
+}
+.myInfoWrap .profile_pic{
+  position: relative;
 }
 
 .myInfoWrap .profile_id{
+  margin-top:10px;
   font-size: 16px;
   font-weight: 500;
 }
@@ -1142,12 +1151,12 @@ Mypage > Main
 }
 
 .myInfoWrap .ico_edit{
+  position: absolute;
+  top:44px;
+  left:50px;
   display: inline-block;
   width: 22px;
   height: 22px;
-  position: relative;
-  left: -30px;
-  top: -15px;
   background: url('../img/ico/ico_edit.png');
   background-size: 100%;
   cursor: pointer;
@@ -1167,6 +1176,7 @@ Mypage > Main
   
 .myOptionBarWrap{
   /* height:  */
+  overflow: hidden;
   padding: 17px 17px 0;
   margin-top: 1px;
   background: #282a34;

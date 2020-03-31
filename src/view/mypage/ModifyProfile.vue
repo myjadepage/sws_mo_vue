@@ -2,7 +2,6 @@
   <div class="mainPageWrap">
   <Bar :val="title" />
   <Modify />
-
   </div>
 </template>
 

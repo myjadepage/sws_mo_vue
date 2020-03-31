@@ -4,11 +4,11 @@
       <div class="profilePic">
         <div class="picBox">
           <!-- 디폴트 이미지는 prImage에 default 클래스 추가 -->
-          <span class="prImage" ></span>
+          <span class="prImage" :style="{backgroundImage:'url('+member.profileImgUrloptional+')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}" ></span>
           <input type="file" name="newPic" id="newPic" />
           <label for="newPic" class="btnModifyPic">프로필 사진 바꾸기</label>
         </div>
-        <h2>SOOYEON_JUNG</h2>
+        <h2>{{member.id}}</h2>
       </div>
 
       <div class="profileInfo">
@@ -26,7 +26,7 @@
         </div>
         <div class="row">
           <label for="userPhone">휴대폰</label>
-          <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678." v-model="member.phone" />
+          <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678" v-model="member.phone" />
         </div>
         <div class="row">
           <label for="userMail">이메일</label>
@@ -52,19 +52,49 @@
 </template>
 
 <script>
+import { getUserInfo } from '@/api/index.js'
+
 export default {
   data () {
     return {
       member: {
-        id: 'SOOYEON_JUNG',
-        name: '뷰티크루_수연',
-        gender: '여',
-        birthDay: '2020.02.02',
-        phone: '010-1234-1234',
-        mail: 'sws@sws.co.kr',
-        nickName: '슬픈사슴',
-        intro: ''
+        id: '',
+        name: '',
+        gender: '',
+        birthDay: '',
+        phone: '',
+        mail: '',
+        nickName: '',
+        intro: '',
+        profileImgUrloptional: '/static/images/ico_member.png'
       }
+    }
+  },
+  created () {
+    console.log(sessionStorage.getItem('accessToken'))
+    if (sessionStorage.getItem('accessToken')) {
+      getUserInfo(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          this.member.name = res.data.jsonData.name
+          if (res.data.jsonData.genderCode === 1) {
+            this.member.gender = '남'
+          } else if (res.data.jsonData.genderCode === 2) {
+            this.member.gender = '여'
+          }
+          this.member.birthDay = res.data.jsonData.birthday
+          this.member.phone = res.data.jsonData.mobile
+          this.member.mail = res.data.jsonData.email
+          this.member.id = res.data.jsonData.userId
+          this.member.nickName = res.data.jsonData.nickName
+          this.member.intro = res.data.jsonData.profile
+
+          if (res.data.jsonData.profileImgUrloptional) {
+            this.member.profileImgUrloptional = res.data.jsonData.profileImgUrloptional
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

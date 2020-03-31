@@ -2,19 +2,18 @@
   <div class="myInfoWrap">
     <div class="infoHeader">
       <div class="profile_pic">
-      <div class="profile_img"></div>
+        <div class="profile_img" :style="{backgroundImage:'url('+member.profileImgUrloptional+')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}"></div>
+        <router-link to="/modifyProfile" class="ico_edit"></router-link>
       </div>
       <div class="profile_text">
-        <br>
-      <div class="profile_id">{{member.id}}</div>
-      <div class="profile_name">{{member.name}}</div>
+        <div class="profile_id">{{member.id}}</div>
+        <div class="profile_name">{{member.nickName}}</div>
       </div>
-      <router-link to="/modifyProfile" class="ico_edit"></router-link>
     </div>
     <div class="infoFooter">
-        <router-link to="/Follower">팔로워 <span class="follower">{{formatFollwer(member.follower)}}</span></router-link>
+        <router-link to="/Follower">팔로워 <span class="follower">{{formatFollwer(follower)}}</span></router-link>
         <span class="dot">·</span>
-        <router-link to="/Following">팔로잉 <span class="following">{{formatFollwer(member.following)}}</span></router-link>
+        <router-link to="/Following">팔로잉 <span class="following">{{formatFollwer(following)}}</span></router-link>
         <span class="dot">·</span>
         <router-link to="/MyPoint">포인트 <span class="point">{{formatPoint}}</span></router-link>
     </div>
@@ -23,15 +22,12 @@
 
 <script>
 export default {
+  props: ['member'],
   data () {
     return {
-      member: {
-        id: 'SOOYEON_JUNG',
-        name: '뷰티크루_수연',
-        follower: 800,
-        following: 1500,
-        point: 1
-      }
+      follower: 800,
+      following: 1500,
+      point: 1000
     }
   },
   methods: {
@@ -47,7 +43,7 @@ export default {
   },
   computed: {
     formatPoint () {
-      return this.member.point.toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      return this.point.toString().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 }
