@@ -33,10 +33,60 @@
 
 <script>
 export default {
+  created () {
+    for (let i = 0; i < this.cartList.length; i++) {
+      const cartItem = this.cartList[i]
+      const product = this.products[i]
+
+      if (this.selectedItem[i] === false) {
+        continue
+      }
+
+      let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
+
+      let cnt = 0
+      if (cartItem.basketQty) {
+        cnt += cartItem.basketQty
+      } else {
+        for (const o of cartItem.productOptions) {
+          cnt += o.optionQty
+        }
+      }
+
+      this.price += prdtPrice * cnt
+    }
+  },
+
   props: ['products', 'selectedItem', 'cartList'],
   data () {
     return {
+      price: 0
+    }
+  },
+  watch: {
+    products () {
+      this.price = 0
+      for (let i = 0; i < this.cartList.length; i++) {
+        const cartItem = this.cartList[i]
+        const product = this.products[i]
 
+        if (this.selectedItem[i] === false) {
+          continue
+        }
+
+        let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
+
+        let cnt = 0
+        if (cartItem.basketQty) {
+          cnt += cartItem.basketQty
+        } else {
+          for (const o of cartItem.productOptions) {
+            cnt += o.optionQty
+          }
+        }
+
+        this.price += prdtPrice * cnt
+      }
     }
   },
   methods: {
@@ -45,36 +95,30 @@ export default {
     }
   },
   computed: {
-    price () {
+    deliveryPrice () {
       let price = 0
-
-      for (let i = 0; i < this.cartList.length; i++) {
-        const cartItem = this.cartList[i]
+      for (let i = 0; i < this.products.length; i++) {
         const product = this.products[i]
         if (this.selectedItem[i] === false) {
           continue
         }
 
-        let cnt = 0
-        if (cartItem.basketQty) {
-          cnt += cartItem.basketQty
-        } else {
-          for (const o of cartItem.optionGroups) {
-            cnt += o.optionQty
-          }
+        switch (product.deliveryPriceTypeCode) {
+          case 1: price += 0
+            break
+          case 2: price += this.product.debitAmount
+            break
+          case 3: price += this.product.prepaymentAmount
+            break
+          case 4: price += 2500
+            break
+          case 5: price += 2500
+            break
+          default: price += 2500
+            break
         }
-
-        price += (product.price - (product.price * product.discountRate)) * cnt + this.$store.getters.getCartItemOptionPrices[i]
       }
-
       return price
-    },
-    deliveryPrice () {
-      let cnt = 0
-      for (const s of this.selectedItem) {
-        if (s)cnt++
-      }
-      return 2500 * cnt
     }
   }
 }
@@ -171,7 +215,6 @@ export default {
 .payInfoWrap .infoFooter{
   position:  relative;
   bottom: 0;
-  width: 100%;
 padding: 15px 12px;
 color: #666666;
 background-color: #f3f3f3;

@@ -32,10 +32,12 @@ export default {
         this.$emit('buyModeClick')
       } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
         if (this.$store.state.isLogin) {
-          sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-          sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
+          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
+          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
           this.$router.push('/BuyProduct')
         } else {
+          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
+          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
           this.$router.push('/Login')
         }
       }
@@ -83,24 +85,14 @@ export default {
 
         if (this.$store.state.isLogin) {
         // 회원 장바구니 등록
-          getCartItem(sessionStorage.getItem('accessToken'))
+          console.log(cartItem)
+
+          postCartItem(sessionStorage.getItem('accessToken'), cartItem)
             .then(res => {
-              for (const b of res.data.jsonData.baskets) {
-                // let compare = {
-                //   prdtSysId: b.prdtSysId,
-                //   basketQty: b.basketQty,
-                //   isOptionNormal: b.isOptionNormal,
-                //   isAddingProduct: b.isAddingProduct,
-                //   productOptions: b.productOptions
-                // }
-
-                // if (isEquals(compare, cartItem)) {
-                //   console.log('중복')
-                // }
-                console.log(b, cartItem)
+              console.log(res)
+              if (res.data.jsonData.resultCode === '0001') {
+                this.$emit('addedCartItem')
               }
-
-              // console.log(res.data.jsonData.baskets)
             })
             .catch(err => {
               if (err.response.status === 401) {
@@ -116,25 +108,6 @@ export default {
                   })
               }
             })
-
-          // postCartItem(sessionStorage.getItem('accessToken'), cartItem)
-          //   .then(res => {
-          //     console.log(res)
-          //   })
-          //   .catch(err => {
-          //     if (err.response.status === 401) {
-          //       getAccessToken(sessionStorage.getItem('refreshToken'))
-          //         .then(res => {
-          //           sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-          //         })
-          //         .catch(err => {
-          //           if (err.response.status === 401) {
-          //             this.$store.dispatch('logOut')
-          //             this.$router.push('/Login')
-          //           }
-          //         })
-          //     }
-          //   })
         } else {
           // 비회원 장바구니 등록
 
@@ -143,18 +116,18 @@ export default {
           if (cartList) {
             cartList = JSON.parse(cartList)
 
-            for (const p of cartList) { // 중복 체크
-              if (isEquals(p, cartItem)) {
-                return
-              }
-            }
+            // for (const p of cartList) { // 중복 체크
+            //   if (isEquals(p, cartItem)) {
+            //     return
+            //   }
+            // }
             cartList.push(cartItem)
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {
             sessionStorage.setItem('nonMemberCartList', JSON.stringify([cartItem]))
           }
+          this.$emit('addedCartItem')
         }
-        this.$emit('addedCartItem')
       }
     }
 
