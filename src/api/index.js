@@ -47,7 +47,7 @@ function getLiveProductList () {
  * 라이브 방송정보
  */
 function getLiveProduct (broadcastSysId) {
-  return axios.get(`${config.baseUrl2}broadcasts/${broadcastSysId}/medialists`)
+  return axios.get(`${config.baseUrl}broadcasts/${broadcastSysId}/medialists`)
 }
 
 /*
