@@ -11,11 +11,13 @@
     <ul class="userList">
 
       <li class="item" v-for="(user, index) in users" :key="user.id" v-if="user.id.includes(keyword)" >
-        <div class="proPic" :style="{ backgroundImage: `url('${user.profile}')`, backgroundSize: 'cover' }" ></div>
-        <div class="center">
-          <p class="userId">{{user.id}}</p>
-          <p class="userNick">{{user.nick}}</p>
-        </div>
+        <router-link to="/BrandProfile">
+          <div class="proPic" :style="{ backgroundImage: `url('${user.profile}')`, backgroundSize: 'cover' }" ></div>
+          <div class="center">
+            <p class="userId">{{user.id}}</p>
+            <p class="userNick">{{user.nick}}</p>
+          </div>
+        </router-link>
         <button class="btn_follow border btn_them" :class="{'gray':user.state}" @click="follow(index)" v-if="phase==='following'" >{{user.state ? '팔로잉' : '팔로우' }}</button>
         <button class="btn_follow border btn_them gray" @click="select(index)" v-if="phase==='follower'" >삭제</button>
       </li>

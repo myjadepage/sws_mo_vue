@@ -1,5 +1,5 @@
 <template>
-  <div class="itemList" :class="{'recent': type==='basket', 'modifyMode':modifyMode}" >
+  <div class="itemList" :class="{'recent': type==='basket' || type==='brand', 'modifyMode':modifyMode}" >
     <div class="listHead" v-if="type==='basket'" >
       <div class="nor">
         <p>전체 (50개)</p>
@@ -16,7 +16,7 @@
         </div>
         <div class="modi">
           <button class="remove" @click="basketDeleteModalShow">삭제</button>
-          <button class="cancle" @click="modifyMode = false">취소</button>
+          <!-- <button class="cancle" @click="modifyMode = false">취소</button> -->
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
           </div>
           <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호 + 클렌징 오일 정품 50ml 추가증정</h2>
-            <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
+            <p class="itemOption" v-if="type!='basket'">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더</p>
           </router-link>
           <div class="itemAmount"  v-if="type!='exchange' && type!='review'">
             <p class="sale" v-if="type==='basket'">25</p>
@@ -100,7 +100,7 @@
           </div>
           <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
-            <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
+            <p class="itemOption" v-if="type!='basket'">[옵션명1] LRS200007G 작은원석</p>
           </router-link>
           <div class="itemAmount"  v-if="type!='exchange' && type!='review'">
             <p class="price">32,500원</p>
@@ -332,7 +332,7 @@ export default {
   data () {
     return {
       type: this.pageType,
-      modifyMode: false,
+      modifyMode: true,
       itemGroupFlag: {
         group1: false,
         group2: false

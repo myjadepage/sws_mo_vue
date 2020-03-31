@@ -11,7 +11,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_01.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>매일매일, 싱그러움을 입다</h5>
               <p>당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디솝을 만나보세요.</p>
@@ -31,7 +31,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_02.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>감성을 깨우는 컬러로 일상을 특별한 SCENE으로</h5>
               <p>당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디솝을 만나보세요.</p>
@@ -51,7 +51,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_03.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>사계절을 그대로 담은</h5>
               <p>당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디솝을 만나보세요.</p>
@@ -71,7 +71,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_04.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>역사가 담긴 빈티지함</h5>
               <p>프랑스를 대표하는 토탈 라이프스타일 브랜드 '벤시몽'<br/>그 컬러풀한 패션&amp;홈데코 아이템에 반하다.</p>
@@ -91,7 +91,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_05.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>감성을 깨우는 컬러로 일상을 특별한 SCENE으로</h5>
               <p>당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디솝을 만나보세요.</p>
@@ -111,7 +111,7 @@
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_06.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>시그니처 네일_시럽하트</h5>
               <p>당신의 삶의 질을 높여 줄 착한 성분으로 더 예쁜 바디솝을 만나보세요.</p>
