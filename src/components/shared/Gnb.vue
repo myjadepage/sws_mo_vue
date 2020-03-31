@@ -79,6 +79,7 @@ export default {
 }
 .common-header-gnb-main.fixed{
   position:fixed;
+  width:100%;
   left:0;
   top:0;
   z-index:200;

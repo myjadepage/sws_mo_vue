@@ -1924,6 +1924,7 @@ html, body{
     color:#e61754;
 }
 
+
 .detailPayWrap .payBody .underline.dark{
     border-bottom:1px solid #000;
 }
@@ -2365,6 +2366,11 @@ html, body{
     background:#fff;
     box-sizing: border-box;
 }
+.compBorderBlock,
+.compBlock.compBorderBlock{
+  margin:0;
+  border-bottom:5px solid #eee;
+}
 
 .compBlock h2{
     margin-bottom:10px;
@@ -2398,15 +2404,16 @@ html, body{
   -moz-transform:translate(-50%, -50%);
 }
 .modalBg .modalHeader{
-  margin:14px 0;
+  height:50px;
   font-size:16px;
   font-size:500;
   color:#111;
   text-align:center;
+  line-height:50px;
 }
 .modalBg .modalBody{
   margin-bottom:30px;
-  padding:0 15px;
+  padding:10px 0 0;
   font-size:15px;
   color:#111;
   text-align:center;
@@ -2514,6 +2521,45 @@ html, body{
 }
 .fullHeight.withdraw .longTextBox{
   height:calc(100% - 193px);
+}
+
+
+
+.switchBtn input{
+  display:none;
+}
+.switchBtn label{
+  display:inline-block;
+  width:44px;
+  height:22px;
+  padding:2px;
+  background:#ccc;
+  border-radius: 11px;
+  box-sizing: border-box;
+  -webkit-transition:background-color 0.3s ease;
+  -moz-transition:background-color 0.3s ease;
+  transition:background-color 0.3s ease;
+}
+.switchBtn label:after{
+  content:'';
+  display:inline-block;
+  width:18px;
+  height:18px;
+  border-radius: 50%;
+  background:#fff;
+  transform: translateX(0);
+  -webkit-transition:transform 0.3s ease;
+  -moz-transition:transform 0.3s ease;
+  transition:transform 0.3s ease;
+}
+.switchBtn input:checked+label{
+  background:#e61754;
+}
+.switchBtn input:checked+label:after{
+  transform: translateX(22px);
+}
+.emptyHeight{
+  height:100%;
 }
 
 
@@ -3411,6 +3457,120 @@ html, body{
   background:#e61754;
 }
 
+.lookUp .btnsWrap{
+  font-size:0;
+}
+.lookUp .btnsWrap button{
+  width:calc((100% - 45px) / 5);
+  height:26px;
+  margin-left:9px;
+  line-height:24px;
+  font-size:13px;
+}
+.lookUp .btnsWrap button:first-child{
+  margin-left:0;
+}
+.lookUp p{
+  margin-top:25px;
+  font-size:15px;
+  color:#666;
+}
+.lookUp span{
+  margin-left:2px;
+  color:#111;
+  font-weight:500;
+}
+
+.pointList{
+  margin-bottom:0;
+  padding:0;
+  font-size:0;
+}
+.pointList input[type="radio"]{
+  display:none;
+}
+.pointList label{
+  position: relative;
+  display:inline-block;
+  width:calc(100% / 3);
+  height:42px;
+  padding-top:10px;
+  font-size:16px;
+  line-height:42px;
+  text-align: center;
+  vertical-align: middle;
+  background:#fff;
+}
+.pointList input:checked+label{
+  color:#e61754;
+  font-weight:500;
+}
+.pointList input:checked+label:after{
+  content:'';
+  position: absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:4px;
+  background:#e61754;
+}
+.pointList input#all:checked~.all_list,
+.pointList input#save:checked~.save_list,
+.pointList input#use:checked~.use_list{
+  display:block;
+}
+.pointList .list{
+  display:none;
+  padding:0 12px;
+  border-top:1px solid #eee;
+}
+.pointList .list .item{
+  overflow: hidden;
+  padding:15px 0;
+  border-bottom:1px solid #eee;
+}
+.pointList .list .txt{
+  display:inline-block;
+  width:71%;
+  font-size:14px;
+  vertical-align: middle;
+}
+.pointList .list .date,
+.pointList .point .desc{
+  font-size:12px;
+  color:#999;
+}
+.pointList .list .point{
+  display:inline-block;
+  width:29%;
+  font-size:18px;
+  text-align: right;
+  vertical-align: middle;
+  line-height:1;
+}
+.pointList.empty{
+  height:calc(100% - 373px);
+}
+.pointList .list.emptyBox{
+  position: relative;
+  height:calc(100% - 52px);
+  padding:0;
+  border-top:none;
+  color:#666;
+  text-align: center;
+  background:#f3f3f3;
+}
+.pointList .list.emptyBox .emptyItem{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  font-size:14px;
+}
+.pointList .list.emptyBox img{
+  width:67px;
+  margin-bottom:25px;
+}
 
 
 
@@ -3500,4 +3660,464 @@ html, body{
 
 /* *******              ******* */
 /* *******  !!cart!!  ******* */
+/* *******              ******* */
+
+
+
+
+
+/* *******              ******* */
+/* *******    편성표     ******* */
+/* *******              ******* */
+
+.calendarBlock{
+  min-width:100%;
+  background:#f3f3f3;
+}
+.dateList{
+  width:100%;
+  height:75px;
+  background:#fff;
+  font-size:0;
+  border-top:1px solid #f3f3f3;
+}
+.dateList .item{
+  position: relative;
+  display:inline-block;
+  width:calc(100% / 7);
+  height:100%;
+  font-size:16px;
+  vertical-align: middle;
+  text-align: center;
+}
+.dateList .item a{
+  display:block;
+  height:100%;
+  color:inherit;
+}
+.dateList .item p{
+  padding-top:10px;
+  line-height:26px;
+}
+.dateList .item.on{
+  color:#e61754;
+}
+.dateList .item.on:after{
+  content:'';
+  position: absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:5px;
+  background:#e61754;
+}
+
+.liveListWrap{
+  padding-bottom:20px;
+}
+.liveListContain{
+  text-align: center;
+}
+.liveListContain > h3{
+  display:inline-block;
+  margin:30px auto 5px auto;
+  padding:7px 20px 9px 36px;
+  color:#fff;
+  font-size:13px;
+  font-weight:500;
+  border-radius: 5px;
+  line-height:1;
+  background:#000 url('../img/ico/clock_w.png') 15px 6px / 16px auto no-repeat;
+}
+.liveList .item{
+  margin:5px 0;
+  padding:15px 12px;
+  text-align: left;
+  background:#fff;
+}
+.liveList .itemTop{
+  overflow: hidden;
+  margin-bottom:15px;
+}
+.liveList .thumBox{
+  position: relative;
+  float:left;
+  width:160px;
+  height:90px;
+  margin-right:15px;
+}
+.liveList .thumBox.onair:before{
+  content:'Onair';
+  position: absolute;
+  top:0;
+  left:0;
+  display:inline-block;
+  width:39px;
+  height:20px;
+  background:#e61754;
+  color:#fff;
+  font-size:11px;
+  line-height:20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.liveList .thumBox a{
+  display:block;
+  width:100%;
+  height:100%;
+}
+.liveList .rightBox{
+  overflow: hidden;
+  float:left;
+  width:calc(100% - 175px);
+}
+.liveList .rightBox .txt{
+  float:left;
+  font-size:14px;
+}
+.liveList .rightBox .switchBtn{
+  float:right;
+  margin-bottom:18px;
+}
+.liveList .rightBox .picsSlider{
+  clear:both;
+  width:100%;
+  height:50px;
+
+}
+.liveList .rightBox .swiper-slide{
+  width:50px;
+  height:50px;
+  border-radius: 6px;
+  border:1px solid rgba(0,0,0,0.05);
+}
+.liveList .itemBot h4,
+.liveList .itemBot p{
+  overflow: hidden;
+  width:100%;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  word-wrap:normal;
+}
+.liveList .itemBot .info{
+  margin-top:15px;
+  font-size:12px;
+  color:#999;
+}
+.liveList .switchBtn input:checked+label{
+  background:#408ef7;
+}
+
+.liveAlarmSet{
+  position: fixed;
+  top:50%;
+  left:50%;
+  z-index:120;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.7);
+  opacity:0;
+  color:#fff;
+  transform:translate(-50%, -50%);
+  transition:opacity 0.3s ease;
+  text-align:center;
+}
+.liveAlarmSet.on{
+  background:rgba(230, 23, 84, 0.9);
+}
+.liveAlarmSet.ani{
+  opacity:1;
+}
+.liveAlarmSet img{
+  width:47px;
+  margin-bottom:10px;
+  margin-top:25px;
+}
+
+
+
+
+
+.btn_floatGlobal{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:101;
+  display:block;
+  width:60px;
+  height:60px;
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px 2px rgba(0,0,0,0.15);
+  background:#fff url('../img/ico/calendar.png') 50% 50% / 26px auto no-repeat;
+}
+
+
+
+
+
+
+
+
+/* *******              ******* */
+/* *******  !!편성표!!   ******* */
+/* *******              ******* */
+
+
+
+
+/* *******              ******* */
+/* *******   고객센터    ******* */
+/* *******              ******* */
+
+.qnaBtns{
+  overflow: hidden;
+  border-top:1px solid #eee;
+}
+.qnaBtns a{
+  float:left;
+  display:block;
+  width:50%;
+  height:110px;
+  text-align: center;
+}
+.qnaBtns img{
+  display:block;
+  margin:32px auto 11px;
+}
+.qnaBtns .myQna img{
+  width:20px;
+}
+.qnaBtns .writeQna img{
+  width:28px;
+}
+
+
+.searchBox form{
+  height:100%;
+}
+.qnsSearchBlock h2{
+  padding-bottom:0;
+  border-bottom:none;
+}
+.searchBox input[type="text"]{
+  width:calc(100% - 50px);
+  height:100%;
+  padding:0 10px;
+  border:none;
+  border-radius: 8px 0 0 8px;
+  box-sizing: border-box;
+}
+.searchBox .btn_search{
+  width:50px;
+  height:100%;
+  border-radius: 0 8px 8px 0;
+  text-align: center;
+}
+.searchBox .btn_search img{
+  width:21px;
+}
+.qnsSearchBlock .iconBox{
+  margin-top:15px;
+  padding:20px 12px;
+  font-size:0;
+}
+.qnsSearchBlock .iconBox a{
+  position: relative;
+  display:inline-block;
+  width:calc(100% / 3);
+  height:60px;
+  font-size:13px;
+  text-align: center;
+  vertical-align: middle;
+}
+.qnsSearchBlock .iconBox a:nth-child(n+4){
+  margin-top:20px;
+}
+.qnsSearchBlock .iconBox img{
+  display:block;
+  margin:0 auto;
+  padding:9px 0 0;
+}
+.qnsSearchBlock .iconBox a span{
+  position: absolute;
+  left:0;
+  bottom:0;
+  display:block;
+  width:100%;
+}
+.qnsSearchBlock .iconBox .w25{width:25px;}
+.qnsSearchBlock .iconBox .w27{width:27px;}
+.qnsSearchBlock .iconBox .w29{width:29px;}
+.qnsSearchBlock .iconBox .w30{width:30px;}
+.qnsSearchBlock .iconBox .w31{width:31px;}
+.qnsSearchBlock .iconBox .w32{width:32px;}
+
+
+
+.qnaList.compBlock{
+  padding:0;
+}
+.qnaList .item{
+  padding:0 12px 20px 12px;
+  background:#fff;
+  transition:background-color 0.3s ease;
+}
+.qnaList .item:before{
+  content:'';
+  display:block;
+  width:100%;
+  height:1px;
+  margin-bottom:20px;
+  background:#eee;
+}
+.qnaList .item:first-child{
+  border-top:none;
+}
+.qnaList .item h3{
+  position: relative;
+  font-size:15px;
+  font-weight:400;
+}
+.qnaList .item .answer{
+  display:none;
+  margin-top:20px;
+  font-size:15px;
+  font-weight:400;
+}
+.qnaList .item .answer h4{
+  font-size:15px;
+  font-weight:500;
+}
+.qnaList .item h3,
+.qnaList .item h4,
+.qnaList .item p{
+  padding-left:14px;
+}
+.qnaList .item h3 span{
+  position: absolute;
+  left:0;
+  top:0;
+}
+
+.csCenter dl{
+  font-size:0;
+}
+.csCenter dt{
+  display:inline-block;
+  width:60px;
+  font-size:15px;
+  font-weight:500;
+  color:#666;
+  vertical-align: top;
+}
+.csCenter dd{
+  overflow: hidden;
+  display:inline-block;
+  width:calc(100% - 70px);
+  margin-left:10px;
+  font-size:15px;
+  vertical-align: top;
+}
+.csCenter .roboto{
+  font-family: 'Roboto';
+  font-weight:500;
+}
+.csCenter dd a{
+  float:right;
+  font-family: 'Noto Sans KR';
+  font-size:13px;
+  text-decoration: underline;
+  color:#e61754;
+}
+
+
+.questionList{
+  border-top:1px solid #eee;
+}
+.questionList .item{
+  padding:15px 12px;
+}
+.questionList .item button{
+  display:block;
+  width:100%;
+  margin-bottom:15px;
+  text-align:left;
+}
+.questionList .item .date{
+  font-size:13px;
+  color:#666;
+}
+.questionList .item .date span{
+  color:#111;
+}
+.questionList .item .row{
+  overflow: hidden;
+  width:100%;
+  margin-top:3px;
+}
+.questionList .item h3{
+  float:left;
+  width:calc(100% - 67px);
+  font-size:14px;
+  font-weight:400;
+}
+.questionList .item .state{
+  float:right;
+  margin-left:15px;
+  font-weight:500;
+}
+.questionList .item .state.open{
+  float:none;
+  clear:both;
+  display:block;
+  margin-top:7px;
+  margin-left:0;
+  font-size:15px;
+}
+.questionList .item .state.open+h3{
+  width:100%;
+}
+.questionList .item .state.yet:after{
+  content:'답변대기'
+}
+.questionList .item .state.fin:after{
+  content:'답변완료'
+}
+.questionList .item .state.open:after{
+  content:'상품문의'
+}
+.questionList .orderInfo{
+  overflow: hidden;
+  margin-bottom:20px;
+}
+.questionList .orderInfo .imgBox{
+  float:left;
+  width:50px;
+  height:50px;
+  margin-right:5px;
+  border:1px solid #eee;
+  box-sizing: border-box;
+}
+.questionList .orderInfo .txtBox{
+  float:left;
+  width:calc(100% - 55px);
+}
+.questionList .orderInfo .txtBox .orderNumb{
+  font-size:13px;
+  font-weight:500;
+  color:#666;
+}
+.questionList .orderInfo .txtBox .orderName{
+  margin-top:3px;
+  font-size:13px;
+  color:#666;
+}
+
+
+
+
+
+/* *******              ******* */
+/* ******* !!고객센터!!  ******* */
 /* *******              ******* */

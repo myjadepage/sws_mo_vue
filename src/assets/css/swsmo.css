@@ -239,7 +239,7 @@
     padding: 0 12px 15px;
     font-size: 24px;
 }
-.live_slide h4>span {
+.live_slide h4>a {
     float: right;
     padding-top: 5px;
     font-size: 15px;
@@ -374,12 +374,34 @@
   border-radius:50%;
   background:rgba(255,255,255,0.9);
   box-shadow:0 2px 2px 0 rgba(0,0,0,0.1);
+  animation:btn_ani 2s ease alternate infinite;
 }
 .weekly_best_main .img_box .txtBox .btn_movie img{
+  position: absolute;
+  top:12px;
+  left:16px;
   width:13px;
-  margin-top:12px;
-  margin-left:16px;
+  transform-origin: 5px 50%;
+  animation:btn_ani2 2s ease alternate infinite;
 }
+
+@keyframes btn_ani{
+  0%{
+    transform:translate(0);
+  }
+  100%{
+    transform:translate(-100%);
+  }
+}
+@keyframes btn_ani2{
+  0%{
+    transform:rotate(0);
+  }
+  100%{
+    transform:rotate(-360deg);
+  }
+}
+
 .weekly_best_main .link_goods > .txtBox{
   width:calc(100% - 12px);
   margin-left:12px;
@@ -664,6 +686,15 @@
 }
 
 /* 상세 라이브 */
+
+
+
+
+
+
+
+
+
 
 /* 플레이어 커스텀 */
   

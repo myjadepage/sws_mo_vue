@@ -1,7 +1,7 @@
 <template>
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
-  <ExchangeEmpty :param="title" v-if="products.length === 0"  />
+  <EmptyBlock :param="emptyMessage" v-if="products.length === 0"  />
   <ExchangeList v-bind:pageType="pageType" v-if="products.length > 0"  />
 
   </div>
@@ -10,12 +10,13 @@
 <script>
 import Bar from '@/components/shared/Bar'
 import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
-import ExchangeEmpty from '@/components/mypage/Exchange/ExchangeEmpty'
+import EmptyBlock from '@/components/shared/EmptyBlock'
 
 export default {
   data () {
     return {
       title: '취소/교환/반품',
+      emptyMessage: '취소/교환/반품이 없습니다',
       pageType: 'exchange',
       products: [
         'a', 'b'
@@ -23,7 +24,7 @@ export default {
     }
   },
   components: {
-    Bar, ExchangeList, ExchangeEmpty
+    Bar, ExchangeList, EmptyBlock
   }
 }
 </script>

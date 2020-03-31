@@ -4,7 +4,7 @@
       <span @click="cartBtnClick" v-if="cartCnt" class="cartBadge">{{cartCnt}}</span>
     </span>
     <router-link to="/MypageSetting" class="settingBtn"></router-link>
-    <span class="qaBtn"></span>
+    <router-link to="/CustomerMain"><span class="qaBtn"></span></router-link>
   </div>
 </template>
 

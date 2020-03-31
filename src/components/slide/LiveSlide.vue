@@ -1,6 +1,6 @@
 <template>
   <div class="live_slide">
-      <h4>Live <span>라이브 편성표 > </span></h4>
+      <h4>Live <router-link to="Calendar">라이브 편성표 ></router-link></h4>
       <swiper :options="swiperOption">
         <!-- live 시에 item에 클래스만 붙여주면 됩니다. -->
         <swiper-slide class="item live" v-for="item in items" :key="item.broadcastSysId">
