@@ -4,8 +4,8 @@ const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http:///api.shallwe.shop/api/v1/',
-  // baseUrl: 'http://shallwe.shop:3000/api/v1/' // 개발
-  baseUrl: 'http://shallwe.shop/api/v1/' // 배포
+  baseUrl: 'http://shallwe.shop:3000/api/v1/' // 개발
+  // baseUrl: 'http://shallwe.shop/api/v1/' // 배포
 }
 
 /**
@@ -47,7 +47,7 @@ function getLiveProductList () {
  * 라이브 방송정보
  */
 function getLiveProduct (broadcastSysId) {
-  return axios.get(`${config.baseUrl2}broadcasts/${broadcastSysId}/medialists`)
+  return axios.get(`${config.baseUrl}broadcasts/${broadcastSysId}/medialists`)
 }
 
 /*
@@ -133,7 +133,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/basket`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -147,11 +147,41 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/listbasket`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
     }
+  })
+}
+
+// 회원 장바구니 삭제
+function removeCartItem (accessToken, basketSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+// 장바구니 수정
+function putCartItem (accessToken, basketSysId, cartItem) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(cartItem))
+  return axios({
+    method: 'put',
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -341,5 +371,7 @@ export {
   addMemberAddress,
   postCartItem,
   getCartItem,
-  getAddingCosts
+  getAddingCosts,
+  removeCartItem,
+  putCartItem
 }

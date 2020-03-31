@@ -33,10 +33,60 @@
 
 <script>
 export default {
-  props: ['products'],
+  created () {
+    for (let i = 0; i < this.cartList.length; i++) {
+      const cartItem = this.cartList[i]
+      const product = this.products[i]
+
+      if (this.selectedItem[i] === false) {
+        continue
+      }
+
+      let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
+
+      let cnt = 0
+      if (cartItem.basketQty) {
+        cnt += cartItem.basketQty
+      } else {
+        for (const o of cartItem.productOptions) {
+          cnt += o.optionQty
+        }
+      }
+
+      this.price += prdtPrice * cnt
+    }
+  },
+
+  props: ['products', 'selectedItem', 'cartList'],
   data () {
     return {
+      price: 0
+    }
+  },
+  watch: {
+    products () {
+      this.price = 0
+      for (let i = 0; i < this.cartList.length; i++) {
+        const cartItem = this.cartList[i]
+        const product = this.products[i]
 
+        if (this.selectedItem[i] === false) {
+          continue
+        }
+
+        let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
+
+        let cnt = 0
+        if (cartItem.basketQty) {
+          cnt += cartItem.basketQty
+        } else {
+          for (const o of cartItem.productOptions) {
+            cnt += o.optionQty
+          }
+        }
+
+        this.price += prdtPrice * cnt
+      }
     }
   },
   methods: {
@@ -45,15 +95,30 @@ export default {
     }
   },
   computed: {
-    price () {
+    deliveryPrice () {
       let price = 0
-      for (const p of this.products) {
-        price += (p.price - (p.price * p.discountRate))
+      for (let i = 0; i < this.products.length; i++) {
+        const product = this.products[i]
+        if (this.selectedItem[i] === false) {
+          continue
+        }
+
+        switch (product.deliveryPriceTypeCode) {
+          case 1: price += 0
+            break
+          case 2: price += this.product.debitAmount
+            break
+          case 3: price += this.product.prepaymentAmount
+            break
+          case 4: price += 2500
+            break
+          case 5: price += 2500
+            break
+          default: price += 2500
+            break
+        }
       }
       return price
-    },
-    deliveryPrice () {
-      return 2500 * this.products.length
     }
   }
 }
@@ -127,7 +192,7 @@ export default {
     width: 12px;
     height: 12px;
     line-height: 12px;
-    font-size: 1px;
+    font-size: 10px;
     background-color: #666666;
     border-radius: 20px;
     color: white;
@@ -148,13 +213,15 @@ export default {
 }
 
 .payInfoWrap .infoFooter{
+  position:  relative;
+  bottom: 0;
 padding: 15px 12px;
 color: #666666;
 background-color: #f3f3f3;
 }
 
 .payInfoWrap .infoFooter ul{
-    padding: 0 10px
+    padding: 0 15px
 }
 
 .payInfoWrap .infoFooter li{

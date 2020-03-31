@@ -46,9 +46,8 @@ export default {
 
 <style>
 .reviewEntityWrap{
-  padding-top: 13px;
-  padding-bottom: 15px;
   border-top: 1px solid #eeeeee;
+  padding: 13px 12px 15px;
 }
 
 .reviewEntityWrap .sm{
@@ -73,14 +72,10 @@ export default {
   line-height: 19px;
 }
 
-.reviewEntityWrap .reviewContent{
-  margin-top: 13px;
-}
-
 .reviewEntityWrap .photoSection{
   display: inline-block;
   width: 100%;
-  padding-top: 56.26%;
+  padding-top: 75%;
   background-color: #ebd1c4;
 }
 

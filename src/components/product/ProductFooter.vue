@@ -11,7 +11,8 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
-import {postCartItem, getAccessToken} from '@/api/index.js'
+import {postCartItem, getAccessToken, getCartItem} from '@/api/index.js'
+import {isEquals} from '@/assets/js/common.js'
 
 export default {
   props: ['buyMode', 'options'],
@@ -31,10 +32,12 @@ export default {
         this.$emit('buyModeClick')
       } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
         if (this.$store.state.isLogin) {
-          sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-          sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
+          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
+          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
           this.$router.push('/BuyProduct')
         } else {
+          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
+          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
           this.$router.push('/Login')
         }
       }
@@ -51,27 +54,30 @@ export default {
           basketQty: 0,
           isOptionNormal: 0,
           isAddingProduct: 0
-          // productOptions: []
-          // addingProductsoptional: []
+          // optionGroups: []
+          // addingProducts: []
         }
 
         if (this.$store.getters.getSelectedOptions[0].contentName !== '') { // 옵션이 있는 경우
           cartItem.isOptionNormal = 1
-          cartItem.productOptions = []
+          cartItem.optionGroups = []
           for (const o of this.$store.getters.getSelectedOptions) {
             let option = {
-              prdtNormalOptionSysId: 0,
-              optionKeyName: o.contentName,
-              optionQty: o.count
+              optionQty: o.count,
+              productOptions: []
             }
 
             for (const c of o.contentGroup) {
               if (c.name === '선택없음') {
                 continue
               }
-              option.prdtNormalOptionSysId = c.prdtNormalOptionSysId
+
+              option.productOptions.push({
+                prdtNormalOptionSysId: c.prdtNormalOptionSysId,
+                optionKeyName: c.name
+              })
             }
-            cartItem.productOptions.push(option)
+            cartItem.optionGroups.push(option)
           }
         } else { // 옵션이 없는 경우
           cartItem.basketQty = this.$store.getters.getSelectedOptions[0].count
@@ -79,12 +85,14 @@ export default {
 
         if (this.$store.state.isLogin) {
         // 회원 장바구니 등록
-
           console.log(cartItem)
 
           postCartItem(sessionStorage.getItem('accessToken'), cartItem)
             .then(res => {
               console.log(res)
+              if (res.data.jsonData.resultCode === '0001') {
+                this.$emit('addedCartItem')
+              }
             })
             .catch(err => {
               if (err.response.status === 401) {
@@ -108,35 +116,19 @@ export default {
           if (cartList) {
             cartList = JSON.parse(cartList)
 
-            for (const p of cartList) { // 중복 체크
-              if (this.isEquals(p, cartItem)) {
-                return
-              }
-            }
+            // for (const p of cartList) { // 중복 체크
+            //   if (isEquals(p, cartItem)) {
+            //     return
+            //   }
+            // }
             cartList.push(cartItem)
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {
             sessionStorage.setItem('nonMemberCartList', JSON.stringify([cartItem]))
           }
+          this.$emit('addedCartItem')
         }
       }
-    },
-
-    isEquals (x, y) { // 객체 값 동일 비교 함수
-      if (x === y) return true
-      if (!(x instanceof Object) || !(y instanceof Object)) return false
-      if (x.constructor !== y.constructor) return false
-      for (var p in x) {
-        if (!x.hasOwnProperty(p)) continue
-        if (!y.hasOwnProperty(p)) return false
-        if (x[p] === y[p]) continue
-        if (typeof (x[p]) !== 'object') return false
-        if (!this.isEquals(x[p], y[p])) return false
-      }
-      for (p in y) {
-        if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) return false
-      }
-      return true
     }
 
   }

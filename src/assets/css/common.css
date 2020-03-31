@@ -1832,7 +1832,7 @@ Product > Description > Review
 
 */
 
-.reviewHeaderWrap .ico_star_half{
+ .ico_star_half{
   display: inline-block;
   background: url("../img/ico/ico_star_half.png");
   background-size: 100%;
@@ -1841,7 +1841,7 @@ Product > Description > Review
 }
 
 
-.reviewHeaderWrap .ico_star_full{
+ .ico_star_full{
   display: inline-block;
   margin-left: 3px;
   background: url("../img/ico/ico_star_full.png");
@@ -1849,7 +1849,7 @@ Product > Description > Review
   width: 20px;
   height: 20px;
 }
-.reviewHeaderWrap .ico_star_none{
+ .ico_star_none{
   display: inline-block;
   background: url("../img/ico/ico_star_none.png");
   background-size: 100%;

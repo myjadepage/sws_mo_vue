@@ -32,12 +32,13 @@
 export default {
   props: ['discount'],
   created () {
-    this.product = JSON.parse(sessionStorage.getItem('product'))
+    this.products = JSON.parse(sessionStorage.getItem('products'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
   },
   data () {
     return {
-      product: {}
+      products: [],
+      options: []
     }
   },
   methods: {
@@ -50,48 +51,50 @@ export default {
   },
   computed: {
     prdPrice () {
-      if (this.options[0].contentName !== '') {
-        let optionPrice = 0
-        let oCnt = 0
-        if (this.options) {
-          for (const o of this.options) {
-            oCnt += o.count
-            optionPrice += (o.price * o.count)
+      let price = 0
+      for (let i = 0; i < this.options.length; i++) {
+        const o = this.options[i]
+        const prdtPrice = this.products[i].price - (this.products[i].price * this.products[i].discountRate)
+
+        for (const oo of o) {
+          if (oo.contentName) {
+            let groupPrice = 0
+            for (const cg of oo.contentGroup) {
+              groupPrice += cg.price
+            }
+            price += (groupPrice * oo.count) + prdtPrice
+          } else {
+            price += oo.count * prdtPrice
           }
         }
-
-        if (optionPrice) {
-          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price * this.product.discountRate) + optionPrice})
-          return this.product.price - (this.product.price * this.product.discountRate) + optionPrice
-        } else {
-          this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: this.product.price - (this.product.price - (this.product.price * this.product.discountRate)) * oCnt})
-          return (this.product.price - (this.product.price * this.product.discountRate)) * oCnt
-        }
-      } else {
-        this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count})
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.options[0].count
       }
+      this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: price})
+      return price
+    },
+    deliveryPrice () {
+      let price = 0
+      for (const product of this.products) {
+        switch (product.deliveryPriceTypeCode) {
+          case 1: price += 0
+            break
+          case 2: price += this.product.debitAmount
+            break
+          case 3: price += this.product.prepaymentAmount
+            break
+          case 4: price += 2500
+            break
+          case 5: price += 2500
+            break
+          default: price += 2500
+            break
+        }
+      }
+      this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: price})
+      return price
     },
 
     addDeliveryCost () {
       return this.$store.getters.getPayPriceInfo.addDeliveryCost
-    },
-
-    deliveryPrice () {
-      switch (this.product.deliveryPriceTypeCode) {
-        case 1: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: 0})
-          return 0
-        case 2: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: this.product.debitAmount})
-          return this.product.debitAmount
-        case 3: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: this.product.prepaymentAmount})
-          return this.product.prepaymentAmount
-        case 4: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: 2500})
-          return 2500
-        case 5: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: 2500})
-          return 2500
-        default: this.$store.commit('updatePayPriceInfo', {name: 'deliveryPrice', price: 2500})
-          return 2500
-      }
     },
     payFinalPrice () {
       this.$emit('finalPrice', this.prdPrice + this.deliveryPrice + this.addDeliveryCost - this.discount)
@@ -99,7 +102,6 @@ export default {
       return this.prdPrice + this.deliveryPrice + this.addDeliveryCost - this.discount
     }
   }
-
 }
 </script>
 

@@ -67,7 +67,7 @@
                     class="btn btn-circle sws_icon btn-fb"/>
                   <span>페이스북</span>
                 </li>
-                <li>
+                <!-- <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
                     callback-url="http://localhost:8080/Login"
@@ -75,7 +75,7 @@
                     class="btn btn-circle sws_icon btn-naver"
                   />
                   <span>네이버</span>
-                </li>
+                </li> -->
             </ul>
         </div>
 
@@ -219,8 +219,6 @@ export default {
 
     // 비회원구매하기
     noMemberBuyClick () {
-      sessionStorage.setItem('product', JSON.stringify(this.$store.getters.getProduct))
-      sessionStorage.setItem('selectedOptions', JSON.stringify(this.$store.getters.getSelectedOptions))
       this.$router.push('/BuyProduct')
     },
     noMemeberOrderClick () {
