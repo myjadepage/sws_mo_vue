@@ -4037,11 +4037,17 @@ html, body{
 }
 .questionList .item{
   padding:15px 12px;
+  background:#fff;
+  border-bottom:1px solid #eee;
+  transition:background-color 0.3s ease;
+}
+.questionList .item.on{
+  background:#f9f9f9;
 }
 .questionList .item button{
   display:block;
   width:100%;
-  margin-bottom:15px;
+  padding-bottom:15px;
   text-align:left;
 }
 .questionList .item .date{
@@ -4058,9 +4064,13 @@ html, body{
 }
 .questionList .item h3{
   float:left;
+  overflow: hidden;
   width:calc(100% - 67px);
   font-size:14px;
   font-weight:400;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  word-wrap:normal;
 }
 .questionList .item .state{
   float:right;
@@ -4077,15 +4087,20 @@ html, body{
 }
 .questionList .item .state.open+h3{
   width:100%;
+  overflow:visible;
+  text-overflow: unset;
+  white-space: normal;
 }
 .questionList .item .state.yet:after{
   content:'답변대기'
 }
 .questionList .item .state.fin:after{
-  content:'답변완료'
+  content:'답변완료';
+  color:#e61754;
 }
 .questionList .item .state.open:after{
-  content:'상품문의'
+  content:'상품문의';
+  color:#111;
 }
 .questionList .orderInfo{
   overflow: hidden;

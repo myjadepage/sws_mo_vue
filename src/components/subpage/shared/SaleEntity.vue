@@ -7,7 +7,7 @@
           <div class="img_box" :style="{backgroundImage:'url('+product.bigImageUrl+')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
             <div class="txtBox">
               <div class="btn_movie">
-                <img src="../../../assets/img/ico/btn_play.png" alt="재생버튼 이미지" />
+                <img src="../../../assets/img/ico/btn_play_them.png" alt="재생버튼 이미지" />
               </div>
               <h5>{{product.briefComment}}</h5>
               <p>{{product.briefDescription}}</p>
