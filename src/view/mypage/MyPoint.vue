@@ -1,7 +1,7 @@
 <template>
   <div class="mainPageWrap" :class="listCount === 0? 'emptyHeight': ''">
   <Bar :val="title" />
-  <OptionBar />
+  <OptionBar :baskets="baskets" />
   <MyInfo :member="member" />
   <LookUp />
   <PointList @type="typeSwitch" :list="list" :listCount="listCount" />
@@ -15,7 +15,7 @@ import OptionBar from '@/components/mypage/Main/MyOptionIconBar'
 import MyInfo from '@/components/mypage/Main/MyInfo'
 import LookUp from '@/components/mypage/Point/PointLookUp'
 import PointList from '@/components/mypage/Point/PointList'
-import { getMypageInfo } from '@/api/index.js'
+import { getMypageInfo, getCartItem } from '@/api/index.js'
 
 export default {
   data () {
@@ -29,6 +29,7 @@ export default {
         followerCnt: 0,
         followingCnt: 0
       },
+      baskets: [],
       listCount: 3,
       list: {
         all: {
@@ -81,6 +82,16 @@ export default {
           }
           if (res.data.jsonData.followingCnt) {
             this.member.followingCnt = res.data.jsonData.followingCnt
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      getCartItem(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          if (res.data.jsonData.baskets) {
+            this.baskets = [...res.data.jsonData.baskets]
           }
         })
         .catch(err => {

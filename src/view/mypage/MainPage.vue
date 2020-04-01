@@ -1,7 +1,7 @@
 <template>
 <div class="mainPageWrap">
 <Bar :val="title" />
-<OptionBar/>
+<OptionBar :baskets="baskets"/>
 <Info :member="member"/>
 <OrderStatus :member="member"/>
 <Util/>
@@ -19,7 +19,7 @@ import OrderStatus from '@/components/mypage/Main/MyOrderStatus'
 import Util from '@/components/mypage/Main/MyUtility'
 import Settings from '@/components/mypage/Main/MySettings'
 import Footer from '@/components/mypage/Main/MyFooter'
-import { getMypageInfo } from '@/api/index.js'
+import { getMypageInfo, getCartItem } from '@/api/index.js'
 
 export default {
   data () {
@@ -37,7 +37,8 @@ export default {
         deliveryReadyCnt: 0,
         deliveringCnt: 0,
         deliveryCompleteCnt: 0
-      }
+      },
+      baskets: []
     }
   },
   components: {
@@ -79,6 +80,16 @@ export default {
           }
           if (res.data.jsonData.deliveryCompleteCnt) {
             this.member.deliveryCompleteCnt = res.data.jsonData.deliveryCompleteCnt
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+      getCartItem(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          if (res.data.jsonData.baskets) {
+            this.baskets = [...res.data.jsonData.baskets]
           }
         })
         .catch(err => {

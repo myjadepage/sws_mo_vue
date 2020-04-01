@@ -1,8 +1,8 @@
 <template>
   <div class="myOptionBarWrap">
-    <span class="cartBtn">
-      <span @click="cartBtnClick" v-if="cartCnt" class="cartBadge">{{cartCnt}}</span>
-    </span>
+    <router-link class="cartBtn" to="/cart">
+      <span v-if="baskets.length > 0" class="cartBadge">{{baskets.length}}</span>
+    </router-link>
     <router-link to="/MypageSetting" class="settingBtn"></router-link>
     <router-link to="/CustomerMain"><span class="qaBtn"></span></router-link>
   </div>
@@ -10,14 +10,9 @@
 
 <script>
 export default {
+  props: ['baskets'],
   data () {
     return {
-      cartCnt: 3
-    }
-  },
-  methods: {
-    cartBtnClick () {
-      this.$router.push('/cart')
     }
   }
 }
