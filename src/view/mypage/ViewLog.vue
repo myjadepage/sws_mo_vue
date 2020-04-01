@@ -24,9 +24,7 @@ export default {
       title: '최근 본 상품',
       pageType: 'basket',
       emptyMeasse: '최근 본 상품이 없습니다.',
-      products: [
-        'a', 'b'
-      ],
+      products: [],
       modalVisiblity: false,
       basketDeleteModal: false,
       removedModal: false

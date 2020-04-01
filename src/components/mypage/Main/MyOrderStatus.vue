@@ -3,11 +3,11 @@
 <div class="staHeader">주문 배송 조회</div>
 <div class="staBody">
   <ul>
-        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[0].cnt}}</span><div class="trackingSta">{{trackingLists[0].sta}}</div></li></router-link>
-        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[1].cnt}}</span><div class="trackingSta">{{trackingLists[1].sta}}</div></li></router-link>
-        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[2].cnt}}</span><div class="trackingSta">{{trackingLists[2].sta}}</div></li></router-link>
-        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[3].cnt}}</span><div class="trackingSta">{{trackingLists[3].sta}}</div></li></router-link>
-        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt">{{trackingLists[4].cnt}}</span><div class="trackingSta">{{trackingLists[4].sta}}</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt" :class="{'shipping':member.orderCnt > 0}">{{member.orderCnt}}</span><div class="trackingSta">주문접수</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt" :class="{'shipping':member.payCnt > 0}">{{member.payCnt}}</span><div class="trackingSta">결제완료</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt" :class="{'shipping':member.deliveryReadyCnt > 0}">{{member.deliveryReadyCnt}}</span><div class="trackingSta">배송준비중</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt" :class="{'shipping':member.deliveringCnt > 0}">{{member.deliveringCnt}}</span><div class="trackingSta">배송중</div></li></router-link>
+        <router-link to="/tracking"><li class="trackingData"><span class="trackingCnt" :class="{'enabled':member.deliveryCompleteCnt > 0}">{{member.deliveryCompleteCnt}}</span><div class="trackingSta">배송완료</div></li></router-link>
       </ul>
 </div>
 </div>
@@ -15,21 +15,9 @@
 
 <script>
 export default {
+  props: ['member'],
   data () {
     return {
-      trackingLists: [{cnt: 0, sta: '주문접수'}, {cnt: 2, sta: '결제완료'}, {cnt: 0, sta: '배송준비중'}, {cnt: 1, sta: '배송중'}, {cnt: 35, sta: '배송완료'}]
-    }
-  },
-
-  mounted () {
-    for (let i = 0; i < this.trackingLists.length; i++) {
-      if (this.trackingLists[i].cnt) {
-        if (i !== 3) {
-          this.$el.getElementsByClassName('trackingCnt')[i].className += ' enabled'
-        } else {
-          this.$el.getElementsByClassName('trackingCnt')[i].className += ' shipping'
-        }
-      }
     }
   }
 

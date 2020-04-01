@@ -14,7 +14,7 @@
       <div class="profileInfo">
         <div class="row">
           <label for="userName">이름</label>
-          <input type="text" id="userName" name="userName" placeholder="이름을 입력해 주세요." v-model="member.name" />
+          <input type="text" id="userName" name="userName" placeholder="이름을 입력해 주세요." v-model.trim="member.name" />
         </div>
         <div class="row">
           <label for="userGender">성별</label>
@@ -27,19 +27,19 @@
         </div>
         <div class="row">
           <label for="userBirth">생년월일</label>
-          <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model="member.birthday" />
+          <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model.trim="member.birthday" />
         </div>
         <div class="row">
           <label for="userPhone">휴대폰</label>
-          <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678" v-model="member.mobile" disabled />
+          <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678" v-model.trim="member.mobile" disabled />
         </div>
         <div class="row">
           <label for="userMail">이메일</label>
-          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model="member.email" disabled />
+          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.email" disabled />
         </div>
         <div class="row">
           <label for="userId">아이디</label>
-          <input type="text" id="userId" name="userId" placeholder="아이디입니다." v-model="member.id" disabled />
+          <input type="text" id="userId" name="userId" placeholder="아이디입니다." v-model.trim="member.id" disabled />
         </div>
         <div class="row">
           <label for="userNick">닉네임</label>

@@ -70,6 +70,17 @@ function payOrders (jsonData, orderSysId) {
   return axios.post(`${config.baseUrl}${orderSysId}/pays`, formdata)
 }
 
+// 마이페이지 조회
+function getMypageInfo (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -390,5 +401,6 @@ export {
   getAddingCosts,
   removeCartItem,
   putCartItem,
-  modifyUserInfo
+  modifyUserInfo,
+  getMypageInfo
 }
