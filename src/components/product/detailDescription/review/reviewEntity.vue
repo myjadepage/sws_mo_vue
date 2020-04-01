@@ -3,13 +3,15 @@
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full sm"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half sm"></span>
         <span v-for="(j,jid) of noneStarCnt" :key="jid" class="ico_star_none sm"></span>
-    <span class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{review.date}}</span><span class="reviewWriter">{{concealedWriter}}</span>
+    <span class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{reviewDate}}</span><span class="reviewWriter">{{review.userId}}</span>
+    <div class="reviewBody">
       <div class="reviewContent">{{review.content}}</div>
-      <div v-if="review.photo.length===1" class="photoSection"></div>
-      <div v-if="review.photo.length>2" class="multiPhotoSection">
+      </div>
+      <!-- <div v-if="review.productReviewPhotos.length===1" class="photoSection"><img :src="reivew.productReviewPhotos[0].photoUrl" alt="포토 리뷰 사진"></div> -->
+      <!-- <div v-if="review.photo.length>2" class="multiPhotoSection">
         <span v-for="(p,idx) in review.photo" :key="idx" class="subPhoto"></span>
       </div>
-      <div v-if="review.media" class="mediaSection"></div>
+      <div v-if="review.media" class="mediaSection"></div> -->
   </div>
 </template>
 
@@ -18,10 +20,10 @@ export default {
   props: ['review'],
   computed: {
     fullStarCnt () {
-      return Math.floor(this.review.rate)
+      return Math.floor(this.review.starPoint / 2)
     },
     halfStarCnt () {
-      return this.review.rate % 1
+      return (this.review.starPoint / 2) % 1
     },
     noneStarCnt () {
       if (this.halfStarCnt) {
@@ -30,15 +32,11 @@ export default {
         return 5 - this.fullStarCnt
       }
     },
-    concealedWriter () {
-      let val = this.review.writer
-      val = val.split('')
-      for (let i = 3; i < val.length; i++) {
-        val[i] = '*'
-      }
-      val = val.join('')
-
-      return val
+    reviewDate () {
+      let date = this.review.createdAt.replace(this.review.createdAt.substr(8, this.review.createdAt.length), '').split('')
+      date.splice(4, 0, '.')
+      date.splice(7, 0, '.')
+      return date.join('')
     }
   }
 }
@@ -92,5 +90,9 @@ export default {
   width: 100%;
   padding-top: 56.26%;
   background-color: gray;
+}
+
+.reviewEntityWrap .reviewBody{
+  padding-left: 3px;
 }
 </style>

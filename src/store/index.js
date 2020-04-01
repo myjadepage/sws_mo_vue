@@ -18,8 +18,7 @@ export const store = new Vuex.Store({
     isAuth: false,
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
-    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0},
-    cartItemOptionPrices: []
+    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0}
   },
   getters: {
     getId: state => state.userInfo.userId,
@@ -36,8 +35,7 @@ export const store = new Vuex.Store({
     getPostCode: state => state.postCode,
     getPayPriceInfo: state => state.payPriceInfo,
     getOrdererInfo: state => state.ordererInfo,
-    getDestInfo: state => state.destInfo,
-    getCartItemOptionPrices: state => state.cartItemOptionPrices
+    getDestInfo: state => state.destInfo
   },
   mutations: {
     // 로그인 성공시
@@ -105,9 +103,6 @@ export const store = new Vuex.Store({
     },
     updateAddDeliveryCost (state, cost) {
       state.payPriceInfo.addDeliveryCost = cost
-    },
-    addcartItemOptionPrice (state, value) {
-      state.cartItemOptionPrices.push(value)
     }
   },
   actions: {

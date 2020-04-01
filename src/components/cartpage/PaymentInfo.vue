@@ -33,62 +33,8 @@
 
 <script>
 export default {
-  created () {
-    for (let i = 0; i < this.cartList.length; i++) {
-      const cartItem = this.cartList[i]
-      const product = this.products[i]
 
-      if (this.selectedItem[i] === false) {
-        continue
-      }
-
-      let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
-
-      let cnt = 0
-      if (cartItem.basketQty) {
-        cnt += cartItem.basketQty
-      } else {
-        for (const o of cartItem.productOptions) {
-          cnt += o.optionQty
-        }
-      }
-
-      this.price += prdtPrice * cnt
-    }
-  },
-
-  props: ['products', 'selectedItem', 'cartList'],
-  data () {
-    return {
-      price: 0
-    }
-  },
-  watch: {
-    products () {
-      this.price = 0
-      for (let i = 0; i < this.cartList.length; i++) {
-        const cartItem = this.cartList[i]
-        const product = this.products[i]
-
-        if (this.selectedItem[i] === false) {
-          continue
-        }
-
-        let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
-
-        let cnt = 0
-        if (cartItem.basketQty) {
-          cnt += cartItem.basketQty
-        } else {
-          for (const o of cartItem.productOptions) {
-            cnt += o.optionQty
-          }
-        }
-
-        this.price += prdtPrice * cnt
-      }
-    }
-  },
+  props: ['products', 'selectedItem', 'prices'],
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryInfoBtnClick')
@@ -119,6 +65,19 @@ export default {
         }
       }
       return price
+    },
+    price () {
+      let val = 0
+
+      for (let i = 0; i < this.prices.length; i++) {
+        const p = this.prices[i]
+        if (this.selectedItem[i] === false) {
+          continue
+        }
+        val += p
+      }
+
+      return val
     }
   }
 }

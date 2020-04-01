@@ -1,7 +1,7 @@
 <template>
   <div class="reviewHeaderWrap">
-      <span class="reviewCnt">리뷰 총 {{totalReviewCnt}}개</span>
-      <div class="rating">
+      <span class="reviewCnt">리뷰 총 {{reviews.length}}개</span>
+      <!-- <div class="rating">
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half"></span>
         <span v-for="(j,jid) of noneStarCnt" :key="jid" class="ico_star_none"></span><span class="ratePoint"> {{reviewAvgRate}}</span>
@@ -10,7 +10,7 @@
           <span @click="catClick(0)" class="selected">전체</span>
           <span @click="catClick(1)">포토</span>
           <span @click="catClick(2)">동영상</span>
-        </div>
+        </div> -->
   </div>
 </template>
 
@@ -35,9 +35,6 @@ export default {
       } else {
         return 5 - this.fullStarCnt
       }
-    },
-    totalReviewCnt () {
-      return this.reviews.photos.length + this.reviews.medias.length + this.reviews.normals.length
     },
     reviewAvgRate () {
       let sum = 0

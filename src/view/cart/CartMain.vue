@@ -11,13 +11,13 @@
     @salesLimitOver="PrdtLimitModalShow"
     @soldOut="StockOutModalShow"
     @prdtCntChange="prdtCntChange"
+    @prdtPrice="prdtPrices"
     :index="idx"
     :product="p"
-    :cartItem="cartList[idx]"
     :isChecked="selectedItem[idx]"
      />
 
-    <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" :prdtCntChange="prdtCntChange" v-if="products.length > 0" :products="[...products]" :cartList="cartList" :selectedItem="[...selectedItem]" />
+    <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" v-if="products.length > 0" :prices="[...prices]" :products="[...products]" :selectedItem="[...selectedItem]" />
 
     <div v-if="modalVisiblity" class="modalSection">
         <div class="darkFilter"></div>
@@ -49,49 +49,45 @@ import {getProduct, getCartItem, getAccessToken, removeCartItem, putCartItem} fr
 
 export default {
   created () {
-    this.$store.state.cartItemOptionPrices = []
-
     if (this.$store.state.isLogin) {
       // 장바구니 목록 가져와야함
       getCartItem(sessionStorage.getItem('accessToken'))
         .then(cartRes => {
-          console.log(cartRes)
           let cartList = cartRes.data.jsonData.baskets
           this.cartList = cartList
+          console.log(cartList)
+
           if (cartList) {
             for (const c of cartList) {
-              this.selectedItem.push(true)
-              getProduct(c.prdtSysId)
-                .then(res => {
-                  this.products.push({...res.data.jsonData.product, normalOptions: res.data.jsonData.normalOptions})
-                })
-                .catch(err => {
-                  console.log(err)
-                })
+              for (const po of c.productOptions) {
+                getProduct(c.prdtSysId)
+                  .then(res => {
+                    let isSameGroup = false
+                    for (const p of this.products) {
+                      isSameGroup = p.optionGroupId === po.optionGroupId
+                    }
+                    if (isSameGroup) {
+
+                    } else {
+                      this.selectedItem.push(true)
+                      this.products.push({
+                        ...res.data.jsonData.product,
+                        normalOptions: res.data.jsonData.normalOptions,
+                        isAddingProduct: c.isAddingProduct,
+                        isOptionNormal: c.isOptionNormal,
+                        optionInfo: c.productOptions,
+                        basketSysId: c.basketSysId,
+                        optionGroupId: po.optionGroupId
+                      }
+                      )
+                    }
+                  })
+                  .catch(err => {
+                    console.log(err)
+                  })
+              }
             }
           }
-
-          // if (baskets) {
-          //   for (const c of baskets) {
-          //     this.selectedItem.push(true)
-          //     getProduct(c.prdtSysId)
-          //       .then(res => {
-          //         let item = {...res.data.jsonData.product, optioninfo: res.data.jsonData.normalOptions, productOptions: c.productOptions, basketSysId: c.basketSysId, cnt: 0}
-          //         if (c.basketQty === 0) {
-          //           for (const o of c.productOptions) {
-          //             item.cnt += o.optionQty
-          //           }
-          //         } else {
-          //           item.cnt = c.basketQty
-          //         }
-
-          //         this.products.push(item)
-          //       })
-          //       .catch(err => {
-          //         console.log(err)
-          //       })
-          //   }
-          // }
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -126,7 +122,7 @@ export default {
   },
   data () {
     return {
-      optionPrices: [],
+      prices: [],
       products: [],
       cartList: [],
       selectedItem: [],
@@ -152,47 +148,43 @@ export default {
     },
 
     indexedDeleteConfirm () {
-      if (this.$store.state.isLogin) {
-        if (this.selectedItem[this.deleteIndex]) {
-          removeCartItem(sessionStorage.getItem('accessToken'), this.cartList[this.deleteIndex].basketSysId)
-            .then(res => {
-              console.log(res)
-              this.cartList.splice(this.deleteIndex, 1)
-              this.products.splice(this.deleteIndex, 1)
-              this.selectedItem.splice(this.deleteIndex, 1)
-            })
-            .catch(err => {
-              if (err.response.status === 401) {
-                getAccessToken(sessionStorage.getItem('refreshToken'))
-                  .then(res => {
-                    sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                  })
-                  .catch(err => {
-                    if (err.response.status === 401) {
-                      this.$store.dispatch('logOut')
-                      this.$router.push('/Login')
-                    }
-                  })
-              }
-            })
-        }
-      } else {
-        if (this.selectedItem[this.deleteIndex]) {
-          this.cartList.splice(this.deleteIndex, 1)
-          this.products.splice(this.deleteIndex, 1)
-          this.selectedItem.splice(this.deleteIndex, 1)
-        }
+      // if (this.$store.state.isLogin) {
+      //   removeCartItem(sessionStorage.getItem('accessToken'), this.products[this.deleteIndex].basketSysId)
+      //     .then(res => {
+      //       this.products.splice(this.deleteIndex, 1)
+      //       this.selectedItem.splice(this.deleteIndex, 1)
+      //     })
+      //     .catch(err => {
+      //       if (err.response.status === 401) {
+      //         getAccessToken(sessionStorage.getItem('refreshToken'))
+      //           .then(res => {
+      //             sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+      //           })
+      //           .catch(err => {
+      //             if (err.response.status === 401) {
+      //               this.$store.dispatch('logOut')
+      //               this.$router.push('/Login')
+      //             }
+      //           })
+      //       }
+      //     })
+      // } else {
+      //   if (this.selectedItem[this.deleteIndex]) {
+      //     this.cartList.splice(this.deleteIndex, 1)
+      //     this.products.splice(this.deleteIndex, 1)
+      //     this.selectedItem.splice(this.deleteIndex, 1)
+      //   }
 
-        if (this.cartList.length > 0) {
-          sessionStorage.setItem('nonMemberCartList', JSON.stringify(this.cartList))
-        } else {
-          this.selectedItem = []
-          sessionStorage.removeItem('nonMemberCartList')
-        }
-      }
+      //   if (this.cartList.length > 0) {
+      //     sessionStorage.setItem('nonMemberCartList', JSON.stringify(this.cartList))
+      //   } else {
+      //     this.selectedItem = []
+      //     sessionStorage.removeItem('nonMemberCartList')
+      //   }
+      // }
 
-      this.DeleteModal = false
-      this.DeletedModal = true
+      // this.DeleteModal = false
+      // this.DeletedModal = true
     },
 
     selectItem (idx) {
@@ -260,49 +252,58 @@ export default {
     prdtCntChange (info) {
       if (this.$store.state.isLogin) { // 회원인 경우
         let cartItem = { // 빈 장바구니 아이템 객체
-          prdtSysId: this.cartList[info[1]].prdtSysId,
-          basketQty: this.cartList[info[1]].basketQty,
-          isOptionNormal: this.cartList[info[1]].isOptionNormal,
-          isAddingProduct: this.cartList[info[1]].isAddingProduct
+          prdtSysId: this.products[info[1]].prdtSysId,
+          basketQty: 0,
+          isOptionNormal: this.products[info[1]].isOptionNormal,
+          isAddingProduct: this.products[info[1]].isAddingProduct
           // optionGroups: []
           // addingProducts: []
         }
 
         if (cartItem.isOptionNormal) { // 옵션이 있는 경우
           cartItem.optionGroups = []
-          for (const o of this.cartList[info[1]].productOptions) {
+
+          for (let i = 0; i < this.products[info[1]].optionInfo.length; i++) {
+            const o = this.products[info[1]].optionInfo[i]
+
             let option = {
               optionGroupId: o.optionGroupId,
-              optionQty: info[2]
+              optionQty: o.optionQty,
+              procTypeCode: 1
+            }
+            if (info[3] === o.optionGroupId) {
+              option.optionQty = info[2]
+              option.procTypeCode = 3
+              this.products[info[1]].optionInfo[i].optionQty = info[2]
             }
 
             cartItem.optionGroups.push(option)
           }
         } else { // 옵션이 없는 경우
           cartItem.basketQty = info[2]
-          this.cartList[info[1]].basketQty = info[2]
+          this.products[info[1]].basketQty = info[2]
         }
 
         console.log(cartItem)
 
-        putCartItem(sessionStorage.getItem('accessToken'), info[0], cartItem)
-          .then(res => {
-            console.log(res)
-          })
-          .catch(err => {
-            if (err.response.status === 401) {
-              getAccessToken(sessionStorage.getItem('refreshToken'))
-                .then(res => {
-                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                })
-                .catch(err => {
-                  if (err.response.status === 401) {
-                    this.$store.dispatch('logOut')
-                    this.$router.push('/Login')
-                  }
-                })
-            }
-          })
+        // putCartItem(sessionStorage.getItem('accessToken'), info[0], cartItem)
+        //   .then(res => {
+        //     console.log(res)
+        //   })
+        //   .catch(err => {
+        //     if (err.response.status === 401) {
+        //       getAccessToken(sessionStorage.getItem('refreshToken'))
+        //         .then(res => {
+        //           sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+        //         })
+        //         .catch(err => {
+        //           if (err.response.status === 401) {
+        //             this.$store.dispatch('logOut')
+        //             this.$router.push('/Login')
+        //           }
+        //         })
+        //     }
+        //   })
       } else { // 비회원인 경우
         let list = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
         if (list[info[0]].basketQty) { // 옵션이 없을경우
@@ -324,57 +325,80 @@ export default {
       this.DeleteModal = false
     },
     deleteConfirm () {
+      let x = [...this.selectedItem]
+      for (let i = this.selectedItem.length - 1; i >= 0; i--) {
+        if (this.selectedItem[i]) {
+          let basketSysId = this.products[i].basketSysId
+          removeCartItem(sessionStorage.getItem('accessToken'), basketSysId)
+            .then(res => {
+              console.log(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+
+          // let cartItem = { // 빈 장바구니 아이템 객체
+          //   prdtSysId: this.products[i].prdtSysId,
+          //   basketQty: 0,
+          //   isOptionNormal: this.products[i].isOptionNormal,
+          //   isAddingProduct: this.products[i].isAddingProduct
+          // // optionGroups: []
+          // // addingProducts: []
+          // }
+
+          // if (cartItem.isOptionNormal) { // 옵션이 있는 경우
+          //   cartItem.optionGroups = []
+
+          //   for (let j = 0; j < this.products[i].optionInfo.length; j++) {
+          //     const o = this.products[i].optionInfo[j]
+
+          //     let option = {
+          //       optionGroupId: o.optionGroupId,
+          //       optionQty: o.optionQty,
+          //       procTypeCode: 1
+          //     }
+          //     if (this.products[i].optionGroupId === o.optionGroupId) {
+          //       option.procTypeCode = 4
+          //     } else {
+          //       continue
+          //     }
+
+          //     cartItem.optionGroups.push(option)
+          //   }
+          // } else { // 옵션이 없는 경우
+          // }
+
+          // putCartItem(sessionStorage.getItem('accessToken'), this.products[i].basketSysId, cartItem)
+          //   .then(res => {
+          //     console.log(res)
+          //     this.products.splice(i, 1)
+          //     this.prices.splice(i, 1)
+          //     x.splice(i, 1)
+          //   })
+          //   .catch(err => {
+          //     if (err.response.status === 401) {
+          //       getAccessToken(sessionStorage.getItem('refreshToken'))
+          //         .then(res => {
+          //           sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+          //         })
+          //         .catch(err => {
+          //           if (err.response.status === 401) {
+          //             this.$store.dispatch('logOut')
+          //             this.$router.push('/Login')
+          //           }
+          //         })
+          //     }
+          //   })
+
+          // console.log(cartItem)
+        }
+      }
+      this.selectedItem = x
+
       if (this.$store.state.isLogin) {
-        let x = [...this.selectedItem]
-        for (let i = 0; i < this.selectedItem.length; i++) {
-          if (this.selectedItem[i]) {
-            removeCartItem(sessionStorage.getItem('accessToken'), this.cartList[i].basketSysId)
-              .then(res => {
-                console.log(res)
-                this.cartList.splice(i, 1)
-                this.products.splice(i, 1)
-                x.splice(i, 1)
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  getAccessToken(sessionStorage.getItem('refreshToken'))
-                    .then(res => {
-                      sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                    })
-                    .catch(err => {
-                      if (err.response.status === 401) {
-                        this.$store.dispatch('logOut')
-                        this.$router.push('/Login')
-                      }
-                    })
-                }
-              })
-          }
-        }
 
-        if (this.cartList.length > 0) {
-          this.selectedItem = x
-        } else {
-          this.selectedItem = []
-        }
       } else {
-        let x = [...this.selectedItem]
 
-        for (let i = 0; i < this.selectedItem.length; i++) {
-          if (this.selectedItem[i]) {
-            this.cartList.splice(i, 1)
-            this.products.splice(i, 1)
-            x.splice(i, 1)
-          }
-        }
-
-        if (this.cartList.length > 0) {
-          this.selectedItem = x
-          sessionStorage.setItem('nonMemberCartList', JSON.stringify(this.cartList))
-        } else {
-          this.selectedItem = []
-          sessionStorage.removeItem('nonMemberCartList')
-        }
       }
 
       this.DeleteModal = false
@@ -385,6 +409,10 @@ export default {
       this.deleteIndex = null
       this.modalVisiblity = false
       this.DeletedModal = false
+    },
+    prdtPrices (info) {
+      this.prices[info[0]] = info[1]
+      this.$forceUpdate()
     }
 
   }

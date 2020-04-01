@@ -11,8 +11,8 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
-import {postCartItem, getAccessToken, getCartItem} from '@/api/index.js'
-import {isEquals} from '@/assets/js/common.js'
+import {postCartItem, getAccessToken} from '@/api/index.js'
+// import {isEquals} from '@/assets/js/common.js'
 
 export default {
   props: ['buyMode', 'options'],
@@ -116,11 +116,6 @@ export default {
           if (cartList) {
             cartList = JSON.parse(cartList)
 
-            // for (const p of cartList) { // 중복 체크
-            //   if (isEquals(p, cartItem)) {
-            //     return
-            //   }
-            // }
             cartList.push(cartItem)
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {

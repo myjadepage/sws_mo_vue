@@ -6,12 +6,13 @@
     </div>
     <div class="entityBody">
     <div class="title">[{{product.brandName}}]{{product.name}}</div>
-    <div v-if="cartItem.isOptionNormal">
-    <div class="option" v-for="(o,idx) in cartItem.productOptions" :key="idx">
-      {{o.optionKeyName}}
-      <!-- <div v-for="(c,idx) in o.productOptions" :key="idx">{{c.optionKeyName}}</div> -->
+
+    <div v-if="product.optionInfo">
+      <div class="option" v-for="(o,idx) in product.optionInfo" :key="idx">
+        <span v-if="product.optionGroupId===o.optionGroupId">{{o.optionKeyName}}</span>
+      </div>
     </div>
-    </div>
+
     <select ref="prdtCnt" :value="prdtCnt" @change="prdtQtyCheck">
         <option value="0">0</option>
         <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
@@ -19,57 +20,50 @@
     <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
     <span @click="removeBtnClick" class="ico_times removeBtn"></span>
     </div>
-  </div>
+     </div>
 </template>
 
 <script>
 export default {
-  created () {
-    for (const o of this.product.normalOptions) {
-      this.options.push(o.content.split(';'))
-    }
-
-    for (let i = 0; i < this.options.length; i++) {
-      const o = this.options[i]
-      for (let oo of o) {
-        oo = oo.split('^')
-
-        if (this.cartItem.productOptions) {
-          for (const og of this.cartItem.productOptions) {
-            if (oo[0] === og.optionKeyName) {
-              this.optionPrice += Number(oo[1])
-            }
-          }
-        }
-      }
-    }
-
-    this.$store.commit('addcartItemOptionPrice', this.optionPrice)
-  },
-  props: ['product', 'index', 'isChecked', 'cartItem'],
+  props: ['product', 'index', 'isChecked'],
   data () {
     return {
       options: [],
-      optionPrice: 0
+      optionPrice: 0,
+      cartItem: {}
     }
   },
   computed:
     {
       totalPrice () {
-        return this.product.price - (this.product.price * this.product.discountRate) + this.optionPrice
+        let optionPrice = 0
+        let optionCnt = 0
+        for (const o of this.product.optionInfo) {
+          if (o.optionGroupId === this.product.optionGroupId) {
+            optionPrice += o.price
+            optionCnt = o.optionQty
+          }
+        }
+
+        return (this.product.price - (this.product.price * this.product.discountRate) + optionPrice) * optionCnt
       },
       prdtCnt () {
-        if (this.cartItem.basketQty) {
-          return this.cartItem.basketQty
-        } else {
-          let cnt = 0
-          for (const o of this.cartItem.productOptions) {
-            cnt += o.optionQty
+        let val = 0
+        for (const o of this.product.optionInfo) {
+          if (o.optionGroupId === this.product.optionGroupId) {
+            val = o.optionQty
           }
-          return cnt
         }
+        return val
       }
     },
+
+  beforeMount () {
+    this.$emit('prdtPrice', [this.index, this.totalPrice])
+  },
+  beforeUpdate () {
+    this.$emit('prdtPrice', [this.index, this.totalPrice])
+  },
 
   methods: {
     removeBtnClick () {
@@ -79,16 +73,8 @@ export default {
       this.$emit('selectItem', this.index)
     },
     prdtQtyCheck (x) {
-      // if (this.product.isSoldout) {
-      //   this.$emit('soldOut', this.index)
-      //   x.target.value = '0'
-      // } else if (x.target.value > this.product.salesQty) {
-      //   this.$emit('salesLimitOver', this.index)
-      //   x.target.value = '0'
-      // }
-
       if (this.$store.state.isLogin) {
-        this.$emit('prdtCntChange', [this.cartItem.basketSysId, this.index, this.$refs.prdtCnt.value])
+        this.$emit('prdtCntChange', [this.product.basketSysId, this.index, this.$refs.prdtCnt.value, this.product.optionGroupId])
       } else {
         this.$emit('prdtCntChange', [this.index, this.$refs.prdtCnt.value])
       }
@@ -119,7 +105,7 @@ export default {
 }
 
 .productEntityWrap .option{
-    margin: 5px 0 10px;
+    margin: 5px 0 5px;
     color: #666666;
 }
 
