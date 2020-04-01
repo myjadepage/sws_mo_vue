@@ -1101,11 +1101,13 @@ Mypage > Main
 
 
 .myInfoWrap .profile_img{
+  overflow: hidden;
   width: 65px;
   height: 65px;
   background: url('../img/ico/ico_member.png');
   background-size: 100%;
   margin-right: 15px;
+  border-radius: 50%;
 }
 
 .myInfoWrap .infoHeader{
@@ -2618,8 +2620,8 @@ html, body{
     height:100px;
     clip-path:circle(50%);
     -webkit-clip-path:circle(50%);
-    background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
-    background-size:cover;
+    /* background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
+    background-size:cover; */
 }
 .profilePic .prImage.default{
   background:url('../img/ico/ico_member.png') 50% 50% no-repeat;
@@ -2668,7 +2670,8 @@ html, body{
     margin-right:10px;
     color:#666;
 }
-.profileInfo .row input{
+.profileInfo .row input,
+.profileInfo .row input:disabled{
     width:calc(100% - 66px);
     height:30px;
     padding:0 10px;
@@ -2676,11 +2679,28 @@ html, body{
     border:none;
     border-bottom:1px solid #eee;
     color:#111;
+    background:transparent;
 }
 .profileInfo .row input::placeholder,
 .profileInfo .row input::-webkit-placeholder,
 .profileInfo .row input:-ms-input-placeholder{
     color:#999;
+}
+.profileInfo .row select{
+  display:inline-block;
+  width:calc(100% - 66px);
+  height:30px;
+  padding:0 10px;
+  box-sizing: border-box;
+  border:none;
+  border-bottom:1px solid #eee;
+  color:#999;
+  font-size:15px;
+  vertical-align: middle;
+  background:url('../img/ico/arrow_down.png') calc(100% - 20px) 50% / 13px auto no-repeat;
+}
+.profileInfo .row select.on{
+  color:#111;
 }
 .profileForm .btn_submit{
     display:block;

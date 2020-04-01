@@ -2,7 +2,7 @@
   <div class="myInfoWrap">
     <div class="infoHeader">
       <div class="profile_pic">
-        <div class="profile_img" :style="{backgroundImage:'url('+member.profileImgUrloptional+')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}"></div>
+        <div class="profile_img" :style="{backgroundImage:'url('+member.profileImgUrl+')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}"></div>
         <router-link to="/modifyProfile" class="ico_edit"></router-link>
       </div>
       <div class="profile_text">

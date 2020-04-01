@@ -81,6 +81,22 @@ function getUserInfo (accessToken) {
   })
 }
 
+// 내정보 관리 변경
+function modifyUserInfo (accessToken, userInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(userInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/myinfo`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -373,5 +389,6 @@ export {
   getCartItem,
   getAddingCosts,
   removeCartItem,
-  putCartItem
+  putCartItem,
+  modifyUserInfo
 }

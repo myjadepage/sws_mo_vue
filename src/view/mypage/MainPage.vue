@@ -28,7 +28,7 @@ export default {
       member: {
         id: '',
         nickName: '',
-        profileImgUrloptional: '/static/images/ico_member.png'
+        profileImgUrl: '/static/images/ico_member.png'
       }
     }
   },
@@ -45,8 +45,8 @@ export default {
           if (res.data.jsonData.nickName) {
             this.member.nickName = res.data.jsonData.nickName
           }
-          if (res.data.jsonData.profileImgUrloptional) {
-            this.member.profileImgUrloptional = res.data.jsonData.profileImgUrloptional
+          if (res.data.jsonData.profileImgUrl) {
+            this.member.profileImgUrl = res.data.jsonData.profileImgUrl
           }
         })
         .catch(err => {
