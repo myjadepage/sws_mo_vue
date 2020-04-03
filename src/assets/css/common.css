@@ -150,12 +150,12 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px inherit inset;
 }
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
   body {
     max-width: 640px;
     margin: 0 auto
   }
-}
+} */
 .ir_pm {
   display: block;
   overflow: hidden;
@@ -1402,11 +1402,12 @@ MyPage > Contact
 
 .email_form select{
     float: right;
+    width:110px;
     color:#E61754;
 }
 
 .email_form input{
-  width: 80%;
+  width: calc(100% - 110px);
 }
 
 .email_form{
@@ -1476,7 +1477,7 @@ MyPage > Notice
 }
 
 .notice_date{
-  font-family: Roboto;
+  font-family: 'Roboto';
  font-size: 13px;
  color: #666666;
 }
@@ -1488,6 +1489,9 @@ MyPage > Notice
 
 .noticeListWrap .hidden{
   display: none;
+}
+.noticeListWrap .notice_content{
+  padding-top:10px;
 }
 
 /* 

@@ -214,6 +214,55 @@ function putCartItem (accessToken, basketSysId, cartItem) {
 
 /**
  *
+ * 마이페이지
+ */
+// 1:1 문의 등록
+function writeQuestion (accessToken, questionInfo) {
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(questionInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}operations/questions`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-공지사항 조회(조건)
+function getNoticeList (sIdx, rCnt) {
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 마이페이지-패스워드 변경
+function changePw (accessToken, pwInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(pwInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/password`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+/**
+ *
  * 회원가입
  */
 
@@ -229,7 +278,7 @@ function checkRSA (rsaEncStr) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/chkrsa`, formdata)
+  return axios.post(`${config.baseUrl2}auth/chkrsa`, formdata)
 }
 
 // 아이디 중복확인
@@ -402,5 +451,8 @@ export {
   removeCartItem,
   putCartItem,
   modifyUserInfo,
-  getMypageInfo
+  getMypageInfo,
+  writeQuestion,
+  getNoticeList,
+  changePw
 }

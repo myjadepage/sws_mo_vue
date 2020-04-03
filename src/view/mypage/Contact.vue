@@ -13,13 +13,16 @@ import Bar from '@/components/shared/Bar'
 import Content from '@/components/mypage/Contact/ContactContent'
 import Email from '@/components/mypage/Contact/ContactEmail'
 import Info from '@/components/mypage/Contact/ContactInfo'
+import { writeQuestion } from '@/api/index.js'
 
 export default {
   data () {
     return {
       title: '문의하기',
-      content: '',
-      email: ''
+      qInfo: {
+        content: '',
+        email: ''
+      }
     }
   },
   components: {
@@ -27,17 +30,29 @@ export default {
   },
   methods: {
     formInputed (data) {
-      this.content = data
+      this.qInfo.content = data
     },
     emailInputed (data) {
-      this.email = data
+      this.qInfo.email = data
     },
     contact () {
-      var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-      if (this.email.match(regExp)) {
-        console.log(this.content, this.email)
+      let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      let spcPattern = /[~#$%^&()_+|<>{}]/
 
-        // 비동기 post 로직
+      if (this.qInfo.email.match(regExp)) {
+        if (!this.qInfo.content.match(spcPattern)) {
+          // console.log(this.qInfo.content, this.qInfo.email)
+          // 비동기 post 로직
+          writeQuestion(sessionStorage.getItem('accessToken'), this.qInfo)
+            .then(res => {
+              console.log(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        } else {
+          alert('문의 내용에 특수문자를 사용할 수 없습니다.')
+        }
       } else {
         alert('이메일 주소가 올바르지 않습니다.')
       }
