@@ -1,10 +1,10 @@
 <template>
-  <div class="detailQaWrap">
+  <div v-if="questions" class="detailQaWrap">
     <div class="qaHeader">
-      상품문의 총 {{qaList.length}}개
+      상품문의 총 {{questions.length}}개
       <button class="goQaBtn" @click="goQAbtnClick">상품 문의하기</button>
     </div>
-    <Entity v-for="(qa,idx) in qaList" :key="idx" :qa="qa" />
+    <Entity v-for="(question,idx) in questions" :key="idx" :question="question" />
   </div>
 </template>
 
@@ -12,46 +12,14 @@
 import Entity from './qa/QAentity'
 
 export default {
+  props: ['questions'],
   components: {
     Entity
   },
-  data () {
-    return {
-      qaList: [
-        {
-          date: '2020.02.11',
-          writer: 'abcdefgh',
-          content: '할인 기간은 언제까지에요?',
-          reply: '',
-          status: 0
-        },
-        {
-          date: '2020.02.11',
-          writer: 'abcdefgh',
-          content: '할인 기간은 언제까지에요?abcdefghijklmfopqrstuvwxyz',
-          reply: '할인은 언제까지 입니다.',
-          status: 1
-        },
-        {
-          date: '2020.02.11',
-          writer: 'abcdefgh',
-          content: '할인 기간은 언제까지에요?abcdefghijklmfopqrstuvwxyz',
-          reply: '할인은 언제까지 입니다.',
-          status: 1
-        },
-        {
-          date: '2020.02.11',
-          writer: 'abcdefgh',
-          content: '할인 기간은 언제까지에요?',
-          reply: '',
-          status: 0
-        }
-      ]
-    }
-  },
   methods: {
     goQAbtnClick () {
-
+      // this.$router.push(`/Product/${this.$route.params.prdtSysId}/QA`)
+      this.$emit('QABtnClick')
     }
   }
 }
