@@ -11,12 +11,8 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
-<<<<<<< HEAD
-import { postCartItem, getAccessToken } from '@/api/index.js'
-=======
 import {postCartItem, getAccessToken} from '@/api/index.js'
 // import {isEquals} from '@/assets/js/common.js'
->>>>>>> swsmo2/master
 
 export default {
   props: ['buyMode', 'options'],
