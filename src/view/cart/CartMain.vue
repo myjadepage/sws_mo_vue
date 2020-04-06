@@ -11,11 +11,16 @@
     @soldOut="StockOutModalShow"
     @sigleItemCntChange="singleItemChange"
     @multiOptionCntChange="multiItemChange"
+    @prdtPrice="calcPrdtPrice"
     :index="idx"
     :product="{...p}"
      />
 
-    <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" v-if="products.length > 0"
+    <PayInfo
+    v-if="products.length > 0"
+    @deliveryInfoBtnClick="DeliveryModalShow"
+    @selectedItemBuy="selectedItemBuyClick"
+    @allItemBuy="allItemBuyClick"
       :products="[...products]"
       />
 
@@ -45,7 +50,7 @@ import StockOutModal from '@/components/cartpage/Modal/StockOut'
 import DeleteModal from '@/components/cartpage/Modal/BasketDeleteModal'
 import DeletedModal from '@/components/cartpage/Modal/BasketDeleted'
 
-import {getProduct, getCartItem, getAccessToken, putCartItem} from '@/api/index.js'
+import {getProduct, getCartItem, getAccessToken, removeCartItem, putCartItem} from '@/api/index.js'
 
 export default {
   created () {
@@ -152,14 +157,17 @@ export default {
       StockOutModal: false,
       DeleteModal: false,
       DeletedModal: false,
-      isCheckAll: true,
-      deleteIndex: null
+      isCheckAll: true
     }
   },
   components: {
     Bar, EmptyCart, CartCount, Product, PayInfo, DeliveryModal, CartLimitModal, PrdtLimitModal, StockOutModal, DeleteModal, DeletedModal
   },
   methods: {
+    calcPrdtPrice (info) {
+      this.products[info[0]].totalPrice = info[1]
+    },
+
     selectItem (idx) {
       if (this.isCheckAll === true) {
         this.isCheckAll = false
@@ -233,7 +241,8 @@ export default {
       if (this.$store.state.isLogin) { // 회원인 경우
         let cartItem = {}
 
-        for (const p of this.products) {
+        for (let i = 0; i < this.products.length; i++) {
+          const p = this.products[i]
           if (p.basketSysId === info[0]) {
             cartItem.prdtSysId = p.prdtSysId
             cartItem.basketQty = Number(p.basketQty)
@@ -250,6 +259,7 @@ export default {
                 })
               }
             } else {
+              this.products[i].basketQty = Number(info[1])
               cartItem.basketQty = Number(info[1])
             }
           }
@@ -273,6 +283,12 @@ export default {
             }
           })
       } else { // 비회원인 경우
+        for (let i = 0; i < this.products.length; i++) {
+          if (info[0] === this.products[i].basketSysId && !this.products[i].isOptionNormal) {
+            this.products[i].basketQty = Number(info[1])
+          }
+        }
+
         let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
         let targetIdx = 0
         for (let i = 0; i < cartList.length; i++) {
@@ -290,6 +306,7 @@ export default {
 
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
+      // this.$forceUpdate()
     },
     multiItemChange (info) {
       if (this.$store.state.isLogin) { // 회원인 경우
@@ -351,6 +368,7 @@ export default {
 
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
+      this.$forceUpdate()
     },
 
     selectedDelete () {
@@ -364,7 +382,51 @@ export default {
     },
     deleteConfirm () {
       if (this.$store.state.isLogin) {
+        for (let i = this.products.length - 1; i >= 0; i--) {
+          const p = this.products[i]
+          if (p.isChecked) {
+            removeCartItem(sessionStorage.getItem('accessToken'), p.basketSysId)
+              .then(res => {
+                console.log(res)
+                this.products.splice(i, 1)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  getAccessToken(sessionStorage.getItem('refreshToken'))
+                    .then(res => {
+                      sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                    })
+                    .catch(err => {
+                      if (err.response.status === 401) {
+                        this.$store.dispatch('logOut')
+                        this.$router.push('/Login')
+                      }
+                    })
+                }
+              })
+          }
+        }
+        this.DeleteModal = false
+        this.DeletedModal = true
       } else {
+        let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+
+        for (let i = this.products.length - 1; i >= 0; i--) {
+          const p = this.products[i]
+
+          if (p.isChecked) {
+            for (let j = cartList.length - 1; j >= 0; j--) {
+              const c = cartList[j]
+              if (c.basketSysId === p.basketSysId) {
+                cartList.splice(j, 1)
+              }
+            }
+            this.products.splice(i, 1)
+          }
+        }
+
+        sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+
         this.DeleteModal = false
         this.DeletedModal = true
       }
@@ -374,8 +436,118 @@ export default {
       this.deleteIndex = null
       this.modalVisiblity = false
       this.DeletedModal = false
+    },
+    selectedItemBuyClick () {
+      let list = []
+      let op = []
+      for (const p of this.products) {
+        if (p.isChecked) {
+          list.push(p)
+          let map = new Map()
+          for (const o of p.optionInfo) {
+            if (!map.has(o.optionGroupId)) {
+              map.set(o.optionGroupId, [])
+            }
+            map.get(o.optionGroupId).push(o)
+          }
 
-      // location.reload()
+          let x = []
+          if (!p.isOptionNormal) {
+            x = [{
+              count: p.basketQty,
+              price: p.price,
+              contentName: '',
+              contentGroup: [{
+                name: p.name,
+                prdtNormalOptionSysId: null,
+                price: null
+              }]
+            }]
+          }
+
+          for (const m of map.values()) {
+            let item = {
+              count: 0,
+              price: 0,
+              contentName: '',
+              contentGroup: []
+            }
+
+            for (const o of m) {
+              item.count = o.optionQty
+              item.price += o.price
+              item.contentName += o.optionKeyName
+              item.contentGroup.push({
+                name: o.optionKeyName,
+                prdtNormalOptionSysId: o.prdtNormalOptionSysId,
+                price: o.price
+              })
+            }
+
+            x.push(item)
+          }
+          op.push(x)
+        }
+      }
+
+      sessionStorage.setItem('products', JSON.stringify(list))
+      sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+
+      this.$router.push('/buyproduct')
+    },
+    allItemBuyClick () {
+      let op = []
+      for (const p of this.products) {
+        let map = new Map()
+        for (const o of p.optionInfo) {
+          if (!map.has(o.optionGroupId)) {
+            map.set(o.optionGroupId, [])
+          }
+          map.get(o.optionGroupId).push(o)
+        }
+
+        let x = []
+        if (!p.isOptionNormal) {
+          x = [{
+            count: p.basketQty,
+            price: p.price,
+            contentName: '',
+            contentGroup: [{
+              name: p.name,
+              prdtNormalOptionSysId: null,
+              price: null
+            }]
+          }]
+        }
+
+        for (const m of map.values()) {
+          let item = {
+            count: 0,
+            price: 0,
+            contentName: '',
+            contentGroup: []
+          }
+
+          for (const o of m) {
+            item.count = o.optionQty
+            item.price += o.price
+            item.contentName += o.optionKeyName
+            item.contentGroup.push({
+              name: o.optionKeyName,
+              prdtNormalOptionSysId: o.prdtNormalOptionSysId,
+              price: o.price
+            })
+          }
+
+          x.push(item)
+        }
+        op.push(x)
+      }
+
+      sessionStorage.setItem('products', JSON.stringify(this.products))
+      sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+
+      this.$router.push('/buyproduct')
     }
   }
 }

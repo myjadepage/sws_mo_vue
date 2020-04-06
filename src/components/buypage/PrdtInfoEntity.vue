@@ -4,22 +4,17 @@
     <div class="infobody">
     <div class="prdTitle">[{{product.brandName}}] {{product.name}}</div>
     <div class="prdOptions" v-if="option[0].contentName">
-      <div>
-        [옵션명1] <span v-for="(oo, i) in option[0].contentGroup" :key="i">{{oo.name==='선택없음'?'':oo.name}} </span>
-      </div>
-      <!-- <div v-for="(o,idx) in option" :key="idx">
-        [옵션명{{idx+1}}] <span v-for="(oo, i) in o.contentGroup" :key="i">{{oo.name==='선택없음'?'':oo.name}} </span>
-        </div> -->
+        [옵션명1] <div v-for="(c,idx) in option[0].contentGroup" :key="idx">{{c.name}}</div>
     </div>
     <div class="prdPriceCnt">
-      {{calcTotalPrice|makeComma}}원 / 수량{{countPrductNum}}개
-    </div>
-      <div v-if="option.length>1">
+      {{calcTotalPrice|makeComma}}원 / 수량{{calcCnt}}개
+      <span v-if="option.length>1">
         <button @click="moreOption = !moreOption">더보기</button>
-      </div>
+      </span>
+    </div>
         <div class="prdOptions" v-if="moreOption">
         <div v-for="x in option.length-1" :key="x">
-          [옵션명{{x+1}}] <span v-for="(oo,idx) in option[x].contentGroup" :key="idx">{{oo.name}}</span>
+          [옵션명{{x+1}}] <div v-for="(c,idx) in option[x].contentGroup" :key="idx">{{c.name}}</div>
         </div>
         </div>
       </div>
@@ -33,27 +28,32 @@ export default {
   computed: {
     calcTotalPrice () {
       if (this.option[0].contentName !== '') {
-        let optionPrice = 0
-        if (this.option) {
-          for (const o of this.option) {
-            optionPrice += o.price + this.product.price - (this.product.price * this.product.discountRate)
+        let val = 0
+        for (const o of this.option) {
+          let optionPrice = 0
+          if (o.contentGroup) {
+            for (const oo of o.contentGroup) {
+              optionPrice += oo.price
+            }
+            val += (optionPrice + this.product.price - (this.product.price * this.product.discountRate)) * o.count
           }
         }
-        return optionPrice
+        return val
       } else {
         return (this.product.price - (this.product.price * this.product.discountRate)) * this.option[0].count
       }
     },
-    countPrductNum () {
+
+    calcCnt () {
       let val = 0
-      if (this.option) {
-        for (const i of this.option) {
-          val += Number(i.count)
-        }
+      for (const o of this.option) {
+        val += o.count
       }
       return val
     }
+
   },
+
   data () {
     return {
       moreOption: false
@@ -63,6 +63,13 @@ export default {
 </script>
 
 <style>
+.buyPrdtEntityWrap{
+  background-color: #fff;
+  padding: 12px 15px;
+  min-height: 90px;
+  margin-bottom: 1px;
+}
+
 .buyPrdtEntityWrap .prdImg img{
   float: left;
   width: 70px;

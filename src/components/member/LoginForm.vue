@@ -40,8 +40,8 @@
             <li><a href="/Searchpw">패스워드 찾기</a></li>
             <li><a href="/RegStep00">회원가입</a></li>
           </ul>
-          <button @click="noMemberBuyClick" v-if="$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원으로 구매</button>
-          <button @click="noMemeberOrderClick" v-if="!$store.getters.getProduct.name" class="btn btn-block btn-sub">비회원 주문조회</button>
+          <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn btn-block btn-sub">비회원으로 구매</button>
+          <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn btn-block btn-sub">비회원 주문조회</button>
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
@@ -223,6 +223,15 @@ export default {
     },
     noMemeberOrderClick () {
       this.$router.push('/nonMemberOrder')
+    }
+  },
+  computed: {
+    nonMemberBtnMode () {
+      if (sessionStorage.getItem('products')) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
