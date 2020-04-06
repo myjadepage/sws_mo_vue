@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {getProduct} from '@/api/index.js'
+// import {getProduct} from '@/api/index.js'
 
 export default {
 
