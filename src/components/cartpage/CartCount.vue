@@ -25,7 +25,14 @@ export default {
       }
     },
     clickDeleteBtn () {
-      if (!this.cntInfo[0].includes(true)) {
+      let isAnyChecked = false
+      for (const p of this.cntInfo[0]) {
+        if (p.isChecked) {
+          isAnyChecked = true
+        }
+      }
+
+      if (isAnyChecked === false) {
         return
       }
       this.$emit('selectedDelete')

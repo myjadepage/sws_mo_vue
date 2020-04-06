@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import {getProduct} from '@/api/index.js'
 
 export default {
 
@@ -70,9 +69,8 @@ export default {
         if (this.products[i].isChecked === false) {
           continue
         }
-        // val += p
+        val += this.products[i].totalPrice
       }
-
       return val
     }
   },
@@ -81,8 +79,10 @@ export default {
       this.$emit('deliveryInfoBtnClick')
     },
     buySelectedItemClick () {
+      this.$emit('selectedItemBuy')
     },
     buyAllClick () {
+      this.$emit('allItemBuy')
     }
   }
 }

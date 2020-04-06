@@ -30,10 +30,12 @@ export default {
 
 .buyPrdInfoWrap{
   margin-top: 5px;
-  background-color: #fff;
-  padding: 15px 12px;
   font-size: 15px;
-  min-height: 108px;
+}
+
+.buyPrdInfoWrap .infoHeader{
+  padding: 15px 12px 0;
+  background-color: #fff;
 }
 
 </style>

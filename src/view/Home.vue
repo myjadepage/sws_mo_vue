@@ -14,6 +14,8 @@ import MainContent from '@/components/MainContent'
 export default {
   created () {
     window.scrollTo(0, 0)
+    sessionStorage.removeItem('products')
+    sessionStorage.removeItem('selectedOptions')
   },
   name: 'Home',
   data () {

@@ -11,9 +11,9 @@
             {{question.content}}
         </div>
 
-        <div v-if="qaVisibility && question.answeroptional" class="replyBody">
+        <div v-if="qaVisibility && question.answer" class="replyBody">
           <div class="contentTitle">답변</div>
-            {{question.answeroptional}}
+            {{question.answer}}
         </div>
       </div>
   </div>
