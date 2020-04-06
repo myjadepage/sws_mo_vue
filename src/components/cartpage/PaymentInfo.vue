@@ -36,13 +36,13 @@ import {getProduct} from '@/api/index.js'
 
 export default {
 
-  props: ['products', 'selectedItem', 'prices', 'cartList'],
+  props: ['products'],
   computed: {
     deliveryPrice () {
       let price = 0
       for (let i = 0; i < this.products.length; i++) {
         const product = this.products[i]
-        if (this.selectedItem[i] === false) {
+        if (product.isChecked === false) {
           continue
         }
 
@@ -66,12 +66,11 @@ export default {
     price () {
       let val = 0
 
-      for (let i = 0; i < this.prices.length; i++) {
-        const p = this.prices[i]
-        if (this.selectedItem[i] === false) {
+      for (let i = 0; i < this.products.length; i++) {
+        if (this.products[i].isChecked === false) {
           continue
         }
-        val += p
+        // val += p
       }
 
       return val

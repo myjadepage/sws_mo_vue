@@ -2,25 +2,21 @@
 <div class="cartMainWrap">
     <Bar :val="'장바구니'" />
     <EmptyCart v-if="products.length===0" />
-    <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" @selectedDelete="selectedDelete" v-if="products.length > 0" :cntInfo="[selectedItem,products.length,isCheckAll]" />
+    <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" @selectedDelete="selectedDelete" v-if="products.length > 0" :cntInfo="[products,isCheckAll]" />
     <Product
     v-for="(p,idx) in products"
     :key="idx"
     @selectItem="selectItem"
     @salesLimitOver="PrdtLimitModalShow"
     @soldOut="StockOutModalShow"
-    @prdtPrice="prdtPrices"
     @sigleItemCntChange="singleItemChange"
     @multiOptionCntChange="multiItemChange"
     :index="idx"
-    :product="p"
-    :isChecked="selectedItem[idx]"
+    :product="{...p}"
      />
 
     <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" v-if="products.length > 0"
-      :prices="[...prices]"
       :products="[...products]"
-      :selectedItem="[...selectedItem]"
       />
 
     <div v-if="modalVisiblity" class="modalSection">
@@ -49,7 +45,7 @@ import StockOutModal from '@/components/cartpage/Modal/StockOut'
 import DeleteModal from '@/components/cartpage/Modal/BasketDeleteModal'
 import DeletedModal from '@/components/cartpage/Modal/BasketDeleted'
 
-import {getProduct, getCartItem, getAccessToken, removeCartItem, putCartItem} from '@/api/index.js'
+import {getProduct, getCartItem, getAccessToken, putCartItem} from '@/api/index.js'
 
 export default {
   created () {
@@ -63,7 +59,6 @@ export default {
             for (const c of cartList) {
               getProduct(c.prdtSysId)
                 .then(res => {
-                  this.selectedItem.push(true)
                   let item = {
                     ...res.data.jsonData.product,
                     normalOptions: res.data.jsonData.normalOptions,
@@ -71,7 +66,8 @@ export default {
                     isOptionNormal: c.isOptionNormal,
                     optionInfo: [],
                     basketSysId: c.basketSysId,
-                    basketQty: c.basketQty
+                    basketQty: c.basketQty,
+                    isChecked: true
                   }
 
                   if (c.productOptions) {
@@ -109,18 +105,18 @@ export default {
 
           cartList[i].basketSysId = 999 - i
 
-          this.selectedItem.push(true)
           let item = {
             isAddingProduct: c.isAddingProduct,
             isOptionNormal: c.isOptionNormal,
             optionInfo: [],
             basketSysId: c.basketSysId,
-            basketQty: c.basketQty
+            basketQty: c.basketQty,
+            isChecked: true
+
           }
 
           if (c.optionGroups) {
             for (const og of c.optionGroups) {
-              console.log(item.basketSysId)
               for (const po of og.productOptions) {
                 item.optionInfo.push({
                   ...po, optionGroupId: og.optionGroupId, optionQty: og.optionQty, price: po.price
@@ -148,9 +144,7 @@ export default {
   },
   data () {
     return {
-      prices: [],
       products: [],
-      selectedItem: [],
       modalVisiblity: false,
       DeliveryModal: false,
       CartLimitModal: false,
@@ -171,9 +165,16 @@ export default {
         this.isCheckAll = false
       }
 
-      this.selectedItem[idx] = !this.selectedItem[idx]
+      this.products[idx].isChecked = !this.products[idx].isChecked
 
-      if (!this.selectedItem.includes(false)) {
+      let isAllSelect = true
+      for (const p of this.products) {
+        if (p.isChecked === false) {
+          isAllSelect = false
+        }
+      }
+
+      if (isAllSelect) {
         this.isCheckAll = true
       }
 
@@ -181,16 +182,16 @@ export default {
     },
 
     selectAll (status) {
-      for (let i = 0; i < this.selectedItem.length; i++) {
-        this.selectedItem[i] = true
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i].isChecked = true
       }
       this.isCheckAll = status
       this.$forceUpdate()
     },
 
     deSelectAll (status) {
-      for (let i = 0; i < this.selectedItem.length; i++) {
-        this.selectedItem[i] = false
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i].isChecked = false
       }
       this.isCheckAll = status
       this.$forceUpdate()
@@ -363,60 +364,7 @@ export default {
     },
     deleteConfirm () {
       if (this.$store.state.isLogin) {
-        let x = [...this.selectedItem]
-        for (let i = this.selectedItem.length - 1; i >= 0; i--) {
-          if (this.selectedItem[i]) {
-            removeCartItem(sessionStorage.getItem('accessToken'), this.products[i].basketSysId)
-              .then(res => {
-                this.products.splice(i, 1)
-                this.prices.splice(i, 1)
-                x.splice(i, 1)
-                this.DeleteModal = false
-                this.DeletedModal = true
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  getAccessToken(sessionStorage.getItem('refreshToken'))
-                    .then(res => {
-                      sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                    })
-                    .catch(err => {
-                      if (err.response.status === 401) {
-                        this.$store.dispatch('logOut')
-                        this.$router.push('/Login')
-                      }
-                    })
-                }
-              })
-          }
-        }
-
-        this.selectedItem = x
       } else {
-        let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-        let x = [...this.selectedItem]
-        let targets = []
-        for (let i = this.selectedItem.length - 1; i >= 0; i--) {
-          if (this.selectedItem[i]) {
-            targets.push(this.products[i].basketSysId)
-          }
-        }
-
-        for (let i = 0; i < x.length; i++) {
-          for (const t of targets) {
-            if (this.products[i] && this.products[i].basketSysId === t) {
-              console.log(cartList)
-
-              // this.products.splice(i, 1)
-              // cartList.splice(i, 1)
-              // this.prices.splice(i, 1)
-              // this.selectedItem.splice(i, 1)
-              // i = 0
-            }
-          }
-        }
-
-        // sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
         this.DeleteModal = false
         this.DeletedModal = true
       }
@@ -428,12 +376,7 @@ export default {
       this.DeletedModal = false
 
       // location.reload()
-    },
-    prdtPrices (info) {
-      this.prices[info[0]] = info[1]
-      this.$forceUpdate()
     }
-
   }
 }
 </script>
