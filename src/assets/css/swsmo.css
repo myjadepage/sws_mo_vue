@@ -697,7 +697,20 @@
 
 
 /* 플레이어 커스텀 */
-  
+.info .flowplayer {
+  position: relative;
+  width:100%;
+  height:210px;
+  background:#000 !important;
+}
+.fullscreen .flowplayer{
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
 .layer-player {
     position: relative;
     /* position: absolute;
@@ -768,24 +781,56 @@ body>#flowplayer-floating-container {
   /* 플레이어 오른쪽 아이콘 */
   /* 전체보기 */
   
-  .fp-secondary {
+  .flowplayer .fp-secondary {
     position: absolute;
-    top: 50px;
-    right: 20px;
+    top: 20px;
+    right: 10px;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    background:rgba(0,0,0,0.45);
+    text-align: center;
+  }
+  .info .fp-secondary{
+    top:20px;
+  }
+  .live .flowplayer .fp-secondary{
+    right:15px;
+    background:none;
+  }
+  .live .flowplayer.is-fullscreen .fp-secondary{
+    background:rgba(0,0,0,0.45);
   }
 
   /* 볼륨음소거 */  
-  .fp-volumebtn {
+  .flowplayer .fp-volumebtn {
     position: absolute;
-    top: 100px;
-    right: 23px;
+    top: 65px;
+    right: 0;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    background:rgba(0,0,0,0.45);
+    text-align: center;
+  }
+  .flowplayer .fp-volumebtn svg{
+    width:10px;
+    margin-top:7px;
+  }
+  .flowplayer.is-muted .fp-volumebtn:after{
+    position: relative;
+    top:-2px;
+    font-size:20px;
   }
   /* 공유버튼 */
   
   .fp-secondary .fp-share-menu {
     position: absolute;
-    top: 100px;
-    right: 10px;
+    top: 90px;
+    right: 0;
+  }
+  .info .fp-secondary .fp-share-menu{
+    top:90px;
   }
 
   /* 비디오메뉴선택 */
@@ -837,6 +882,11 @@ body>#flowplayer-floating-container {
     font-weight: 500;
   }
 
+  /* .mainMedia.live{
+    position:relative;
+    width:100%;
+    height:100vh;
+  } */
 
 
   .live .flowplayer .fp-engine{
@@ -850,7 +900,7 @@ body>#flowplayer-floating-container {
     opacity:0;
     transition:all 0.3s ease;
   }
-  .live .flowplayer .fp-secondary{
+  /* .live .flowplayer .fp-secondary{
     top:65px;
     right:16px;
     width:30px;
@@ -868,20 +918,42 @@ body>#flowplayer-floating-container {
     display:inline-block;
     width:24px;
     margin-top:6px;
+  } */
+  .live.info .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen,
+  .live .flowplayer .fp-secondary .fp-fullscreen-exit,
+  .live.fullscreen .flowplayer .fp-secondary .fp-fullscreen,
+  .live.fullscreen .flowplayer .fp-secondary .fp-fullscreen-exit,
+  .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen{
+    display:none;
+  }
+  .live.info .flowplayer .fp-secondary .fp-fullscreen,
+  .live .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen-exit,
+  .flowplayer .fp-secondary .fp-fullscreen,
+  .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen-exit{
+    display:inline-block;
+    margin-right:0;
+    margin-top:7px;
+    width:20px;
   }
   .live .flowplayer .fp-volumebtn{
     position:fixed;
-    top:115px;
+    top:65px;
     right:16px;
     width:30px;
     height:30px;
     margin-right:0;
     border-radius: 50%;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.45);
     text-align: center;
   }
-  .is-small.is-share-menu .fp-controls{
-    display:block !important;
+  .live.info .flowplayer .fp-volumebtn{
+    top:115px;
+  }
+  .live.info .flowplayer.is-fullscreen .fp-volumebtn{
+    top:65px;
+  }
+  .flowplayer.is-small.is-share-menu .fp-controls{
+    display:inline-block !important;
   }
   .live .flowplayer .fp-volumebtn svg{
     width:10px;
@@ -908,22 +980,26 @@ body>#flowplayer-floating-container {
     opacity:1;
     background:rgba(0,0,0,0.5);
   }
-  .live .flowplayer .fp-header .fp-share-menu{
+  .flowplayer .fp-header .fp-share-menu{
     float:none;
     right:0;
     width:30px;
     height:30px;
     margin-right:0;
     border-radius: 50%;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.45);
     text-align: center;
   }
-  .live .flowplayer .fp-header .fp-share-menu .fp-share{
+  .live .flowplayer .fp-header .fp-share-menu{
+    right:0px;
+  }
+  .flowplayer .fp-header .fp-share-menu .fp-share{
     width:18px;
     margin-top:4px;
     margin-right:2px;
   }
-  .live .flowplayer .fp-header .fp-share-menu .fp-menu{
+  .live .flowplayer .fp-header .fp-share-menu .fp-menu,
+  .mainMedia .flowplayer .fp-header .fp-share-menu .fp-menu{
     left:calc(100% - 150px) !important;
     top:0 !important;
     right:40px !important;
@@ -933,7 +1009,7 @@ body>#flowplayer-floating-container {
     width:auto !important;
     height: 90px !important;
   }
-  .live .flowplayer.is-small .fp-share-menu li{
+  .flowplayer.is-small .fp-share-menu li{
     display:block;
     margin:5px 0;
     padding-left:10px;
@@ -943,6 +1019,9 @@ body>#flowplayer-floating-container {
     left:0;
     bottom:116px;
     width:100%;
+  }
+  .live.info .flowplayer .fp-controls{
+    bottom:0;
   }
   .live .flowplayer .productInfoBox{
     position: absolute;
@@ -1030,4 +1109,41 @@ body>#flowplayer-floating-container {
   }
   .live .flowplayer.is-tiny:after{
     display:none;
+  }
+
+  
+  .mainMedia .toggleFullsize{
+    position:absolute;
+    top:20px;
+    right:16px;
+    z-index:130;
+    width:30px;
+    height:30px;
+    background:url('../img/ico/btn_movieSize.png') 50% 50% /30px auto no-repeat;
+    transition:opacity 0.3s ease;
+    transform:translateX(100px);
+    opacity:0;
+  }
+  .mainMedia .is-touched .toggleFullsize{
+    opacity:1;
+    transform:translateX(0);
+  }
+  .mainMedia.info .toggleFullsize{
+    top:20px;
+  }
+  .mainMedia .btn_goBack{
+    position:absolute;
+    top:20px;
+    left:20px;
+    z-index:130;
+    width:27px;
+    height:23px;
+    background:url('../img/ico/back_arrow_w.png') 50% 50% / 17px auto no-repeat;
+    transition:opacity 0.3s ease;
+    transform:translateX(-100px);
+    opacity:0;
+  }
+  .mainMedia .is-touched .btn_goBack{
+    opacity:1;
+    transform:translateX(0);
   }

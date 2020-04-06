@@ -2,7 +2,7 @@
   <div class="productMediaWrap">
     <div :style="mediaSize" class="mainMedia">
       <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
-      <div id="player_container" class="use-play-1 flowplayer"></div>
+      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle"></div>
     </div>
 
     <!-- <ul class="mediaMenu">
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import 'flowplayer-files/lib/styles/flowplayer.css'
+// import 'flowplayer-files/lib/styles/flowplayer.css'
 
 export default {
   data () {
@@ -41,42 +41,21 @@ export default {
       const POSTER = 'http://cdn.shallwe.link/product/0/0/krill_oil_snapshot.jpg'
       const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
 
-      console.log(this.$route.params)
-      if (this.$route.params.type === '1') {
-        // eslint-disable-next-line no-undef
-        flowplayer('#player_container', {
-          float_on_scroll: true,
-          share: {
-            link: true,
-            facebook: true,
-            twitter: false
-          },
-          type: 'application/x-mpegurl',
-          src: VIDEOSRC,
-          poster: POSTER,
-          token: TOKEN
-        })
-      } else {
-        // eslint-disable-next-line no-undef
-        flowplayer('#player_container', {
-          float_on_scroll: true,
-          share: {
-            link: true,
-            facebook: true,
-            twitter: false
-          },
-          rewind: true,
-          type: 'application/x-mpegurl',
-          src: VIDEOSRC,
-          poster: POSTER,
-          token: TOKEN
-        })
-      }
-    },
-    selectMediaMode (x) {
-      this.$el.getElementsByTagName('li')[this.mediaMode].className = ''
-      this.mediaMode = x
-      this.$el.getElementsByTagName('li')[this.mediaMode].className = 'selected'
+      // eslint-disable-next-line no-undef
+      flowplayer('#player_container', {
+        share: {
+          link: true,
+          facebook: true,
+          twitter: false
+        },
+        rewind: true,
+        type: 'application/x-mpegurl',
+        src: VIDEOSRC,
+        poster: POSTER,
+        token: TOKEN,
+        loop: false,
+        preload: 'auto'
+      })
     }
   }
 }
@@ -140,4 +119,5 @@ export default {
 .productMediaWrap .selected .dot{
   visibility: visible;
 }
+
 </style>
