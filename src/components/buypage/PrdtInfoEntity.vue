@@ -34,18 +34,12 @@ export default {
     calcTotalPrice () {
       if (this.option[0].contentName !== '') {
         let optionPrice = 0
-        let oCnt = 0
         if (this.option) {
           for (const o of this.option) {
-            oCnt += o.count
-            optionPrice += (o.price * o.count) + this.product.price - (this.product.price * this.product.discountRate)
+            optionPrice += o.price + this.product.price - (this.product.price * this.product.discountRate)
           }
         }
-        if (optionPrice) {
-          return optionPrice
-        } else {
-          return (this.product.price - (this.product.price * this.product.discountRate)) * oCnt
-        }
+        return optionPrice
       } else {
         return (this.product.price - (this.product.price * this.product.discountRate)) * this.option[0].count
       }

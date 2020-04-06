@@ -17,6 +17,9 @@ export default {
       }
     },
     clickDeleteBtn () {
+      if (!this.cntInfo[0].includes(true)) {
+        return
+      }
       this.$emit('selectedDelete')
     }
   },
@@ -52,9 +55,8 @@ export default {
       position: relative;
       top: 10.5px;
       float: right;
-      width: 70px;
+      width: 20%;
       height: 32px;
-      border: 1px solid #cccccc;
       color: #111111;
       border-radius: 2px;
       font-size: 13px;

@@ -5,9 +5,10 @@
       <input @focus="inputFocused" @blur="inputUnFocused" @change="mailInputed" v-model="emailAddr" type="text" placeholder="이메일 주소">
         <select @change="mailInputed" v-model="emailDomain" name="mailDomain" id="mailDomain">
             <option value="">직접입력</option>
-            <option value="@naver.com">네이버</option>
-            <option value="@hanmail.net">다음</option>
-            <option value="@gmail.com">구글</option>
+            <option value="@naver.com">@naver.com</option>
+            <option value="@hanmail.net">@hanmail.net</option>
+            <option value="@nate.com">@nate.com</option>
+            <option value="@gmail.com">@gmail.com</option>
         </select>
         </div>
         <div class="text-center">

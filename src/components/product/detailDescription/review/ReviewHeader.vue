@@ -1,6 +1,6 @@
 <template>
   <div class="reviewHeaderWrap">
-      <span class="reviewCnt">리뷰 총 {{totalReviewCnt}}개</span>
+      <span class="reviewCnt">리뷰 총 {{reviews.length}}개</span>
       <div class="rating">
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half"></span>
@@ -36,22 +36,13 @@ export default {
         return 5 - this.fullStarCnt
       }
     },
-    totalReviewCnt () {
-      return this.reviews.photos.length + this.reviews.medias.length + this.reviews.normals.length
-    },
     reviewAvgRate () {
       let sum = 0
-      for (const i of this.reviews.photos) {
-        sum += i.rate
-      }
-      for (const i of this.reviews.medias) {
-        sum += i.rate
-      }
-      for (const i of this.reviews.normals) {
-        sum += i.rate
+      for (const i of this.reviews) {
+        sum += i.starPoint
       }
 
-      return Math.round(sum / this.totalReviewCnt).toFixed(1)
+      return Math.round((sum / 2) / this.reviews.length).toFixed(1)
     }
   }
 
@@ -70,6 +61,7 @@ export default {
 .reviewHeaderWrap .reviewCnt{
   font-size: 15px;
   font-weight: 500;
+  padding-left: 3px;
 }
 
 .reviewHeaderWrap .reviewCategory span{

@@ -44,7 +44,7 @@ export default {
       this.$el.getElementsByTagName('li')[this.selectedMenu].className = ''
       this.selectedMenu = x
       this.$el.getElementsByTagName('li')[this.selectedMenu].className = 'selected'
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 400)
     }
   }
 }

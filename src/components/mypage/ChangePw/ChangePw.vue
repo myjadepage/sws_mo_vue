@@ -1,34 +1,68 @@
 <template>
   <form action="" class="chngPw">
     <h2>기존 비밀번호</h2>
-    <input type="password" name="oldPw" placeholder="기존 비밀번호 입력" v-model="oldPassword" required />
+    <input type="password" name="oldPw" placeholder="기존 비밀번호 입력" v-model="pw.currentPassword" required />
 
     <h2>새 비밀번호 설정</h2>
-    <input type="password" name="newPw" placeholder="새 비밀번호 8~20자 이내" maxlength="20" v-model="password" required />
+    <input type="password" name="newPw" placeholder="새 비밀번호 6~20자 이내" maxlength="20" v-model="pw.newPassword" required />
     <input type="password" name="newPw_chk" placeholder="새 비밀번호 다시 입력" maxlength="20" v-model="confirmpw" required />
-    <p>영문, 숫자, 특수문자 혼합</p>
+    <p>영문, 숫자 또는 특수문자 혼합</p>
 
     <div class="btnsWrap">
       <button @click="emptyBack" class="btn_them gray border">취소</button>
-      <button class="btn_them ">확인</button>
+      <button class="btn_them " @click.stop.prevent="sendNewPw">확인</button>
     </div>
   </form>
 </template>
 
 <script>
+import { changePw } from '@/api/index.js'
+import { makeRsa } from '@/assets/js/common.js'
 
 export default {
   data () {
     return {
-      oldPassword: null,
-      password: null,
-      confirmpw: null
+      confirmpw: null,
+      pw: {
+        currentPassword: null,
+        newPassword: null
+      },
+      mspw: {
+        currentPassword: null,
+        newPassword: null
+      }
     }
   },
   methods: {
     emptyBack (e) {
       e.preventDefault()
       this.$router.go(-1)
+    },
+    sendNewPw () {
+      const enChk = new RegExp(/[a-z|A-Z]/gi)
+
+      if (this.pw.newPassword.legnth < 6 && this.pw.newPassword.legnth > 20) {
+        alert('비밀번호는 8~20자 이내로 입력해주세요.')
+        return false
+      } else if (this.pw.newPassword !== this.confirmpw) {
+        alert('비밀번호가 동일하지 않습니다.')
+        return false
+      } else if (!enChk.test(this.pw.newPassword)) {
+        alert('영문,숫자 또는 특수문자로 입력해 주세요')
+        return false
+      } else {
+        this.mspw.currentPassword = makeRsa(this.pw.currentPassword)
+        this.mspw.newPassword = makeRsa(this.pw.newPassword)
+        changePw(sessionStorage.getItem('accessToken'), this.mspw)
+          .then(res => {
+            this.pw.currentPassword = null
+            this.pw.newPassword = null
+            this.confirmpw = null
+            this.mspw.newPassword = null
+            this.mspw.currentPassword = null
+            this.mspw.newPassword = null
+          })
+      }
     }
   }
 }

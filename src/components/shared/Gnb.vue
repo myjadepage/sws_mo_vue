@@ -74,9 +74,9 @@ export default {
 
 <style scope>
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
     .gnb_main{max-width:640px;margin:0 auto;}
-}
+} */
 .common-header-gnb-main.fixed{
   position:fixed;
   width:100%;

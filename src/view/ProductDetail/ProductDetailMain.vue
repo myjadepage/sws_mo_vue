@@ -110,6 +110,7 @@ export default {
     }
   },
   beforeDestroy () {
+    this.$store.state.product = {}
     this.$store.commit('deleteAllOption')
   }
 }

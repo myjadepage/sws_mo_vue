@@ -150,12 +150,12 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px inherit inset;
 }
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
   body {
     max-width: 640px;
     margin: 0 auto
   }
-}
+} */
 .ir_pm {
   display: block;
   overflow: hidden;
@@ -1101,11 +1101,13 @@ Mypage > Main
 
 
 .myInfoWrap .profile_img{
+  overflow: hidden;
   width: 65px;
   height: 65px;
   background: url('../img/ico/ico_member.png');
   background-size: 100%;
   margin-right: 15px;
+  border-radius: 50%;
 }
 
 .myInfoWrap .infoHeader{
@@ -1400,11 +1402,12 @@ MyPage > Contact
 
 .email_form select{
     float: right;
+    width:110px;
     color:#E61754;
 }
 
 .email_form input{
-  width: 80%;
+  width: calc(100% - 110px);
 }
 
 .email_form{
@@ -1474,7 +1477,7 @@ MyPage > Notice
 }
 
 .notice_date{
-  font-family: Roboto;
+  font-family: 'Roboto';
  font-size: 13px;
  color: #666666;
 }
@@ -1486,6 +1489,9 @@ MyPage > Notice
 
 .noticeListWrap .hidden{
   display: none;
+}
+.noticeListWrap .notice_content{
+  padding-top:10px;
 }
 
 /* 
@@ -2618,8 +2624,8 @@ html, body{
     height:100px;
     clip-path:circle(50%);
     -webkit-clip-path:circle(50%);
-    background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
-    background-size:cover;
+    /* background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
+    background-size:cover; */
 }
 .profilePic .prImage.default{
   background:url('../img/ico/ico_member.png') 50% 50% no-repeat;
@@ -2668,7 +2674,8 @@ html, body{
     margin-right:10px;
     color:#666;
 }
-.profileInfo .row input{
+.profileInfo .row input,
+.profileInfo .row input:disabled{
     width:calc(100% - 66px);
     height:30px;
     padding:0 10px;
@@ -2676,11 +2683,28 @@ html, body{
     border:none;
     border-bottom:1px solid #eee;
     color:#111;
+    background:transparent;
 }
 .profileInfo .row input::placeholder,
 .profileInfo .row input::-webkit-placeholder,
 .profileInfo .row input:-ms-input-placeholder{
     color:#999;
+}
+.profileInfo .row select{
+  display:inline-block;
+  width:calc(100% - 66px);
+  height:30px;
+  padding:0 10px;
+  box-sizing: border-box;
+  border:none;
+  border-bottom:1px solid #eee;
+  color:#999;
+  font-size:15px;
+  vertical-align: middle;
+  background:url('../img/ico/arrow_down.png') calc(100% - 20px) 50% / 13px auto no-repeat;
+}
+.profileInfo .row select.on{
+  color:#111;
 }
 .profileForm .btn_submit{
     display:block;

@@ -19,7 +19,7 @@
           </tr>
       </table>
       <div class="btnSection">
-          <button class="BuySelectBtn">선택상품 구매</button><button class="BuyAllBtn">전체상품 구매</button>
+          <button @click="buySelectedItemClick" class="BuySelectBtn">선택상품 구매</button><button @click="buyAllClick" class="BuyAllBtn">전체상품 구매</button>
       </div>
       </div>
     <div class="infoFooter">
@@ -32,68 +32,11 @@
 </template>
 
 <script>
+import {getProduct} from '@/api/index.js'
+
 export default {
-  created () {
-    for (let i = 0; i < this.cartList.length; i++) {
-      const cartItem = this.cartList[i]
-      const product = this.products[i]
 
-      if (this.selectedItem[i] === false) {
-        continue
-      }
-
-      let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
-
-      let cnt = 0
-      if (cartItem.basketQty) {
-        cnt += cartItem.basketQty
-      } else {
-        for (const o of cartItem.productOptions) {
-          cnt += o.optionQty
-        }
-      }
-
-      this.price += prdtPrice * cnt
-    }
-  },
-
-  props: ['products', 'selectedItem', 'cartList'],
-  data () {
-    return {
-      price: 0
-    }
-  },
-  watch: {
-    products () {
-      this.price = 0
-      for (let i = 0; i < this.cartList.length; i++) {
-        const cartItem = this.cartList[i]
-        const product = this.products[i]
-
-        if (this.selectedItem[i] === false) {
-          continue
-        }
-
-        let prdtPrice = product.price - (product.price * product.discountRate) + this.$store.getters.getCartItemOptionPrices[i]
-
-        let cnt = 0
-        if (cartItem.basketQty) {
-          cnt += cartItem.basketQty
-        } else {
-          for (const o of cartItem.productOptions) {
-            cnt += o.optionQty
-          }
-        }
-
-        this.price += prdtPrice * cnt
-      }
-    }
-  },
-  methods: {
-    deliveryBtnClick () {
-      this.$emit('deliveryInfoBtnClick')
-    }
-  },
+  props: ['products', 'selectedItem', 'prices', 'cartList'],
   computed: {
     deliveryPrice () {
       let price = 0
@@ -119,6 +62,28 @@ export default {
         }
       }
       return price
+    },
+    price () {
+      let val = 0
+
+      for (let i = 0; i < this.prices.length; i++) {
+        const p = this.prices[i]
+        if (this.selectedItem[i] === false) {
+          continue
+        }
+        val += p
+      }
+
+      return val
+    }
+  },
+  methods: {
+    deliveryBtnClick () {
+      this.$emit('deliveryInfoBtnClick')
+    },
+    buySelectedItemClick () {
+    },
+    buyAllClick () {
     }
   }
 }
@@ -127,7 +92,6 @@ export default {
 <style>
 .payInfoWrap{
     background-color: #fff;
-    margin-top: 5px;
 }
 
 .payInfoWrap .infoTitle{
@@ -177,7 +141,7 @@ export default {
 
 .payInfoWrap .btnSection button{
     font-size: 15px;
-    width:163px;
+    width: 48%;
     height: 50px;
     border-radius: 2px;
 }

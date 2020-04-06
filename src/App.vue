@@ -21,9 +21,12 @@ export default {
     const scroll = document.createElement('script')
     scroll.setAttribute('src', '/static/js/float-on-scroll.min.js')
     document.head.appendChild(scroll)
+    const share = document.createElement('script')
+    share.setAttribute('src', '/static/js/share.min.js')
+    document.head.appendChild(share)
   }
 }
 </script>
-
+<style lang="css" src="@/assets/css/flowplayer.css"></style>
 <style lang="css" src="@/assets/css/common.css"></style>
 <style lang="css" src="@/assets/css/swsmo.css"></style>

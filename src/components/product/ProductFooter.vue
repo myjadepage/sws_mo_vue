@@ -11,7 +11,12 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
+<<<<<<< HEAD
 import { postCartItem, getAccessToken } from '@/api/index.js'
+=======
+import {postCartItem, getAccessToken} from '@/api/index.js'
+// import {isEquals} from '@/assets/js/common.js'
+>>>>>>> swsmo2/master
 
 export default {
   props: ['buyMode', 'options'],
@@ -60,10 +65,14 @@ export default {
         if (this.$store.getters.getSelectedOptions[0].contentName !== '') { // 옵션이 있는 경우
           cartItem.isOptionNormal = 1
           cartItem.optionGroups = []
+          let i = 999
           for (const o of this.$store.getters.getSelectedOptions) {
             let option = {
               optionQty: o.count,
               productOptions: []
+            }
+            if (!this.$store.state.isLogin) {
+              option.optionGroupId = i--
             }
 
             for (const c of o.contentGroup) {
@@ -71,10 +80,18 @@ export default {
                 continue
               }
 
-              option.productOptions.push({
-                prdtNormalOptionSysId: c.prdtNormalOptionSysId,
-                optionKeyName: c.name
-              })
+              if (this.$store.state.isLogin) {
+                option.productOptions.push({
+                  prdtNormalOptionSysId: c.prdtNormalOptionSysId,
+                  optionKeyName: c.name
+                })
+              } else {
+                option.productOptions.push({
+                  prdtNormalOptionSysId: c.prdtNormalOptionSysId,
+                  optionKeyName: c.name,
+                  price: c.price
+                })
+              }
             }
             cartItem.optionGroups.push(option)
           }
@@ -114,12 +131,6 @@ export default {
 
           if (cartList) {
             cartList = JSON.parse(cartList)
-
-            // for (const p of cartList) { // 중복 체크
-            //   if (isEquals(p, cartItem)) {
-            //     return
-            //   }
-            // }
             cartList.push(cartItem)
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {

@@ -3,9 +3,15 @@ import axios from 'axios'
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
+<<<<<<< HEAD
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
+=======
+  baseUrl3: 'http:///api.shallwe.shop/api/v1/',
+  baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
+  // baseUrl: 'http://shallwe.shop/api/v1/' // 배포
+>>>>>>> swsmo2/master
 }
 
 /**
@@ -70,6 +76,17 @@ function payOrders (jsonData, orderSysId) {
   return axios.post(`${config.baseUrl}${orderSysId}/pays`, formdata)
 }
 
+// 마이페이지 조회
+function getMypageInfo (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -78,6 +95,22 @@ function getUserInfo (accessToken) {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
     }
+  })
+}
+
+// 내정보 관리 변경
+function modifyUserInfo (accessToken, userInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(userInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/myinfo`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -124,6 +157,16 @@ function getProduct (id) {
 
 function getBroadCast (id) {
   return axios.get(`${config.baseUrl}broadcasts/${id}`)
+}
+
+// 리뷰 목록 가져오기
+function getPrdtReviewList (id) {
+  return axios.get(`${config.baseUrl2}products/${id}/reviews/list`)
+}
+
+// 문의 목록 가져오기
+function getPrdtQuestionList (id) {
+  return axios.get(`${config.baseUrl2}products/${id}/questions/list`)
 }
 
 // 회원 장바구니 등록
@@ -187,6 +230,55 @@ function putCartItem (accessToken, basketSysId, cartItem) {
 
 /**
  *
+ * 마이페이지
+ */
+// 1:1 문의 등록
+function writeQuestion (accessToken, questionInfo) {
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(questionInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}operations/questions`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-공지사항 조회(조건)
+function getNoticeList (sIdx, rCnt) {
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 마이페이지-패스워드 변경
+function changePw (accessToken, pwInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(pwInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/password`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+/**
+ *
  * 회원가입
  */
 
@@ -202,7 +294,7 @@ function checkRSA (rsaEncStr) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/chkrsa`, formdata)
+  return axios.post(`${config.baseUrl2}auth/chkrsa`, formdata)
 }
 
 // 아이디 중복확인
@@ -373,5 +465,12 @@ export {
   getCartItem,
   getAddingCosts,
   removeCartItem,
-  putCartItem
+  putCartItem,
+  modifyUserInfo,
+  getMypageInfo,
+  getPrdtReviewList,
+  getPrdtQuestionList,
+  writeQuestion,
+  getNoticeList,
+  changePw
 }
