@@ -462,12 +462,9 @@ export {
   putCartItem,
   modifyUserInfo,
   getMypageInfo,
-<<<<<<< HEAD
   getPrdtReviewList,
-  getPrdtQuestionList
-=======
+  getPrdtQuestionList,
   writeQuestion,
   getNoticeList,
   changePw
->>>>>>> ef8f6e81b47cf024f49d9cbe2b30d07eba5e1c24
 }
