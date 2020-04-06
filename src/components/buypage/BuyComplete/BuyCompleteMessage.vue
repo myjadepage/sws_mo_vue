@@ -1,13 +1,18 @@
 <template>
   <div class="completeMessageWrap">
+    <div v-if="!result">
+      {{errMsg}}
+    </div>
+    <div v-if="result">
     <div class="message">주문이 정상적으로 접수되었습니다.</div>
     <div class="orderNum">주문번호 {{info.orderCode}}</div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['info'],
+  props: ['info', 'result', 'errMsg'],
   data () {
     return {
     }

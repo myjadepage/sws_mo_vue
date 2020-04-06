@@ -1,6 +1,12 @@
 <template>
 <div class="cartMainWrap">
     <Bar :val="'장바구니'" />
+      <!-- <Loading
+      :active.sync="isProductLoading"
+      :is-full-page="false"
+      :heigth="50"
+      :width="50"
+        /> -->
     <EmptyCart v-if="products.length===0" />
     <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" @selectedDelete="selectedDelete" v-if="products.length > 0" :cntInfo="[products,isCheckAll]" />
     <Product
@@ -49,8 +55,10 @@ import PrdtLimitModal from '@/components/cartpage/Modal/PrdtLimitOver'
 import StockOutModal from '@/components/cartpage/Modal/StockOut'
 import DeleteModal from '@/components/cartpage/Modal/BasketDeleteModal'
 import DeletedModal from '@/components/cartpage/Modal/BasketDeleted'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
-import {getProduct, getCartItem, getAccessToken, removeCartItem, putCartItem} from '@/api/index.js'
+import {getProduct, getCartItem, getAccessToken, putCartItem, removeCartList} from '@/api/index.js'
 
 export default {
   created () {
@@ -59,7 +67,7 @@ export default {
       getCartItem(sessionStorage.getItem('accessToken'))
         .then(cartRes => {
           let cartList = cartRes.data.jsonData.baskets
-
+          this.cartSize = cartList.length
           if (cartList) {
             for (const c of cartList) {
               getProduct(c.prdtSysId)
@@ -103,7 +111,7 @@ export default {
         })
     } else {
       let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-
+      this.cartSize = cartList.length
       if (cartList) {
         for (let i = 0; i < cartList.length; i++) {
           const c = cartList[i]
@@ -147,6 +155,10 @@ export default {
       }
     }
   },
+  beforeMount () {
+    this.isProductLoading = !(this.cartSize === this.products.length)
+  },
+
   data () {
     return {
       products: [],
@@ -157,11 +169,13 @@ export default {
       StockOutModal: false,
       DeleteModal: false,
       DeletedModal: false,
-      isCheckAll: true
+      isCheckAll: true,
+      isProductLoading: true,
+      cartSize: 0
     }
   },
   components: {
-    Bar, EmptyCart, CartCount, Product, PayInfo, DeliveryModal, CartLimitModal, PrdtLimitModal, StockOutModal, DeleteModal, DeletedModal
+    Bar, EmptyCart, CartCount, Product, PayInfo, DeliveryModal, CartLimitModal, PrdtLimitModal, StockOutModal, DeleteModal, DeletedModal, Loading
   },
   methods: {
     calcPrdtPrice (info) {
@@ -382,32 +396,33 @@ export default {
     },
     deleteConfirm () {
       if (this.$store.state.isLogin) {
+        let basketSysIds = []
         for (let i = this.products.length - 1; i >= 0; i--) {
           const p = this.products[i]
           if (p.isChecked) {
-            removeCartItem(sessionStorage.getItem('accessToken'), p.basketSysId)
-              .then(res => {
-                console.log(res)
-                this.products.splice(i, 1)
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  getAccessToken(sessionStorage.getItem('refreshToken'))
-                    .then(res => {
-                      sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                    })
-                    .catch(err => {
-                      if (err.response.status === 401) {
-                        this.$store.dispatch('logOut')
-                        this.$router.push('/Login')
-                      }
-                    })
-                }
-              })
+            basketSysIds.push(p.basketSysId)
           }
         }
-        this.DeleteModal = false
-        this.DeletedModal = true
+
+        let item = {
+          basketSysIds: basketSysIds.join()
+        }
+
+        removeCartList(sessionStorage.getItem('accessToken'), item)
+          .then(res => {
+            for (let i = this.products.length - 1; i >= 0; i--) {
+              const p = this.products[i]
+              if (basketSysIds.includes(p.basketSysId)) {
+                this.products.splice(i, 1)
+              }
+            }
+
+            this.DeleteModal = false
+            this.DeletedModal = true
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
         let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
 

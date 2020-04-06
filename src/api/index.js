@@ -206,6 +206,23 @@ function removeCartItem (accessToken, basketSysId) {
   })
 }
 
+// 장바구니 목록 삭제
+function removeCartList (accessToken, basketSysIds) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(basketSysIds))
+
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // 장바구니 수정
 function putCartItem (accessToken, basketSysId, cartItem) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -466,5 +483,6 @@ export {
   getPrdtQuestionList,
   writeQuestion,
   getNoticeList,
-  changePw
+  changePw,
+  removeCartList
 }

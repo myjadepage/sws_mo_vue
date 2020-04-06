@@ -121,8 +121,8 @@ export default {
 
           sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
           let name = ''
-          if (products.length > 2) {
-            name = `${products[0].name} 외 ${products - length - 1}건`
+          if (products.length > 1) {
+            name = `${products[0].name} 외 ${products.length - 1}건`
           } else {
             name = products[0].name
           }
