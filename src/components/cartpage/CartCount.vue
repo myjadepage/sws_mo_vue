@@ -1,6 +1,6 @@
 <template>
   <div class="cartCountWrap">
-      <input :checked="cntInfo[2]" ref="checkAll" @click="checkAll" id="checkAll" type="checkbox"> <label for="checkAll">전체선택 (<span class="selectCnt">{{selectedCnt}}</span>/{{cntInfo[1]}}개)</label>
+      <input :checked="cntInfo[1]" ref="checkAll" @click="checkAll" id="checkAll" type="checkbox"> <label for="checkAll">전체선택 (<span class="selectCnt">{{selectedCnt}}</span>/{{cntInfo[0].length}}개)</label>
     <button @click="clickDeleteBtn" class="deleteBtn">선택삭제</button>
   </div>
 </template>
@@ -27,7 +27,9 @@ export default {
     selectedCnt () {
       let val = 0
       for (let i = 0; i < this.cntInfo[0].length; i++) {
-        if (this.cntInfo[0][i] === true)val++
+        if (this.cntInfo[0][i].isChecked) {
+          val++
+        }
       }
       return val
     }

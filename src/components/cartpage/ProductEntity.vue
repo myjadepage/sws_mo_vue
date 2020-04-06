@@ -1,7 +1,7 @@
 <template>
   <div class="productEntityWrap">
     <div class="entityBody">
-      <div ref="imgBox" @click="selectBtnClick" :class="isChecked?'imgBox selected':'imgBox'">
+      <div ref="imgBox" @click="selectBtnClick" :class="product.isChecked?'imgBox selected':'imgBox'">
       <div class="checkBox"><span class="check"></span></div>
       <img :src="product.smallImageUrl">
       </div>
@@ -56,7 +56,7 @@ export default {
 
     this.optionMap = map
   },
-  props: ['product', 'index', 'isChecked'],
+  props: ['product', 'index'],
   data () {
     return {
       optionMap: null
