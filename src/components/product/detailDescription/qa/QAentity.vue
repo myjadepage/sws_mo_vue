@@ -1,19 +1,19 @@
 <template>
   <div class="qaEntityWrap">
       <div class="dateAndWriter">
-          <span class="date">{{qa.date}}</span> {{qa.writer}}
+          <span class="date">{{questionDate}}</span> {{question.userId}}
       </div>
       <div class="qaBody" @click="entityClick">
         <span v-if="!qaVisibility" class="title">{{title}}</span>
-        <span :class="qa.status===0?'status':'status complete'">{{qa.status===0?'답변대기':'답변완료'}}</span>
+        <span :class="question.treatFlag===0?'status':'status complete'">{{question.treatFlag===0?'답변대기':'답변완료'}}</span>
         <div v-if="qaVisibility" class="qaContent">
             <div class="contentTitle">상품문의</div>
-            {{qa.content}}
+            {{question.content}}
         </div>
 
-        <div v-if="qaVisibility && qa.reply" class="replyBody">
+        <div v-if="qaVisibility && question.answeroptional" class="replyBody">
           <div class="contentTitle">답변</div>
-            {{qa.reply}}
+            {{question.answeroptional}}
         </div>
       </div>
   </div>
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  props: ['qa'],
+  props: ['question'],
   methods: {
     entityClick () {
       this.qaVisibility = !this.qaVisibility
@@ -34,11 +34,17 @@ export default {
   },
   computed: {
     title () {
-      if (this.qa.content.length > 30) {
-        return this.qa.content.replace(this.qa.content.substring(29), '...')
+      if (this.question.content.length > 30) {
+        return this.question.content.replace(this.question.content.substring(29), '...')
       } else {
-        return this.qa.content
+        return this.question.content
       }
+    },
+    questionDate () {
+      let date = this.question.createdAt.replace(this.question.createdAt.substr(8, this.question.createdAt.length), '').split('')
+      date.splice(4, 0, '.')
+      date.splice(7, 0, '.')
+      return date.join('')
     }
   }
 }

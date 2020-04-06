@@ -10,17 +10,13 @@
 
 <script>
 export default {
-  props: ['title', 'deleteIndex'],
+  props: ['title'],
   methods: {
     modalClose () {
       this.$emit('deleteClose')
     },
     deleteConfirm () {
-      if (this.deleteIndex !== null) {
-        this.$emit('indexedDeleteConfirm')
-      } else {
-        this.$emit('deleteConfirm')
-      }
+      this.$emit('deleteConfirm')
     }
   }
 }

@@ -153,6 +153,16 @@ function getBroadCast (id) {
   return axios.get(`${config.baseUrl}broadcasts/${id}`)
 }
 
+// 리뷰 목록 가져오기
+function getPrdtReviewList (id) {
+  return axios.get(`${config.baseUrl2}products/${id}/reviews/list`)
+}
+
+// 문의 목록 가져오기
+function getPrdtQuestionList (id) {
+  return axios.get(`${config.baseUrl2}products/${id}/questions/list`)
+}
+
 // 회원 장바구니 등록
 function postCartItem (accessToken, cartItem) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -452,6 +462,8 @@ export {
   putCartItem,
   modifyUserInfo,
   getMypageInfo,
+  getPrdtReviewList,
+  getPrdtQuestionList,
   writeQuestion,
   getNoticeList,
   changePw

@@ -1,97 +1,136 @@
 <template>
   <div class="productEntityWrap">
-    <div ref="imgBox" @click="selectBtnClick" :class="isChecked?'imgBox selected':'imgBox'">
-    <div class="checkBox"><span class="check"></span></div>
-    <img :src="product.smallImageUrl">
-    </div>
     <div class="entityBody">
-    <div class="title">[{{product.brandName}}]{{product.name}}</div>
-    <div v-if="cartItem.isOptionNormal">
-    <div class="option" v-for="(o,idx) in cartItem.productOptions" :key="idx">
-      {{o.optionKeyName}}
-      <!-- <div v-for="(c,idx) in o.productOptions" :key="idx">{{c.optionKeyName}}</div> -->
+      <div ref="imgBox" @click="selectBtnClick" :class="isChecked?'imgBox selected':'imgBox'">
+      <div class="checkBox"><span class="check"></span></div>
+      <img :src="product.smallImageUrl">
+      </div>
+      <div class="title">[{{product.brandName}}]{{product.name}}</div>
+
+      <div class="entityText" v-if="optionMap.size === 1">
+
+        <div class="option" v-for="(o,idx) in product.optionInfo" :key="idx">
+           [옵션명{{idx+1}}] {{o.optionKeyName}}
+        </div>
+
+          <select :value="product.optionInfo[0].optionQty" @change="cntChange">
+            <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
+          </select>
+        <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+      </div>
+
+      <div v-if="!product.isOptionNormal">
+        <select :value="product.basketQty" @change="cntChange">
+            <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
+          </select>
+        <span class="price">{{nonOptionPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+      </div>
+
+        <div v-if="optionMap.size>1" class="priceSection">
+          <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+        </div>
     </div>
+
+    <div v-if="optionMap.size > 1">
+    <OptionEntity v-for="o in optionMap" @optionCntChange="optionCntChange" :product="product" :key="o[0]" :option="o" />
     </div>
-    <select ref="prdtCnt" :value="prdtCnt" @change="prdtQtyCheck">
-        <option value="0">0</option>
-        <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
-    </select>
-    <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
-    <span @click="removeBtnClick" class="ico_times removeBtn"></span>
-    </div>
-  </div>
+
+     </div>
 </template>
 
 <script>
+import OptionEntity from './OptionEntity'
+
 export default {
-  created () {
-    for (const o of this.product.normalOptions) {
-      this.options.push(o.content.split(';'))
-    }
-
-    for (let i = 0; i < this.options.length; i++) {
-      const o = this.options[i]
-      for (let oo of o) {
-        oo = oo.split('^')
-
-        if (this.cartItem.productOptions) {
-          for (const og of this.cartItem.productOptions) {
-            if (oo[0] === og.optionKeyName) {
-              this.optionPrice += Number(oo[1])
-            }
-          }
-        }
-      }
-    }
-
-    this.$store.commit('addcartItemOptionPrice', this.optionPrice)
+  components: {
+    OptionEntity
   },
-  props: ['product', 'index', 'isChecked', 'cartItem'],
+  created () {
+    let map = new Map()
+    for (const o of this.product.optionInfo) {
+      if (!map.has(o.optionGroupId)) {
+        map.set(o.optionGroupId, [])
+      }
+      map.get(o.optionGroupId).push(o)
+    }
+
+    this.optionMap = map
+  },
+  props: ['product', 'index', 'isChecked'],
   data () {
     return {
-      options: [],
-      optionPrice: 0
+      optionMap: null
     }
   },
   computed:
     {
       totalPrice () {
-        return this.product.price - (this.product.price * this.product.discountRate) + this.optionPrice
-      },
-      prdtCnt () {
-        if (this.cartItem.basketQty) {
-          return this.cartItem.basketQty
-        } else {
-          let cnt = 0
-          for (const o of this.cartItem.productOptions) {
-            cnt += o.optionQty
+        let prdtPrice = this.product.price - (this.product.price * this.product.discountRate)
+        let val = 0
+
+        if (this.optionMap.size > 1) {
+          for (const o of this.optionMap.values()) {
+            let p = 0
+            for (const oo of o) {
+              p += oo.price
+            }
+
+            p += prdtPrice
+            p *= o[0].optionQty
+
+            val += p
           }
-          return cnt
+
+          return val
+        } else {
+          for (const o of this.optionMap.values()) {
+            val += prdtPrice
+            for (const oo of o) {
+              val += oo.price
+            }
+            val *= o[0].optionQty
+          }
+
+          return val
         }
+      },
+
+      nonOptionPrice () {
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.product.basketQty
       }
     },
 
+  beforeMount () {
+    if (this.product.isOptionNormal) {
+      this.$emit('prdtPrice', [this.index, this.totalPrice])
+    } else {
+      this.$emit('prdtPrice', [this.index, this.nonOptionPrice])
+    }
+  },
+  beforeUpdate () {
+    if (this.product.isOptionNormal) {
+      this.$emit('prdtPrice', [this.index, this.totalPrice])
+    } else {
+      this.$emit('prdtPrice', [this.index, this.nonOptionPrice])
+    }
+  },
+
   methods: {
-    removeBtnClick () {
-      this.$emit('removeItem', this.index)
-    },
     selectBtnClick () {
       this.$emit('selectItem', this.index)
     },
-    prdtQtyCheck (x) {
-      // if (this.product.isSoldout) {
-      //   this.$emit('soldOut', this.index)
-      //   x.target.value = '0'
-      // } else if (x.target.value > this.product.salesQty) {
-      //   this.$emit('salesLimitOver', this.index)
-      //   x.target.value = '0'
-      // }
-
-      if (this.$store.state.isLogin) {
-        this.$emit('prdtCntChange', [this.cartItem.basketSysId, this.index, this.$refs.prdtCnt.value])
+    cntChange (x) {
+      if (this.product.isOptionNormal) {
+        for (let i = 0; i < this.product.optionInfo.length; i++) {
+          this.product.optionInfo[i].optionQty = Number(x.target.value)
+        }
       } else {
-        this.$emit('prdtCntChange', [this.index, this.$refs.prdtCnt.value])
+        this.product.basketQty = Number(x.target.value)
       }
+      this.$emit('sigleItemCntChange', [this.product.basketSysId, x.target.value])
+    },
+    optionCntChange (x) {
+      this.$emit('multiOptionCntChange', [this.product.basketSysId, x])
     }
   }
 }
@@ -100,14 +139,34 @@ export default {
 <style>
 
 .productEntityWrap{
-    /* height: 135px; */
     background-color: #fff;
-    margin-bottom: 1px;
-    padding: 15px 12px;
+    padding: 15px 12px 0;
+    margin-bottom: 5px;
+}
+
+.productEntityWrap .prdPrice{
+  text-decoration: line-through;
+  font-size: 13px;
+  color: #999999;
 }
 
 .productEntityWrap .entityBody{
-  margin-left: 80px;
+  min-height: 70px;
+  margin-bottom: 1px;
+  padding-bottom: 15px;
+}
+
+.productEntityWrap .entityText{
+  padding-left: 80px;
+}
+
+.productEntityWrap .price{
+  font-weight: 500;
+}
+
+.productEntityWrap .option{
+  color: #666666;
+  margin: 5px 0 0 4px;
 }
 
 .productEntityWrap img{
@@ -118,45 +177,7 @@ export default {
  margin-right: 10px;
 }
 
-.productEntityWrap .option{
-    margin: 5px 0 10px;
-    color: #666666;
-}
-
-.productEntityWrap .price{
-    font-weight: 500;
-}
-
-.productEntityWrap .prdPrice{
-    font-size: 13px;
-    color: #999999;
-    text-decoration: line-through;
-}
-
-.productEntityWrap select{
-    margin-right: 13px;
-    border-radius: 2px;
-    line-height: 30px;
-    padding-left: 10px;
-    border: 1px solid #cccccc;
-    height: 30px;
-    width: 50px;
-}
-
-.ico_times{
-    float: right;
-    background: url('../../assets/img/ico/ico_times.png');
-    background-size: 100%;
-    width: 11px;
-    height: 11px;
-}
-
-.ico_times.removeBtn{
-  position: relative;
-  top: 12px;
-}
-
-.imgBox{
+.productEntityWrap .imgBox{
   position: relative;
   user-select: none;
   float: left;
@@ -172,6 +193,20 @@ export default {
   height: 26px;
   text-align: center;
   background-color: #fff;
+}
+
+.productEntityWrap .title{
+  margin-bottom: 10px;
+}
+
+.productEntityWrap select{
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  border: 1px solid #cccccc;
+  margin: 10px 13px 0 4px;
 }
 
 .productEntityWrap .imgBox .check{

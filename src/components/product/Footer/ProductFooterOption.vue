@@ -125,7 +125,7 @@ export default {
 
     calcPrice (idx) {
       if (this.$store.getters.getSelectedOptions[idx].contentName) {
-        return this.$store.getters.getOptionPrice(idx) * this.$store.getters.getOptionCnt(idx) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)
+        return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getOptionCnt(idx)
       } else {
         return this.$store.getters.getOptionCnt(idx) * (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
       }
@@ -145,7 +145,7 @@ export default {
         let cnt = 0
         for (const item of o) {
           cnt += item.count
-          val += (item.count * item.price) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)
+          val += (item.price + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * item.count
         }
 
         if (val) {
