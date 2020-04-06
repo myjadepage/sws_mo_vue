@@ -69,6 +69,7 @@ export default {
 
       // eslint-disable-next-line no-undef
       flowplayer('#player_container', {
+        float_on_scroll: false,
         share: {
           link: true,
           facebook: true,
