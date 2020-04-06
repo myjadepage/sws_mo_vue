@@ -1,8 +1,8 @@
 <template>
   <div class="mainPageWrap" :class="listCount === 0? 'emptyHeight': ''">
   <Bar :val="title" />
-  <OptionBar :baskets="baskets" />
-  <MyInfo :member="member" />
+  <!-- <OptionBar :baskets="baskets" /> -->
+  <!-- <MyInfo :member="member" /> -->
   <LookUp />
   <PointList @type="typeSwitch" :list="list" :listCount="listCount" />
 

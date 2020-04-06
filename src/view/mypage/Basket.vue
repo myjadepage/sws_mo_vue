@@ -2,7 +2,7 @@
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
   <EmptyBlock :param="emptyMessage" v-if="products.length === 0"  />
-  <ExchangeList v-bind:pageType="pageType" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
+  <BasketList v-bind:pageType="pageType" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
 
   <section v-if="modalVisiblity" class="modalBg">
     <BasketDeleteModal v-if="basketDeleteModal" @basketDelete="basketDeleteModalClose" @removedShow="removedShow" :title="title" />
@@ -13,7 +13,7 @@
 
 <script>
 import Bar from '@/components/shared/Bar'
-import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
+import BasketList from '@/components/mypage/Basket/BasketList'
 import EmptyBlock from '@/components/shared/EmptyBlock'
 import BasketDeleteModal from '@/components/mypage/Exchange/Modal/BasketDeleteModal'
 import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
@@ -33,7 +33,7 @@ export default {
     }
   },
   components: {
-    Bar, ExchangeList, EmptyBlock, BasketDeleteModal, RemovedModal
+    Bar, BasketList, EmptyBlock, BasketDeleteModal, RemovedModal
   },
   methods: {
     basketDeleteModalShow () {

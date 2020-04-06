@@ -1,7 +1,7 @@
 <template>
   <div class="mediaEntityWrap">
-      <div class="thumbnailSection">
-          <img :src="media.thumbNailUrl" alt="">
+      <div class="thumbnailSection" @click="play(idx)">
+          <img :src="media.thumbNailUrl" alt="" >
           <span class="time">{{media.mediaLength}}</span>
       </div>
       <div class="titleSection">
@@ -15,7 +15,12 @@
 
 <script>
 export default {
-  props: ['media']
+  props: ['media', 'idx'],
+  methods: {
+    play (idx) {
+      this.$emit('play', idx)
+    }
+  }
 }
 
 </script>

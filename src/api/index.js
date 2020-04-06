@@ -288,6 +288,38 @@ function changePw (accessToken, pwInfo) {
   })
 }
 
+// 마이페이지-최근 본 상품 등록
+function setRecentViewList (accessToken, viewInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(viewInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-최근 본 상품 조회
+function getRecentViewList (accessToken, sIdx, rCnt) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
 /**
  *
  * 회원가입
@@ -484,5 +516,7 @@ export {
   writeQuestion,
   getNoticeList,
   changePw,
-  removeCartList
+  removeCartList,
+  getRecentViewList,
+  setRecentViewList
 }
