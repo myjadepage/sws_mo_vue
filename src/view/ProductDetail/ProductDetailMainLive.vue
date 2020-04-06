@@ -1,6 +1,6 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-      <MediaLive/>
+      <MediaLive :product="product" :mode="mode"/>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
   },
   data () {
     return {
+      mode: 'fullscreen',
       title: '상품상세',
       product: {}
     }

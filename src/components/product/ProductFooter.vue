@@ -12,6 +12,7 @@
 <script>
 import Option from './Footer/ProductFooterOption'
 import {postCartItem, getAccessToken} from '@/api/index.js'
+// import {isEquals} from '@/assets/js/common.js'
 
 export default {
   props: ['buyMode', 'options'],

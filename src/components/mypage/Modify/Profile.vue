@@ -65,6 +65,8 @@ import Axios from 'axios'
 import uuidv4 from 'uuid4'
 import { getUserInfo, modifyUserInfo } from '@/api/index.js'
 
+/* eslint-disable */
+
 export default {
   data () {
     return {
