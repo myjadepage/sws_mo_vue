@@ -11,7 +11,9 @@
 
 <script>
 import Option from './Footer/ProductFooterOption'
+// eslint-disable-next-line
 import {postCartItem, getAccessToken, getCartItem} from '@/api/index.js'
+// eslint-disable-next-line
 import {isEquals} from '@/assets/js/common.js'
 
 export default {

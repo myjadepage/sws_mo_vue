@@ -77,6 +77,11 @@ export default new Router({
       component: () => import('@/view/productDetail/ProductDetailMainLive')
     },
     {
+      path: '/Product/:prdtSysId/detail/:broadcastSysId',
+      name: 'ProductDetailLiveInfo',
+      component: () => import('@/view/productDetail/ProductDetailMainLiveInfo')
+    },
+    {
       path: '/Login',
       name: 'Login',
       // beforeEnter: rejectAuthUser,

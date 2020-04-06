@@ -61,6 +61,16 @@ export default {
             this.mspw.newPassword = null
             this.mspw.currentPassword = null
             this.mspw.newPassword = null
+            alert('비밀번호가 변경되었습니다.')
+          })
+          .catch(err => {
+            this.pw.currentPassword = null
+            this.pw.newPassword = null
+            this.confirmpw = null
+            this.mspw.newPassword = null
+            this.mspw.currentPassword = null
+            this.mspw.newPassword = null
+            console.log(err)
           })
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="itemList" :class="{'recent': type==='basket' || type==='brand', 'modifyMode':modifyMode}" >
-    <div class="listHead" v-if="type==='basket'" >
+    <div class="listHead" v-if="type!=='history'" >
       <div class="nor">
         <p>전체 (50개)</p>
       </div>
@@ -15,7 +15,7 @@
           <button class="cancle" @click="modifyMode = true">편집</button>
         </div>
         <div class="modi">
-          <button class="remove" @click="basketDeleteModalShow">삭제</button>
+          <button class="remove" >삭제</button>
           <!-- <button class="cancle" @click="modifyMode = false">취소</button> -->
         </div>
       </div>
@@ -95,8 +95,8 @@
         </div>
         <div class="itemBody">
           <div class="imgBox">
-            <input type="checkbox" name="item_1" id="item_1" v-model="products.b.checked" />
-            <label for="item_1"></label>
+            <input type="checkbox" name="item_1" id="item_1" v-model="products.b.checked"  />
+            <label for="item_1" v-if="type!=='history'"></label>
           </div>
           <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
@@ -162,7 +162,10 @@
           <p class="state c_them" v-if="type==='review' && !tabState">배송완료</p>
         </div>
         <div class="itemBody">
-          <div class="imgBox"></div>
+          <div class="imgBox">
+            <input type="checkbox" name="item_2" id="item_2" v-model="products.c.checked"  />
+            <label for="item_2" v-if="type!=='history'"></label>
+          </div>
           <router-link to="/ExchangeDetail" class="txtBox">
             <h2 class="itemTitle">[헤라] 센슈얼 립 세럼 글로우1호</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석</p>
@@ -236,6 +239,11 @@ export default {
           checked: false,
           like: false,
           basket: true
+        },
+        'c': {
+          checked: false,
+          like: false,
+          basket: true
         }
       }
     }
@@ -245,9 +253,6 @@ export default {
       for (let product in this.products) {
         this.products[product].checked = !this.allChecked
       }
-    },
-    basketDeleteModalShow () {
-      this.$emit('basketDeleteModalShow')
     },
     exchangeReqOpen () {
       this.$emit('exchangeReqOpen')
