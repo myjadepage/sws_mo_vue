@@ -2,9 +2,9 @@
   <div class="productDetailWrap" v-if="product.prdtSysId">
     <div  v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <MediaLive :product="product" :mode="mode"/>
+      <MediaLive :product="product" :mode="mode" :playedIndex="playedIndex"/>
       <Info :product="product" />
-      <SubMedia />
+      <SubMedia @play="play" />
       <Info2 :product="product" />
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
@@ -23,7 +23,7 @@ import Info2 from '@/components/product/ProductInfo2'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
 import CartModal from '@/components/product/Modal/CartModal'
-import {getProduct} from '@/api/index'
+import {getProduct, setRecentViewList, getRecentViewList} from '@/api/index'
 
 export default {
   created () {
@@ -36,7 +36,35 @@ export default {
       this.options = res.data.jsonData.normalOptions
 
       if (this.$store.state.isLogin) { // 회원인 경우
+        // eslint-disable-next-line
+        let viewInfo = {
+          prdtSysId: this.product.prdtSysId,
+          viewTypeCode: 0
+        }
+        // 회원인 경우, 최근 본 상품 조회.
+        getRecentViewList(sessionStorage.getItem('accessToken'), 0, 10)
+          .then(res => {
+            // console.log(res)
+            let f = res.data.jsonData.views.find(obj => obj.prdtSysId === this.product.prdtSysId)
 
+            // 같은 상품이 있을 경우, false.
+            if (f) {
+              console.log('이미 있음')
+              return false
+
+            // 없으면 insert
+            } else {
+              setRecentViewList(sessionStorage.getItem('accessToken'), viewInfo)
+                .then(res => {
+                  if (res.data.jsonData.resultCode === '0001') {
+                    console.log('추가 성공')
+                  }
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            }
+          })
       } else { // 비회원인 경우
         if (localStorage.getItem('nonMemberRecentItem')) { // 최근 본 상품이 있다면,
           let recentItem = JSON.parse(localStorage.getItem('nonMemberRecentItem'))
@@ -96,7 +124,8 @@ export default {
       product: {},
       buyMode: false,
       showCartModal: false,
-      options: []
+      options: [],
+      playedIndex: 0
     }
   },
   components: {
@@ -108,6 +137,9 @@ export default {
       setTimeout(() => {
         this.showCartModal = false
       }, 3000)
+    },
+    play (idx) {
+      this.playedIndex = idx
     }
   },
   beforeDestroy () {

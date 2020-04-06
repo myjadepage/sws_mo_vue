@@ -697,6 +697,9 @@
 
 
 /* 플레이어 커스텀 */
+.mainMedia .flowplayer{
+  height:210px;
+}
 .info .flowplayer {
   position: relative;
   width:100%;

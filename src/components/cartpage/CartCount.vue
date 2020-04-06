@@ -1,5 +1,5 @@
 <template>
-  <div class="cartCountWrap">
+  <div class="cartCountWrap" :class="{'fixed': scrolled}">
       <input :checked="cntInfo[1]" ref="checkAll" @click="checkAll" id="checkAll" type="checkbox"> <label for="checkAll">전체선택 (<span class="selectCnt">{{selectedCnt}}</span>/{{cntInfo[0].length}}개)</label>
     <button @click="clickDeleteBtn" class="deleteBtn">선택삭제</button>
   </div>
@@ -8,6 +8,14 @@
 <script>
 export default {
   props: ['cntInfo'],
+  data () {
+    return {
+      scrolled: false
+    }
+  },
+  create () {
+    this.windowScrollY()
+  },
   methods: {
     checkAll (e) {
       if (e.target.checked) {
@@ -21,6 +29,9 @@ export default {
         return
       }
       this.$emit('selectedDelete')
+    },
+    windowScrollY () {
+      this.scrolled = window.scrollY > 50
     }
   },
   computed: {
@@ -33,12 +44,22 @@ export default {
       }
       return val
     }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.windowScrollY)
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.windowScrollY)
   }
 }
 </script>
 
 <style>
     .cartCountWrap{
+        position:absolute;
+        top:50px;
+        left:0;
+        width:100%;
         font-size: 16px;
         font-weight: 500;
         background-color: #fff;
@@ -47,6 +68,16 @@ export default {
         padding: 0px 12px;
         line-height: 53px;
         height: 53px;
+        box-sizing: border-box;
+    }
+    .cartCountWrap.fixed{
+      position:fixed;
+      top:0;
+      margin-top:0;
+      border-bottom:1px solid #eee;
+    }
+    .cartCountWrap + .productEntityWrap{
+      margin-top:59px;
     }
 
     .cartCountWrap .selectCnt{

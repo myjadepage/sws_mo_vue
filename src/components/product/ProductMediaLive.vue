@@ -28,11 +28,26 @@
 import { getLiveProduct } from '../../api'
 
 export default {
-  props: ['product', 'mode'],
+  props: ['product', 'mode', 'playedIndex'],
   data () {
     return {
+      videoType: 'live',
       broadcastSysId: null,
-      prdtSysId: null
+      prdtSysId: null,
+      dummyItem: [
+        {
+          thumnailUrl: '',
+          objectIds: '170c79acc9763aba'
+        },
+        {
+          thumnailUrl: '',
+          objectIds: '1706171e5dd6ad88'
+        },
+        {
+          thumnailUrl: '',
+          objectIds: '170c79acc9763aba'
+        }
+      ]
     }
   },
   mounted: function () {
@@ -40,8 +55,8 @@ export default {
     this.prdtSysId = this.$route.params.prdtSysId
     getLiveProduct(this.$route.params.broadcastSysId)
       .then(res => {
-        console.log(res)
-        this.getVideoTypePlayer(res.data.jsonData.broadcastMedias[0])
+        // console.log(res.data.jsonData.broadcastMedias[0])
+        this.getVideoTypePlayer(res.data.jsonData.broadcastMedias[0], this.videoType)
         // $(this.$refs.player).children('video').stop()
         // console.log($(this.$refs.player))
         if (this.mode === 'fullscreen') {
@@ -61,14 +76,15 @@ export default {
       })
   },
   methods: {
-    getVideoTypePlayer (item) {
+    getVideoTypePlayer (item, playType) {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       const POSTER = item.thumnailUrl
       const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
-      // const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
 
-      // eslint-disable-next-line no-undef
-      flowplayer('#player_container', {
+      // 테스트용 url
+      // const VIDEOSRC = 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+
+      let liveOpt = {
         float_on_scroll: false,
         share: {
           link: true,
@@ -84,7 +100,31 @@ export default {
         loop: false,
         preload: 'auto',
         seekable: false
-      })
+      }
+
+      let vodOpt = {
+        float_on_scroll: false,
+        share: {
+          link: true,
+          facebook: true,
+          twitter: false
+        },
+        rewind: true,
+        type: 'application/x-mpegurl',
+        src: VIDEOSRC,
+        poster: POSTER,
+        token: TOKEN,
+        loop: false,
+        preload: 'auto'
+      }
+
+      if (playType === 'live') {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', liveOpt)
+      } else if (playType === 'vod') {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', vodOpt)
+      }
     },
     formatNumber (num) {
       let value = num
@@ -94,8 +134,17 @@ export default {
       this.$router.go(-1)
     },
     goDetail () {
-      // console.log('/Product/' + this.prdtSysId + '/detail/' + this.broadcastSysId)
       this.$router.push('/Product/' + this.prdtSysId + '/detail/' + this.broadcastSysId)
+    }
+  },
+  watch: {
+    playedIndex: function () {
+      // 페이지 라우팅으로 변경.
+      // vod인지 live인지에 따라 변수 변경해줘야 함
+
+      $(this.$refs.player)[0].find('video').setSrc(`https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.dummyItem[this.playedIndex].objectIds}/playlist.m3u8`).play()
+      // $(this.$refs.player)[0].find('video').setSrc('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8').play()
+      // this.getVideoTypePlayer(this.dummyItem[this.playedIndex], 'vod')
     }
   }
 }

@@ -2,7 +2,7 @@
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
   <EmptyBlock :param="emptyMeasse" v-if="products.length === 0"  />
-  <ExchangeList v-bind:pageType="pageType" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
+  <viewList v-bind:pageType="pageType" :products="products" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
 
   <section v-if="modalVisiblity" class="modalBg">
     <BasketDeleteModal v-if="basketDeleteModal" @basketDelete="basketDeleteModalClose" @removedShow="removedShow" :title="title" />
@@ -13,10 +13,11 @@
 
 <script>
 import Bar from '@/components/shared/Bar'
-import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
+import viewList from '@/components/mypage/ViewLog/ViewList'
 import EmptyBlock from '@/components/shared/EmptyBlock'
 import BasketDeleteModal from '@/components/mypage/Exchange/Modal/BasketDeleteModal'
 import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
+import { getRecentViewList } from '@/api/index.js'
 
 export default {
   data () {
@@ -27,11 +28,25 @@ export default {
       products: [],
       modalVisiblity: false,
       basketDeleteModal: false,
-      removedModal: false
+      removedModal: false,
+      viewStartIndex: 0
     }
   },
   components: {
-    Bar, ExchangeList, EmptyBlock, BasketDeleteModal, RemovedModal
+    Bar, viewList, EmptyBlock, BasketDeleteModal, RemovedModal
+  },
+  created () {
+    if (sessionStorage.getItem('accessToken')) {
+      getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
+        .then(res => {
+          console.log(res)
+          this.viewStartIndex = res.data.jsonData.viewStartIndex
+          this.products.push(...res.data.jsonData.views)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
   methods: {
     basketDeleteModalShow () {
