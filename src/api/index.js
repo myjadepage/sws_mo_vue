@@ -3,9 +3,9 @@ import axios from 'axios'
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
-  baseUrl3: 'http:///api.shallwe.shop/api/v1/',
-  baseUrl: 'http://shallwe.shop:3000/api/v1/' // 개발
-  // baseUrl: 'http://shallwe.shop/api/v1/' // 배포
+  baseUrl3: 'http://api.shallwe.shop/api/v1/',
+  baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
+  // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
 
 /**
