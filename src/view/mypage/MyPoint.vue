@@ -1,10 +1,10 @@
 <template>
-  <div class="mainPageWrap" :class="listCount === 0? 'emptyHeight': ''">
+  <div class="mainPageWrap emptyHeight" >
   <Bar :val="title" />
   <!-- <OptionBar :baskets="baskets" /> -->
   <!-- <MyInfo :member="member" /> -->
-  <LookUp />
-  <PointList @type="typeSwitch" :list="list" :listCount="listCount" />
+  <LookUp @sendDate="setDate" />
+  <PointList :lists="lists" />
 
   </div>
 </template>
@@ -15,7 +15,7 @@ import OptionBar from '@/components/mypage/Main/MyOptionIconBar'
 import MyInfo from '@/components/mypage/Main/MyInfo'
 import LookUp from '@/components/mypage/Point/PointLookUp'
 import PointList from '@/components/mypage/Point/PointList'
-import { getMypageInfo, getCartItem } from '@/api/index.js'
+import { getMypageInfo, getCartItem, getPointInfo } from '@/api/index.js'
 
 export default {
   data () {
@@ -29,36 +29,24 @@ export default {
         followerCnt: 0,
         followingCnt: 0
       },
+      todayStr: '',
+      startDateStr: '',
       baskets: [],
-      listCount: 3,
-      list: {
-        all: {
-          count: 3,
-          item: []
-        },
-        save: {
-          count: 2,
-          item: []
-        },
-        use: {
-          count: 0,
-          item: []
-        }
-      }
+      lists: []
     }
   },
   components: {
     Bar, MyInfo, OptionBar, LookUp, PointList
   },
   methods: {
-    typeSwitch (typeStr) {
-      if (typeStr === 'all') {
-        this.listCount = this.listCount
-      } else if (typeStr === 'save') {
-        this.listCount = this.list.save.count
-      } else if (typeStr === 'use') {
-        this.listCount = this.list.use.count
-      }
+    setDate (today, startDate) {
+      this.todayStr = today.replace(/\./gi, '')
+      this.startDateStr = startDate.replace(/\./gi, '')
+
+      getPointInfo(sessionStorage.getItem('accessToken'), this.todayStr, this.startDateStr, 0)
+        .then(res => {
+          console.log(res)
+        })
     }
   },
   created () {
@@ -96,6 +84,11 @@ export default {
         })
         .catch(err => {
           console.log(err)
+        })
+
+      getPointInfo(sessionStorage.getItem('accessToken'), this.todayStr, this.startDateStr, 0)
+        .then(res => {
+          console.log(res)
         })
     }
   }
