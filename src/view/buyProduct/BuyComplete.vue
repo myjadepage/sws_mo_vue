@@ -1,13 +1,14 @@
 <template>
   <div class="buyCompleteWrap">
-    <div v-if="result" class="success"></div>
+    <div v-if="result" class="success" >
+  </div>
     <Bar val="구매완료" />
-    <Message :info="info" />
+    <Message :result="result" :info="info" :errMsg="errMsg" />
     <Account v-if="payMethod===3" :info="info" />
     <Info :info="info" />
     <Guides/>
     <Footer/>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -21,62 +22,70 @@ import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
-    let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
-
-    this.info = payInfo
-    this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
-    sessionStorage.removeItem('orderRes')
-    sessionStorage.removeItem('product')
-    sessionStorage.removeItem('payItem')
-
-    switch (this.$store.getters.getPayMethod) {
-      case 'card':
-        this.payMethod = 1
-        break
-      case 'trans':
-        this.payMethod = 2
-        break
-      case 'vbank':
-        this.payMethod = 3
-        break
-      case 'phone':
-        this.payMethod = 4
-        break
-      case 'samsung':
-        this.payMethod = 5
-        break
-      case 'kpay':
-        this.payMethod = 6
-        break
-      case 'cultureland':
-        this.payMethod = 7
-        break
-      case 'smartculture':
-        this.payMethod = 8
-        break
-      case 'happymoney':
-        this.payMethod = 9
-        break
-      case 'booknlife':
-        this.payMethod = 10
-        break
-      default:
-        break
+    console.log(this.$route)
+    if (this.$route.query.imp_success === 'true') {
+      this.result = true
+    } else {
+      this.result = false
+      this.errMsg = this.$route.query.error_msg
     }
 
-    let item = {
-      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
-    }
+    // let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
 
-    if (localStorage.getItem('orderSysId')) {
-      payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-        console.log(res)
-        sessionStorage.removeItem('orderSysId')
-      }).catch(err => {
-        console.log(err)
-        sessionStorage.removeItem('orderSysId')
-      })
-    }
+    // this.info = payInfo
+    // this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
+    // sessionStorage.removeItem('orderRes')
+    // sessionStorage.removeItem('product')
+    // sessionStorage.removeItem('payItem')
+
+    // switch (this.$store.getters.getPayMethod) {
+    //   case 'card':
+    //     this.payMethod = 1
+    //     break
+    //   case 'trans':
+    //     this.payMethod = 2
+    //     break
+    //   case 'vbank':
+    //     this.payMethod = 3
+    //     break
+    //   case 'phone':
+    //     this.payMethod = 4
+    //     break
+    //   case 'samsung':
+    //     this.payMethod = 5
+    //     break
+    //   case 'kpay':
+    //     this.payMethod = 6
+    //     break
+    //   case 'cultureland':
+    //     this.payMethod = 7
+    //     break
+    //   case 'smartculture':
+    //     this.payMethod = 8
+    //     break
+    //   case 'happymoney':
+    //     this.payMethod = 9
+    //     break
+    //   case 'booknlife':
+    //     this.payMethod = 10
+    //     break
+    //   default:
+    //     break
+    // }
+
+    // let item = {
+    //   paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
+    // }
+
+    // if (localStorage.getItem('orderSysId')) {
+    //   payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+    //     console.log(res)
+    //     sessionStorage.removeItem('orderSysId')
+    //   }).catch(err => {
+    //     console.log(err)
+    //     sessionStorage.removeItem('orderSysId')
+    //   })
+    // }
   },
 
   data () {
@@ -84,8 +93,8 @@ export default {
       result: true, // 성공 true / 실패 false
       item: {},
       info: {},
-      payMethod: 0
-
+      payMethod: 0,
+      errMsg: ''
     }
   },
 
