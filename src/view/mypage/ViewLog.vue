@@ -2,12 +2,8 @@
   <div :class="[products.length > 0 ? 'bgGray' : 'exchange' ]">
   <Bar :val="title" />
   <EmptyBlock :param="emptyMeasse" v-if="products.length === 0"  />
-  <viewList v-bind:pageType="pageType" :products="products" v-if="products.length > 0" @basketDeleteModalShow="basketDeleteModalShow"  />
+  <viewList v-bind:pageType="pageType" :products="products" v-if="products.length > 0"  />
 
-  <section v-if="modalVisiblity" class="modalBg">
-    <BasketDeleteModal v-if="basketDeleteModal" @basketDelete="basketDeleteModalClose" @removedShow="removedShow" :title="title" />
-    <RemovedModal v-if="removedModal" @removed="removedClose" :title="title" />
-  </section>
   </div>
 </template>
 
@@ -36,34 +32,17 @@ export default {
     Bar, viewList, EmptyBlock, BasketDeleteModal, RemovedModal
   },
   created () {
+    window.scrollTo(0, 0)
+
     if (sessionStorage.getItem('accessToken')) {
       getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
         .then(res => {
-          console.log(res)
           this.viewStartIndex = res.data.jsonData.viewStartIndex
           this.products.push(...res.data.jsonData.views)
         })
         .catch(err => {
           console.log(err)
         })
-    }
-  },
-  methods: {
-    basketDeleteModalShow () {
-      this.modalVisiblity = true
-      this.basketDeleteModal = true
-    },
-    basketDeleteModalClose () {
-      this.modalVisiblity = false
-      this.basketDeleteModal = false
-    },
-    removedShow () {
-      this.basketDeleteModal = false
-      this.removedModal = true
-    },
-    removedClose () {
-      this.modalVisiblity = false
-      this.removedModal = false
     }
   }
 }

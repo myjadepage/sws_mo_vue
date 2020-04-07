@@ -345,11 +345,103 @@ function getMyReviewList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/reviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/reviews/list`
+  })
+}
+
+// 마이페이지-최근 본 상품 삭제(리스트)
+function delRecentViewList (accessToken, lists) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(lists))
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-찜한 상품 등록
+function setPicksList (accessToken, pickInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(pickInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-찜한 상품 삭제
+function delPicksList (accessToken, prdtSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/${prdtSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
     }
+  })
+}
+
+// 마이페이지-찜한 상품 조회
+function getPicksList (accessToken, sIdx, rCnt) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-찜한 상품 삭제(리스트)
+function delPicksLists (accessToken, lists) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(lists))
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-마이 포인트 내역 조회
+// flag - 0: 전체 1: 적립 2:사용.
+function getPointInfo (accessToken, sDate, eData, flag) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let req = {startDate: sDate, endDate: eData, treatFlag: flag}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/pointhists/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -553,5 +645,11 @@ export {
   getRecentViewList,
   setRecentViewList,
   postPrdtQuestion,
-  getMyReviewList
+  getMyReviewList,
+  setPicksList,
+  delPicksList,
+  getPicksList,
+  delPicksLists,
+  delRecentViewList,
+  getPointInfo
 }

@@ -89,13 +89,29 @@ export default {
       title: '마이리뷰',
       pageType: 'review',
       emptyMessage: '리뷰를 작성하지 않은 상품 내역이 없습니다.',
+<<<<<<< HEAD
       reviews: [],
       products: [],
+=======
+      emptyMessage2: '리뷰를 작성한 상품 내역이 없습니다.',
+      products: [],
+      reviews: {
+        pre: {
+          length: 4
+        },
+        writed: {
+          length: 24
+        }
+      },
+>>>>>>> a4d10c7fd287d51e7428f0ae46d06773574466e7
       tabState: false
     }
   },
   components: {
     Bar, ExchangeList, EmptyBlock, ReviewTab, ReviewEntity
+  },
+  created () {
+    window.scrollTo(0, 0)
   },
   methods: {
     tabSwitch () {
