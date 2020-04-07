@@ -350,11 +350,6 @@ export default new Router({
       path: '/CustomerSearch',
       name: 'CustomerSearch',
       component: () => import('@/view/customer/CustomerSearch')
-    },
-    {
-      path: '/Product/:prdtSysId/QA',
-      name: 'QAPage',
-      component: () => import('@/view/ProductDetail/QAPage/QAMain')
     }
   ]
 })

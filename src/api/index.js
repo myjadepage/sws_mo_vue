@@ -59,7 +59,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`${config.baseUrl4}orders`, formdata)
+  return axios.post(`${config.baseUrl}orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {
@@ -145,23 +145,43 @@ function getAddingCosts (postNumber) {
  * 상품 상세
  */
 // 단일 상품
-function getProduct (id) {
-  return axios.get(`${config.baseUrl}products/${id}`)
+function getProduct (prdtSysId) {
+  return axios.get(`${config.baseUrl}products/${prdtSysId}`)
 }
 
-function getBroadCast (id) {
-  return axios.get(`${config.baseUrl}broadcasts/${id}`)
+function getBroadCast (prdtSysId) {
+  return axios.get(`${config.baseUrl}broadcasts/${prdtSysId}`)
 }
 
 // 리뷰 목록 가져오기
-function getPrdtReviewList (id) {
-  return axios.get(`${config.baseUrl2}products/${id}/reviews/list`)
+function getPrdtReviewList (prdtSysId) {
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/reviews/list`)
 }
 
 // 문의 목록 가져오기
-function getPrdtQuestionList (id) {
-  return axios.get(`${config.baseUrl2}products/${id}/questions/list`)
+function getPrdtQuestionList (prdtSysId) {
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/questions/list`)
 }
+
+// 문의 등록하기
+function postPrdtQuestion (accessToken, prdtSysId, qaData) {
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(qaData))
+
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}products/${prdtSysId}/questions`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+/*
+* 장바구니
+*/
 
 // 회원 장바구니 등록
 function postCartItem (accessToken, cartItem) {
@@ -313,6 +333,19 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
   return axios({
     method: 'get',
     url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+// 마이 리뷰 목록 가져오기
+function getMyReviewList (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/reviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -518,5 +551,7 @@ export {
   changePw,
   removeCartList,
   getRecentViewList,
-  setRecentViewList
+  setRecentViewList,
+  postPrdtQuestion,
+  getMyReviewList
 }

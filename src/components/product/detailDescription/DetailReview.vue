@@ -1,21 +1,7 @@
 <template>
   <div class="detailReviewWrap">
-      <div v-if="reviews">
       <ReviewHeader :reviews="reviews" @catClick="catClick" />
       <Entity v-for="(review,idx) in reviews" :key="idx" :cat="currentCat" :review="review" />
-      </div>
-      <!-- <div v-if="currentCat===0">
-        <Entity v-for="r in reviews.photos" :key="r.r_no" :review="r" />
-        <Entity v-for="r in reviews.normals" :key="r.r_no" :review="r" />
-        <Entity v-for="m in reviews.medias" :key="m.r_no" :review="m" />
-        </div>
-        <div v-if="currentCat===1">
-          <Entity v-for="r in reviews.photos" :key="r.r_no" :review="r" />
-        </div>
-        <div v-if="currentCat===2">
-          <Entity v-for="m in reviews.medias" :key="m.r_no" :review="m" />
-        </div> -->
-
   </div>
 </template>
 
