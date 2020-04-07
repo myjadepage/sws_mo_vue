@@ -18,7 +18,7 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-import {payOrders} from '@/api/index.js'
+// import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
