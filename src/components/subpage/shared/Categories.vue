@@ -70,7 +70,9 @@ export default {
 
 <style>
  .subCatWrap {
-   position: relative;
+   position: absolute;
+   top:45px;
+   left:0;
    width:100%;
    font-size:0;
  }

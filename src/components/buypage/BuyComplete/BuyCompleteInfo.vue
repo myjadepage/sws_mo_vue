@@ -6,15 +6,15 @@
     <table>
       <tr>
         <th>상품금액</th>
-        <td>{{payInfo.prdtPrice|makeComma}}원</td>
+        <td>{{info.payInfo.prdtPrice|makeComma}}원</td>
       </tr>
       <tr>
         <th>배송비</th>
-        <td>{{payInfo.deliveryPrice?formatPrice(payInfo.deliveryPrice)+'원':'무료배송'}}</td>
+        <td>{{deliveryPrice?formatPrice(deliveryPrice)+'원':'무료배송'}}</td>
       </tr>
-      <tr v-if="payInfo.discount">
+      <tr v-if="info.payInfo.discount">
         <th>할인금액</th>
-        <td>-{{payInfo.discount|makeComma}}원</td>
+        <td>-{{info.payInfo.discount|makeComma}}원</td>
       </tr>
       <tr>
         <th>결제금액</th>
@@ -26,23 +26,19 @@
 
 <script>
 export default {
-  created () {
-    this.payInfo = this.$store.getters.getPayPriceInfo
-  },
   props: ['info'],
-  data () {
-    return {
-      payInfo: {}
-    }
-  },
-  computed: {
-    totalPrice () {
-      return this.payInfo.prdtPrice + this.payInfo.deliveryPrice - this.payInfo.discount
-    }
-  },
   methods: {
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+  },
+  computed: {
+    deliveryPrice () {
+      return this.info.payInfo.addDeliveryCost + this.info.payInfo.deliveryPrice
+    },
+
+    totalPrice () {
+      return this.info.payInfo.prdtPrice + this.deliveryPrice - this.info.payInfo.discount
     }
   }
 

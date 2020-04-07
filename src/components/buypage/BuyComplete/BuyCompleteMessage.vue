@@ -5,14 +5,14 @@
     </div>
     <div v-if="result">
     <div class="message">주문이 정상적으로 접수되었습니다.</div>
-    <div class="orderNum">주문번호 {{info.orderCode}}</div>
+    <div class="orderNum">주문번호 {{orderCode}}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['info', 'result', 'errMsg'],
+  props: ['info', 'result', 'errMsg', 'orderCode'],
   data () {
     return {
     }
@@ -29,7 +29,7 @@ export default {
 }
 
 .completeMessageWrap .orderNum,.completeMessageWrap .message{
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
 }
 

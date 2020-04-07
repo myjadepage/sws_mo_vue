@@ -216,6 +216,7 @@ export default {
   padding-left: 10px;
   border: 1px solid #cccccc;
   margin: 10px 13px 0 4px;
+  background:url('../../assets/img/ico/arrow_down.png') 40px 50% / 13px auto no-repeat;
 }
 
 .productEntityWrap .imgBox .check{

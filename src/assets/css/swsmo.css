@@ -232,6 +232,7 @@
 /* 메인 라이브슬라이드 */
 
 .live_slide{
+  margin-top:114px;
   margin-bottom:60px;
 }
 .live_slide h4 {
@@ -307,6 +308,9 @@
 
 
 /* 서브 라이브 슬라이드 */
+.subSlide{
+  margin-top:44px;
+}
 .live_slide.subSlide{
   margin-top:50px;
 }

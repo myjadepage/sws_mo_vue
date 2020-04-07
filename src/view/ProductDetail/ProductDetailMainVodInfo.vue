@@ -4,7 +4,7 @@
       <Bar :val="title" />
       <MediaLive :product="product" :mode="mode" :playedIndex="playedIndex"/>
       <Info :product="product" />
-      <!-- <SubMedia @play="play" /> -->
+      <SubMedia @play="play" />
       <Info2 :product="product" />
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
@@ -16,7 +16,7 @@
 
 <script>
 import Bar from '@/components/shared/Bar'
-import MediaLive from '@/components/product/ProductMediaLive'
+import MediaLive from '@/components/product/ProductMediaVod'
 import Info from '@/components/product/ProductInfo'
 import SubMedia from '@/components/product/SubMedia'
 import Info2 from '@/components/product/ProductInfo2'

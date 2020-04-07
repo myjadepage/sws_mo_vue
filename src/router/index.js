@@ -82,6 +82,11 @@ export default new Router({
       component: () => import('@/view/productDetail/ProductDetailMainLiveInfo')
     },
     {
+      path: '/Product/:prdtSysId/detailVod/:broadcastSysId',
+      name: 'ProductDetailVodInfo',
+      component: () => import('@/view/productDetail/ProductDetailMainVodInfo')
+    },
+    {
       path: '/Login',
       name: 'Login',
       // beforeEnter: rejectAuthUser,
@@ -350,11 +355,6 @@ export default new Router({
       path: '/CustomerSearch',
       name: 'CustomerSearch',
       component: () => import('@/view/customer/CustomerSearch')
-    },
-    {
-      path: '/Product/:prdtSysId/QA',
-      name: 'QAPage',
-      component: () => import('@/view/ProductDetail/QAPage/QAMain')
     }
   ]
 })

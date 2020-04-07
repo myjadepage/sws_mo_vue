@@ -222,6 +222,7 @@ input:-webkit-autofill {
   background: #fff
 }
 #swsContent {
+  position: relative;
   width: 100%;
 }
 #swsHead .inner_head {
@@ -2923,6 +2924,38 @@ html, body{
     padding:20px 12px 10px;
 }
 
+.ico_like{
+  display: inline-block;
+  width: 17px;
+  height: 15px;
+  background: url('../img/ico/ico_like.png');
+  background-size: 100%;
+}
+
+  .ico_unlike{
+    display: inline-block;
+    width: 17px;
+    height: 15px;
+    background: url('../img/ico/ico_unlike.png');
+    background-size: 100%;
+  }
+  
+  .ico_photo{
+    display: inline-block;
+    width: 26px;
+    height: 20px;
+    background: url('../img/ico/ico_photo.png');
+    background-size: 100%;
+  }
+  
+  .ico_media{
+    display: inline-block;
+    width: 26px;
+    height: 20px;
+    background: url('../img/ico/ico_media.png');
+    background-size: 100%;
+  }
+
 
 
 .deliveryBlock th,
@@ -2946,9 +2979,6 @@ html, body{
 .paymentInfo th{
     width:70px;
 }
- 
-
-
 
 
 .myreview .tabBox{

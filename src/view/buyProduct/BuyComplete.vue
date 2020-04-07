@@ -3,7 +3,7 @@
     <div v-if="result" class="success" >
   </div>
     <Bar val="구매완료" />
-    <Message :result="result" :info="info" :errMsg="errMsg" />
+    <Message :result="result" :info="info" :errMsg="errMsg" :orderCode="orderCode" />
     <Account v-if="payMethod===3" :info="info" />
     <Info :info="info" />
     <Guides/>
@@ -22,60 +22,61 @@ import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
 
 export default {
   created () {
-    console.log(this.$route)
     if (this.$route.query.imp_success === 'true') {
       this.result = true
+      this.orderCode = this.$route.query.merchant_uid
     } else {
       this.result = false
       this.errMsg = this.$route.query.error_msg
     }
 
-    // let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
+    let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
 
-    // this.info = payInfo
-    // this.info.orderCode = JSON.parse(sessionStorage.getItem('orderRes')).jsonData.res.orderCode
-    // sessionStorage.removeItem('orderRes')
-    // sessionStorage.removeItem('product')
+    this.info = payInfo
+    // sessionStorage.removeItem('products')
+    // sessionStorage.removeItem('selectedOptions')
     // sessionStorage.removeItem('payItem')
 
-    // switch (this.$store.getters.getPayMethod) {
-    //   case 'card':
-    //     this.payMethod = 1
-    //     break
-    //   case 'trans':
-    //     this.payMethod = 2
-    //     break
-    //   case 'vbank':
-    //     this.payMethod = 3
-    //     break
-    //   case 'phone':
-    //     this.payMethod = 4
-    //     break
-    //   case 'samsung':
-    //     this.payMethod = 5
-    //     break
-    //   case 'kpay':
-    //     this.payMethod = 6
-    //     break
-    //   case 'cultureland':
-    //     this.payMethod = 7
-    //     break
-    //   case 'smartculture':
-    //     this.payMethod = 8
-    //     break
-    //   case 'happymoney':
-    //     this.payMethod = 9
-    //     break
-    //   case 'booknlife':
-    //     this.payMethod = 10
-    //     break
-    //   default:
-    //     break
-    // }
+    switch (this.info.payMethod) {
+      case 'card':
+        this.payMethod = 1
+        break
+      case 'trans':
+        this.payMethod = 2
+        break
+      case 'vbank':
+        this.payMethod = 3
+        break
+      case 'phone':
+        this.payMethod = 4
+        break
+      case 'samsung':
+        this.payMethod = 5
+        break
+      case 'kpay':
+        this.payMethod = 6
+        break
+      case 'cultureland':
+        this.payMethod = 7
+        break
+      case 'smartculture':
+        this.payMethod = 8
+        break
+      case 'happymoney':
+        this.payMethod = 9
+        break
+      case 'booknlife':
+        this.payMethod = 10
+        break
+      default:
+        break
+    }
 
-    // let item = {
-    //   paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
-    // }
+    let item = {
+      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
+    }
+
+    console.log(item)
 
     // if (localStorage.getItem('orderSysId')) {
     //   payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
@@ -94,7 +95,8 @@ export default {
       item: {},
       info: {},
       payMethod: 0,
-      errMsg: ''
+      errMsg: '',
+      orderCode: ''
     }
   },
 
