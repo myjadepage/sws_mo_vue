@@ -1,26 +1,33 @@
 <template>
 <div class="cartMainWrap">
     <Bar :val="'장바구니'" />
+      <!-- <Loading
+      :active.sync="isProductLoading"
+      :is-full-page="false"
+      :heigth="50"
+      :width="50"
+        /> -->
     <EmptyCart v-if="products.length===0" />
-    <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" @selectedDelete="selectedDelete" v-if="products.length > 0" :cntInfo="[selectedItem,products.length,isCheckAll]" />
+    <CartCount @cartSelectAll="selectAll" @cartDeSelectAll="deSelectAll" @selectedDelete="selectedDelete" v-if="products.length > 0" :cntInfo="[products,isCheckAll]" />
     <Product
     v-for="(p,idx) in products"
     :key="idx"
     @selectItem="selectItem"
     @salesLimitOver="PrdtLimitModalShow"
     @soldOut="StockOutModalShow"
-    @prdtPrice="prdtPrices"
     @sigleItemCntChange="singleItemChange"
     @multiOptionCntChange="multiItemChange"
+    @prdtPrice="calcPrdtPrice"
     :index="idx"
-    :product="p"
-    :isChecked="selectedItem[idx]"
+    :product="{...p}"
      />
 
-    <PayInfo @deliveryInfoBtnClick="DeliveryModalShow" v-if="products.length > 0"
-      :prices="[...prices]"
+    <PayInfo
+    v-if="products.length > 0"
+    @deliveryInfoBtnClick="DeliveryModalShow"
+    @selectedItemBuy="selectedItemBuyClick"
+    @allItemBuy="allItemBuyClick"
       :products="[...products]"
-      :selectedItem="[...selectedItem]"
       />
 
     <div v-if="modalVisiblity" class="modalSection">
@@ -48,8 +55,10 @@ import PrdtLimitModal from '@/components/cartpage/Modal/PrdtLimitOver'
 import StockOutModal from '@/components/cartpage/Modal/StockOut'
 import DeleteModal from '@/components/cartpage/Modal/BasketDeleteModal'
 import DeletedModal from '@/components/cartpage/Modal/BasketDeleted'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
-import {getProduct, getCartItem, getAccessToken, removeCartItem, putCartItem} from '@/api/index.js'
+import {getProduct, getCartItem, getAccessToken, putCartItem, removeCartList} from '@/api/index.js'
 
 export default {
   created () {
@@ -58,12 +67,11 @@ export default {
       getCartItem(sessionStorage.getItem('accessToken'))
         .then(cartRes => {
           let cartList = cartRes.data.jsonData.baskets
-
+          this.cartSize = cartList.length
           if (cartList) {
             for (const c of cartList) {
               getProduct(c.prdtSysId)
                 .then(res => {
-                  this.selectedItem.push(true)
                   let item = {
                     ...res.data.jsonData.product,
                     normalOptions: res.data.jsonData.normalOptions,
@@ -71,7 +79,8 @@ export default {
                     isOptionNormal: c.isOptionNormal,
                     optionInfo: [],
                     basketSysId: c.basketSysId,
-                    basketQty: c.basketQty
+                    basketQty: c.basketQty,
+                    isChecked: true
                   }
 
                   if (c.productOptions) {
@@ -102,25 +111,25 @@ export default {
         })
     } else {
       let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-
+      this.cartSize = cartList.length
       if (cartList) {
         for (let i = 0; i < cartList.length; i++) {
           const c = cartList[i]
 
           cartList[i].basketSysId = 999 - i
 
-          this.selectedItem.push(true)
           let item = {
             isAddingProduct: c.isAddingProduct,
             isOptionNormal: c.isOptionNormal,
             optionInfo: [],
             basketSysId: c.basketSysId,
-            basketQty: c.basketQty
+            basketQty: c.basketQty,
+            isChecked: true
+
           }
 
           if (c.optionGroups) {
             for (const og of c.optionGroups) {
-              console.log(item.basketSysId)
               for (const po of og.productOptions) {
                 item.optionInfo.push({
                   ...po, optionGroupId: og.optionGroupId, optionQty: og.optionQty, price: po.price
@@ -146,11 +155,13 @@ export default {
       }
     }
   },
+  beforeMount () {
+    this.isProductLoading = !(this.cartSize === this.products.length)
+  },
+
   data () {
     return {
-      prices: [],
       products: [],
-      selectedItem: [],
       modalVisiblity: false,
       DeliveryModal: false,
       CartLimitModal: false,
@@ -159,21 +170,33 @@ export default {
       DeleteModal: false,
       DeletedModal: false,
       isCheckAll: true,
-      deleteIndex: null
+      isProductLoading: true,
+      cartSize: 0
     }
   },
   components: {
-    Bar, EmptyCart, CartCount, Product, PayInfo, DeliveryModal, CartLimitModal, PrdtLimitModal, StockOutModal, DeleteModal, DeletedModal
+    Bar, EmptyCart, CartCount, Product, PayInfo, DeliveryModal, CartLimitModal, PrdtLimitModal, StockOutModal, DeleteModal, DeletedModal, Loading
   },
   methods: {
+    calcPrdtPrice (info) {
+      this.products[info[0]].totalPrice = info[1]
+    },
+
     selectItem (idx) {
       if (this.isCheckAll === true) {
         this.isCheckAll = false
       }
 
-      this.selectedItem[idx] = !this.selectedItem[idx]
+      this.products[idx].isChecked = !this.products[idx].isChecked
 
-      if (!this.selectedItem.includes(false)) {
+      let isAllSelect = true
+      for (const p of this.products) {
+        if (p.isChecked === false) {
+          isAllSelect = false
+        }
+      }
+
+      if (isAllSelect) {
         this.isCheckAll = true
       }
 
@@ -181,16 +204,16 @@ export default {
     },
 
     selectAll (status) {
-      for (let i = 0; i < this.selectedItem.length; i++) {
-        this.selectedItem[i] = true
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i].isChecked = true
       }
       this.isCheckAll = status
       this.$forceUpdate()
     },
 
     deSelectAll (status) {
-      for (let i = 0; i < this.selectedItem.length; i++) {
-        this.selectedItem[i] = false
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i].isChecked = false
       }
       this.isCheckAll = status
       this.$forceUpdate()
@@ -232,7 +255,8 @@ export default {
       if (this.$store.state.isLogin) { // 회원인 경우
         let cartItem = {}
 
-        for (const p of this.products) {
+        for (let i = 0; i < this.products.length; i++) {
+          const p = this.products[i]
           if (p.basketSysId === info[0]) {
             cartItem.prdtSysId = p.prdtSysId
             cartItem.basketQty = Number(p.basketQty)
@@ -249,6 +273,7 @@ export default {
                 })
               }
             } else {
+              this.products[i].basketQty = Number(info[1])
               cartItem.basketQty = Number(info[1])
             }
           }
@@ -272,6 +297,12 @@ export default {
             }
           })
       } else { // 비회원인 경우
+        for (let i = 0; i < this.products.length; i++) {
+          if (info[0] === this.products[i].basketSysId && !this.products[i].isOptionNormal) {
+            this.products[i].basketQty = Number(info[1])
+          }
+        }
+
         let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
         let targetIdx = 0
         for (let i = 0; i < cartList.length; i++) {
@@ -289,6 +320,7 @@ export default {
 
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
+      // this.$forceUpdate()
     },
     multiItemChange (info) {
       if (this.$store.state.isLogin) { // 회원인 경우
@@ -350,6 +382,7 @@ export default {
 
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
+      this.$forceUpdate()
     },
 
     selectedDelete () {
@@ -363,60 +396,52 @@ export default {
     },
     deleteConfirm () {
       if (this.$store.state.isLogin) {
-        let x = [...this.selectedItem]
-        for (let i = this.selectedItem.length - 1; i >= 0; i--) {
-          if (this.selectedItem[i]) {
-            removeCartItem(sessionStorage.getItem('accessToken'), this.products[i].basketSysId)
-              .then(res => {
-                this.products.splice(i, 1)
-                this.prices.splice(i, 1)
-                x.splice(i, 1)
-                this.DeleteModal = false
-                this.DeletedModal = true
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  getAccessToken(sessionStorage.getItem('refreshToken'))
-                    .then(res => {
-                      sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                    })
-                    .catch(err => {
-                      if (err.response.status === 401) {
-                        this.$store.dispatch('logOut')
-                        this.$router.push('/Login')
-                      }
-                    })
-                }
-              })
+        let basketSysIds = []
+        for (let i = this.products.length - 1; i >= 0; i--) {
+          const p = this.products[i]
+          if (p.isChecked) {
+            basketSysIds.push(p.basketSysId)
           }
         }
 
-        this.selectedItem = x
+        let item = {
+          basketSysIds: basketSysIds.join()
+        }
+
+        removeCartList(sessionStorage.getItem('accessToken'), item)
+          .then(res => {
+            for (let i = this.products.length - 1; i >= 0; i--) {
+              const p = this.products[i]
+              if (basketSysIds.includes(p.basketSysId)) {
+                this.products.splice(i, 1)
+              }
+            }
+
+            this.DeleteModal = false
+            this.DeletedModal = true
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
         let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-        let x = [...this.selectedItem]
-        let targets = []
-        for (let i = this.selectedItem.length - 1; i >= 0; i--) {
-          if (this.selectedItem[i]) {
-            targets.push(this.products[i].basketSysId)
-          }
-        }
 
-        for (let i = 0; i < x.length; i++) {
-          for (const t of targets) {
-            if (this.products[i] && this.products[i].basketSysId === t) {
-              console.log(cartList)
+        for (let i = this.products.length - 1; i >= 0; i--) {
+          const p = this.products[i]
 
-              // this.products.splice(i, 1)
-              // cartList.splice(i, 1)
-              // this.prices.splice(i, 1)
-              // this.selectedItem.splice(i, 1)
-              // i = 0
+          if (p.isChecked) {
+            for (let j = cartList.length - 1; j >= 0; j--) {
+              const c = cartList[j]
+              if (c.basketSysId === p.basketSysId) {
+                cartList.splice(j, 1)
+              }
             }
+            this.products.splice(i, 1)
           }
         }
 
-        // sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+        sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+
         this.DeleteModal = false
         this.DeletedModal = true
       }
@@ -426,14 +451,119 @@ export default {
       this.deleteIndex = null
       this.modalVisiblity = false
       this.DeletedModal = false
-
-      // location.reload()
     },
-    prdtPrices (info) {
-      this.prices[info[0]] = info[1]
-      this.$forceUpdate()
-    }
+    selectedItemBuyClick () {
+      let list = []
+      let op = []
+      for (const p of this.products) {
+        if (p.isChecked) {
+          list.push(p)
+          let map = new Map()
+          for (const o of p.optionInfo) {
+            if (!map.has(o.optionGroupId)) {
+              map.set(o.optionGroupId, [])
+            }
+            map.get(o.optionGroupId).push(o)
+          }
 
+          let x = []
+          if (!p.isOptionNormal) {
+            x = [{
+              count: p.basketQty,
+              price: p.price,
+              contentName: '',
+              contentGroup: [{
+                name: p.name,
+                prdtNormalOptionSysId: null,
+                price: null
+              }]
+            }]
+          }
+
+          for (const m of map.values()) {
+            let item = {
+              count: 0,
+              price: 0,
+              contentName: '',
+              contentGroup: []
+            }
+
+            for (const o of m) {
+              item.count = o.optionQty
+              item.price += o.price
+              item.contentName += o.optionKeyName
+              item.contentGroup.push({
+                name: o.optionKeyName,
+                prdtNormalOptionSysId: o.prdtNormalOptionSysId,
+                price: o.price
+              })
+            }
+
+            x.push(item)
+          }
+          op.push(x)
+        }
+      }
+
+      sessionStorage.setItem('products', JSON.stringify(list))
+      sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+
+      this.$router.push('/buyproduct')
+    },
+    allItemBuyClick () {
+      let op = []
+      for (const p of this.products) {
+        let map = new Map()
+        for (const o of p.optionInfo) {
+          if (!map.has(o.optionGroupId)) {
+            map.set(o.optionGroupId, [])
+          }
+          map.get(o.optionGroupId).push(o)
+        }
+
+        let x = []
+        if (!p.isOptionNormal) {
+          x = [{
+            count: p.basketQty,
+            price: p.price,
+            contentName: '',
+            contentGroup: [{
+              name: p.name,
+              prdtNormalOptionSysId: null,
+              price: null
+            }]
+          }]
+        }
+
+        for (const m of map.values()) {
+          let item = {
+            count: 0,
+            price: 0,
+            contentName: '',
+            contentGroup: []
+          }
+
+          for (const o of m) {
+            item.count = o.optionQty
+            item.price += o.price
+            item.contentName += o.optionKeyName
+            item.contentGroup.push({
+              name: o.optionKeyName,
+              prdtNormalOptionSysId: o.prdtNormalOptionSysId,
+              price: o.price
+            })
+          }
+
+          x.push(item)
+        }
+        op.push(x)
+      }
+
+      sessionStorage.setItem('products', JSON.stringify(this.products))
+      sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+
+      this.$router.push('/buyproduct')
+    }
   }
 }
 </script>

@@ -59,7 +59,7 @@ function postOrders (jsonData) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
 
-  return axios.post(`${config.baseUrl}orders`, formdata)
+  return axios.post(`${config.baseUrl4}orders`, formdata)
 }
 // 주문결제정보 등록
 function payOrders (jsonData, orderSysId) {
@@ -111,7 +111,7 @@ function modifyUserInfo (accessToken, userInfo) {
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl}users/${userSysId}/listaddress`, {
+  return axios.get(`${config.baseUrl2}users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -126,7 +126,7 @@ function addMemberAddress (accessToken, addrInfo) {
   formdata.set('jsonData', JSON.stringify(addrInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/address`,
+    url: `${config.baseUrl2}users/${userSysId}/address`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -206,6 +206,23 @@ function removeCartItem (accessToken, basketSysId) {
   })
 }
 
+// 장바구니 목록 삭제
+function removeCartList (accessToken, basketSysIds) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(basketSysIds))
+
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // 장바구니 수정
 function putCartItem (accessToken, basketSysId, cartItem) {
   let userSysId = parseJwt(accessToken).authSysId
@@ -268,6 +285,38 @@ function changePw (accessToken, pwInfo) {
       'Authorization': `Bearer ${accessToken}`
     },
     data: formdata
+  })
+}
+
+// 마이페이지-최근 본 상품 등록
+function setRecentViewList (accessToken, viewInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(viewInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-최근 본 상품 조회
+function getRecentViewList (accessToken, sIdx, rCnt) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
   })
 }
 
@@ -466,5 +515,8 @@ export {
   getPrdtQuestionList,
   writeQuestion,
   getNoticeList,
-  changePw
+  changePw,
+  removeCartList,
+  getRecentViewList,
+  setRecentViewList
 }

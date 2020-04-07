@@ -2015,10 +2015,6 @@ html, body{
     box-sizing: border-box;
     vertical-align: middle;
 }
-.itemList .listHead .btnsWrap .remove{
-    color:#e61754;
-    border:1px solid #e61754;
-}
 .itemList .listHead .btnsWrap .cancle{
     margin-left:5px;
     color:#111;
@@ -2900,9 +2896,25 @@ html, body{
 
 
 .itemList.recent .listHead{
+  position:absolute;
+  top:50px;
+  left:0;
+  z-index:10;
+  width:100%;
     margin-top:0;
     padding-bottom:10px;
     border-top:1px solid #eee;
+    background:#fff;
+    box-sizing: border-box;
+}
+.itemList.recent .listHead.fixed{
+  position:fixed;
+  top:0;
+  border-top:none;
+  border-bottom:1px solid #eee;
+}
+.itemList.recent .listHead+ul{
+  margin-top:61px
 }
 .itemList.recent .listHead:after{
     display:none;
@@ -3520,6 +3532,10 @@ html, body{
   font-weight:500;
 }
 
+
+.lookUp.compBlock{
+  margin-top:1px;
+}
 .pointList{
   margin-bottom:0;
   padding:0;

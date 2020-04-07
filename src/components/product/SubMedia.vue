@@ -1,7 +1,7 @@
 <template>
-<div class="subMediaWrap">
-          <MediaEntity v-for="(sm,idx) in subMedias" :key="idx" :media="sm" />
-        </div>
+  <div class="subMediaWrap">
+    <MediaEntity v-for="(sm,idx) in subMedias" :key="idx" :media="sm" @play="play" :idx="idx" />
+  </div>
 </template>
 
 <script>
@@ -27,6 +27,11 @@ export default {
           mediaLength: '00:45'
         }
       ]
+    }
+  },
+  methods: {
+    play (idx) {
+      this.$emit('play', idx)
     }
   }
 }

@@ -73,7 +73,6 @@ export default {
         }
         val += p
       }
-
       return val
     }
   },
@@ -82,8 +81,10 @@ export default {
       this.$emit('deliveryInfoBtnClick')
     },
     buySelectedItemClick () {
+      this.$emit('selectedItemBuy')
     },
     buyAllClick () {
+      this.$emit('allItemBuy')
     }
   }
 }

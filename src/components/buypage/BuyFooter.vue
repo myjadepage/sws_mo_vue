@@ -11,13 +11,15 @@ export default {
   props: ['finalPrice', 'coupon', 'addresses'],
   methods: {
     payBtnClick () {
-      let product = JSON.parse(sessionStorage.getItem('product'))
+      let products = JSON.parse(sessionStorage.getItem('products'))
       let options = JSON.parse(sessionStorage.getItem('selectedOptions'))
       let optionQty = 0
 
       if (options) {
         for (const o of options) {
-          optionQty += o.count
+          for (const oo of o) {
+            optionQty += oo.count
+          }
         }
       }
 
@@ -50,32 +52,42 @@ export default {
         }
       }
 
-      item.orderProducts.push({
-        'prdtSysId': product.prdtSysId,
-        'qty': optionQty,
-        'price': product.price,
-        'discount': product.discount,
-        'discountRate': product.discountRate
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i]
+        const option = options[i]
+        let op = {
+          'prdtSysId': product.prdtSysId,
+          'qty': 0,
+          'price': product.price,
+          'discount': product.discount,
+          'discountRate': product.discountRate
         // 'optionGroups': []
-      })
-
-      if (options[0].contentName) {
-        item.orderProducts[0].optionGroups = []
-        let idx = 1
-        for (const o of options) {
-          let op = {
-            groupId: idx++, qty: o.count, options: []
-          }
-
-          for (const c of o.contentGroup) {
-            if (c.name === '선택없음') {
-              continue
-            }
-            op.options.push({prdtNormalOptionSysId: c.prdtNormalOptionSysId, optionKeyName: c.name, price: c.price})
-          }
-
-          item.orderProducts[0].optionGroups.push(op)
         }
+
+        let id = 1
+        if (product.isOptionNormal) {
+          op.optionGroups = []
+          for (const o of option) {
+            op.qty += o.count
+            let og = {
+              groupId: id++,
+              qty: o.count,
+              options: []
+            }
+            for (const oo of o.contentGroup) {
+              og.options.push({
+                prdtNormalOptionSysId: oo.prdtNormalOptionSysId,
+                optionKeyName: oo.name,
+                price: oo.price
+              })
+            }
+            op.optionGroups.push(og)
+          }
+        } else {
+          op.qty = option[0].count
+        }
+
+        item.orderProducts.push(op)
       }
 
       console.log(item)
@@ -101,19 +113,25 @@ export default {
       sessionStorage.setItem('payItem', JSON.stringify(item))
       sessionStorage.setItem('orderRes', JSON.stringify(res))
 
-      this.$router.push('/buycomplete?imp_uid=imp1234567890&merchant_uid=order12345')
+      // this.$router.push('/buycomplete?imp_uid=imp1234567890&merchant_uid=order12345')
 
       postOrders(item)
         .then(res => { // 주문정보등록 성공 시
           console.log(res)
 
           sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+          let name = ''
+          if (products.length > 1) {
+            name = `${products[0].name} 외 ${products.length - 1}건`
+          } else {
+            name = products[0].name
+          }
 
           this.$IMP().request_pay({ // 아임포트 호출
             pg: 'html5_inicis',
             pay_method: this.$store.getters.getPayMethod,
             merchant_uid: res.data.jsonData.res.orderCode,
-            name: product.name,
+            name: name,
             amount: this.finalPrice,
             buyer_email: item.orderEmail,
             buyer_name: item.orderName,

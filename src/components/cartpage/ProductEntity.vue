@@ -1,7 +1,7 @@
 <template>
   <div class="productEntityWrap">
     <div class="entityBody">
-      <div ref="imgBox" @click="selectBtnClick" :class="isChecked?'imgBox selected':'imgBox'">
+      <div @click="selectBtnClick" :class="product.isChecked?'imgBox selected':'imgBox'">
       <div class="checkBox"><span class="check"></span></div>
       <img :src="product.smallImageUrl">
       </div>
@@ -20,7 +20,7 @@
       </div>
 
       <div v-if="!product.isOptionNormal">
-        <select :value="product.basketQty" @change="cntChange">
+        <select v-model="product.basketQty" @change="cntChange">
             <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
           </select>
         <span class="price">{{nonOptionPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
@@ -30,7 +30,6 @@
           <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
         </div>
     </div>
-
     <div v-if="optionMap.size > 1">
     <OptionEntity v-for="o in optionMap" @optionCntChange="optionCntChange" :product="product" :key="o[0]" :option="o" />
     </div>
@@ -56,7 +55,7 @@ export default {
 
     this.optionMap = map
   },
-  props: ['product', 'index', 'isChecked'],
+  props: ['product', 'index'],
   data () {
     return {
       optionMap: null
@@ -108,13 +107,25 @@ export default {
     }
   },
   beforeUpdate () {
+    let map = new Map()
+    for (const o of this.product.optionInfo) {
+      if (!map.has(o.optionGroupId)) {
+        map.set(o.optionGroupId, [])
+      }
+      map.get(o.optionGroupId).push(o)
+    }
+
+    this.optionMap = map
+
     if (this.product.isOptionNormal) {
       this.$emit('prdtPrice', [this.index, this.totalPrice])
     } else {
       this.$emit('prdtPrice', [this.index, this.nonOptionPrice])
     }
   },
-
+  beforeDestroy () {
+    this.optionMap.clear()
+  },
   methods: {
     selectBtnClick () {
       this.$emit('selectItem', this.index)
@@ -124,8 +135,6 @@ export default {
         for (let i = 0; i < this.product.optionInfo.length; i++) {
           this.product.optionInfo[i].optionQty = Number(x.target.value)
         }
-      } else {
-        this.product.basketQty = Number(x.target.value)
       }
       this.$emit('sigleItemCntChange', [this.product.basketSysId, x.target.value])
     },

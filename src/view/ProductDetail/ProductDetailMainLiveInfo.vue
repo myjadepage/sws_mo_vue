@@ -2,9 +2,9 @@
   <div class="productDetailWrap" v-if="product.prdtSysId">
     <div  v-if="buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <Media/>
+      <MediaLive :product="product" :mode="mode" :playedIndex="playedIndex"/>
       <Info :product="product" />
-      <SubMedia />
+      <SubMedia @play="play" />
       <Info2 :product="product" />
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
@@ -16,7 +16,7 @@
 
 <script>
 import Bar from '@/components/shared/Bar'
-import Media from '@/components/product/ProductMedia'
+import MediaLive from '@/components/product/ProductMediaLive'
 import Info from '@/components/product/ProductInfo'
 import SubMedia from '@/components/product/SubMedia'
 import Info2 from '@/components/product/ProductInfo2'
@@ -119,15 +119,17 @@ export default {
   },
   data () {
     return {
+      mode: 'info',
       title: '상품상세',
       product: {},
       buyMode: false,
       showCartModal: false,
-      options: []
+      options: [],
+      playedIndex: 0
     }
   },
   components: {
-    Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal
+    Bar, MediaLive, SubMedia, Info, Info2, Description, ProductFooter, CartModal
   },
   methods: {
     addedCartItem () {
@@ -135,10 +137,12 @@ export default {
       setTimeout(() => {
         this.showCartModal = false
       }, 3000)
+    },
+    play (idx) {
+      this.playedIndex = idx
     }
   },
   beforeDestroy () {
-    this.$store.state.product = {}
     this.$store.commit('deleteAllOption')
   }
 }

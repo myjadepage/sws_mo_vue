@@ -52,22 +52,27 @@ export default {
   computed: {
     prdPrice () {
       let price = 0
-      for (let i = 0; i < this.options.length; i++) {
-        const o = this.options[i]
-        const prdtPrice = this.products[i].price - (this.products[i].price * this.products[i].discountRate)
+      for (let i = 0; i < this.products.length; i++) {
+        const product = this.products[i]
+        const option = this.options[i]
 
-        for (const oo of o) {
-          if (oo.contentName) {
-            let groupPrice = 0
-            for (const cg of oo.contentGroup) {
-              groupPrice += cg.price
+        if (option.contentName !== '') {
+          let val = 0
+          for (const o of option) {
+            let optionPrice = 0
+            if (o.contentGroup) {
+              for (const oo of o.contentGroup) {
+                optionPrice += oo.price
+              }
+              val += (optionPrice + product.price - (product.price * product.discountRate)) * o.count
             }
-            price += (groupPrice * oo.count) + prdtPrice
-          } else {
-            price += oo.count * prdtPrice
           }
+          price += val
+        } else {
+          price += (product.price - (product.price * product.discountRate)) * option.count
         }
       }
+
       this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: price})
       return price
     },

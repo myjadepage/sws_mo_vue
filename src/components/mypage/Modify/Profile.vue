@@ -14,7 +14,7 @@
       <div class="profileInfo">
         <div class="row">
           <label for="userName">이름</label>
-          <input type="text" id="userName" name="userName" placeholder="이름을 입력해 주세요." v-model.trim="member.name" />
+          <input type="text" id="userName" name="userName" placeholder="이름을 입력해 주세요." v-model.trim="member.name" disabled />
         </div>
         <div class="row">
           <label for="userGender">성별</label>
@@ -35,7 +35,7 @@
         </div>
         <div class="row">
           <label for="userMail">이메일</label>
-          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.email" disabled />
+          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.email" />
         </div>
         <div class="row">
           <label for="userId">아이디</label>
@@ -65,6 +65,8 @@ import Axios from 'axios'
 import uuidv4 from 'uuid4'
 import { getUserInfo, modifyUserInfo } from '@/api/index.js'
 
+/* eslint-disable */
+
 export default {
   data () {
     return {
@@ -90,9 +92,7 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getUserInfo(sessionStorage.getItem('accessToken'))
         .then(res => {
-          if (res.data.jsonData.name) {
-            this.member.name = res.data.jsonData.name
-          }
+          this.member.name = res.data.jsonData.name
           if (res.data.jsonData.genderCode) {
             this.member.genderCode = res.data.jsonData.genderCode
           }
@@ -100,7 +100,9 @@ export default {
             this.member.birthday = res.data.jsonData.birthday.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3')
           }
           this.member.mobile = res.data.jsonData.mobile
-          this.member.email = res.data.jsonData.email
+          if (res.data.jsonData.email) {
+            this.member.email = res.data.jsonData.email
+          }
           this.member.id = res.data.jsonData.userId
 
           if (res.data.jsonData.nickName) {
@@ -123,6 +125,7 @@ export default {
   },
   methods: {
     submitModify () {
+      // 이름 변경 불가. 이메일 변경 가능으로 수정해야 함. 아직 api 수정 안됨
       let userInfo = {...this.member}
       delete userInfo.profileImgUrl
       delete userInfo.id
