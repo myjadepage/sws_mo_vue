@@ -27,6 +27,7 @@ export default {
     }
   },
   methods: {
+
     clickBuy () {
       if (!this.buyMode) {
         this.$emit('buyModeClick')

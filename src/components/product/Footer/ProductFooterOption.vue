@@ -1,7 +1,7 @@
 <template>
   <div class="productOptionWrap" v-if="buyMode">
     <div class="selectSection" v-if="options">
-    <select @change="optionSelected" v-for="(o,idx) in optionContents" :key="o.prdtNormalOptionSysId" :name="o.name" :ref="'option'+idx">
+    <select  @change="optionSelected" v-for="(o,idx) in optionContents" :key="o.prdtNormalOptionSysId" :name="o.name" :ref="'option'+idx">
       <option value="">{{options[idx].name}}</option>
       <option v-for="(c,idx) in o" :key="idx" :value="[c[0]+'**'+c[1]]">{{c[0]}}</option>
     </select>

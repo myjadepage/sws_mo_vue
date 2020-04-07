@@ -1,7 +1,7 @@
 <template>
-  <div v-if="questions" class="detailQaWrap">
+  <div class="detailQaWrap">
     <div class="qaHeader">
-      상품문의 총 {{questions.length}}개
+      상품문의 총 {{questions?questions.length:0}}개
       <button class="goQaBtn" @click="goQAbtnClick">상품 문의하기</button>
     </div>
     <Entity v-for="(question,idx) in questions" :key="idx" :question="question" />
@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     goQAbtnClick () {
-      // this.$router.push(`/Product/${this.$route.params.prdtSysId}/QA`)
       this.$emit('QABtnClick')
     }
   }

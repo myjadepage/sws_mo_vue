@@ -92,28 +92,26 @@ export default {
 
       console.log(item)
 
-      let res = {'jsonData': {
-        'res': {
-          'orderSysId': 9,
-          'orderProducts': [
-            {
-              'prdtSysId': 39,
-              'orderPrdtSysId': 5
-            },
-            {
-              'prdtSysId': 40,
-              'orderPrdtSysId': 6
-            }
-          ],
-          'orderCode': 'S20200306190346-0000003'
-        },
-        'code': 200
-      }}
+      // let res = {'jsonData': {
+      //   'res': {
+      //     'orderSysId': 9,
+      //     'orderProducts': [
+      //       {
+      //         'prdtSysId': 39,
+      //         'orderPrdtSysId': 5
+      //       },
+      //       {
+      //         'prdtSysId': 40,
+      //         'orderPrdtSysId': 6
+      //       }
+      //     ],
+      //     'orderCode': 'S20200306190346-0000003'
+      //   },
+      //   'code': 200
+      // }}
 
-      sessionStorage.setItem('payItem', JSON.stringify(item))
-      sessionStorage.setItem('orderRes', JSON.stringify(res))
-
-      // this.$router.push('/buycomplete?imp_uid=imp1234567890&merchant_uid=order12345')
+      sessionStorage.setItem('payItem', JSON.stringify({...item, payInfo: this.$store.getters.getPayPriceInfo, payMethod: this.$store.getters.getPayMethod}))
+      // sessionStorage.setItem('orderRes', JSON.stringify(res))
 
       postOrders(item)
         .then(res => { // 주문정보등록 성공 시
@@ -138,7 +136,7 @@ export default {
             buyer_tel: item.orderMobile,
             buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
             buyer_postcode: item.receiverPostNumber,
-            m_redirect_url: 'http://localhost:8080/buyComplete'
+            m_redirect_url: `localhost:8080/buyComplete`
           }, (res) => {
             if (res.sucess) {
               console.log(res)

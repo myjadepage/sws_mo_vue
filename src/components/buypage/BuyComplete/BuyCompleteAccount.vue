@@ -11,7 +11,7 @@
       </tr>
       <tr>
         <th>입금은행</th>
-        <td>{{info}}</td>
+        <td>{{accountInfo.bank}}</td>
       </tr>
       <tr>
         <th>수취인</th>
