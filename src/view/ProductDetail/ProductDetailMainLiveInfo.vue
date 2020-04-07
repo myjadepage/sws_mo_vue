@@ -4,7 +4,7 @@
       <Bar :val="title" />
       <MediaLive :product="product" :mode="mode" :playedIndex="playedIndex"/>
       <Info :product="product" />
-      <SubMedia @play="play" />
+      <!-- <SubMedia @play="play" /> -->
       <Info2 :product="product" />
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />

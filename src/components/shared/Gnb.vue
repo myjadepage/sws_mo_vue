@@ -77,6 +77,11 @@ export default {
 /* @media (orientation: landscape) {
     .gnb_main{max-width:640px;margin:0 auto;}
 } */
+.common-header-gnb-main{
+  position:absolute;
+  top:320px;
+  left:0;
+}
 .common-header-gnb-main.fixed{
   position:fixed;
   width:100%;

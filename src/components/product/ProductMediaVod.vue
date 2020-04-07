@@ -58,7 +58,7 @@ export default {
     this.prdtSysId = this.$route.params.prdtSysId
     getLiveProduct(this.$route.params.broadcastSysId)
       .then(res => {
-        console.log(res.data.jsonData.broadcastMedias[0])
+        // console.log(res.data.jsonData.broadcastMedias[0])
         this.getVideoTypePlayer(res.data.jsonData.broadcastMedias[0])
         // $(this.$refs.player).children('video').stop()
         // console.log($(this.$refs.player))
@@ -82,7 +82,7 @@ export default {
     getVideoTypePlayer (item, playType) {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       const POSTER = item.thumnailUrl
-      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
+      // const VIDEOSRC = `https://yhls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
 
       // 테스트용 url
       const VIDEOSRC = 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
@@ -96,6 +96,7 @@ export default {
         },
         rewind: true,
         type: 'application/x-mpegurl',
+        autoplay: true,
         src: VIDEOSRC,
         poster: POSTER,
         token: TOKEN,

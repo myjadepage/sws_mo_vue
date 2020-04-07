@@ -58,7 +58,7 @@ export default {
     this.prdtSysId = this.$route.params.prdtSysId
     getLiveProduct(this.$route.params.broadcastSysId)
       .then(res => {
-        console.log(res.data.jsonData.broadcastMedias[0])
+        // console.log(res.data.jsonData.broadcastMedias[0])
         this.getVideoTypePlayer(res.data.jsonData.broadcastMedias[0])
         // $(this.$refs.player).children('video').stop()
         // console.log($(this.$refs.player))
@@ -86,6 +86,7 @@ export default {
 
       // 테스트용 url
       // const VIDEOSRC = 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
+      // const VIDEOSRC = 'http://epiensup1.xst.kinxcdn.com/epiens/test2.m3u8'
 
       let liveOpt = {
         float_on_scroll: false,
