@@ -8,13 +8,13 @@
           <input type="file" name="newPic" id="newPic" v-on:change="upload" />
           <label for="newPic" class="btnModifyPic">프로필 사진 바꾸기</label>
         </div>
-        <h2>{{member.id}}</h2>
+        <h2>{{member.nickName}}</h2>
       </div>
 
       <div class="profileInfo">
         <div class="row">
-          <label for="userName">이름</label>
-          <input type="text" id="userName" name="userName" placeholder="이름을 입력해 주세요." v-model.trim="member.name" disabled />
+          <label for="userMail">아이디</label>
+          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.userId" disabled/>
         </div>
         <div class="row">
           <label for="userGender">성별</label>
@@ -32,14 +32,6 @@
         <div class="row">
           <label for="userPhone">휴대폰</label>
           <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678" v-model.trim="member.mobile" disabled />
-        </div>
-        <div class="row">
-          <label for="userMail">이메일</label>
-          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.email" />
-        </div>
-        <div class="row">
-          <label for="userId">아이디</label>
-          <input type="text" id="userId" name="userId" placeholder="아이디입니다." v-model.trim="member.id" disabled />
         </div>
         <div class="row">
           <label for="userNick">닉네임</label>
@@ -71,15 +63,13 @@ export default {
   data () {
     return {
       member: {
-        id: '',
-        name: '',
         genderCode: '',
         birthday: '',
         mobile: '',
-        email: '',
+        userId: '',
         nickName: '',
         profile: '',
-        profileImgUrl: ''
+        profileImgUrl: '/static/images/ico_member.png'
       },
       modalVisiblity: false,
       pop: false
@@ -92,21 +82,17 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getUserInfo(sessionStorage.getItem('accessToken'))
         .then(res => {
-          this.member.name = res.data.jsonData.name
-          if (res.data.jsonData.genderCode) {
-            this.member.genderCode = res.data.jsonData.genderCode
-          }
           if (res.data.jsonData.birthday) {
             this.member.birthday = res.data.jsonData.birthday.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3')
           }
           this.member.mobile = res.data.jsonData.mobile
-          if (res.data.jsonData.email) {
-            this.member.email = res.data.jsonData.email
-          }
-          this.member.id = res.data.jsonData.userId
+          this.member.userId = res.data.jsonData.userId
 
           if (res.data.jsonData.nickName) {
             this.member.nickName = res.data.jsonData.nickName
+          }
+          if (res.data.jsonData.genderCode) {
+            this.member.genderCode = res.data.jsonData.genderCode
           }
           if (res.data.jsonData.profile) {
             this.member.profile = res.data.jsonData.profile
@@ -128,18 +114,13 @@ export default {
       // 이름 변경 불가. 이메일 변경 가능으로 수정해야 함. 아직 api 수정 안됨
       let userInfo = {...this.member}
       delete userInfo.profileImgUrl
-      delete userInfo.id
-      delete userInfo.email
+      delete userInfo.userId
       delete userInfo.mobile
 
       // 유효성 검사
       let nameRegExp = /^[가-힣]{2,4}$/ // 이름
       let inputRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s/]+$/ // 영문,숫자,한글
 
-      if (!nameRegExp.test(userInfo.name) && userInfo.name.length > 0) { // 이름검사
-        alert('이름이 올바르지 않습니다.')
-        return false
-      }
 
       // 생년월일 검사
       if (userInfo.birthday.length === 10) {
@@ -190,7 +171,7 @@ export default {
 
       modifyUserInfo(sessionStorage.getItem('accessToken'), userInfo)
         .then(res => {
-          if (res.data.jsonData.code !== 200) {
+          if (res.data.jsonData.resultCode !== '0001') {
             alert('정보 수정에 실패했습니다.')
           } else {
             this.openPop()
@@ -236,7 +217,7 @@ export default {
       newUrl.profileImgUrl = this.member.profileImgUrl
       modifyUserInfo(sessionStorage.getItem('accessToken'), newUrl)
         .then(res => {
-          if (res.data.jsonData.code !== 200) {
+          if (res.data.jsonData.resultCode !== '0001') {
             alert('프로필 사진 업로드에 실패했습니다.')
           }
         })

@@ -3,7 +3,7 @@
   <div id="tabs" class="member_con">
       <ul class="tabs">
           <li :class="[activetab === 1 ? 'active' : '']"><a v-on:click="activetab=1" >연락처로 찾기</a></li>
-          <li :class="[activetab === 2 ? 'active' : '']"><a v-on:click="activetab=2" >이메일로 찾기</a></li>
+          <!-- <li :class="[activetab === 2 ? 'active' : '']"><a v-on:click="activetab=2" >이메일로 찾기</a></li> -->
       </ul>
       <div class="content">
           <!-- 1.등록된 휴대폰으로 아이디찾기 -->
@@ -33,7 +33,7 @@
           </div>
 
           <!-- 2.등록된 이메일로 아이디 찾기 -->
-          <div v-if="activetab === 2" class="tabcontent">
+          <!-- <div v-if="activetab === 2" class="tabcontent">
               <h4>아이디 입력</h4>
               <div class="wrap-input100 mb0">
               <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
@@ -56,7 +56,7 @@
               <li><strong  class="color_main">제한시간 {{ countTime }}</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
-          </div>
+          </div> -->
       </div>
   </div>
 

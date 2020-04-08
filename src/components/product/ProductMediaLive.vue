@@ -106,8 +106,30 @@ export default {
         seekable: false
       }
 
-      // eslint-disable-next-line no-undef
-      flowplayer('#player_container', liveOpt)
+      let vodOpt = {
+        float_on_scroll: false,
+        share: {
+          link: true,
+          facebook: true,
+          twitter: false
+        },
+        rewind: true,
+        type: 'application/x-mpegurl',
+        autoplay: true,
+        src: VIDEOSRC,
+        poster: POSTER,
+        token: TOKEN,
+        loop: false,
+        preload: 'auto'
+      }
+
+      if (this.videoType === 'live') {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', liveOpt)
+      } else if (this.videoType === 'vod') {
+        // eslint-disable-next-line no-undef
+        flowplayer('#player_container', vodOpt)
+      }
     },
     formatNumber (num) {
       let value = num

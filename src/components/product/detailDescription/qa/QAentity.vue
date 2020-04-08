@@ -52,31 +52,43 @@ export default {
 
 <style>
 .qaEntityWrap{
-    padding: 18px 12px 15px;
+    padding: 18px 0 15px;
     border-top: 1px solid #eeeeee;
 }
 
 .qaEntityWrap .dateAndWriter{
-    font-size: 13px;
-    color:#666666;
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  padding:0 12px;
+  font-size: 13px;
+  color:#666666;
 }
 
 .qaEntityWrap .dateAndWriter .date{
     font-family: Roboto;
 }
 
+.qaEntityWrap .qaBody{
+  overflow: hidden;
+}
+
 .qaEntityWrap .qaBody .status{
-    float: right;
-    font-weight: 500;
+  margin-right:12px;
+  float: right;
+  font-weight: 500;
 }
 
 .qaEntityWrap .qaBody .status.complete{
     color: #e61754;
 }
+.qaEntityWrap .qaContent{
+  padding:5px 12px;
+  clear:both;
+  background:#f3f3f3;
+}
 
 .qaEntityWrap .replyBody{
-    margin-top: 15px;
+    padding:5px 12px;
+    background:#f3f3f3;
 }
 
 .qaEntityWrap .qaBody .replyBody .contentTitle{
