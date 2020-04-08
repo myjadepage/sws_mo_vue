@@ -3345,6 +3345,7 @@ html, body{
   width:50px;
   height:50px;
   margin-right:10px;
+  margin-bottom:10px;
   border:1px solid #eee;
   box-sizing: border-box;
   vertical-align: middle;
@@ -4709,4 +4710,164 @@ html, body{
 
 /* *******              ******* */
 /* ******* !!고객센터!!  ******* */
+/* *******              ******* */
+
+
+
+
+
+/* *******              ******* */
+/* *******   제품상세    ******* */
+/* *******              ******* */
+
+.productInfoWrap{
+  padding: 5px 12px 10px;
+}
+.productInfoWrap .deliveryPriceSection,
+.productInfoWrap .pointSection{
+  padding:15px 0;
+}
+.productInfoWrap .deliveryPriceSection{
+  border-bottom:1px solid #eee;
+}
+.productInfoWrap .sectionHead.dp{
+  font-weight: 500;
+  margin: 0 30px 10px 0;
+}
+
+.productInfoWrap .sectionHead.pt{
+  font-weight: 500;
+  margin: 0 16px 0 0;
+}
+
+.productInfoWrap .productTitle{
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.productInfoWrap .won,.orProductPrice{
+  font-size: 13px;
+}
+
+.productInfoWrap .orProductPrice{
+  color: #999999;
+  text-decoration: line-through;
+}
+
+.productInfoWrap .onair{
+  height: 22px;
+  width: 52.5px;
+  padding: 4px 7.5px;
+  margin-right: 5px;
+  background-color: #e61754;
+  color: white;
+}
+
+.productInfoWrap .productDiscount, .saleProductPrice{
+  margin-right: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.productInfoWrap .productDiscount{
+  color: #e61754;
+}
+.productInfoWrap .ico{
+  margin-right: 5px;
+}
+
+.productInfoWrap .utilSection{
+  margin-top: 22px;
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+.productInfoWrap .icoBtn{
+  margin-right: 24px;
+  cursor: pointer;
+}
+
+.productInfoWrap .ico_share{
+display: inline-block;
+position: relative;
+top: 3px;
+background: url('../../assets/img/ico/ico_share.png');
+width: 15px;
+height: 15px;
+background-size: 100%;
+}
+.productInfoWrap .ico_bell{
+display: inline-block;
+position: relative;
+top: 3px;
+background: url('../../assets/img/ico/enable_bell.png');
+width: 16px;
+height: 17px;
+background-size: 100%;
+
+}
+.productInfoWrap .ico_no_bell{
+display: inline-block;
+position: relative;
+top: 3px;
+background: url('../../assets/img/ico/disable_bell.png');
+width: 16px;
+height: 17px;
+background-size: 100%;
+}
+
+
+.productDescWrap{
+  position: relative;
+  padding-top:40px;
+}
+.productDescWrap .descMenu{
+  overflow:hidden;
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:40px;
+  border-bottom: 1px solid #eeeeee;
+}
+.productDescWrap .descMenu.scrolling{
+  position:fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: #fff;
+  opacity: 0.9;
+}
+.productDescWrap .descMenu li{
+  float:left;
+  height:40px;
+  line-height:40px;
+  text-align: center;
+}
+
+.descMenu li:nth-child(1){
+    width: 25%;
+}
+.descMenu li:nth-child(2){
+    width: 16%;
+}
+.descMenu li:nth-child(3){
+    width: 25%;
+}
+.descMenu li:nth-child(4){
+    width: 34%;
+}
+
+  
+.productDescWrap .selected button{
+  color: #e61754;
+  font-weight: 500;
+}
+
+
+
+
+/* *******              ******* */
+/* ******* !!제품상세!!  ******* */
 /* *******              ******* */

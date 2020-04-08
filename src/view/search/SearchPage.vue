@@ -1,7 +1,7 @@
 <template>
   <div class="searchPageWrap">
       <SearchHeader :cat="cat" @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
-      <SearchCategory @catChange="catChange" :hidden="!isInputFocus" />
+      <SearchCategory :cat="cat" @catChange="catChange" v-if="!isInputFocus" />
       <div v-if="!isInputFocus&&cat===0">
         <SearchProduct  v-for="(r,idx) in searchResults" :key="idx" :product="r" />
       </div>

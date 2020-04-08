@@ -31,6 +31,9 @@ import Footer from '@/components/shared/Footer'
 export default {
   components: {
     Header, Categories, ScrollTopBtn, LiveSlide, Sale, SubSlide, CategorySlide, Brand, Theme, Footer
+  },
+  created () {
+    window.scrollTo(0, 0)
   }
 }
 </script>

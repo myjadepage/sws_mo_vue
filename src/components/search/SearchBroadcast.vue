@@ -5,8 +5,8 @@
         <img class="brThumbnail" :src="broadcast.thumnailUrl" alt="방송 썸네일">
       </div>
       <div class="infoSection">
-          <img class="brandImg" :src="broadcast.brandImageUrl" alt="브랜드 이미지"><span class="brandName">{{broadcast.brandName}}</span><span class="ico_3dot"></span>
-          <div class="moreMenu">
+          <img class="brandImg" :src="broadcast.brandImageUrl" alt="브랜드 이미지"><span class="brandName">{{broadcast.brandName}}</span><span @click="moreMenu=!moreMenu" class="ico_3dot"></span>
+          <div v-if="moreMenu" class="moreMenu">
               <ul>
                   <li>링크복사</li>
                   <li>신고</li>
@@ -25,7 +25,7 @@ export default {
   props: ['broadcast'],
   data () {
     return {
-      moreMenu: true
+      moreMenu: false
     }
   },
   computed: {
@@ -132,10 +132,10 @@ margin-left: 170px;
     background-color: #fff;
     position: absolute;
     top: 0;
-    right: 20px;
+    right: 30px;
     width: 150px;
     height: 85px;
-    border: 1px solid black;
+    border: 1px solid #999999;
 }
 
 .searchBroadcastWrap .moreMenu li{

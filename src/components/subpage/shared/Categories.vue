@@ -75,6 +75,7 @@ export default {
    left:0;
    width:100%;
    font-size:0;
+   border-bottom:1px solid #eee;
  }
  .subCatWrap.fixed{
    position:fixed;

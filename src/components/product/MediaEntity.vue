@@ -1,15 +1,13 @@
 <template>
   <div class="mediaEntityWrap">
-      <div class="thumbnailSection" @click="play(idx)">
-          <img :src="media.thumbNailUrl" alt="" >
-          <span class="time">{{media.mediaLength}}</span>
-      </div>
-      <div class="titleSection">
-          <div class="title">
-              #{{media.title}}
-          </div>
-      </div>
-          <span class="playBtn"></span>
+        <div class="thumbnailSection" @click="play(idx)">
+            <img :src="media.thumbNailUrl" alt="" >
+            <span class="time">{{media.mediaLength}}</span>
+        </div>
+        <div class="titleSection">
+            <p class="title" v-html="media.title"></p>
+        </div>
+        <button class="playBtn"></button>
   </div>
 </template>
 
@@ -27,27 +25,43 @@ export default {
 
 <style>
     .mediaEntityWrap{
-        background-color: #fff;
+        position:relative;
+        overflow:hidden;
+        width:100%;
         height: 112px;
-        margin-bottom: 21px;
+        margin-top: 21px;
+        background-color: #fff;
+    }
+    .subMediaWrap .mediaEntityWrap:first-child{
+        margin-top:0;
     }
 
     .titleSection{
+        float:left;
+        width:calc(100% - 200px);
         padding: 15px  0 0 15px;
         background-color: #fff;
+        box-sizing: border-box;
     }
 
     .titleSection .title{
-        text-align: right;
+        position: relative;
         display: inline-block;
-        width: 60px;
-        height: 60px;
-        margin-left: 15px;
+        padding-left:10px;
+        padding-right:35px;
+        word-break:keep-all;
+    }
+    .titleSection .title:before{
+        content:'#';
+        display:block;
+        position:absolute;
+        top:0;
+        left:0;
     }
 
     .mediaEntityWrap .thumbnailSection{
-        position: relative;
-        float: left;
+        position:relative;
+        float:left;
         width: 200px;
         height: 112px;
         background-color: skyblue;
@@ -58,13 +72,13 @@ export default {
     }
 
     .mediaEntityWrap .playBtn{
-        float: right;
-        position: relative;
+        position: absolute;
+        bottom:20px;
         right: 20px;
-        background: url('../../assets/img/ico/btn_play.png');
-        background-size: 100%;
         width: 13px;
         height: 16px;
+        background: url('../../assets/img/ico/btn_play.png');
+        background-size: 100%;
     }
 
     .mediaEntityWrap .time{

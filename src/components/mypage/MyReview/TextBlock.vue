@@ -9,11 +9,8 @@
       <div class="preViewBox">
         <textarea placeholder="포토리뷰를 작성해 주세요." v-model="reviewText"></textarea>
         <ul class="photoList">
-          <li class="item" style="background:url('/static/images/1.jpg') 50% 50% / cover no-repeat;">
-            <button class="remove"><img src="../../../assets/img/ico/btn_remove.png" alt="이미지 삭제" /></button>
-          </li>
-          <li class="item" style="background:url('/static/images/2.jpg') 50% 50% / cover no-repeat;">
-            <button class="remove"><img src="../../../assets/img/ico/btn_remove.png" alt="이미지 삭제" /></button>
+          <li class="item" style="background:url('/static/images/1.jpg') 50% 50% /cover no-repeat;" v-for="(img, index) in imgFile" v-bind:key="index">
+            <button class="remove" @click="delPhoto(index)"><img src="../../../assets/img/ico/btn_remove.png" alt="이미지 삭제" /></button>
           </li>
         </ul>
       </div>
@@ -36,7 +33,8 @@ export default {
   data () {
     return {
       mode: 'text',
-      imgSrc: []
+      imgLength: 0,
+      imgFile: []
     }
   },
   methods: {
@@ -44,7 +42,17 @@ export default {
       this.mode = 'photo'
     },
     setphotos (event) {
-      this.imgSrc = event.target.files
+      // let startIndex = this.imgLength
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.imgFile.push(event.target.files[i])
+        this.imgLength++
+      }
+      console.log(this.imgFile)
+    },
+    delPhoto (index) {
+      this.imgFile.splice(index, 1)
+      this.imgLength--
+      // console.log($(event.target).parents('.item').remove())
     }
   }
 }

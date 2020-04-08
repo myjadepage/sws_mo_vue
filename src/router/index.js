@@ -82,11 +82,6 @@ export default new Router({
       component: () => import('@/view/productDetail/ProductDetailMainLiveInfo')
     },
     {
-      path: '/Product/:prdtSysId/detailVod/:broadcastSysId',
-      name: 'ProductDetailVodInfo',
-      component: () => import('@/view/productDetail/ProductDetailMainVodInfo')
-    },
-    {
       path: '/Login',
       name: 'Login',
       // beforeEnter: rejectAuthUser,
@@ -267,7 +262,7 @@ export default new Router({
       component: () => import('@/view/mypage/ExchangeReq')
     },
     {
-      path: '/ReviewWrite',
+      path: '/ReviewWrite/:prdtSysId',
       name: 'ReviewWrite',
       component: () => import('@/view/mypage/ReviewWrite')
     },

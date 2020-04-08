@@ -1,10 +1,10 @@
 <template>
   <div class="bgGray reviewBlock">
   <Bar :val="title" />
-  <DetailItem />
-  <PhotoReview />
-  <MovieReview />
-  <BuyDecision />
+  <DetailItem :product="product" />
+  <PhotoReview :prdtSysId="prdtSysId" />
+  <MovieReview :prdtSysId="prdtSysId" />
+  <BuyDecision :prdtSysId="prdtSysId" />
   </div>
 </template>
 
@@ -14,16 +14,27 @@ import DetailItem from '@/components/mypage/MyReview/DetailItem'
 import PhotoReview from '@/components/mypage/MyReview/PhotoReview'
 import MovieReview from '@/components/mypage/MyReview/MovieReview'
 import BuyDecision from '@/components/mypage/MyReview/BuyDecision'
+import {getProduct} from '@/api/index'
 
 export default {
   name: 'ReviewWrite',
   data () {
     return {
-      title: '수취확인/리뷰작성'
+      title: '수취확인/리뷰작성',
+      prdtSysId: this.$route.params.prdtSysId,
+      product: {}
     }
   },
   components: {
     Bar, DetailItem, PhotoReview, MovieReview, BuyDecision
+  },
+  created () {
+    getProduct(this.prdtSysId)
+      .then(res => {
+        if (res.data.jsonData.resultCode === '0001') {
+          this.product = res.data.jsonData.product
+        }
+      })
   }
 }
 </script>
