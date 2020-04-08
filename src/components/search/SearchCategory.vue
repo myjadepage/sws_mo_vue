@@ -12,11 +12,10 @@
 export default {
   data () {
     return {
-      cat: null
+      cat: 0
     }
   },
   mounted () {
-    this.cat = this.$store.getters.getSearchCat
     this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
   },
   methods: {
@@ -24,7 +23,7 @@ export default {
       this.$el.getElementsByTagName('li')[this.cat].className = ''
       this.cat = x
       this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
-      this.$store.state.searchCat = x
+      this.$emit('catChange', x)
     }
   }
 }

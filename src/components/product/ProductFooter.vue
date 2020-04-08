@@ -98,8 +98,6 @@ export default {
 
         if (this.$store.state.isLogin) {
         // 회원 장바구니 등록
-          console.log(cartItem)
-
           postCartItem(sessionStorage.getItem('accessToken'), cartItem)
             .then(res => {
               console.log(res)

@@ -14,7 +14,6 @@ export const store = new Vuex.Store({
     finalPrice: null,
     payMethod: null,
     selectedOptions: [],
-    searchCat: 0,
     isAuth: false,
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
@@ -31,7 +30,6 @@ export const store = new Vuex.Store({
     getSelectedOptionsLength: state => state.selectedOptions.length,
     getOptionCnt: state => idx => state.selectedOptions[idx].count,
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
-    getSearchCat: state => state.searchCat,
     getPostCode: state => state.postCode,
     getPayPriceInfo: state => state.payPriceInfo,
     getOrdererInfo: state => state.ordererInfo,
@@ -49,27 +47,27 @@ export const store = new Vuex.Store({
       }
     },
     loginSuccessGoogle (state) {
-      sessionStorage.getItem('accessTokenGoogle')
-      sessionStorage.getItem('refreshTokenGoogle')
-      if (sessionStorage.getItem('accessTokenGoogle')) {
+      sessionStorage.getItem('accessToken')
+      sessionStorage.getItem('refreshToken')
+      if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
       } else {
         state.isLogin = false
       }
     },
     loginSuccessKakao (state) {
-      sessionStorage.getItem('accessTokenKakao')
-      sessionStorage.getItem('refreshTokenKakao')
-      if (sessionStorage.getItem('accessTokenKakao')) {
+      sessionStorage.getItem('accessToken')
+      sessionStorage.getItem('refreshToken')
+      if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
       } else {
         state.isLogin = false
       }
     },
     loginSuccessNaver (state) {
-      sessionStorage.getItem('accessTokenNaver')
-      sessionStorage.getItem('refreshTokenNaver')
-      if (sessionStorage.getItem('accessTokenNaver')) {
+      sessionStorage.getItem('accessToken')
+      sessionStorage.getItem('refreshToken')
+      if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
       } else {
         state.isLogin = false

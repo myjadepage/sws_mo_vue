@@ -45,6 +45,11 @@ export default {
         'orderProducts': []
       }
 
+      if (!item.orderName || !item.orderTel || !item.receiverName || !item.receiverTel) {
+        alert('모든 정보가 입력되지 않았습니다.')
+        return
+      }
+
       for (const a of this.addresses) {
         if (a.initFlag === 1) {
           item.orderAddress1 = a.newAddress

@@ -1,9 +1,15 @@
 <template>
   <div class="searchPageWrap">
-      <SearchHeader @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
-      <SearchCategory v-if="!isInputFocus" />
-      <div v-if="!isInputFocus">
-        <SearchProduct  v-for="p in products" :key="p.prdtSysId" :product="p" />
+      <SearchHeader :cat="cat" @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
+      <SearchCategory @catChange="catChange" :hidden="!isInputFocus" />
+      <div v-if="!isInputFocus&&cat===0">
+        <SearchProduct  v-for="(r,idx) in searchResults" :key="idx" :product="r" />
+      </div>
+      <div v-if="!isInputFocus&&cat===1">
+        <SearchBrand  v-for="(r,idx) in searchResults" :key="idx" :brand="r" />
+      </div>
+      <div v-if="!isInputFocus&&cat===2">
+        <SearchBroadcast  v-for="(r,idx) in searchResults" :key="idx" :broadcast="r" />
       </div>
   </div>
 </template>
@@ -12,20 +18,31 @@
 import SearchHeader from '@/components/search/SearchHeader'
 import SearchCategory from '@/components/search/SearchCategory'
 import SearchProduct from '@/components/search/SearchProduct'
+import SearchBrand from '@/components/search/SearchBrand'
+import SearchBroadcast from '@/components/search/SearchBroadcast'
 
 export default {
   components: {
-    SearchHeader, SearchCategory, SearchProduct
+    SearchHeader, SearchCategory, SearchProduct, SearchBrand, SearchBroadcast
   },
   data () {
     return {
       isInputFocus: false,
-      products: {}
+      searchResults: [],
+      cat: 0
+    }
+  },
+  watch: {
+    cat () {
+      this.searchResults = []
     }
   },
   methods: {
     search (p) {
-      this.products = p
+      this.searchResults = p
+    },
+    catChange (x) {
+      this.cat = x
     }
   }
 }

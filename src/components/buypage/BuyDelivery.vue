@@ -7,18 +7,21 @@
     <div class="buyDeliveryBody">
       <div class="form-group">
         <label for="destName">배송자 이름</label>
-        <input v-model="name" id="destName" type="text">
+        <input @change="isValidName" v-model="name" id="destName" type="text">
         </div>
 
         <div class="form-group">
         <label for="destPhone">휴대폰 번호</label>
-        <input v-model="phone" id="destPhone" type="text" placeholder="“-” 없이 입력">
+        <input @change="isValidPhone" v-model="phone" id="destPhone" type="text" placeholder="“-” 없이 입력">
         </div>
 
         <div class="address">
         <label for="">주소</label>
-        <input type="text" :value="address" disabled>
-        <input type="text" :value="detailAddr" disabled>
+        <div class="addressInput">
+          <input type="text" :value="address" disabled>
+          <br>
+          <input type="text" :value="detailAddr" disabled>
+        </div>
         </div>
     </div>
   </div>
@@ -30,6 +33,20 @@ export default {
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')
+    },
+    isValidName (x) {
+      let regex = /^[가-힣]+$/
+      if (!regex.test(this.name)) {
+        alert('정확한 이름을 입력 해주세요')
+        this.name = ''
+      }
+    },
+    isValidPhone (x) {
+      let regex = /^[0-9]+$/
+      if (!regex.test(this.phone)) {
+        alert('정확한 번호를 입력 해주세요')
+        this.phone = ''
+      }
     }
   },
   computed: {
@@ -90,10 +107,6 @@ text-align: right;
 margin-bottom: 15px
 }
 
-.buyDeliveryWrap .buyDeliveryBody .address{
-text-align: right;
-}
-
 .buyDeliveryWrap .buyDeliveryBody input[type="text"]{
   all: unset;
   height: 30px;
@@ -109,24 +122,24 @@ text-align: right;
   color: #999999;
 }
 
+.buyDeliveryWrap .addressInput{
+  height: 72px;
+}
+
 .buyDeliveryWrap .buyDeliveryBody .address input[type="text"]{
   margin-bottom: 5px;
   background-color: #f9f9f9;
   color: #999999;
+  float: right;
 }
 
 .buyDeliveryWrap .buyDeliveryBody label{
-text-align: left;
-line-height: 30px;
-float: left;
-width: 73px;
-font-size: 15px;
-margin-right: 33px;
-color: #111111;
-}
-
-.buyDeliveryWrap .buyDeliveryBody .address label{
-  margin-bottom: 20px;
+  text-align: left;
+  line-height: 30px;
+  float: left;
+  width: 73px;
+  font-size: 15px;
+  color: #111111;
 }
 
 </style>

@@ -149,20 +149,24 @@ export default {
       let accessToken = res.data.jsonData.accessToken
       let refreshToken = res.data.jsonData.refreshToken
       let snsAddInfoFlag = res.data.jsonData.snsAddInfoFlag
-      switch (snsParam) {
-        case 'google' :
-          sessionStorage.setItem('accessTokenGoogle', accessToken)
-          sessionStorage.setItem('refreshTokenGoogle', refreshToken)
-          break
-        case 'naver' :
-          sessionStorage.setItem('accessTokenNaver', accessToken)
-          sessionStorage.setItem('refreshTokenNaver', refreshToken)
-          break
-        case 'kakao' :
-          sessionStorage.setItem('accessTokenKakao', accessToken)
-          sessionStorage.setItem('refreshTokenKakao', refreshToken)
-          break
-      }
+
+      sessionStorage.setItem('accessToken', accessToken)
+      sessionStorage.setItem('refreshToken', refreshToken)
+
+      // switch (snsParam) {
+      //   case 'google' :
+      //     sessionStorage.setItem('accessTokenGoogle', accessToken)
+      //     sessionStorage.setItem('refreshTokenGoogle', refreshToken)
+      //     break
+      //   case 'naver' :
+      //     sessionStorage.setItem('accessTokenNaver', accessToken)
+      //     sessionStorage.setItem('refreshTokenNaver', refreshToken)
+      //     break
+      //   case 'kakao' :
+      //     sessionStorage.setItem('accessTokenKakao', accessToken)
+      //     sessionStorage.setItem('refreshTokenKakao', refreshToken)
+      //     break
+      // }
       getUserInfo(accessToken).then(r => {
         sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
       }).catch(err => {
