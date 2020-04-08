@@ -1,10 +1,10 @@
 <template>
 <div>
   <div id="tabs" class="member_con">
-      <ul class="tabs">
+      <!-- <ul class="tabs">
           <li :class="[activetab === 1 ? 'active' : '']"><a v-on:click="activetab=1" >연락처로 찾기</a></li>
           <li :class="[activetab === 2 ? 'active' : '']"><a v-on:click="activetab=2" >이메일로 찾기</a></li>
-      </ul>
+      </ul> -->
       <div class="content">
           <!-- 1.등록된 휴대폰으로 아이디찾기 -->
           <div v-if="activetab === 1" class="tabcontent">
@@ -33,7 +33,7 @@
           </div>
 
           <!-- 2.등록된 이메일로 아이디 찾기 -->
-          <div v-if="activetab === 2" class="tabcontent">
+          <!-- <div v-if="activetab === 2" class="tabcontent">
               <h4>아이디 입력</h4>
               <div class="wrap-input100 mb0">
               <input class="input100" type="text" v-model="id" name="id" placeholder="아이디를 입력해 주세요">
@@ -56,7 +56,7 @@
               <li><strong  class="color_main">제한시간 {{ countTime }}</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
-          </div>
+          </div> -->
       </div>
   </div>
 
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { makeRsa, parseDate } from '@/assets/js/common.js'
 import { sendSms, chkSmsAuth, retauthMine } from '../../api'
 export default {
   data () {
@@ -79,6 +80,7 @@ export default {
       isHide: true,
       id: null,
       phone: null,
+      pwPhone: null,
       email: null,
       authNo: null,
       countTime: null,
@@ -88,7 +90,8 @@ export default {
   methods: {
     sendPhone: function () {
       this.isHide = false
-      sendSms(2, 1, this.phone)
+      this.pwPhone = makeRsa(this.phone)
+      sendSms(2, 1, this.pwPhone, this.id)
         .then(data => {
           console.log('sms전송성공', data.data.jsonData.res)
           switch (data.data.jsonData.resultCode) {
@@ -105,7 +108,7 @@ export default {
         })
     },
     checkPhone: function () {
-      chkSmsAuth(2, 1, this.phone, this.authNo)
+      chkSmsAuth(2, 1, this.pwPhone, this.authNo, this.id)
         .then(data => {
           console.log('인증번호입력확인', data)
           switch (data.data.jsonData.resultCode) {
@@ -122,11 +125,15 @@ export default {
         })
     },
     resultAuth: function () {
-      retauthMine(2, 1, this.phone)
+      retauthMine(2, 1, this.pwPhone, this.id)
         .then(res => {
           console.log('본인인증결과', res)
+          localStorage.setItem('authToken', res.data.jsonData.res.authToken)
           switch (res.data.jsonData.resultCode) {
             case '1003' : alert('아이디가 존재하지 않습니다.')
+              this.id = ''
+              this.phone = ''
+              this.authNo = ''
               break
             case '0002' : alert('인증에 실패하였습니다.')
               break
@@ -190,35 +197,24 @@ export default {
           console.log(error)
         })
     },
-    // 날짜 String -> Date 변환
-    parse: function (str) {
-      var y = str.substr(0, 4)
-      var m = str.substr(4, 2)
-      var d = str.substr(6, 2)
-      var h = str.substr(8, 2)
-      var mm = str.substr(10, 2)
-      var ss = str.substr(12, 2)
-      return new Date(y, m - 1, d, h, mm, ss)
-    },
-    // 인증 10분제한시간
     countTimeDown: function (limitTime) {
-      // 인증번호 입력시간 카운트
-      let date = this.parse(limitTime)
+      let date = parseDate(limitTime)
       let endSeconds = Math.floor(date / 1000)
       let startSeconds = Math.floor(Date.now() / 1000)
       let limitDate = endSeconds - startSeconds
-      console.log('limitDate', limitDate)
-      if (limitDate > 0) {
-        var timer = setInterval(() => {
-          this.countTime = Math.floor(limitDate / 60) + ' : ' + (limitDate % 60)
-          if (this.countTime <= 0) {
-            clearInterval(timer)
-            this.countTime = 0
-          }
-          limitDate--
-          console.log(limitDate)
-        }, 1000)
-      }
+
+      var timer = setInterval(() => {
+        this.countTime = Math.floor(limitDate / 60) + '분 ' + (limitDate % 60) + '초'
+        if (limitDate <= 0) {
+          clearInterval(timer)
+          this.countTime = '0분 0초'
+        }
+        if (this.isClickedCheck === true) {
+          this.isHide = true
+          clearInterval(timer)
+        }
+        limitDate--
+      }, 1000)
     }
   }
 }

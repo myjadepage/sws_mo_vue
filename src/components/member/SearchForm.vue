@@ -1,10 +1,10 @@
 <template>
 <div>
   <div id="tabs" class="member_con">
-      <ul class="tabs">
+      <!-- <ul class="tabs">
           <li :class="[activetab === 1 ? 'active' : '']"><a v-on:click="activetab=1" >연락처로 찾기</a></li>
           <li :class="[activetab === 2 ? 'active' : '']"><a v-on:click="activetab=2" >이메일로 찾기</a></li>
-      </ul>
+      </ul> -->
       <div class="content">
           <!-- 1.등록된 휴대폰으로 아이디찾기 -->
           <div v-if="activetab === 1" class="tabcontent">
@@ -28,7 +28,7 @@
           </div>
 
           <!-- 2.등록된 이메일로 아이디 찾기 -->
-          <div v-if="activetab === 2" class="tabcontent">
+          <!-- <div v-if="activetab === 2" class="tabcontent">
               <h4>등록된 이메일로 아이디 찾기</h4>
               <div class="wrap-input100">
                 <input class="input100" type="text" v-model="email" name="email" placeholder="이메일을 입력해 주세요">
@@ -46,7 +46,7 @@
               <li><strong  class="color_main">제한시간 {{ countTime }}</strong></li>
               <li><span>* 인증번호는 1일 최대 5회 발송으로 제한됩니다.</span></li>
             </ul>
-          </div>
+          </div> -->
       </div>
   </div>
 
@@ -55,7 +55,7 @@
        <p>SNS 간편가입을 통해 가입하신 경우, 아이디/비밀번호 문의는 해당 SNS 서비스를 통해 이용 가능합니다.</p>
   </div>
 
-  <modal v-if="showModal" @close="showModal = false">
+  <modal v-if="showModal" @close="showModal = false" @comfirm="$router.push('/Login')">
     <h3 slot="header">알림</h3>
     <p slot="body">회원님의 아이디는 {{ id }}입니다.</p>
   </modal>
@@ -65,6 +65,7 @@
 
 <script>
 import modal from '@/components/Popup'
+import { makeRsa, parseDate } from '@/assets/js/common.js'
 import { sendSms, chkSmsAuth, retauthMine } from '../../api'
 export default {
   components: {
@@ -74,6 +75,7 @@ export default {
     return {
       isHide: true,
       phone: null,
+      pwPhone: null,
       email: null,
       authNo: null,
       activetab: 1,
@@ -85,9 +87,10 @@ export default {
   methods: {
     sendPhone: function () {
       this.isHide = false
-      sendSms(1, 1, this.phone)
+      this.pwPhone = makeRsa(this.phone)
+      sendSms(1, 1, this.pwPhone)
         .then(data => {
-          console.log('sms전송성공', data.data.jsonData.res)
+          console.log('sms전송성공', data)
           switch (data.data.jsonData.resultCode) {
             case '1001' : alert('일 최대 5회로 전송횟수가 초과되었습니다.')
               break
@@ -102,7 +105,7 @@ export default {
         })
     },
     checkPhone: function () {
-      chkSmsAuth(1, 1, this.phone, this.authNo)
+      chkSmsAuth(1, 1, this.pwPhone, this.authNo)
         .then(data => {
           console.log('인증번호입력확인', data)
           switch (data.data.jsonData.resultCode) {
@@ -119,7 +122,7 @@ export default {
         })
     },
     resultAuth: function () {
-      retauthMine(1, 1, this.phone)
+      retauthMine(1, 1, this.pwPhone)
         .then(res => {
           console.log('본인인증결과', res)
           switch (res.data.jsonData.resultCode) {
@@ -129,7 +132,6 @@ export default {
               break
             case '0001' : this.showModal = true
               this.id = res.data.jsonData.res.userId
-              break
           }
         })
         .catch(function (error) {
@@ -189,35 +191,24 @@ export default {
           console.log(error)
         })
     },
-    // 날짜 String -> Date 변환
-    parse: function (str) {
-      var y = str.substr(0, 4)
-      var m = str.substr(4, 2)
-      var d = str.substr(6, 2)
-      var h = str.substr(8, 2)
-      var mm = str.substr(10, 2)
-      var ss = str.substr(12, 2)
-      return new Date(y, m - 1, d, h, mm, ss)
-    },
-    // 인증 10분제한시간
     countTimeDown: function (limitTime) {
-      // 인증번호 입력시간 카운트
-      let date = this.parse(limitTime)
+      let date = parseDate(limitTime)
       let endSeconds = Math.floor(date / 1000)
       let startSeconds = Math.floor(Date.now() / 1000)
       let limitDate = endSeconds - startSeconds
-      console.log('limitDate', limitDate)
-      if (limitDate > 0) {
-        var timer = setInterval(() => {
-          this.countTime = Math.floor(limitDate / 60) + ' : ' + (limitDate % 60)
-          if (this.countTime <= 0) {
-            clearInterval(timer)
-            this.countTime = 0
-          }
-          limitDate--
-          console.log(limitDate)
-        }, 1000)
-      }
+
+      var timer = setInterval(() => {
+        this.countTime = Math.floor(limitDate / 60) + '분 ' + (limitDate % 60) + '초'
+        if (limitDate <= 0) {
+          clearInterval(timer)
+          this.countTime = '0분 0초'
+        }
+        if (this.isClickedCheck === true) {
+          this.isHide = true
+          clearInterval(timer)
+        }
+        limitDate--
+      }, 1000)
     }
   }
 }

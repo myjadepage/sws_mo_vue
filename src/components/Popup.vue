@@ -18,7 +18,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-                <button class="modal-default-button color_main" @click="$emit('close')">
+                <button class="modal-default-button color_main" @click="$emit('comfirm')">
                 확인
               </button>
               <button class="modal-default-button" @click="$emit('close')">

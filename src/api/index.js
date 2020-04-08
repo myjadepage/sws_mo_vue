@@ -302,7 +302,7 @@ function getNoticeList (sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
+    url: `${config.baseUrl}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -316,7 +316,7 @@ function changePw (accessToken, pwInfo) {
   formdata.set('jsonData', JSON.stringify(pwInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/password`,
+    url: `${config.baseUrl}users/${userSysId}/password`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -332,7 +332,7 @@ function setRecentViewList (accessToken, viewInfo) {
   formdata.set('jsonData', JSON.stringify(viewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -349,7 +349,7 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -362,7 +362,7 @@ function getMyReviewList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/reviews/list`
+    url: `${config.baseUrl}users/${userSysId}/reviews/list`
   })
 }
 
@@ -373,7 +373,7 @@ function delRecentViewList (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -403,7 +403,7 @@ function delPicksList (accessToken, prdtSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/${prdtSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/${prdtSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -419,7 +419,7 @@ function getPicksList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -435,7 +435,7 @@ function delPicksLists (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -453,7 +453,7 @@ function getPointInfo (accessToken, sDate, eData, flag) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/pointhists/list`,
+    url: `${config.baseUrl}users/${userSysId}/pointhists/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -479,7 +479,7 @@ function checkRSA (rsaEncStr) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/chkrsa`, formdata)
+  return axios.post(`${config.baseUrl}auth/chkrsa`, formdata)
 }
 
 // 아이디 중복확인
@@ -494,11 +494,12 @@ function checkJoinId (id) {
 }
 
 // 본인인증전송
-function sendSms (authType, authWay, authWayValue) {
+function sendSms (authType, authWay, authWayValue, userId) {
   let jsonData = {
     'authType': authType,
     'authWay': authWay,
-    'authWayValue': authWayValue
+    'authWayValue': authWayValue,
+    'userId': userId
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
@@ -506,16 +507,50 @@ function sendSms (authType, authWay, authWayValue) {
 }
 
 // 본인인증확인
-function chkSmsAuth (authType, authWay, authWayValue, authNo) {
+function chkSmsAuth (authType, authWay, authWayValue, authNo, userId) {
   let jsonData = {
     'authType': authType,
     'authWay': authWay,
     'authWayValue': authWayValue,
-    'authNo': authNo
+    'authNo': authNo,
+    'userId': userId
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
   return axios.post(`${config.baseUrl}auth/chkauthmine`, formdata)
+}
+
+// 본인인증결과
+function retauthMine (authType, authWay, authWayValue, userId) {
+  let jsonData = {
+    'authType': authType,
+    'authWay': authWay,
+    'authWayValue': authWayValue,
+    'userId': userId
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios.post(`${config.baseUrl}auth/retauthmine`, formdata)
+}
+
+// 패스워드 찾기
+function searchPassword (password) {
+  let authToken = localStorage.getItem('authToken')
+  let jsonData = {
+    'password': password
+  }
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(jsonData))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl}users/password`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${authToken}`
+    },
+    data: formdata
+  })
+  // return axios.patch(`${config.baseUrl2}users/password`, formdata, aaa)
 }
 
 // 회원가입
@@ -524,13 +559,12 @@ function createtUser (user) {
     'userId': user.userId,
     'password': user.password,
     'mobile': user.phone,
-    'email': user.email,
     'agreeSellection1': user.agreeSellection1,
     'agreeSellection2': user.agreeSellection2
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/join`, formdata)
+  return axios.post(`${config.baseUrl}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -541,19 +575,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
-}
-
-// 본인인증결과
-function retauthMine (authType, authWay, authWayValue) {
-  let jsonData = {
-    'authType': authType,
-    'authWay': authWay,
-    'authWayValue': authWayValue
-  }
-  var formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/retauthmine`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 간편로그인
@@ -671,5 +693,6 @@ export {
   getPointInfo,
   searchProducts,
   searchBrands,
-  searchBroadcasts
+  searchBroadcasts,
+  searchPassword
 }

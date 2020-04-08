@@ -5,15 +5,17 @@
         <!-- 일반로그인 -->
         <h2 class="title">로그인</h2>
         <div class="wrap-input100" >
-          <input  class="input100" type="text" name="id" placeholder="아이디를 입력해 주세요"
+          <input  class="input100" type="text" name="id" placeholder="이메일를 입력해 주세요"
             v-model="id" required>
           <span class="focus-input100"></span>
         </div>
+
         <div class="wrap-input100">
           <input class="input100" type="password" name="password" placeholder="패스워드를 입력해 주세요"
             v-model="password" required>
           <span class="focus-input100"></span>
          </div>
+
          <ul class="form_item_wrap" style="text-align:right">
             <li>
               <div class="toggle-button toggle-button-save">
@@ -40,8 +42,6 @@
             <li><a href="/Searchpw">패스워드 찾기</a></li>
             <li><a href="/RegStep00">회원가입</a></li>
           </ul>
-          <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn btn-block btn-sub">비회원으로 구매</button>
-          <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn btn-block btn-sub">비회원 주문조회</button>
     </div>
     <div class="member_foot">
         <!-- 소셜로그인 -->
@@ -67,7 +67,7 @@
                     class="btn btn-circle sws_icon btn-fb"/>
                   <span>페이스북</span>
                 </li>
-                <!-- <li>
+                <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
                     callback-url="http://localhost:8080/Login"
@@ -75,9 +75,12 @@
                     class="btn btn-circle sws_icon btn-naver"
                   />
                   <span>네이버</span>
-                </li> -->
+                </li>
             </ul>
         </div>
+
+         <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn">비회원으로 구매</button>
+         <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn">비회원 주문조회</button>
 
     </div>
 </div>
