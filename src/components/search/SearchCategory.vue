@@ -10,21 +10,16 @@
 
 <script>
 export default {
-  data () {
-    return {
-      cat: null
-    }
-  },
+  props: ['cat'],
   mounted () {
-    this.cat = this.$store.getters.getSearchCat
     this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
   },
   methods: {
     selectMediaMode (x) {
       this.$el.getElementsByTagName('li')[this.cat].className = ''
+      this.$emit('catChange', x)
       this.cat = x
       this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
-      this.$store.state.searchCat = x
     }
   }
 }

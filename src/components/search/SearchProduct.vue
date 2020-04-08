@@ -5,13 +5,13 @@
     </div>
     <div class="title">
       <router-link :to="'/product/'+product.prdtSysId">
-      [{{product.brandName}}] {{product.name}}
+      {{product.name}}
       </router-link>
     </div>
     <div class="price">
-     <span class="discount">{{product.discountRate * 100}}%</span>
+     <span v-if="product.discountRate" class="discount">{{product.discountRate * 100}}%</span>
      <span class="totalPrice">{{product.price - (product.price * product.discountRate) | makeComma}}원</span>
-     <span class="p_price">{{product.price|makeComma}}</span>
+     <span v-if="product.discountRate" class="p_price">{{product.price|makeComma}}</span>
     </div>
     <div class="p_info">
       <span class="info"><span class="ico ico_rates_star"></span>{{rate}}</span>

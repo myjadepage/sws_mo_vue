@@ -9,11 +9,11 @@
     <div class="prdPriceCnt">
       {{calcTotalPrice|makeComma}}원 / 수량{{calcCnt}}개
       <span v-if="option.length>1">
-        <button @click="moreOption = !moreOption">더보기</button>
+        <button class="moreBtn" @click="moreOption = !moreOption">더 보기</button>
       </span>
     </div>
         <div class="prdOptions" v-if="moreOption">
-        <div v-for="x in option.length-1" :key="x">
+        <div class="subOptions" v-for="x in option.length-1" :key="x">
           [옵션명{{x+1}}] <div v-for="(c,idx) in option[x].contentGroup" :key="idx">{{c.name}}</div>
         </div>
         </div>
@@ -95,5 +95,20 @@ export default {
 
 .buyPrdtEntityWrap .prdPriceCnt{
   font-weight: 500;
+}
+
+.buyPrdtEntityWrap .subOptions{
+margin-top: 5px;
+background-color: #f9f9f9;
+/* width: fit-content; */
+padding: 5px;
+border-radius: 2px;
+}
+
+.buyPrdtEntityWrap .moreBtn{
+  font-size: 9px;
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 0 2px;
 }
 </style>
