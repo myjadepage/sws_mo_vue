@@ -67,7 +67,9 @@ export default {
       getCartItem(sessionStorage.getItem('accessToken'))
         .then(cartRes => {
           let cartList = cartRes.data.jsonData.baskets
-          this.cartSize = cartList.length
+          if (cartList) {
+            this.cartSize = cartList.length
+          }
           if (cartList) {
             for (const c of cartList) {
               getProduct(c.prdtSysId)
@@ -111,7 +113,9 @@ export default {
         })
     } else {
       let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-      this.cartSize = cartList.length
+      if (cartList) {
+        this.cartSize = cartList.length
+      }
       if (cartList) {
         for (let i = 0; i < cartList.length; i++) {
           const c = cartList[i]

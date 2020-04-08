@@ -140,6 +140,23 @@ function getAddingCosts (postNumber) {
   return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
 }
 
+/*
+* 검색
+*/
+
+// 상품 검색
+function searchProducts (name) {
+  return axios.get(`${config.baseUrl2}products/searchlists?name=${name}`)
+}
+// 브랜드 검색
+function searchBrands (name) {
+  return axios.get(`${config.baseUrl2}brands/searchlists?name=${name}`)
+}
+// 방송 검색
+function searchBroadcasts (title) {
+  return axios.get(`${config.baseUrl2}broadcasts/searchlists?title=${title}`)
+}
+
 /**
  *
  * 상품 상세
@@ -651,5 +668,8 @@ export {
   getPicksList,
   delPicksLists,
   delRecentViewList,
-  getPointInfo
+  getPointInfo,
+  searchProducts,
+  searchBrands,
+  searchBroadcasts
 }

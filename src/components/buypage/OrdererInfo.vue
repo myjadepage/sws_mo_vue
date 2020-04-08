@@ -1,22 +1,22 @@
 <template>
   <div class="ordererInfoWrap">
       <div class="ordererHeader">
-          주문자 정보<span v-if="isLogin===false" class="loginBtn">회원구매</span>
+          주문자 정보
       </div>
           <div class="ordererBody">
       <div class="form-group">
         <label for="orderName">주문자 이름</label>
-        <input v-model="name" id="orderName" type="text">
+        <input @change="isValidName" v-model="name" id="orderName" type="text">
         </div>
 
         <div class="form-group">
         <label for="orderPhone">휴대폰 번호</label>
-        <input v-model="phone" id="orderPhone" type="text" placeholder="“-” 없이 입력">
+        <input @change="isValidPhone" v-model="phone" id="orderPhone" type="text" placeholder="“-” 없이 입력">
         </div>
 
         <div class="form-group">
         <label for="orderEmail">이메일 주소</label>
-        <input v-model="email" id="orderEmail" type="email">
+        <input @change="isValidEmail" v-model="email" id="orderEmail" type="email">
         </div>
 
         <div class="orderIsDest">
@@ -45,6 +45,27 @@ export default {
       if (this.$refs.orderIsDest.checked) {
         this.$store.commit('updateDestInfo', ['name', this.name])
         this.$store.commit('updateDestInfo', ['phone', this.phone])
+      }
+    },
+    isValidName (x) {
+      let regex = /^[가-힣]+$/
+      if (!regex.test(this.name)) {
+        alert('정확한 이름을 입력 해주세요')
+        this.name = ''
+      }
+    },
+    isValidPhone (x) {
+      let regex = /^[0-9]+$/
+      if (!regex.test(this.phone)) {
+        alert('정확한 번호를 입력 해주세요')
+        this.phone = ''
+      }
+    },
+    isValidEmail (x) {
+      let regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+      if (!regex.test(this.email)) {
+        alert('정확한 이메일 주소를 입력 해주세요')
+        this.email = ''
       }
     }
   },
@@ -101,7 +122,7 @@ margin-bottom: 15px
   border: 1px solid #eeeeee;
   padding-left: 5px;
   text-align: left;
-  min-width: 66%;
+  width: 66%;
 }
 
 .ordererInfoWrap .ordererBody input[type="text"]::placeholder{
@@ -115,7 +136,6 @@ text-align: left;
 float: left;
 width: 73px;
 font-size: 15px;
-margin-right: 33px;
 line-height: 30px;
 color: #111111;
 }

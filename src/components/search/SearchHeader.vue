@@ -5,9 +5,19 @@
       <span @click="clickSearchBtn" class="ico_search_btn"></span>
       <span v-if="keyword" @click="deleteInput" class="ico_delete_btn"></span>
       <div class="searchList">
-        <ul v-if="products && inputFocus" >
-          <li @click="keywordClick(p)" v-for="p in products" :key="p.prdtSysId">
-            {{p.name|shortString}}
+        <ul v-if="cat===0 && searchResults && inputFocus" >
+          <li @click="keywordClick(p)" v-for="(p,idx) in searchResults" :key="idx">
+            {{p.name}}
+          </li>
+        </ul>
+        <ul v-if="cat===1 && searchResults && inputFocus" >
+          <li @click="keywordClick(p)" v-for="(p,idx) in searchResults" :key="idx">
+            {{p.name}}
+          </li>
+        </ul>
+        <ul v-if="cat===2 && searchResults && inputFocus" >
+          <li @click="keywordClick(p)" v-for="(p,idx) in searchResults" :key="idx">
+            {{p.title}}
           </li>
         </ul>
       </div>
@@ -15,24 +25,26 @@
 </template>
 
 <script>
-import {getProductList} from '@/api/index.js'
+import {searchProducts, searchBrands, searchBroadcasts} from '@/api/index.js'
 
 export default {
-  created () {
-    this.searchMode = this.$store.getters.getSearchCat // searchMode 1:상품 2:브랜드 3:방송
-  },
+  props: ['cat'], // searchMode 0:상품 1:브랜드 2:방송
   data () {
     return {
-      searchMode: 0,
       keyword: '',
-      products: {},
+      searchResults: [],
       timer: null,
       inputFocus: false
     }
   },
+  watch: {
+    cat () {
+      this.searchResults = {}
+    }
+  },
   methods: {
     keywordClick (p) {
-      this.products = {p}
+      this.searchResults = {p}
       this.clickSearchBtn()
     },
 
@@ -50,7 +62,7 @@ export default {
     },
     deleteInput () {
       this.keyword = ''
-      this.products = {}
+      this.searchResults = {}
     },
     inputKeyPressed () {
       let self = this
@@ -59,29 +71,35 @@ export default {
           clearTimeout(this.timer)
         }
         this.timer = setTimeout(function () {
-          if (self.searchMode === 0) {
-            getProductList('name=' + self.keyword).then((res) => {
-              self.products = res.data.jsonData.products
-            }
-            ).catch((e) => console.log(e)
-            )
+          if (self.cat === 0) {
+            searchProducts(self.keyword)
+              .then((res) => {
+                self.searchResults = res.data.jsonData.products
+              }
+              ).catch((e) => console.log(e)
+              )
+          } else if (self.cat === 1) {
+            searchBrands(self.keyword)
+              .then((res) => {
+                self.searchResults = res.data.jsonData.brands
+              }
+              ).catch((e) => console.log(e)
+              )
+          } else if (self.cat === 2) {
+            searchBroadcasts(self.keyword)
+              .then((res) => {
+                self.searchResults = res.data.jsonData.broadcasts
+              }
+              ).catch((e) => console.log(e)
+              )
           }
-          // else if (self.searchMode === 1) {
-          //   getBrandList().then((res) => {
-          //     console.log(res)
-          //   }
-          //   ).catch((e) => console.log(e)
-          //   )
-          // } else if (self.searchMode === 2) {
-
-          // }
         }, 200)
       } else {
-        this.products = {}
+        this.searchResults = {}
       }
     },
     clickSearchBtn () {
-      this.$emit('clickSearch', this.products)
+      this.$emit('clickSearch', this.searchResults)
       this.$refs.input.blur()
       this.unFocused()
     }
