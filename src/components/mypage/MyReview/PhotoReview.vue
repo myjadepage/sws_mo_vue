@@ -1,8 +1,8 @@
 <template>
 
   <section class="photoReview compBlock">
-    <StartScore :score="score"/>
-    <TextBlock :reviewText="reviewText" :photos="photos" />
+    <StartScore :score="score" @stars="stars"/>
+    <TextBlock :photos="photos" :prdtSysId="prdtSysId" :score="score" @text="text" />
   </section>
 
 </template>
@@ -13,15 +13,23 @@ import TextBlock from '@/components/mypage/MyReview/TextBlock'
 
 export default {
   name: 'PhotoReview',
+  props: ['prdtSysId'],
   data () {
     return {
-      score: 3,
-      reviewText: '최고에요!',
+      score: 0,
       photos: []
     }
   },
   components: {
     StartScore, TextBlock
+  },
+  methods: {
+    stars (num) {
+      this.score = num
+    },
+    text (str) {
+      this.reviewText = str
+    }
   }
 }
 </script>

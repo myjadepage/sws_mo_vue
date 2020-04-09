@@ -25,6 +25,7 @@ export default {
   methods: {
     setScore (num) {
       this.starScore = num
+      this.$emit('stars', num)
     }
   }
 }

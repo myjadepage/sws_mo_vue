@@ -6,9 +6,9 @@
     <h2>면역력 챙기셨어요?</h2>
     <p>외출 전 마스크와 면역력을 챙기세요!</p>
     <ul class="list">
-      <li class="item">
+      <li class="item noItem">기획 상품이 없습니다.</li>
+      <!-- <li class="item">
         <router-link to="">
-          <!-- imgBox 에 mov 클래스를 붙여주면 재생 이미지가 나타남 -->
           <div class="imgBox" style="background:url('/static/images/temp_them_1.png') 50% 50% /cover no-repeat;"></div>
           <div class="txtBox">
             <p class="itemName">보글스타일 폴리우레탄 소재 데일리 마스크(블랙 3개입)</p>
@@ -33,7 +33,7 @@
             <p class="price">37,000원</p>
           </div>
         </router-link>
-      </li>
+      </li> -->
     </ul>
   </div>
 </section>

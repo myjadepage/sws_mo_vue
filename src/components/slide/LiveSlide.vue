@@ -16,6 +16,11 @@
             </router-link>
           </div>
         </swiper-slide>
+        <swiper-slide class="item live" v-if="items.length === 0">
+          <div>
+              <p class="noItem">현재 Live방송이 없습니다.</p>
+          </div>
+        </swiper-slide>
       </swiper>
   </div>
 </template>
@@ -33,7 +38,7 @@ export default {
   },
   data () {
     return {
-      items: [ ],
+      items: [],
       broadcastType: null,
       swiperOption: {
         slidesPerView: 'auto',
@@ -50,7 +55,7 @@ export default {
         if (res.data.jsonData.resultCode === '0001') {
           vm.items = res.data.jsonData.broadcasts
         } else {
-          alert('라이브 리스트를 불러올 수 없습니다.')
+          console.log('라이브 리스트를 불러올 수 없습니다.')
         }
       })
       .catch(function (error) {

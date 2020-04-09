@@ -73,7 +73,7 @@ function payOrders (jsonData, orderSysId) {
 // 마이페이지 조회
 function getMypageInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/mypage`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -99,7 +99,7 @@ function modifyUserInfo (accessToken, userInfo) {
   formdata.set('jsonData', JSON.stringify(userInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/myinfo`,
+    url: `${config.baseUrl}users/${userSysId}/myinfo`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -111,7 +111,7 @@ function modifyUserInfo (accessToken, userInfo) {
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/listaddress`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -126,7 +126,7 @@ function addMemberAddress (accessToken, addrInfo) {
   formdata.set('jsonData', JSON.stringify(addrInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/address`,
+    url: `${config.baseUrl}users/${userSysId}/address`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -235,7 +235,7 @@ function removeCartItem (accessToken, basketSysId) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -251,7 +251,7 @@ function removeCartList (accessToken, basketSysIds) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -267,7 +267,7 @@ function putCartItem (accessToken, basketSysId, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'put',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -286,7 +286,7 @@ function writeQuestion (accessToken, questionInfo) {
   formdata.set('jsonData', JSON.stringify(questionInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}operations/questions`,
+    url: `${config.baseUrl}operations/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -316,7 +316,7 @@ function changePw (accessToken, pwInfo) {
   formdata.set('jsonData', JSON.stringify(pwInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl}users/${userSysId}/password`,
+    url: `${config.baseUrl2}users/${userSysId}/password`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -332,7 +332,7 @@ function setRecentViewList (accessToken, viewInfo) {
   formdata.set('jsonData', JSON.stringify(viewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -349,7 +349,7 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -358,11 +358,34 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
 }
 
 // 마이 리뷰 목록 가져오기
-function getMyReviewList (accessToken) {
+function getMyReviewList (accessToken, sIdx, rCnt) {
   let userSysId = parseJwt(accessToken).authSysId
+  let req = {startIndex: sIdx, rowCount: rCnt}
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/reviews/list`
+    url: `${config.baseUrl2}users/${userSysId}/reviews/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 리뷰 작성
+function setReview (accessToken, prdtSysId, reviewInfo) {
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(reviewInfo))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}products/${prdtSysId}/reviews`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
   })
 }
 
@@ -564,7 +587,7 @@ function createtUser (user) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/join`, formdata)
+  return axios.post(`${config.baseUrl2}auth/join`, formdata)
 }
 
 // 일반로그인
@@ -575,7 +598,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/login`, formdata)
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
 
 // 간편로그인
@@ -694,5 +717,6 @@ export {
   searchProducts,
   searchBrands,
   searchBroadcasts,
-  searchPassword
+  searchPassword,
+  setReview
 }

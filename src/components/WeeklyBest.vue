@@ -4,8 +4,9 @@
     <ul class="box_best_item">
       <!-- 임시주석 -->
       <Entity v-for="(i,idx) in items" :key="idx" :product="i" />
+      <li class="item noItem" v-if="items.length === 0"><p>Weekly 상품이 없습니다.</p></li>
 
-      <li class="item">
+      <!-- <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to="/detailExam"  class="link_goods">
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_01.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
@@ -124,7 +125,7 @@
             </dl>
           </div>
         </router-link>
-      </li>
+      </li> -->
     </ul>
    </div>
 </template>

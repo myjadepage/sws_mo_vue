@@ -3,8 +3,8 @@
     <h4>Sale</h4>
     <ul class="box_best_item">
       <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" />
-
-      <li class="item">
+      <li class="item noItem" v-if="products.length === 0">세일 상품이 없습니다.</li>
+      <!-- <li class="item">
         <button class="like"><span class="ir">좋아요 버튼</span></button>
         <router-link to=""  class="link_goods">
           <div class="img_box" :style="{backgroundImage:'url(/static/images/temp_weekly_01.png)', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}">
@@ -123,7 +123,7 @@
             </dl>
           </div>
         </router-link>
-      </li>
+      </li> -->
     </ul>
    </div>
 </template>
