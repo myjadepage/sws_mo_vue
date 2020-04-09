@@ -3,7 +3,7 @@
   <div @click="allModalClose" v-if="addrModalVisibility || infoModalVisibility" class="darkFilter"></div>
     <Bar :val="title" />
     <ProductInfo/>
-    <Orderer />
+    <Orderer :user="user" />
     <Delivery :addresses="addresses" @deliveryBtnClick="addrModalShow" />
     <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
     <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
@@ -31,10 +31,31 @@ import TotalPriceInfo from '@/components/buypage/TotalPriceInfo'
 import BuyFooter from '@/components/buypage/BuyFooter'
 import InfoModal from '@/components/buypage/Modal/DeliveryInfoModal'
 import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
-import {getMemberAddrList, getAccessToken} from '@/api/index.js'
+import {getMemberAddrList, getAccessToken, getUserInfo} from '@/api/index.js'
 
 export default {
   created () {
+    if (this.$store.state.isLogin) {
+      getUserInfo(sessionStorage.getItem('accessToken'))
+        .then(res => {
+          this.user = res.data.jsonData
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
+    }
+
     if (sessionStorage.getItem('accessToken')) {
       getMemberAddrList(sessionStorage.getItem('accessToken'))
         .then(res => {
@@ -74,7 +95,8 @@ export default {
       finalPrice: 0,
       addrModalVisibility: false,
       infoModalVisibility: false,
-      addresses: []
+      addresses: [],
+      user: {}
     }
   },
   methods: {

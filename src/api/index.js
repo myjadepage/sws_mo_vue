@@ -84,7 +84,7 @@ function getMypageInfo (accessToken) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -146,15 +146,15 @@ function getAddingCosts (postNumber) {
 
 // 상품 검색
 function searchProducts (name) {
-  return axios.get(`${config.baseUrl2}products/searchlists?name=${name}`)
+  return axios.get(`${config.baseUrl}products/searchlists?name=${name}`)
 }
 // 브랜드 검색
 function searchBrands (name) {
-  return axios.get(`${config.baseUrl2}brands/searchlists?name=${name}`)
+  return axios.get(`${config.baseUrl}brands/searchlists?name=${name}`)
 }
 // 방송 검색
 function searchBroadcasts (title) {
-  return axios.get(`${config.baseUrl2}broadcasts/searchlists?title=${title}`)
+  return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
 }
 
 /**
@@ -172,12 +172,12 @@ function getBroadCast (prdtSysId) {
 
 // 리뷰 목록 가져오기
 function getPrdtReviewList (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/reviews/list`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/reviews/list`)
 }
 
 // 문의 목록 가져오기
 function getPrdtQuestionList (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/questions/list`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/questions/list`)
 }
 
 // 문의 등록하기
@@ -187,7 +187,7 @@ function postPrdtQuestion (accessToken, prdtSysId, qaData) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}products/${prdtSysId}/questions`,
+    url: `${config.baseUrl}products/${prdtSysId}/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -207,7 +207,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/baskets`,
+    url: `${config.baseUrl}users/${userSysId}/baskets`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -221,7 +221,7 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -412,7 +412,7 @@ function setPicksList (accessToken, pickInfo) {
   formdata.set('jsonData', JSON.stringify(pickInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -573,7 +573,10 @@ function searchPassword (password) {
     },
     data: formdata
   })
-  // return axios.patch(`${config.baseUrl2}users/password`, formdata, aaa)
+  // return axios.patch(`${config.baseUrl2}users/password`, formdata, {
+  //   'Content-Type': 'application/x-www-form-urlencoded',
+  //   'Authorization': `Bearer ${authToken}`
+  // })
 }
 
 // 회원가입
