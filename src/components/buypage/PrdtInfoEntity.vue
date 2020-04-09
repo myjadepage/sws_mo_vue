@@ -9,7 +9,7 @@
     <div class="prdPriceCnt">
       {{calcTotalPrice|makeComma}}원 / 수량{{calcCnt}}개
       <span v-if="option.length>1">
-        <button class="moreBtn" @click="moreOption = !moreOption">더 보기</button>
+        <button class="moreBtn" @click="moreOption = !moreOption">{{moreOption?"접기":"더 보기"}}</button>
       </span>
     </div>
         <div class="prdOptions" v-if="moreOption">
@@ -106,6 +106,7 @@ border-radius: 2px;
 }
 
 .buyPrdtEntityWrap .moreBtn{
+  width: 40px;
   font-size: 9px;
   border: 1px solid black;
   border-radius: 2px;

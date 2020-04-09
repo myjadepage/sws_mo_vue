@@ -29,17 +29,7 @@
 
 <script>
 export default {
-  created () {
-    if (sessionStorage.getItem('accessToken')) {
-      this.isLogin = true
-    }
-  },
-  data () {
-    return {
-      isLogin: false
-    }
-  },
-  props: ['member'],
+  props: ['user'],
   methods: {
     orderIsDestCheck () {
       if (this.$refs.orderIsDest.checked) {

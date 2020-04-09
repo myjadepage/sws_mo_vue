@@ -16,7 +16,7 @@
           <div class="txtBox">
             <dl>
               <dt>[{{product.brandName}}] {{product.productName}}</dt>
-              <dd>{{productPrice|makeComma}}원<span class="c_them">{{product.discountRate * 100}}%</span></dd>
+              <dd>{{productPrice|makeComma}}원<span v-if="product.discountRate" class="c_them">{{product.discountRate * 100}}%</span></dd>
             </dl>
           </div>
         </router-link>

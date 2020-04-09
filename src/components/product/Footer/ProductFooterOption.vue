@@ -105,7 +105,6 @@ export default {
 
       for (const o of this.$store.getters.getSelectedOptions) { // 옵션 중복 체크
         if (o.contentName === item.contentName) {
-          alert('이미 선택된 옵션입니다.')
           for (let i = 0; i < this.optionContents.length; i++) {
             this.$refs['option' + i][0].value = ''
           }
@@ -164,10 +163,10 @@ export default {
 
 <style>
 .productOptionWrap{
-    /* display: inline-block; */
-    height: fit-content;
     text-align: center;
     user-select: none;
+    max-height: 500px;
+overflow: scroll;
 }
 
 .productOptionWrap .optionListSection{
