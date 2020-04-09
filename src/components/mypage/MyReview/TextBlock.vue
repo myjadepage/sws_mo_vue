@@ -50,7 +50,7 @@ export default {
     photoSubmit () {
       let reviewInfo = {}
       if (this.score > 0) {
-        reviewInfo.starPointoptional = this.score
+        reviewInfo.starPoint = this.score
       }
       if (this.mode === 'text') {
         reviewInfo.reviewType = 0
@@ -67,6 +67,7 @@ export default {
           reviewInfo.reviewPhotos.push(JSON.stringify({'photoUrl': img}))
         })
       }
+      console.log(reviewInfo)
 
       setReview(sessionStorage.getItem('accessToken'), this.prdtSysId, reviewInfo)
         .then(res => {
@@ -74,7 +75,7 @@ export default {
           if (res.data.jsonData.resultCode !== '0001') {
             alert('사진 업로드에 실패했습니다.')
           } else if (res.data.jsonData.resultCode === '0001') {
-            this.$router.push('/MyReview')
+            // this.$router.push('/MyReview')
           }
         })
     },

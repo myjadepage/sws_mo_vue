@@ -254,13 +254,18 @@
   position: relative;
   width:300px;
 }
+.live_slide .item.single{
+  display:block;
+  width:calc(100% - 24px);
+  margin-left:12px;
+}
 .live_slide .item a{
   display:block;
 }
 .live_slide .item .imgBox{
   overflow: hidden;
   width:100%;
-  height:180px;
+  padding-top:60%;
 }
 .live_slide .item .imgBox img{
   width:100%;
@@ -290,6 +295,10 @@
   border-radius:50%;
   background:rgba(255,255,255,0.9);
   box-shadow:0 2px 2px 0 rgba(0,0,0,0.1);
+}
+.live_slide .item.single .btn_movie{
+  top:0;
+  margin-top:calc(60% - 21px);
 }
 .live_slide .item .btn_movie img{
   width:13px;

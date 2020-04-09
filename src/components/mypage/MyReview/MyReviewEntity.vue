@@ -12,7 +12,7 @@
             <router-link :to="'/ReviewWrite/' + item.prdtSysId" class="btn_them border col1 btn-first">리뷰작성</router-link>
           </div>
           <div class="reviewBox" v-if="tabState">
-            <div class="stars" v-if="item.starPoint">
+            <div class="stars" v-if="item.starPoint > 0">
               <img src="../../../assets/img/ico/ico_star_full.png" alt="1점" v-for="n in item.starPoint" :key="n" />
               <img src="../../../assets/img/ico/ico_star_none.png" alt="0점" v-for="n in (5 - starPoint) " :key="n" />
             </div>
