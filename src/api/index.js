@@ -73,7 +73,7 @@ function payOrders (jsonData, orderSysId) {
 // 마이페이지 조회
 function getMypageInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/mypage`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -84,7 +84,7 @@ function getMypageInfo (accessToken) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -111,7 +111,7 @@ function modifyUserInfo (accessToken, userInfo) {
 // 회원 주소 목록 가져오기
 function getMemberAddrList (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/listaddress`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/listaddress`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -550,7 +550,10 @@ function searchPassword (password) {
     },
     data: formdata
   })
-  // return axios.patch(`${config.baseUrl2}users/password`, formdata, aaa)
+  // return axios.patch(`${config.baseUrl2}users/password`, formdata, {
+  //   'Content-Type': 'application/x-www-form-urlencoded',
+  //   'Authorization': `Bearer ${authToken}`
+  // })
 }
 
 // 회원가입

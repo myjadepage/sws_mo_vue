@@ -78,10 +78,10 @@
                 </li>
             </ul>
         </div>
-
-         <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn">비회원으로 구매</button>
-         <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn">비회원 주문조회</button>
-
+        <div style="clear:both">
+          <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn">비회원으로 구매</button>
+          <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn">비회원 주문조회</button>
+        </div>
     </div>
 </div>
 </template>
