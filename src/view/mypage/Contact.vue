@@ -45,7 +45,10 @@ export default {
           // 비동기 post 로직
           writeQuestion(sessionStorage.getItem('accessToken'), this.qInfo)
             .then(res => {
-              console.log(res)
+              // console.log(res)
+              alert('문의가 접수되었습니다.')
+              this.content = ''
+              this.email = ''
             })
             .catch(err => {
               console.log(err)

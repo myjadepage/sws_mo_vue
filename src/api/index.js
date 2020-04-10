@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
-  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
+  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
@@ -172,7 +172,7 @@ function getBroadCast (prdtSysId) {
 
 // 리뷰 목록 가져오기
 function getPrdtReviewList (prdtSysId) {
-  return axios.get(`${config.baseUrl}products/${prdtSysId}/reviews/list`)
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/reviews/list`)
 }
 
 // 문의 목록 가져오기
@@ -485,6 +485,34 @@ function getPointInfo (accessToken, sDate, eData, flag) {
   })
 }
 
+// 마이페이지-알림 설정 조회
+function getAlertSetting (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+// 마이페이지-알림 설정 수정
+function setAlertSetting (accessToken, setInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(setInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 /**
  *
  * 회원가입
@@ -721,5 +749,7 @@ export {
   searchBrands,
   searchBroadcasts,
   searchPassword,
-  setReview
+  setReview,
+  getAlertSetting,
+  setAlertSetting
 }

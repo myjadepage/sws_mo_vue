@@ -120,7 +120,7 @@ export default {
 
       // 유효성 검사
       let nameRegExp = /^[가-힣]{2,4}$/ // 이름
-      let inputRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s/]+$/ // 영문,숫자,한글
+      let inputRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s\./]+$/ // 영문,숫자,한글
 
 
       // 생년월일 검사

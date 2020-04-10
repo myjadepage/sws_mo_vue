@@ -70,10 +70,18 @@ export default {
 .qaEntityWrap .qaBody{
   overflow: hidden;
 }
+.qaEntityWrap .qaBody .title{
+  float:left;
+  display:block;
+  width:calc(100% - 79px);
+  padding-left:12px;
+}
 
 .qaEntityWrap .qaBody .status{
-  margin-right:12px;
   float: right;
+  display:block;
+  width:55px;
+  margin-right:12px;
   font-weight: 500;
 }
 

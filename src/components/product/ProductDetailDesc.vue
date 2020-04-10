@@ -22,6 +22,7 @@ export default {
 
     getPrdtReviewList(id)
       .then(res => {
+        console.log(res)
         this.reivews = res.data.jsonData.reviews
       })
       .catch(err => {
@@ -60,6 +61,13 @@ export default {
     },
     qaDone () {
       this.QAWriteMode = false
+      getPrdtQuestionList(this.$route.params.prdtSysId)
+        .then(res => {
+          this.questions = res.data.jsonData.questions
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
