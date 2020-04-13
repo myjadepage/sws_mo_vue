@@ -207,7 +207,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/baskets`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -221,7 +221,7 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -235,7 +235,7 @@ function removeCartItem (accessToken, basketSysId) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -251,7 +251,7 @@ function removeCartList (accessToken, basketSysIds) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -267,7 +267,7 @@ function putCartItem (accessToken, basketSysId, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'put',
-    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -396,7 +396,7 @@ function delRecentViewList (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -412,7 +412,7 @@ function setPicksList (accessToken, pickInfo) {
   formdata.set('jsonData', JSON.stringify(pickInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -426,7 +426,7 @@ function delPicksList (accessToken, prdtSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/${prdtSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/${prdtSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -442,7 +442,7 @@ function getPicksList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -458,7 +458,7 @@ function delPicksLists (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -476,7 +476,7 @@ function getPointInfo (accessToken, sDate, eData, flag) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/pointhists/list`,
+    url: `${config.baseUrl2}users/${userSysId}/pointhists/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`

@@ -841,7 +841,9 @@ body>#flowplayer-floating-container {
     opacity:0;
   }
   .flowplayer.is-hovered.is-paused .fp-secondary,
-  .flowplayer.is-hovered.is-playing .fp-secondary{
+  .flowplayer.is-hovered.is-playing .fp-secondary,
+  .live.fullscreen .flowplayer.is-paused .fp-secondary,
+  .live.fullscreen .flowplayer.is-touched .fp-secondary{
     opacity:1;
   }
   .info .fp-secondary{
@@ -993,6 +995,7 @@ body>#flowplayer-floating-container {
     width:20px;
   }
   .live .flowplayer .fp-volumebtn{
+    display:none;
     position:fixed;
     top:65px;
     right:16px;
@@ -1010,7 +1013,15 @@ body>#flowplayer-floating-container {
     position:absolute;
     top:-100px;
   }
-  .live.info .flowplayer.is-fullscreen .fp-volumebtn{
+  @media screen and (min-width: 600px) {
+    .live.info .flowplayer .fp-volumebtn{
+      position:absolute;
+      top:-100%;
+    } 
+  }
+  .live.info .flowplayer.is-fullscreen .fp-volumebtn,
+  .live.fullscreen .flowplayer.is-touched .fp-volumebtn,
+  .productMediaWrap.fullscreen .live.fullscreen .flowplayer.is-paused .fp-volumebtn{
     position:fixed;
     top:65px;
   }
@@ -1219,6 +1230,26 @@ body>#flowplayer-floating-container {
   }
   .mainMedia .is-touched .btn_goBack,
   .mainMedia .is-paused .btn_goBack{
+    opacity:1;
+    transform:translateX(0);
+  }
+  .mainMedia .toggleMute{
+    position:absolute;
+    top:63px;
+    right:16px;
+    z-index:130;
+    width:30px;
+    height:30px;
+    background:url('../img/ico/btn_mute.png') 50% 50% /30px auto no-repeat;
+    transition:opacity 0.3s ease;
+    transform:translateX(100px);
+    opacity:0;
+  }
+  .mainMedia .toggleMute.muted{
+    background:url('../img/ico/btn_muted.png') 50% 50% /30px auto no-repeat;
+  }
+  .mainMedia .is-touched .toggleMute,
+  .mainMedia .is-paused .toggleMute{
     opacity:1;
     transform:translateX(0);
   }

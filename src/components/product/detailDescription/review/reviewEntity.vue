@@ -21,6 +21,7 @@
 <script>
 import 'flowplayer-files/lib/styles/flowplayer.css'
 import ReviewInfo from '@/components/product/detailDescription/review/InfoBar'
+// eslint-disable-next-line
 import { getProductReview } from '@/api/index.js'
 
 export default {
@@ -91,7 +92,10 @@ export default {
         type: 'application/x-mpegurl',
         src: VIDEOSRC,
         poster: POSTER,
-        token: TOKEN
+        token: TOKEN,
+        preload: 'auto',
+        muted: false,
+        hls: {startLevel: 0}
       })
     }
   }

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {getAlertSetting, setAlertSetting} from '@/api/index'
+import {getAlertSetting, setAlertSetting, getAccessToken} from '@/api/index'
 
 export default {
   data () {
@@ -34,9 +34,39 @@ export default {
   mounted () {
     getAlertSetting(sessionStorage.getItem('accessToken'))
       .then(res => {
+        console.log(res)
         if (res.data.jsonData.resultCode === '0001') {
           this.alertSets.buyLog = res.data.jsonData.orderFlag
           this.alertSets.exchangeLog = res.data.jsonData.orderStatFlag
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        if (err.response.status === 401) {
+          getAccessToken(sessionStorage.getItem('refreshToken'))
+            .then(res => {
+              sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              getAlertSetting(sessionStorage.getItem('accessToken'))
+                .then(res => {
+                  if (res.data.jsonData.resultCode === '0001') {
+                    this.alertSets.buyLog = res.data.jsonData.orderFlag
+                    this.alertSets.exchangeLog = res.data.jsonData.orderStatFlag
+                  }
+                })
+                .catch(err => {
+                  console.log(err)
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            })
+            .catch(err => {
+              if (err.response.status === 401) {
+                this.$store.dispatch('logOut')
+                this.$router.push('/Login')
+              }
+            })
         }
       })
   },
@@ -60,7 +90,33 @@ export default {
       // console.log(setInfo)
       setAlertSetting(sessionStorage.getItem('accessToken'), setInfo)
         .then(res => {
-          // console.log(res)
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                setAlertSetting(sessionStorage.getItem('accessToken'), setInfo)
+                  .then(res => {
+                    // console.log(res)
+                  })
+                  .catch(err => {
+                    console.log(err)
+                    if (err.response.status === 401) {
+                      this.$store.dispatch('logOut')
+                      this.$router.push('/Login')
+                    }
+                  })
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
         })
     }
   }
