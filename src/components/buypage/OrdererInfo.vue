@@ -6,17 +6,17 @@
           <div class="ordererBody">
       <div class="form-group">
         <label for="orderName">주문자 이름</label>
-        <input @change="isValidName" v-model="name" id="orderName" type="text">
+        <input ref="name" @change="isValidName" v-model="name" id="orderName" type="text">
         </div>
 
         <div class="form-group">
         <label for="orderPhone">휴대폰 번호</label>
-        <input @change="isValidPhone" v-model="phone" id="orderPhone" type="text" placeholder="“-” 없이 입력">
+        <input ref="phone" @change="isValidPhone" v-model="phone" id="orderPhone" type="text" placeholder="“-” 없이 입력">
         </div>
 
         <div class="form-group">
         <label for="orderEmail">이메일 주소</label>
-        <input @change="isValidEmail" v-model="email" id="orderEmail" type="email">
+        <input ref="email" @change="isValidEmail" v-model="email" id="orderEmail" type="email">
         </div>
 
         <div class="orderIsDest">
@@ -30,6 +30,11 @@
 <script>
 export default {
   props: ['user'],
+  watch: {
+    user (val) {
+      this.email = val.userId
+    }
+  },
   methods: {
     orderIsDestCheck () {
       if (this.$refs.orderIsDest.checked) {

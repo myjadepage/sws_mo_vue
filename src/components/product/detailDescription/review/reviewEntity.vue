@@ -3,7 +3,7 @@
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full sm"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half sm"></span>
         <span v-for="(j,jid) of noneStarCnt" :key="jid" class="ico_star_none sm"></span>
-    <span class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{reviewDate}}</span><span class="reviewWriter">{{review.userId}}</span>
+    <span @click="declareBtnClick" class="reviewDeclare">신고하기</span><span class="reviewDelimiter">|</span><span class="reviewDate">{{reviewDate}}</span><span class="reviewWriter">{{review.userId}}</span>
     <div class="reviewBody">
       <div class="reviewContent">{{review.content}}</div>
       </div>
@@ -86,6 +86,10 @@ export default {
           token: TOKEN
         })
       }
+    },
+    declareBtnClick () {
+      this.$emit('declare', this.review.prdtReviewSysId)
+      // this.$store.state.claimReviewId = this.review.prdtReviewSysId
     }
   }
 }

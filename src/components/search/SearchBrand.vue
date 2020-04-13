@@ -1,13 +1,25 @@
 <template>
   <div class="searchBrandWrap">
       <img :src="brand.imageUrl" alt="브랜드 이미지"><span class="name">{{brand.name}}</span>
-      <button>팔로우</button>
+      <button :class="isFallow?'unactive':'active'" @click="fallowBtnClick">{{title}}</button>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['brand']
+  props: ['brand'],
+  data () {
+    return {
+      isFallow: true,
+      title: '팔로우'
+    }
+  },
+  methods: {
+    fallowBtnClick () {
+      this.isFallow = !this.isFallow
+      this.title = this.isFallow ? '팔로우' : '팔로잉'
+    }
+  }
 }
 </script>
 
@@ -34,12 +46,19 @@ export default {
 
     .searchBrandWrap button{
         float: right;
-        border: 1px solid #e61754;
-        color: #e61754;
         width: 70px;
         height: 28px;
         border-radius: 14px;
         position: relative;
         top: 10px;
+    }
+    .searchBrandWrap button.unactive{
+        border: 1px solid #e61754;
+        color: #e61754;
+    }
+
+    .searchBrandWrap button.active{
+        border: 1px solid #cccccc;
+        color: #666666;
     }
 </style>

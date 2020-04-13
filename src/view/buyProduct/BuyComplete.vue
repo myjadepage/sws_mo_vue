@@ -18,7 +18,7 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-// import {payOrders} from '@/api/index.js'
+import {payOrders} from '@/api/index.js'
 
 export default {
   created () {
@@ -33,9 +33,9 @@ export default {
     let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
 
     this.info = payInfo
-    // sessionStorage.removeItem('products')
-    // sessionStorage.removeItem('selectedOptions')
-    // sessionStorage.removeItem('payItem')
+    sessionStorage.removeItem('products')
+    sessionStorage.removeItem('selectedOptions')
+    sessionStorage.removeItem('payItem')
 
     switch (this.info.payMethod) {
       case 'card':
@@ -78,15 +78,15 @@ export default {
 
     console.log(item)
 
-    // if (localStorage.getItem('orderSysId')) {
-    //   payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-    //     console.log(res)
-    //     sessionStorage.removeItem('orderSysId')
-    //   }).catch(err => {
-    //     console.log(err)
-    //     sessionStorage.removeItem('orderSysId')
-    //   })
-    // }
+    if (sessionStorage.getItem('orderSysId')) {
+      payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+        console.log(res)
+        sessionStorage.removeItem('orderSysId')
+      }).catch(err => {
+        console.log(err)
+        sessionStorage.removeItem('orderSysId')
+      })
+    }
   },
 
   data () {
@@ -102,11 +102,8 @@ export default {
 
   components: {
     Bar, Message, Account, Info, Guides, Footer
-  },
-
-  beforeDestroy () {
-    sessionStorage.removeItem('selectedOptions')
   }
+
 }
 </script>
 

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 import Header from '@/components/shared/Header'
 import Footer from '@/components/shared/Footer'
 import MainContent from '@/components/MainContent'

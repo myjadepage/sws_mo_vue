@@ -1,6 +1,6 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-    <div  v-if="buyMode" class="darkFilter"></div>
+    <div  v-if="buyMode||showDeclareModal" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info :product="product" />
@@ -9,6 +9,7 @@
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
+      <DeclareModal @cencelBtnClick="declareCancel" v-if="showDeclareModal" />
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
       </transition>
   </div>
@@ -23,6 +24,7 @@ import Info2 from '@/components/product/ProductInfo2'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
 import CartModal from '@/components/product/Modal/CartModal'
+import DeclareModal from '@/components/product/Modal/DeclareModal'
 import {getProduct, setRecentViewList, getRecentViewList} from '@/api/index'
 
 export default {
@@ -123,18 +125,25 @@ export default {
       product: {},
       buyMode: false,
       showCartModal: false,
+      showDeclareModal: false,
       options: []
     }
   },
   components: {
-    Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal
+    Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal, DeclareModal
   },
   methods: {
+    test () {
+      this.showDeclareModal = true
+    },
     addedCartItem () {
       this.showCartModal = true
       setTimeout(() => {
         this.showCartModal = false
       }, 3000)
+    },
+    declareCancel () {
+      this.showDeclareModal = false
     }
   },
   beforeDestroy () {
