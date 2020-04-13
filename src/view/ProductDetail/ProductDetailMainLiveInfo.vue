@@ -23,7 +23,7 @@ import Info2 from '@/components/product/ProductInfo2'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
 import CartModal from '@/components/product/Modal/CartModal'
-import {getProduct, setRecentViewList, getRecentViewList} from '@/api/index'
+import {getProduct, setRecentViewList, getRecentViewList, getAccessToken} from '@/api/index'
 
 export default {
   created () {
@@ -74,6 +74,44 @@ export default {
                 })
                 .catch(err => {
                   console.log(err)
+                })
+            }
+          })
+          .catch(err => {
+            console.log(err)
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                  getRecentViewList(sessionStorage.getItem('accessToken'), 0, 10)
+                    .then(res => {
+                      // console.log(res)
+                      let f = res.data.jsonData.views.find(obj => obj.prdtSysId === this.product.prdtSysId)
+
+                      // 같은 상품이 있을 경우, false.
+                      if (f) {
+                        console.log('이미 있음')
+                        return false
+
+                      // 없으면 insert
+                      } else {
+                        setRecentViewList(sessionStorage.getItem('accessToken'), viewInfo)
+                          .then(res => {
+                            if (res.data.jsonData.resultCode === '0001') {
+                              console.log('추가 성공')
+                            }
+                          })
+                          .catch(err => {
+                            console.log(err)
+                          })
+                      }
+                    })
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
                 })
             }
           })

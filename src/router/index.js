@@ -267,6 +267,11 @@ export default new Router({
       component: () => import('@/view/mypage/ReviewWrite')
     },
     {
+      path: '/ReviewDetail/:prdtSysId/:prdtReviewSysId',
+      name: 'ReviewDetail',
+      component: () => import('@/view/productDetail/ReviewDetail')
+    },
+    {
       path: '/MypageSetting',
       name: 'MypageSetting',
       component: () => import('@/view/mypage/MypageSetting')

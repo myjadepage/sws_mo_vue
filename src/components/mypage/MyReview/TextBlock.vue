@@ -39,7 +39,6 @@ export default {
       mode: 'text',
       txt: '',
       imgLength: 0,
-      imgFile: [],
       imgUrls: []
     }
   },
@@ -48,6 +47,9 @@ export default {
       this.mode = 'photo'
     },
     photoSubmit () {
+      if (this.txt === '' && this.score === '') {
+        return false
+      }
       let reviewInfo = {}
       if (this.score > 0) {
         reviewInfo.starPoint = this.score
@@ -64,25 +66,24 @@ export default {
         reviewInfo.content = this.txt
         reviewInfo.reviewPhotos = []
         this.imgUrls.forEach(img => {
-          reviewInfo.reviewPhotos.push(JSON.stringify({'photoUrl': img}))
+          reviewInfo.reviewPhotos.push({'photoUrl': img})
         })
       }
-      console.log(reviewInfo)
+      // console.log(reviewInfo)
 
       setReview(sessionStorage.getItem('accessToken'), this.prdtSysId, reviewInfo)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.jsonData.resultCode !== '0001') {
             alert('사진 업로드에 실패했습니다.')
           } else if (res.data.jsonData.resultCode === '0001') {
-            // this.$router.push('/MyReview')
+            this.$router.push('/MyReview')
           }
         })
     },
     delPhoto (index) {
-      this.imgFile.splice(index, 1)
+      this.imgUrls.splice(index, 1)
       this.imgLength--
-      // console.log($(event.target).parents('.item').remove())
     },
 
     /* eslint-disable */

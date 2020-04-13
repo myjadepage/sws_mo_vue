@@ -13,7 +13,7 @@ import viewList from '@/components/mypage/ViewLog/ViewList'
 import EmptyBlock from '@/components/shared/EmptyBlock'
 import BasketDeleteModal from '@/components/mypage/Exchange/Modal/BasketDeleteModal'
 import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
-import { getRecentViewList } from '@/api/index.js'
+import { getRecentViewList, getAccessToken } from '@/api/index.js'
 
 export default {
   data () {
@@ -37,11 +37,37 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
         .then(res => {
+          console.log(res)
           this.viewStartIndex = res.data.jsonData.viewStartIndex
           this.products.push(...res.data.jsonData.views)
         })
         .catch(err => {
           console.log(err)
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
+                  .then(res => {
+                    console.log(res)
+                    this.viewStartIndex = res.data.jsonData.viewStartIndex
+                    this.products.push(...res.data.jsonData.views)
+                  })
+                  .catch(err => {
+                    console.log(err)
+                    if (err.response.status === 401) {
+                      this.$store.dispatch('logOut')
+                      this.$router.push('/Login')
+                    }
+                  })
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
         })
     }
   }

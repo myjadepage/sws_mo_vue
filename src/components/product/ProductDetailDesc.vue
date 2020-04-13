@@ -22,6 +22,7 @@ export default {
 
     getPrdtReviewList(id)
       .then(res => {
+        // console.log(res)
         this.reivews = res.data.jsonData.reviews
       })
       .catch(err => {
@@ -49,6 +50,16 @@ export default {
   },
   watch: {
     selectedMenu (newVal) {
+      // if (newVal === 1) {
+      //   getPrdtReviewList(this.$route.params.prdtSysId)
+      //     .then(res => {
+      //       // console.log(res)
+      //       this.reivews = res.data.jsonData.reviews
+      //     })
+      //     .catch(err => {
+      //       console.log(err)
+      //     })
+      // }
       if (newVal === 2) {
         this.QAWriteMode = false
       }
@@ -60,6 +71,13 @@ export default {
     },
     qaDone () {
       this.QAWriteMode = false
+      getPrdtQuestionList(this.$route.params.prdtSysId)
+        .then(res => {
+          this.questions = res.data.jsonData.questions
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

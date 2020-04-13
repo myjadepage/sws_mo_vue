@@ -81,13 +81,16 @@ export default {
   position:absolute;
   top:320px;
   left:0;
+  width:100%;
 }
 .common-header-gnb-main.fixed{
   position:fixed;
   width:100%;
-  left:0;
+  max-width:640px;
+  left:50%;
   top:0;
   z-index:200;
+  transform: translateX(-50%);
 }
 .gnb_main{position: relative;z-index:99; margin-bottom: 40px;padding-top:20px; font-size:16px;background-color:#fff;border-bottom:1px solid #d9d9d9;font-size:0;}
 .fixed .gnb_main{

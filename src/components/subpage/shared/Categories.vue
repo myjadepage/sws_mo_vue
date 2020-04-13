@@ -74,15 +74,17 @@ export default {
    top:45px;
    left:0;
    width:100%;
+   max-width:640px;
    font-size:0;
    border-bottom:1px solid #eee;
  }
  .subCatWrap.fixed{
    position:fixed;
-   left:0;
+   left:50%;
    top:0;
    z-index:200;
    background:#fff;
+   transform: translateX(-50%);
  }
  .subCatWrap .home{
    display:inline-block;

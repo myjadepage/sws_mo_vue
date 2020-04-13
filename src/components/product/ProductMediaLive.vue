@@ -1,11 +1,11 @@
 <template>
 <!-- 라이브 방송일 경우 사용하는 상품 페이지 -->
-  <div class="productMediaWrap">
+  <div class="productMediaWrap" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
     <div class="mainMedia live" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
       <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar" ref="player">
         <!-- <div class="ui-custom"> -->
           <button class="toggleFullsize" @click="goDetail" v-if="mode==='fullscreen'"><span class="ir_pm">전체화면 켜기/끄기</span></button>
-          <!-- <button class="toggleMute"><span class="ir_pm">음소거 켜기/끄기</span></button> -->
+          <button class="toggleMute" :class="{'muted':muteState}"  ref="muteBtn"><span class="ir_pm">음소거 켜기/끄기</span></button>
         <!-- </div> -->
         <button class="btn_goBack" @click="goBack"></button>
         <div class="productInfoBox" v-if="mode==='fullscreen'">
@@ -34,23 +34,7 @@ export default {
       videoType: 'live',
       broadcastSysId: null,
       prdtSysId: null,
-      dummyItem: [
-        {
-          thumnailUrl: '',
-          objectIds: '170c79acc9763aba',
-          type: 'live'
-        },
-        {
-          thumnailUrl: '',
-          objectIds: '1706171e5dd6ad88',
-          type: 'vod'
-        },
-        {
-          thumnailUrl: '',
-          objectIds: '170c79acc9763aba',
-          type: 'vod'
-        }
-      ]
+      muteState: false
     }
   },
   mounted: function () {
@@ -103,7 +87,9 @@ export default {
         live: true,
         loop: false,
         preload: 'auto',
-        seekable: false
+        seekable: false,
+        muted: false,
+        hls: {startLevel: 0}
       }
 
       let vodOpt = {
@@ -123,13 +109,24 @@ export default {
         preload: 'auto'
       }
 
+      // eslint-disable-next-line
+      let player;
       if (this.videoType === 'live') {
         // eslint-disable-next-line no-undef
-        flowplayer('#player_container', liveOpt)
+        player = flowplayer('#player_container', liveOpt)
       } else if (this.videoType === 'vod') {
         // eslint-disable-next-line no-undef
-        flowplayer('#player_container', vodOpt)
+        player = flowplayer('#player_container', vodOpt)
       }
+
+      this.$refs.muteBtn.addEventListener('click', () => {
+        player.toggleMute()
+        if (player.muted === true) {
+          this.muteState = true
+        } else {
+          this.muteState = false
+        }
+      }, false)
     },
     formatNumber (num) {
       let value = num
@@ -141,26 +138,14 @@ export default {
     goDetail () {
       this.$router.push('/Product/' + this.prdtSysId + '/detail/' + this.broadcastSysId)
     }
-  },
-  watch: {
-    playedIndex: function () {
-      // 페이지 라우팅으로 변경.
-
-      if (this.dummyItem[this.playedIndex].type === 'live') {
-        this.$router.push('/Product/' + this.prdtSysId + '/detail/2')
-      } else {
-        this.$router.push('/Product/' + this.prdtSysId + '/detailVod/2')
-      }
-      // $(this.$refs.player)[0].find('video').setSrc(`https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.dummyItem[this.playedIndex].objectIds}/playlist.m3u8`).play()
-      // $(this.$refs.player)[0].find('video').setSrc('https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8').play()
-      // this.getVideoTypePlayer(this.dummyItem[this.playedIndex], 'vod')
-    }
   }
 }
 </script>
 
 <style scoped>
-
+body{
+  max-width:100% !important;
+}
 #player_container {
     background-size: contain !important;
 }

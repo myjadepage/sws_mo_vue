@@ -55,7 +55,9 @@ export default {
         poster: POSTER,
         token: TOKEN,
         loop: false,
-        preload: 'auto'
+        preload: 'auto',
+        muted: false,
+        hls: {startLevel: 0}
       })
     }
   }

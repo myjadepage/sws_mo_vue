@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
-  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
+  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
@@ -172,7 +172,7 @@ function getBroadCast (prdtSysId) {
 
 // 리뷰 목록 가져오기
 function getPrdtReviewList (prdtSysId) {
-  return axios.get(`${config.baseUrl}products/${prdtSysId}/reviews/list`)
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/reviews/list`)
 }
 
 // 리뷰 신고하기
@@ -223,7 +223,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/baskets`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -237,7 +237,7 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -251,7 +251,7 @@ function removeCartItem (accessToken, basketSysId) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -267,7 +267,7 @@ function removeCartList (accessToken, basketSysIds) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -283,7 +283,7 @@ function putCartItem (accessToken, basketSysId, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'put',
-    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -412,7 +412,7 @@ function delRecentViewList (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -428,7 +428,7 @@ function setPicksList (accessToken, pickInfo) {
   formdata.set('jsonData', JSON.stringify(pickInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -442,7 +442,7 @@ function delPicksList (accessToken, prdtSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/${prdtSysId}`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/${prdtSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -458,7 +458,7 @@ function getPicksList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -474,7 +474,7 @@ function delPicksLists (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -492,7 +492,62 @@ function getPointInfo (accessToken, sDate, eData, flag) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/pointhists/list`,
+    url: `${config.baseUrl2}users/${userSysId}/pointhists/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 마이페이지-알림 설정 조회
+function getAlertSetting (accessToken) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+// 마이페이지-알림 설정 수정
+function setAlertSetting (accessToken, setInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(setInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
+// 상품 리뷰 가져오기
+function getProductReview (prdtSysId, prdtReviewSysId) {
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}products/${prdtSysId}/reviews/${prdtReviewSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 마이페이지 - 팔로잉 목록 조회
+function getFollowing (accessToken, getInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(getInfo))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/follows/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -738,5 +793,8 @@ export {
   searchBroadcasts,
   searchPassword,
   setReview,
-  claimReview
+  getAlertSetting,
+  setAlertSetting,
+  getProductReview,
+  getFollowing
 }

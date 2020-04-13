@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { changePw } from '@/api/index.js'
+import { changePw, getAccessToken } from '@/api/index.js'
 import { makeRsa } from '@/assets/js/common.js'
 
 export default {
@@ -71,6 +71,41 @@ export default {
             this.mspw.currentPassword = null
             this.mspw.newPassword = null
             console.log(err)
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                  changePw(sessionStorage.getItem('accessToken'), this.mspw)
+                    .then(res => {
+                      this.pw.currentPassword = null
+                      this.pw.newPassword = null
+                      this.confirmpw = null
+                      this.mspw.newPassword = null
+                      this.mspw.currentPassword = null
+                      this.mspw.newPassword = null
+                      alert('비밀번호가 변경되었습니다.')
+                    })
+                    .catch(err => {
+                      this.pw.currentPassword = null
+                      this.pw.newPassword = null
+                      this.confirmpw = null
+                      this.mspw.newPassword = null
+                      this.mspw.currentPassword = null
+                      this.mspw.newPassword = null
+                      console.log(err)
+                      if (err.response.status === 401) {
+                        this.$store.dispatch('logOut')
+                        this.$router.push('/Login')
+                      }
+                    })
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
           })
       }
     }

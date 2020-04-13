@@ -1,7 +1,7 @@
 <template>
   <div class="detailReviewWrap">
-      <ReviewHeader :reviews="reviews" @catClick="catClick" />
-      <Entity v-for="(review,idx) in reviews" :key="idx" :cat="currentCat" :review="review" />
+      <ReviewHeader :reviews="reviews" @typeClick="typeClick" :type="type" />
+      <Entity v-for="(review,idx) in reviewList" :key="idx" :type="type" :review="review" :class="{'dpNone':review.reviewType !== type && type !== 0}" />
   </div>
 </template>
 
@@ -16,17 +16,24 @@ export default {
   },
   data () {
     return {
-      currentCat: 0
+      type: 0
     }
   },
 
   methods: {
-    catClick (cat) {
-      let cats = this.$el.getElementsByClassName('reviewCategory')[0].children
-
-      cats[this.currentCat].className = ''
-      this.currentCat = cat
-      cats[cat].className = 'selected'
+    typeClick (type) {
+      this.type = type
+    }
+  },
+  computed: {
+    reviewList () {
+      // if (this.type === 0) {
+      return this.reviews
+      // } else if (this.type === 1) {
+      // return this.reviews.filter(review => review.reviewType === 1)
+      // } else if (this.type === 2) {
+      // return this.reviews.filter(review => review.reviewType === 2)
+      // }
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="searchCatWrap">
       <ul>
-          <li @click="selectMediaMode(0)">상품</li>
-          <li @click="selectMediaMode(1)">브랜드</li>
-          <li @click="selectMediaMode(2)">방송</li>
+          <li><button @click="selectMediaMode(0)" :class="{'selected':cat===0}">상품</button></li>
+          <li><button @click="selectMediaMode(1)" :class="{'selected':cat===1}">브랜드</button></li>
+          <li><button @click="selectMediaMode(2)" :class="{'selected':cat===2}">방송</button></li>
       </ul>
   </div>
 </template>
@@ -20,10 +20,7 @@ export default {
   },
   methods: {
     selectMediaMode (x) {
-      this.$el.getElementsByTagName('li')[this.cat].className = ''
       this.$emit('catChange', x)
-      this.cat = x
-      this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
     }
   }
 }
@@ -37,21 +34,26 @@ export default {
 }
 
 .searchCatWrap ul{
-    width: 100%;
+  overflow: hidden;
+  width: 100%;
 }
 .searchCatWrap li{
-    cursor: pointer;
     text-align: center;
-    font-size: 16px;
     float: left;
-    padding: 20px 0;
     width: 33%;
     /* text-align: center; */
+}
+.searchCatWrap li button{
+  display:block;
+  width:100%;
+  padding: 20px 0 8px;
+  font-size: 16px;
+  font-weight:500;
+  box-sizing: border-box;
 }
 
 .searchCatWrap .selected{
     color: #e61754;
-    font-weight: 500;
     border-bottom: 4px solid #e61754;
 }
 </style>

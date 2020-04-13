@@ -21,7 +21,9 @@ export default {
         this.noticeList = [...res.data.jsonData.notices]
         this.startIndex = res.data.jsonData.startIndex
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.log(err)
+      })
   },
   data () {
     return {

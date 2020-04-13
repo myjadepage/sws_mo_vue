@@ -13,7 +13,7 @@ import Bar from '@/components/shared/Bar'
 import Content from '@/components/mypage/Contact/ContactContent'
 import Email from '@/components/mypage/Contact/ContactEmail'
 import Info from '@/components/mypage/Contact/ContactInfo'
-import { writeQuestion } from '@/api/index.js'
+import { writeQuestion, getAccessToken } from '@/api/index.js'
 
 export default {
   data () {
@@ -45,10 +45,39 @@ export default {
           // 비동기 post 로직
           writeQuestion(sessionStorage.getItem('accessToken'), this.qInfo)
             .then(res => {
-              console.log(res)
+              // console.log(res)
+              alert('문의가 접수되었습니다.')
+              this.content = ''
+              this.email = ''
             })
             .catch(err => {
               console.log(err)
+              if (err.response.status === 401) {
+                getAccessToken(sessionStorage.getItem('refreshToken'))
+                  .then(res => {
+                    sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                    writeQuestion(sessionStorage.getItem('accessToken'), this.qInfo)
+                      .then(res => {
+                        // console.log(res)
+                        alert('문의가 접수되었습니다.')
+                        this.content = ''
+                        this.email = ''
+                      })
+                      .catch(err => {
+                        console.log(err)
+                        if (err.response.status === 401) {
+                          this.$store.dispatch('logOut')
+                          this.$router.push('/Login')
+                        }
+                      })
+                  })
+                  .catch(err => {
+                    if (err.response.status === 401) {
+                      this.$store.dispatch('logOut')
+                      this.$router.push('/Login')
+                    }
+                  })
+              }
             })
         } else {
           alert('문의 내용에 특수문자를 사용할 수 없습니다.')

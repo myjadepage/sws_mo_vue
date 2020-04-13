@@ -1,14 +1,14 @@
 <template>
 
   <section class="photoReview compBlock">
-    <StartScore :score="score" @stars="stars"/>
+    <StarScore :score="score" @stars="stars"/>
     <TextBlock :photos="photos" :prdtSysId="prdtSysId" :score="score" @text="text" />
   </section>
 
 </template>
 
 <script>
-import StartScore from '@/components/mypage/MyReview/StartScore'
+import StarScore from '@/components/mypage/MyReview/StarScore'
 import TextBlock from '@/components/mypage/MyReview/TextBlock'
 
 export default {
@@ -21,7 +21,7 @@ export default {
     }
   },
   components: {
-    StartScore, TextBlock
+    StarScore, TextBlock
   },
   methods: {
     stars (num) {

@@ -39,7 +39,7 @@ export default {
   },
   watch: {
     cat () {
-      this.searchResults = {}
+      this.searchResults = []
     }
   },
   methods: {
@@ -63,7 +63,7 @@ export default {
     },
     deleteInput () {
       this.keyword = ''
-      this.searchResults = {}
+      this.searchResults = []
     },
     inputKeyPressed () {
       let self = this
@@ -75,6 +75,7 @@ export default {
           if (self.cat === 0) {
             searchProducts(self.keyword)
               .then((res) => {
+                console.log(res)
                 self.searchResults = res.data.jsonData.products
               }
               ).catch((e) => console.log(e)
@@ -82,6 +83,7 @@ export default {
           } else if (self.cat === 1) {
             searchBrands(self.keyword)
               .then((res) => {
+                console.log(res)
                 self.searchResults = res.data.jsonData.brands
               }
               ).catch((e) => console.log(e)
@@ -89,6 +91,7 @@ export default {
           } else if (self.cat === 2) {
             searchBroadcasts(self.keyword)
               .then((res) => {
+                console.log(res)
                 self.searchResults = res.data.jsonData.broadcasts
               }
               ).catch((e) => console.log(e)
@@ -96,7 +99,7 @@ export default {
           }
         }, 200)
       } else {
-        this.searchResults = {}
+        this.searchResults = []
       }
     },
     clickSearchBtn () {

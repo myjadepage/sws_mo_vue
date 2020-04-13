@@ -55,7 +55,7 @@
 import PopSingleButton from '@/components/shared/PopSingleButton'
 import Axios from 'axios'
 import uuidv4 from 'uuid4'
-import { getUserInfo, modifyUserInfo } from '@/api/index.js'
+import { getUserInfo, modifyUserInfo, getAccessToken } from '@/api/index.js'
 
 /* eslint-disable */
 
@@ -107,6 +107,50 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                getUserInfo(sessionStorage.getItem('accessToken'))
+                  .then(res => {
+                    // console.log(res)
+                    if (res.data.jsonData.birthday) {
+                      this.member.birthday = res.data.jsonData.birthday.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3')
+                    }
+                    this.member.mobile = res.data.jsonData.mobile
+                    this.member.userId = res.data.jsonData.userId
+
+                    if (res.data.jsonData.nickName) {
+                      this.member.nickName = res.data.jsonData.nickName
+                    }
+                    if (res.data.jsonData.genderCode) {
+                      this.member.genderCode = res.data.jsonData.genderCode
+                    }
+                    if (res.data.jsonData.profile) {
+                      this.member.profile = res.data.jsonData.profile
+                    }
+
+                    if (res.data.jsonData.profileImgUrl) {
+                      this.member.profileImgUrl = res.data.jsonData.profileImgUrl
+                    } else {
+                      this.member.profileImgUrl = '/static/images/ico_member.png'
+                    }
+                  })
+                  .catch(err => {
+                    console.log(err)
+                    if (err.response.status === 401) {
+                      this.$store.dispatch('logOut')
+                      this.$router.push('/Login')
+                    }
+                  })
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
         })
     }
   },
@@ -120,7 +164,7 @@ export default {
 
       // 유효성 검사
       let nameRegExp = /^[가-힣]{2,4}$/ // 이름
-      let inputRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s/]+$/ // 영문,숫자,한글
+      let inputRegExp = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s\./]+$/ // 영문,숫자,한글
 
 
       // 생년월일 검사
