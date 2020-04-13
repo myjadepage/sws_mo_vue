@@ -513,6 +513,33 @@ function setAlertSetting (accessToken, setInfo) {
   })
 }
 
+// 상품 리뷰 가져오기
+function getProductReview (prdtSysId, prdtReviewSysId) {
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}products/${prdtSysId}/reviews/${prdtReviewSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 마이페이지 - 팔로잉 목록 조회
+function getFollowing (accessToken, getInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(getInfo))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/follows/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 /**
  *
  * 회원가입
@@ -751,5 +778,7 @@ export {
   searchPassword,
   setReview,
   getAlertSetting,
-  setAlertSetting
+  setAlertSetting,
+  getProductReview,
+  getFollowing
 }

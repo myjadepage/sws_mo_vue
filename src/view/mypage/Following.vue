@@ -1,7 +1,7 @@
 <template>
   <div>
     <Bar :val="title" />
-    <Follow :users="users" :phase="phase" @follow="stateSwitch" />
+    <Follow :users="users" :phase="phase" :searchName="searchName" @follow="stateSwitch" @name="getList" @empty="empty" />
     <section v-if="removeConfirm" class="modalBg" >
       <RemoveModal  @close="removedClose" @remove="removeFollowing" />
     </section>
@@ -12,68 +12,66 @@
 import Bar from '@/components/shared/Bar'
 import Follow from '@/components/mypage/Follow/Follow'
 import RemoveModal from '@/components/mypage/Follow/Modal/RemoveModal'
-import profile1 from '@/assets/img/temp_profile1.jpg'
-import profile2 from '@/assets/img/temp_profile2.jpg'
-import profile3 from '@/assets/img/temp_profile3.jpg'
-import profile4 from '@/assets/img/temp_profile4.jpg'
+import { getFollowing } from '@/api/index.js'
 
 export default {
   data () {
     return {
       title: '팔로잉',
-      users: [
-        {
-          id: 'lovely123',
-          nick: '요미요미',
-          profile: profile1,
-          state: false,
-          idx: 0
-        },
-        {
-          id: '알레그리',
-          nick: '요마요마',
-          profile: profile2,
-          state: true,
-          idx: 1
-        },
-        {
-          id: 'abcd',
-          nick: '미요미요',
-          profile: profile3,
-          state: true,
-          idx: 2
-        },
-        {
-          id: 'lodd',
-          nick: 'SKY',
-          profile: profile4,
-          state: true,
-          idx: 3
-        }
-      ],
       phase: 'following',
       selected: 0,
-      removeConfirm: false
+      removeConfirm: false,
+      startIndex: 0,
+      searchName: '',
+      oldName: '',
+      users: []
     }
   },
   components: {
     Bar, Follow, RemoveModal
   },
+  created () {
+    this.getList()
+  },
   methods: {
     stateSwitch (idx) {
-      if (this.users[idx].state === true) {
-        this.selected = idx
-        this.removeConfirm = true
-        return
-      }
-      this.users[idx].state = !this.users[idx].state
+      this.selected = idx
+      this.removeConfirm = true
     },
     removedClose () {
       this.removeConfirm = false
     },
     removeFollowing () {
+      this.users.splice(this.selected, 1)
       this.removedClose()
-      this.users[this.selected].state = !this.users[this.selected].state
+    },
+    empty () {
+      this.startIndex = 0
+      this.oldName = ''
+      this.getList()
+    },
+    getList (name) {
+      let getInfo = {}
+      if (name) {
+        if (this.oldName !== name) {
+          this.startIndex = 0
+        }
+        getInfo.name = name
+        this.oldName = name
+      }
+      getInfo.startIndex = this.startIndex
+      // console.log(getInfo)
+      getFollowing(sessionStorage.getItem('accessToken'), getInfo)
+        .then(res => {
+          if (res.data.jsonData.resultCode === '0001') {
+            this.users = res.data.jsonData.follows
+            this.startIndex = res.data.jsonData.startIndex
+          } else if (res.data.jsonData.resultCode === '0004') {
+            this.users = []
+            this.startIndex = 0
+          }
+          // console.log(res)
+        })
     }
   }
 }

@@ -40,6 +40,7 @@ export default {
     async onSingleVideoUploaderEvent () {
       var targetObj = this.$refs.movieInput;
       let prdtSysId = this.prdtSysId
+      let self = this
       var formData = new FormData();
       formData.append("file", targetObj.files[0]);
       this.uploadState = true
@@ -53,6 +54,7 @@ export default {
         data: formData
       })
         .then(function(res) {
+          // console.log(res)
           if (res.data.success) {
             let reviewInfo = {}
             reviewInfo.reviewType = 2
@@ -64,7 +66,7 @@ export default {
                 if (res.data.jsonData.resultCode !== '0001') {
                   console.log('사진 업로드에 실패했습니다.')
                 } else if (res.data.jsonData.resultCode === '0001') {
-                  this.$router.push('/MyReview')
+                  self.$router.push('/MyReview')
                 }
               })
           } else {

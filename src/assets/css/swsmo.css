@@ -721,18 +721,35 @@
 
 
 /* 플레이어 커스텀 */
+.productMediaWrap{
+  position: relative;
+  width:100%;
+  padding-top:56.3%;
+}
+.productMediaWrap.fullscreen{
+  height:100vh;
+  padding:0;
+}
+.productMediaWrap .mainMedia{
+  position: absolute;
+  top:0;
+  left:0;
+  z-index:1;
+  width:100%;
+  height:100%;
+}
 .mainMedia .flowplayer{
-  height:210px;
+  height:100%;
 }
 .info .flowplayer {
   position: relative;
   width:100%;
-  height:210px;
+  height:100%;
   background:#000 !important;
 }
 .fullscreen .flowplayer{
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
@@ -817,6 +834,15 @@ body>#flowplayer-floating-container {
     border-radius: 50%;
     background:rgba(0,0,0,0.45);
     text-align: center;
+    opacity:0;
+  }
+  .flowplayer.is-hovered .fp-secondary,
+  .flowplayer.is-starting .fp-secondary{
+    opacity:0;
+  }
+  .flowplayer.is-hovered.is-paused .fp-secondary,
+  .flowplayer.is-hovered.is-playing .fp-secondary{
+    opacity:1;
   }
   .info .fp-secondary{
     top:20px;
@@ -928,6 +954,9 @@ body>#flowplayer-floating-container {
     opacity:0;
     transition:all 0.3s ease;
   }
+  .live .flowplayer.is-paused .fp-ui{
+    opacity:1;
+  }
   /* .live .flowplayer .fp-secondary{
     top:65px;
     right:16px;
@@ -974,6 +1003,9 @@ body>#flowplayer-floating-container {
     background:rgba(0,0,0,0.45);
     text-align: center;
   }
+  .live.fullscreen .flowplayer.is-paused .fp-volumebtn{
+    position:absolute;
+  }
   .live.info .flowplayer .fp-volumebtn{
     position:absolute;
     top:-100px;
@@ -1019,6 +1051,15 @@ body>#flowplayer-floating-container {
     border-radius: 50%;
     background:rgba(0,0,0,0.45);
     text-align: center;
+    opacity:0;
+  }
+  .flowplayer.is-playing.is-hovered .fp-header .fp-share-menu,
+  .flowplayer.is-paused .fp-header .fp-share-menu,
+  .flowplayer.is-touched .fp-header .fp-share-menu{
+    opacity:1;
+  }
+  .flowplayer.is-starting .fp-header .fp-share-menu{
+    opacity:0;
   }
   .live .flowplayer .fp-header .fp-share-menu{
     right:0px;
@@ -1068,7 +1109,8 @@ body>#flowplayer-floating-container {
     opacity:0;
     transition:all 0.3s ease;
   }
-  .live .flowplayer.is-touched .productInfoBox{
+  .live .flowplayer.is-touched .productInfoBox,
+  .live .flowplayer.is-paused .productInfoBox{
     opacity:1;
   }
   .live .flowplayer .productInfoBox h1{
@@ -1155,7 +1197,8 @@ body>#flowplayer-floating-container {
     transform:translateX(100px);
     opacity:0;
   }
-  .mainMedia .is-touched .toggleFullsize{
+  .mainMedia .is-touched .toggleFullsize,
+  .mainMedia .is-paused .toggleFullsize{
     opacity:1;
     transform:translateX(0);
   }
@@ -1174,7 +1217,8 @@ body>#flowplayer-floating-container {
     transform:translateX(-100px);
     opacity:0;
   }
-  .mainMedia .is-touched .btn_goBack{
+  .mainMedia .is-touched .btn_goBack,
+  .mainMedia .is-paused .btn_goBack{
     opacity:1;
     transform:translateX(0);
   }

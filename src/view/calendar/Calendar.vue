@@ -29,6 +29,9 @@ export default {
   },
   components: {
     Header, datePicker, liveList, liveFloatingBtn, EmptyBlock
+  },
+  created () {
+    window.scrollTo(0, 0)
   }
 }
 </script>

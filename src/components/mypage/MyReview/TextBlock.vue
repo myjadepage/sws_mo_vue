@@ -47,6 +47,9 @@ export default {
       this.mode = 'photo'
     },
     photoSubmit () {
+      if (this.txt === '' && this.score === '') {
+        return false
+      }
       let reviewInfo = {}
       if (this.score > 0) {
         reviewInfo.starPoint = this.score

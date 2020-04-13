@@ -150,12 +150,12 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px inherit inset;
 }
 
-/* @media (orientation: landscape) {
+@media all and (min-width : 640px) {
   body {
     max-width: 640px;
     margin: 0 auto
   }
-} */
+}
 .ir_pm {
   display: block;
   overflow: hidden;
@@ -1904,6 +1904,10 @@ html, body{
     font-weight:500;
 }
 
+.FashionMainWrap{
+  position: relative;
+}
+
 .btnsWrap.col2{
     font-size:0;
 }
@@ -3031,23 +3035,23 @@ html, body{
   overflow: hidden;
   margin-top:10px;
 }
-.myreview .reviewBox .goodBox{
+.goodBox{
   float:left;
   font-size:0;
 }
-.myreview .reviewBox .goodBox p{
+.goodBox p{
   display:inline-block;
   padding-left:20px;
   font-size:12px;
   color:#666;
   vertical-align: middle;
 }
-.myreview .reviewBox .goodBox .good{
+.goodBox .good{
   margin-right:15px;
   background:url('../img/ico/like@3x.png') 0 50% no-repeat;
   background-size:17px 15px;
 }
-.myreview .reviewBox .goodBox .bad{
+.goodBox .bad{
   background:url('../img/ico/like-copy@3x.png') 0 50% no-repeat;
   background-size:17px 15px;
 }
@@ -3170,6 +3174,11 @@ html, body{
   height:28px;
   line-height:26px;
   border-radius:14px;
+}
+.followBlock .noneUser{
+  margin-top:80px;
+  text-align: center;
+  color:#666;
 }
 
 
@@ -3419,6 +3428,83 @@ html, body{
 }
 .buyDecision .btnsWrap{
   margin-top:15px;
+}
+
+.ReviewDetailWrapper .headBarWrap{
+  border-bottom:1px solid #eee;
+}
+.review_slide{
+  position: relative;
+}
+.review_slide img{
+  width:100%;
+}
+.review_slide .swiper-pagination{
+  position: absolute;
+  left:50%;
+  bottom:10px;
+  padding:2px 12px;
+  transform:translateX(-50%);
+  border-radius: 2px;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  font-size:13px;
+  text-align: center;
+}
+
+.reviewInfoBar{
+  overflow: hidden;
+  margin:0 12px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+.reviewEntityWrap .reviewInfoBar{
+  margin:0;
+}
+.reviewInfoBar .starBox{
+  float:left;
+}
+.reviewInfoBar .txtBox{
+  float:right;
+  font-size:0;
+}
+.reviewInfoBar .txtBox span,
+.reviewInfoBar .txtBox button{
+  display:inline-block;
+  margin-left:6px;
+  font-size:13px;
+  color:#666;
+  vertical-align: middle;
+}
+.reviewInfoBar .txtBox .reviewWriter{
+  margin-left:0;
+}
+.ReviewDetailWrapper .reviewInfoBar .ico_star_full,
+.ReviewDetailWrapper .reviewInfoBar .ico_star_none{
+  width:12px;
+  height:12px;
+}
+.optionBar {
+  margin:0 12px;
+  padding:10px 0;
+  font-size:14px;
+  color:#666;
+  border-bottom:1px solid #eee;
+}
+.ReviewDetailWrapper .content{
+  margin:0 12px;
+  padding:10px 0;
+  color:#111;
+}
+.ReviewDetailWrapper .goodBox{
+  float:none;
+  margin:0 12px;
+}
+.ReviewDetailWrapper .goodBox button{
+  padding-left:20px;
+}
+.ReviewDetailWrapper .singlePhoto{
+  width:100%;
 }
 
 

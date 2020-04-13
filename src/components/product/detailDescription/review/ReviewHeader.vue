@@ -1,25 +1,25 @@
 <template>
   <div class="reviewHeaderWrap">
-      <span class="reviewCnt">리뷰 총 개</span>
+      <span class="reviewCnt">리뷰 총 {{reviews.length}}개</span>
       <div class="rating">
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half"></span>
         <span v-for="(j,jid) of noneStarCnt" :key="jid" class="ico_star_none"></span><span class="ratePoint"> {{reviewAvgRate}}</span>
       </div>
         <div class="reviewCategory">
-          <span @click="catClick(0)" class="selected">전체</span>
-          <span @click="catClick(1)">포토</span>
-          <span @click="catClick(2)">동영상</span>
+          <span @click="typeClick(0)" :class="{'selected': type === 0}">전체</span>
+          <span @click="typeClick(1)" :class="{'selected': type === 1}">포토</span>
+          <span @click="typeClick(2)" :class="{'selected': type === 2}">동영상</span>
         </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['reviews'],
+  props: ['reviews', 'type'],
   methods: {
-    catClick (cat) {
-      this.$emit('catClick', cat)
+    typeClick (type) {
+      this.$emit('typeClick', type)
     }
   },
   computed: {
@@ -38,12 +38,16 @@ export default {
     },
     reviewAvgRate () {
       let sum = 0
+      let cnt = 0
       if (this.reviews) {
-        for (const i of this.reviews) {
-          sum += i.starPoint
-        }
+        this.reviews.forEach(obj => {
+          if (obj.starPoint) {
+            sum += obj.starPoint
+            cnt++
+          }
+        })
 
-        return Math.round((sum / 2) / this.reviews.length).toFixed(1)
+        return Math.round(sum / cnt).toFixed(1)
       } else {
         return 0
       }

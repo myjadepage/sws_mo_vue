@@ -11,7 +11,7 @@
       <li class="item" v-for="list in lists" v-bind:key="list.pointHistSysId">
         <div class="txt">
           <p class="title">임시 제목</p>
-          <p class="date">{{list.createdAt}}</p>
+          <p class="date">{{setDate}}</p>
         </div>
         <p class="point" v-if="list.point > 0">+{{list.point}}<br/><span class="desc">임시</span></p>
         <p class="point c_them" v-if="list.point < 0">-{{list.point}}<br/><span class="desc">임시</span></p>
@@ -29,7 +29,7 @@
       <li class="item" v-for="list in saveList" v-bind:key="list.pointHistSysId">
         <div class="txt">
           <p class="title">임시 제목</p>
-          <p class="date">{{list.createdAt}}</p>
+          <p class="date">{{setDate}}</p>
         </div>
         <p class="point" v-if="list.point > 0">+{{list.point}}<br/><span class="desc">임시</span></p>
       </li>
@@ -46,7 +46,7 @@
       <li class="item" v-for="list in useList" v-bind:key="list.pointHistSysId">
         <div class="txt">
           <p class="title">임시 제목</p>
-          <p class="date">{{list.createdAt}}</p>
+          <p class="date">{{setDate}}</p>
         </div>
         <p class="point" v-if="list.point > 0">+{{list.point}}<br/><span class="desc">임시</span></p>
       </li>
@@ -98,6 +98,13 @@ export default {
       this.emptyValue = true
     } else {
       this.emptyValue = false
+    }
+  },
+  computed: {
+    setDate () {
+      if (this.list.createdAt) {
+        return this.list.createdAt.substr(0, 4) + '.' + this.list.createdAt.substr(4, 2) + '.' + this.list.createdAt.substr(6, 2)
+      }
     }
   }
 }

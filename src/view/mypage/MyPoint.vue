@@ -46,6 +46,9 @@ export default {
       getPointInfo(sessionStorage.getItem('accessToken'), this.todayStr, this.startDateStr, 0)
         .then(res => {
           console.log(res)
+          if (res.data.jsonData.resultCode === '0001') {
+            this.lists = res.data.jsonData.pointHists
+          }
         })
     }
   },
@@ -84,11 +87,6 @@ export default {
         })
         .catch(err => {
           console.log(err)
-        })
-
-      getPointInfo(sessionStorage.getItem('accessToken'), this.todayStr, this.startDateStr, 0)
-        .then(res => {
-          console.log(res)
         })
     }
   }

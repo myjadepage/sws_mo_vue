@@ -1,6 +1,6 @@
 <template>
 <!-- 라이브 방송일 경우 사용하는 상품 페이지 -->
-  <div class="productMediaWrap">
+  <div class="productMediaWrap" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
     <div class="mainMedia live" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
       <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar" ref="player">
         <!-- <div class="ui-custom"> -->
@@ -160,7 +160,9 @@ export default {
 </script>
 
 <style scoped>
-
+body{
+  max-width:100% !important;
+}
 #player_container {
     background-size: contain !important;
 }

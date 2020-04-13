@@ -11,6 +11,7 @@
       <div v-if="!isInputFocus&&cat===2">
         <SearchBroadcast  v-for="(r,idx) in searchResults" :key="idx" :broadcast="r" />
       </div>
+      <p class="emptyBox" v-if="searchResults.length === 0">검색 결과가 없습니다.</p>
   </div>
 </template>
 
@@ -53,5 +54,10 @@ export default {
     background-color: #f3f3f3;
     min-height: 640px;
     height: 100%;
+  }
+  .emptyBox{
+    margin-top:80px;
+    text-align: center;
+    color:#666;
   }
 </style>
