@@ -1,10 +1,10 @@
 <template>
 <div class="detailInfoWrap">
   <div class="infoSection">
-   <div ref="descSection" class="descSection">
+    <div ref="descSection" class="descSection">
+    </div>
    </div>
-     <button ref="spreadBtn" v-if="isSpreadable"  @click="clickSpread">{{btnText}}</button>
-   </div>
+  <button ref="spreadBtn" v-if="isSpreadable"  @click="clickSpread">{{btnText}}</button>
 </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
       if (this.btnText === '상세 정보 접기') {
         this.btnText = '상세 정보 펼쳐보기'
         this.$refs.descSection.style.maxHeight = '800px'
-        this.$refs.spreadBtn.style.position = 'absolute'
+        this.$refs.spreadBtn.style.position = 'static'
         window.scrollTo(0, 550)
       } else {
         this.btnText = '상세 정보 접기'
@@ -77,13 +77,10 @@ export default {
 }
 
 .detailInfoWrap button{
-  position: absolute;
-  left: 5%;
-  bottom: 30px;
-  display: inline-block;
-  margin-bottom: 30px;
+  display: block;
   width: 90%;
   height: 44px;
+  margin: 30px auto;
   border: 1px solid #e61754;
   color: #e61754;
   background-color: #fff;
