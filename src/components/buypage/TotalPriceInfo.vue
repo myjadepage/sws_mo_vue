@@ -143,6 +143,7 @@ export default {
     background-color: #666666;
     border-radius: 20px;
     color: white;
+    margin: 0;
 }
 
 .totalPriceWrap th{

@@ -141,7 +141,7 @@ export default {
             buyer_tel: item.orderMobile,
             buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
             buyer_postcode: item.receiverPostNumber,
-            m_redirect_url: `localhost:8080/buyComplete`
+            m_redirect_url: `192.168.1.82:8080/buyComplete`
           }, (res) => {
             if (res.sucess) {
               console.log(res)

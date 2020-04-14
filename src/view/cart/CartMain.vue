@@ -581,7 +581,7 @@ export default {
    position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 101;
   background-color: black;
   opacity: 0.5;
   width: 100%;

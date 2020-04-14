@@ -8,7 +8,7 @@
       <span class="reviewWriter">{{printId}}</span>
       <span class="reviewDate">{{reviewDate}}</span>
       <span class="reviewDelimiter">|</span>
-      <button class="reviewDeclare">신고하기</button>
+      <button @click="declareBtnClick" class="reviewDeclare">신고하기</button>
     </p>
   </div>
 </template>
@@ -27,6 +27,11 @@ export default {
       if (this.review.userId) {
         return this.review.userId.substr(0, 10)
       }
+    }
+  },
+  methods: {
+    declareBtnClick () {
+      this.$store.commit('showDeclare', this.review.prdtReviewSysId)
     }
   }
 }

@@ -1,11 +1,13 @@
 <template>
   <div class="productEntityWrap">
     <div class="entityBody">
-      <div @click="selectBtnClick" :class="product.isChecked?'imgBox selected':'imgBox'">
-      <div class="checkBox"><span class="check"></span></div>
+      <div @click="prdtClick" class="prdtSection">
+      <div :class="product.isChecked?'imgBox selected':'imgBox'">
+      <div @click.stop="selectBtnClick" class="checkBox"><span class="check"></span></div>
       <img :src="product.smallImageUrl">
       </div>
       <div class="title">[{{product.brandName}}]{{product.name}}</div>
+      </div>
 
       <div class="entityText" v-if="optionMap.size === 1">
 
@@ -140,6 +142,9 @@ export default {
     },
     optionCntChange (x) {
       this.$emit('multiOptionCntChange', [this.product.basketSysId, x])
+    },
+    prdtClick () {
+      this.$router.push(`/product/${this.product.prdtSysId}`)
     }
   }
 }

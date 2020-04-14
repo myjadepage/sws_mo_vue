@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import { userLogin, getUserInfo } from '../api'
+import { userLogin } from '../api'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -18,7 +18,8 @@ export const store = new Vuex.Store({
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
     payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0},
-    claimReviewId: null
+    claimReviewId: null,
+    declareModalShow: false
   },
   getters: {
     getId: state => state.userInfo.userId,
@@ -102,6 +103,15 @@ export const store = new Vuex.Store({
     },
     updateAddDeliveryCost (state, cost) {
       state.payPriceInfo.addDeliveryCost = cost
+    },
+    showDeclare (state, prdtReviewSysId) {
+      state.declareModalShow = true
+      if (prdtReviewSysId) {
+        state.claimReviewId = prdtReviewSysId
+      }
+    },
+    unShowDeclare (state) {
+      state.declareModalShow = false
     }
   },
   actions: {
@@ -119,12 +129,6 @@ export const store = new Vuex.Store({
             let refreshToken = res.data.jsonData.refreshToken
             sessionStorage.setItem('accessToken', accessToken)
             sessionStorage.setItem('refreshToken', refreshToken)
-
-            getUserInfo(accessToken).then(r => {
-              sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
-            }).catch(err => {
-              console.log(err)
-            })
 
             dispatch('getUserInfo')
             router.push('/')

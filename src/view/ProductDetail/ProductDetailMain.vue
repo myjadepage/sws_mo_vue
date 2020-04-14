@@ -1,16 +1,16 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-    <div  v-if="buyMode||showDeclareModal" class="darkFilter"></div>
+    <div v-if="$store.state.declareModalShow||buyMode" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info :product="product" />
       <SubMedia />
       <Info2 :product="product" />
-      <Description />
+      <Description @declare="declare" />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
-      <DeclareModal @cencelBtnClick="declareCancel" v-if="showDeclareModal" />
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
+      <DeclareModal v-if="$store.state.declareModalShow" />
       </transition>
   </div>
 </template>
@@ -24,6 +24,7 @@ import Info2 from '@/components/product/ProductInfo2'
 import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
 import CartModal from '@/components/product/Modal/CartModal'
+import DeclareModal from '@/components/product/Modal/DeclareModal'
 import {getProduct, setRecentViewList, getRecentViewList, getAccessToken} from '@/api/index'
 
 export default {
@@ -162,12 +163,11 @@ export default {
       product: {},
       buyMode: false,
       showCartModal: false,
-      showDeclareModal: false,
       options: []
     }
   },
   components: {
-    Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal
+    Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal, DeclareModal
   },
   methods: {
     test () {
@@ -179,8 +179,8 @@ export default {
         this.showCartModal = false
       }, 3000)
     },
-    declareCancel () {
-      this.showDeclareModal = false
+    declare () {
+      console.log('aaa')
     }
   },
   beforeDestroy () {
@@ -194,7 +194,7 @@ export default {
 .productDetailWrap{
   min-width: 360px;
 }
-.productDetailWrap .darkFilter{
+.darkFilter{
   position: fixed;
   top: 0;
   left: 0;

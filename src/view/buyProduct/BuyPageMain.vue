@@ -5,8 +5,8 @@
     <ProductInfo/>
     <Orderer :user="user" />
     <Delivery :addresses="addresses" @deliveryBtnClick="addrModalShow" />
-    <Coupon @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
-    <CouponDetail  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
+    <Coupon  @couponBtnClick="couponMode=!couponMode" :couponCnt="coupons.length" :coupon="discountCoupon" :point="discountPoint" />
+    <CouponDetail :user="user"  v-if="couponMode" :coupons=coupons @discountByCoupon="discountByCoupon" @discountByPoint="discountByPoint" />
     <PayMethods/>
     <Term/>
     <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
@@ -87,9 +87,6 @@ export default {
       discountPoint: 0,
       discountCoupon: 0,
       coupons: [
-        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 3000, condition: '주문 상품 금액 최고 10,000원 이상'},
-        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 2000, condition: '주문 상품 금액 최고 10,000원 이상'},
-        {brand: 'SWS', name: '가입 축하 쿠폰(2020.03.23 까지)', price: 10000, condition: '주문 상품 금액 최고 10,000원 이상'}
       ],
       couponMode: false,
       finalPrice: 0,

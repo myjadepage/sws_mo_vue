@@ -65,9 +65,9 @@ function postOrders (jsonData) {
 function payOrders (jsonData, orderSysId) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  formdata.set('orderSysId', orderSysId)
+  // formdata.set('orderSysId', orderSysId)
 
-  return axios.post(`${config.baseUrl}${orderSysId}/pays`, formdata)
+  return axios.post(`${config.baseUrl4}orders/${orderSysId}/pays`, formdata)
 }
 
 // 마이페이지 조회
@@ -137,7 +137,7 @@ function addMemberAddress (accessToken, addrInfo) {
 
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
-  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
+  return axios.get(`${config.baseUrl4}operations/deliveries/addingCosts/${postNumber}`)
 }
 
 /*
@@ -182,7 +182,7 @@ function claimReview (accessToken, prdtSysId, prdtReviewSysId, data) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl}products/${prdtSysId}/reviews/${prdtReviewSysId}/claims`,
+    url: `${config.baseUrl2}products/${prdtSysId}/reviews/${prdtReviewSysId}/claims`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -348,7 +348,7 @@ function setRecentViewList (accessToken, viewInfo) {
   formdata.set('jsonData', JSON.stringify(viewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -365,7 +365,7 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -796,5 +796,6 @@ export {
   getAlertSetting,
   setAlertSetting,
   getProductReview,
-  getFollowing
+  getFollowing,
+  claimReview
 }

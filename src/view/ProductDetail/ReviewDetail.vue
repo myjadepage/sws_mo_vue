@@ -1,13 +1,15 @@
 <template>
   <div class="ReviewDetailWrapper">
+      <div v-if="$store.state.declareModalShow" class="darkFilter"></div>
       <Bar :val="title" />
       <ReviewPhotos :review="review" :photosLength="photosLength" v-if="review.reviewType === 1 && photosLength > 1" />
       <img :src="review.productReviewPhotos[0].photoUrl" alt="" class="singlePhoto" v-if="review.reviewType === 1 && photosLength === 1" />
       <ReviewMovie :review="review" v-if="review.reviewType === 2" />
-      <InfoBar :review="review" />
+      <InfoBar @declare="declare" :review="review" />
       <OptionBar />
       <p class="content" >{{printText}}</p>
       <LikeBox :like="review.recommendCnt" :hate="review.deprecatedCnt"  />
+      <DeclareModal v-if="$store.state.declareModalShow" />
   </div>
 </template>
 
@@ -18,17 +20,19 @@ import OptionBar from '@/components/product/detailDescription/review/OptionBar'
 import ReviewPhotos from '@/components/product/detailDescription/review/ReviewPhotos'
 import ReviewMovie from '@/components/product/detailDescription/review/ReviewMovie'
 import LikeBox from '@/components/product/detailDescription/review/LikeBox'
+import DeclareModal from '@/components/product/Modal/DeclareModal'
 import { getProductReview } from '@/api/index.js'
 
 export default {
   components: {
-    Bar, InfoBar, ReviewPhotos, LikeBox, OptionBar, ReviewMovie
+    Bar, InfoBar, ReviewPhotos, LikeBox, OptionBar, ReviewMovie, DeclareModal
   },
   data () {
     return {
       review: {},
       photosLength: 0,
-      title: ''
+      title: '',
+      declareModalShow: false
     }
   },
   created () {
@@ -55,6 +59,11 @@ export default {
       } else if (this.review.content) {
         return this.review.content
       }
+    }
+  },
+  methods: {
+    declare () {
+      this.declareModalShow = true
     }
   }
 }
