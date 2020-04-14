@@ -4,7 +4,7 @@
       <li class="item" v-for="(item, index) in list" :key="index">
         <div class="itemBody">
           <div class="imgBox" :style="{backgroundImage:'url('+ item.smallImageUrl +')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}"></div>
-          <router-link to="/ExchangeDetail" class="txtBox">
+          <router-link :to="'/product/'+ item.prdtSysId" class="txtBox">
             <h2 class="itemTitle">[{{item.brandName}}] {{item.name}}</h2>
             <p class="itemOption">[옵션명1] LRS200007G 작은원석 [원석컬러] 06일 라벤더 임시</p>
           </router-link>
@@ -16,7 +16,7 @@
               <img src="../../../assets/img/ico/ico_star_full.png" alt="1점" v-for="n in item.starPoint" :key="'full'+n" />
               <img src="../../../assets/img/ico/ico_star_none.png" alt="0점" v-for="m in (5 - item.starPoint)" :key="'empty'+m" />
             </div>
-            <p class="reviewPara">{{item.content ? item.content : item.oneLine}}</p>
+            <p class="reviewPara"><router-link :to="'/ReviewDetail/'+ item.prdtSysId + '/' + item.prdtReviewSysId">{{item.content ? item.content : item.oneLine}}</router-link></p>
             <div class="icos">
               <div class="goodBox">
                 <p class="good">추천 {{item.recommendCnt}}</p>

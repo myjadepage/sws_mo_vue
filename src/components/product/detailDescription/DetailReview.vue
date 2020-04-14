@@ -1,7 +1,9 @@
 <template>
   <div class="detailReviewWrap">
       <ReviewHeader :reviews="reviews" @typeClick="typeClick" :type="type" />
-      <Entity v-for="(review,idx) in reviewList" :key="idx" :type="type" :review="review" :class="{'dpNone':review.reviewType !== type && type !== 0}" />
+      <div v-if="reviewList">
+        <Entity v-for="(review,idx) in reviewList" :key="idx" :type="type" :review="review" :class="{'dpNone':review.reviewType !== type && type !== 0}" />
+      </div>
   </div>
 </template>
 

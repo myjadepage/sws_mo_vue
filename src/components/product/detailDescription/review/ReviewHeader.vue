@@ -1,6 +1,6 @@
 <template>
   <div class="reviewHeaderWrap">
-      <span class="reviewCnt">리뷰 총 {{reviews.length}}개</span>
+      <span class="reviewCnt">리뷰 총 {{reviewsLength}}개</span>
       <div class="rating">
        <span><span v-for="(n,nid) of fullStarCnt" :key="nid" class="ico_star_full"></span></span>
         <span v-if="halfStarCnt" class="ico_star_half"></span>
@@ -46,11 +46,14 @@ export default {
             cnt++
           }
         })
-
-        return Math.round(sum / cnt).toFixed(1)
+        if (sum === 0 && cnt === 0) return 0
+        return (sum / cnt).toFixed(1)
       } else {
         return 0
       }
+    },
+    reviewsLength () {
+      return this.reviews ? this.reviews.length : 0
     }
   }
 
