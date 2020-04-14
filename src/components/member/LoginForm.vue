@@ -11,7 +11,7 @@
         </div>
 
         <div class="wrap-input100">
-          <input class="input100" type="password" name="password" placeholder="패스워드를 입력해 주세요"
+          <input @keypress.enter="loginBtnClick" class="input100" type="password" name="password" placeholder="패스워드를 입력해 주세요"
             v-model="password" required>
           <span class="focus-input100"></span>
          </div>

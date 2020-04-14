@@ -1,6 +1,6 @@
 <template>
   <div class="productDetailWrap" v-if="product.prdtSysId">
-    <div  v-if="buyMode" class="darkFilter"></div>
+    <div  v-if="buyMode||showDeclareModal" class="darkFilter"></div>
       <Bar :val="title" />
       <Media/>
       <Info :product="product" />
@@ -9,6 +9,7 @@
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
+      <DeclareModal @cencelBtnClick="declareCancel" v-if="showDeclareModal" />
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
       </transition>
   </div>
@@ -161,6 +162,7 @@ export default {
       product: {},
       buyMode: false,
       showCartModal: false,
+      showDeclareModal: false,
       options: []
     }
   },
@@ -168,11 +170,17 @@ export default {
     Bar, Media, SubMedia, Info, Info2, Description, ProductFooter, CartModal
   },
   methods: {
+    test () {
+      this.showDeclareModal = true
+    },
     addedCartItem () {
       this.showCartModal = true
       setTimeout(() => {
         this.showCartModal = false
       }, 3000)
+    },
+    declareCancel () {
+      this.showDeclareModal = false
     }
   },
   beforeDestroy () {

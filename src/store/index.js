@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
     isAuth: false,
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
-    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0}
+    payPriceInfo: {prdtPrice: 0, discount: 0, deliveryPrice: 0, addDeliveryCost: 0},
+    claimReviewId: null
   },
   getters: {
     getId: state => state.userInfo.userId,

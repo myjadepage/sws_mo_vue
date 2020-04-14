@@ -10,7 +10,14 @@
 
 <script>
 export default {
-  props: ['cat'],
+  data () {
+    return {
+      cat: 0
+    }
+  },
+  mounted () {
+    this.$el.getElementsByTagName('li')[this.cat].className = 'selected'
+  },
   methods: {
     selectMediaMode (x) {
       this.$emit('catChange', x)
