@@ -381,7 +381,7 @@ function getMyReviewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/reviews/list`,
+    url: `${config.baseUrl2}users/${userSysId}/reviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -396,7 +396,7 @@ function setReview (accessToken, prdtSysId, reviewInfo) {
   formdata.set('jsonData', JSON.stringify(reviewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl}products/${prdtSysId}/reviews`,
+    url: `${config.baseUrl2}products/${prdtSysId}/reviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -672,7 +672,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl}auth/login`, formdata)
+  return axios.post(`${config.baseUrl2}auth/login`, formdata)
 }
 
 // 간편로그인

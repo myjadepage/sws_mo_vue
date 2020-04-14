@@ -34,6 +34,19 @@ export default {
           getAccessToken(sessionStorage.getItem('refreshToken'))
             .then(res => {
               sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              getMyReviewList(sessionStorage.getItem('accessToken'), 0, 10)
+                .then(res => {
+                  console.log(res)
+                  if (res.data.jsonData.resultCode === '0001') {
+                    this.reviews = res.data.jsonData.reviews
+                  }
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
             })
             .catch(err => {
               if (err.response.status === 401) {

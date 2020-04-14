@@ -1,9 +1,7 @@
 <template>
    <div class="headBarWrap">
-     <div @click="goBack" class="barClick">
-      <span class="ico_back_arr"></span>
-          {{val}}
-      </div>
+    <button @click="goBack" class="barClick ico_back_arr"></button>
+    <h1>{{val}}</h1>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
       </div>
       <div class="photoBox" v-if="review.reviewType===1">
         <img class="singlePic" v-if="review.productReviewPhotos.length === 1" :src="review.productReviewPhotos[0].photoUrl" alt="" />
-        <div v-if="limitLength > 1" class="photoSection" :style="{width:(limitLength * 76) + ((limitLength - 1) * 10) + 'px'}">
+        <div v-if="limitLength > 1" class="photoSection" >
           <router-link :to="'/ReviewDetail/' + $route.params.prdtSysId +'/' + review.prdtReviewSysId" class="imgBox" v-for="(photo, pIndex) in photoLength" :key="review.prdtReviewSysId + '_Pic_' + pIndex" :style="{backgroundImage:'url('+ photo.photoUrl +')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}" :class="{'moreBtn':pIndex === 3}" ></router-link>
         </div>
       </div>
@@ -93,7 +93,7 @@ export default {
         src: VIDEOSRC,
         poster: POSTER,
         token: TOKEN,
-        preload: 'auto',
+        preload: 'metadata',
         muted: false,
         hls: {startLevel: 0}
       })
@@ -106,7 +106,7 @@ export default {
 .reviewEntityWrap{
   overflow: hidden;
   border-top: 1px solid #eeeeee;
-  padding: 13px 12px 15px;
+  padding: 5px 12px 15px;
 }
 .reviewEntityWrap.dpNone{
   display:none;
@@ -145,8 +145,8 @@ export default {
 .reviewEntityWrap .photoBox .imgBox{
   position:relative;
   display:inline-block;
-  width:76px;
-  height:76px;
+  width:calc((100% - 30px) / 4);
+  padding-top:calc((100% - 30px) / 4);
   margin-left:10px;
   vertical-align: middle;
 }
