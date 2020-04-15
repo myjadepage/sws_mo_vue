@@ -76,6 +76,7 @@ export default {
         line-height: 53px;
         height: 53px;
         box-sizing: border-box;
+        z-index: 101;
     }
     .cartCountWrap.fixed{
       position:fixed;

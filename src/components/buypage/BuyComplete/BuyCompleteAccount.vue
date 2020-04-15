@@ -11,19 +11,19 @@
       </tr>
       <tr>
         <th>입금은행</th>
-        <td>{{accountInfo.bank}}</td>
+        <td>{{vbankInfo.vbank_name}}</td>
       </tr>
       <tr>
         <th>수취인</th>
-        <td>{{accountInfo.receiver}}</td>
+        <td>{{vbankHolder}}</td>
       </tr>
       <tr>
         <th>입금계좌</th>
-        <td>{{accountInfo.account}}</td>
+        <td>{{vbankInfo.vbank_num}}</td>
       </tr>
       <tr>
         <th>입금기한</th>
-        <td>{{TermInfo}}</td>
+        <!-- <td>{{vbankTerm}}</td> -->
       </tr>
     </table>
     </div>
@@ -32,26 +32,18 @@
 
 <script>
 export default {
-  props: ['info'],
-  data () {
-    return {
-      accountInfo: {
-        price: 34900,
-        bank: '국민은행',
-        receiver: '쉘위샵',
-        account: '1111-1111-1111-1111',
-        termDate: '2020.01.31',
-        termTime: '23:59'
-      }
-    }
-  },
+  props: ['info', 'vbankInfo'],
   computed: {
-    TermInfo () {
-      let date = this.accountInfo.termDate.split('.')
-      let time = this.accountInfo.termTime.split(':')
+    vbankHolder () {
+      return this.vbankInfo.vbank_holder.trim()
+    },
 
-      let val = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${time[0]}시 ${time[1]}분까지`
-      return val
+    vbankTerm () {
+      // let date = this.accountInfo.termDate.split('.')
+      // let time = this.accountInfo.termTime.split(':')
+
+      // let val = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${time[0]}시 ${time[1]}분까지`
+      return ''
     }
   }
 }

@@ -4,14 +4,14 @@
           신고
       </div>
       <ul>
-          <li><label for="radio1">광고/홍보성</label><input @change="nonContenCatClick" v-model="cat" type="radio" value="1" name="claimTypeCode" id="radio1"></li>
-          <li><label for="radio2">음란성</label><input @change="nonContenCatClick" v-model="cat" type="radio" value="2" name="claimTypeCode" id="radio2"></li>
-          <li><label for="radio3">욕설/비방</label><input @change="nonContenCatClick" v-model="cat" type="radio" value="3" name="claimTypeCode" id="radio3"></li>
-          <li><label for="radio4">게시물 도배</label><input @change="nonContenCatClick" v-model="cat" type="radio" value="4" name="claimTypeCode" id="radio4"></li>
-          <li><label for="radio5">개인정보 유출</label><input @change="nonContenCatClick" v-model="cat" type="radio" value="5" name="claimTypeCode" id="radio5"></li>
+          <li><label for="radio1">광고/홍보성</label><input  v-model="cat" type="radio" value="1" name="claimTypeCode" id="radio1"></li>
+          <li><label for="radio2">음란성</label><input v-model="cat" type="radio" value="2" name="claimTypeCode" id="radio2"></li>
+          <li><label for="radio3">욕설/비방</label><input v-model="cat" type="radio" value="3" name="claimTypeCode" id="radio3"></li>
+          <li><label for="radio4">게시물 도배</label><input  v-model="cat" type="radio" value="4" name="claimTypeCode" id="radio4"></li>
+          <li><label for="radio5">개인정보 유출</label><input  v-model="cat" type="radio" value="5" name="claimTypeCode" id="radio5"></li>
           <li><label for="radio0">기타</label><input v-model="cat" type="radio" value="0" name="claimTypeCode" id="radio0"></li>
       </ul>
-        <textarea v-model="content" v-if="cat==='0'" name="content" rows="2"  placeholder="직접입력"></textarea>
+        <textarea v-model="content"  name="content" rows="2"  placeholder="직접입력"></textarea>
 
         <div class="modalFooter">
             <button @click="cancelBtnClick">취소</button><button @click="declareBtnClick" class="btnHighlight">신고</button>
@@ -23,7 +23,6 @@
 import {claimReview, getAccessToken} from '@/api/index.js'
 
 export default {
-  props: ['prdtReviewSysId'],
   data () {
     return {
       cat: null,
@@ -32,34 +31,34 @@ export default {
   },
   methods: {
     cancelBtnClick () {
-      this.$emit('cencelBtnClick')
+      this.$store.commit('unShowDeclare')
     },
     declareBtnClick () {
-      let item = {
-        claimTypeCode: this.cat,
-        content: this.content
+      if (this.cat) {
+        let item = {
+          claimTypeCode: Number(this.cat),
+          content: this.content
+        }
+        claimReview(sessionStorage.getItem('accessToken'), this.$route.params.prdtSysId, this.$store.state.claimReviewId, item)
+          .then(res => {
+            console.log(res)
+            this.$store.commit('unShowDeclare')
+          })
+          .catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
       }
-      claimReview(sessionStorage.getItem('accessToken'), this.$route.params.prdtSysId, this.prdtReviewSysId, item)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          if (err.response.status === 401) {
-            getAccessToken(sessionStorage.getItem('refreshToken'))
-              .then(res => {
-                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  this.$store.dispatch('logOut')
-                  this.$router.push('/Login')
-                }
-              })
-          }
-        })
-    },
-    nonContenCatClick () {
-      this.content = ''
     }
   }
 }

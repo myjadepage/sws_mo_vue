@@ -42,30 +42,31 @@ export default {
     },
 
     postQnA () {
-      let item = {
-        questionTypeCode: Number(this.$refs.qnaType.value),
-        content: this.$refs.qnaDesc.value
-      }
+      if (this.$refs.qnaType.value !== '') {
+        let item = {
+          questionTypeCode: Number(this.$refs.qnaType.value),
+          content: this.$refs.qnaDesc.value
+        }
 
-      postPrdtQuestion(sessionStorage.getItem('accessToken'), this.$route.params.prdtSysId, item)
-        .then(res => {
-          console.log(res)
-          this.$emit('qaDone')
-        })
-        .catch(err => {
-          if (err.response.status === 401) {
-            getAccessToken(sessionStorage.getItem('refreshToken'))
-              .then(res => {
-                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-              })
-              .catch(err => {
-                if (err.response.status === 401) {
-                  this.$store.dispatch('logOut')
-                  this.$router.push('/Login')
-                }
-              })
-          }
-        })
+        postPrdtQuestion(sessionStorage.getItem('accessToken'), this.$route.params.prdtSysId, item)
+          .then(res => {
+            this.$emit('qaDone')
+          })
+          .catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
+      }
     }
   }
 }

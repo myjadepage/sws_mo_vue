@@ -46,13 +46,13 @@
 
 <script>
 export default {
-  props: ['coupons'],
+  props: ['coupons', 'user'],
   data () {
     return {
       currnetCat: 0,
-      currentPoint: 10000,
+      currentPoint: this.user.point,
       currentCoupon: null,
-      discountPoint: 10000,
+      discountPoint: this.user.point,
       inputPoint: ''
     }
   },
