@@ -8,7 +8,7 @@
 import {postOrders} from '@/api/index.js'
 
 export default {
-  props: ['finalPrice', 'coupon', 'addresses'],
+  props: ['finalPrice', 'coupon', 'addresses', 'point'],
   methods: {
     payBtnClick () {
       let products = JSON.parse(sessionStorage.getItem('products'))
@@ -57,6 +57,8 @@ export default {
         }
       }
 
+      let basketSysIds = []
+
       for (let i = 0; i < products.length; i++) {
         const product = products[i]
         const option = options[i]
@@ -92,6 +94,10 @@ export default {
           op.qty = option[0].count
         }
 
+        if (product.basketSysId !== undefined) {
+          basketSysIds.push(product.basketSysId)
+        }
+
         item.orderProducts.push(op)
       }
 
@@ -115,7 +121,7 @@ export default {
       //   'code': 200
       // }}
 
-      sessionStorage.setItem('payItem', JSON.stringify({...item, payInfo: this.$store.getters.getPayPriceInfo, payMethod: this.$store.getters.getPayMethod}))
+      sessionStorage.setItem('payItem', JSON.stringify({...item, payInfo: this.$store.getters.getPayPriceInfo, payMethod: this.$store.getters.getPayMethod, discountPoint: this.point, basketSysIds: basketSysIds}))
       // sessionStorage.setItem('orderRes', JSON.stringify(res))
 
       postOrders(item)
@@ -143,12 +149,8 @@ export default {
             buyer_postcode: item.receiverPostNumber,
             m_redirect_url: `192.168.1.82:8080/buyComplete`
           }, (res) => {
-            if (res.sucess) {
-              console.log(res)
-              this.$router.push('/buycomplete/success')
-            } else {
-              this.$router.push('/buycomplete/failure')
-            }
+            console.log(res)
+            this.$router.push('/buyComplete')
           })
         })
         .catch(error => { // 주문정보등록 실패

@@ -67,13 +67,13 @@ function payOrders (jsonData, orderSysId) {
   formdata.set('jsonData', JSON.stringify(jsonData))
   // formdata.set('orderSysId', orderSysId)
 
-  return axios.post(`${config.baseUrl4}orders/${orderSysId}/pays`, formdata)
+  return axios.post(`${config.baseUrl}orders/${orderSysId}/pays`, formdata)
 }
 
 // 마이페이지 조회
 function getMypageInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/mypage`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -84,7 +84,7 @@ function getMypageInfo (accessToken) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -137,7 +137,23 @@ function addMemberAddress (accessToken, addrInfo) {
 
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
-  return axios.get(`${config.baseUrl4}operations/deliveries/addingCosts/${postNumber}`)
+  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
+}
+
+// 회원 포인트 수정
+function patchUserPoint (accessToken, pointData) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(pointData))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl}users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
 }
 
 /*
@@ -672,7 +688,7 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 간편로그인
@@ -718,27 +734,6 @@ function getRefressToken (refreshToken) {
   return axios.post(`${config.baseUrl}auth/refresh`, header)
 }
 
-// function getAccessToken (refreshToken) {
-//   let header = {
-//     'Authorization': `Bearer ${refreshToken}`
-//   }
-//   return axios.post(`${config.baseUrl}auth/accesstoken`, '', header)
-// }
-
-// 토큰 만료 여부 확인 (true:만료 false:기한남음)
-// function isTokenExpired (token) {
-//   let tokenExp = parseJwt(token).exp * 1000
-//   let now = new Date().getTime()
-//   let timeDiff = tokenExp - now
-
-//   if (timeDiff < 0) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
-// let dayDiff = Math.ceil(Math.abs(timeDiff) / (1000 * 60 * 60 * 24))
 export {
   getAccessToken,
   getRefressToken,
@@ -797,5 +792,6 @@ export {
   setAlertSetting,
   getProductReview,
   getFollowing,
-  claimReview
+  claimReview,
+  patchUserPoint
 }

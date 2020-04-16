@@ -5,7 +5,7 @@
     </div>
     <div v-if="result">
     <div class="message">주문이 정상적으로 접수되었습니다.</div>
-    <div class="orderNum">주문번호 {{orderCode}}</div>
+    <div class="orderNum">주문번호 <span ref="orderCode" @click="copyOrderCode">{{orderCode}}</span></div>
     </div>
   </div>
 </template>
@@ -13,8 +13,18 @@
 <script>
 export default {
   props: ['info', 'result', 'errMsg', 'orderCode'],
-  data () {
-    return {
+  created () {
+    console.log(navigator.userAgent)
+  },
+  methods: {
+    copyOrderCode () {
+      let t = document.createElement('textarea')
+      document.body.appendChild(t)
+      t.value = this.orderCode
+      t.select()
+      t.setSelectionRange(0, 99999)
+      document.execCommand('copy')
+      document.body.removeChild(t)
     }
   }
 }
