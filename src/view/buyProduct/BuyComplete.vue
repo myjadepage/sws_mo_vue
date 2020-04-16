@@ -1,6 +1,6 @@
 <template>
   <div class="buyCompleteWrap">
-    <Bar val="구매완료" />
+    <Bar :backBtn="false" val="구매완료" />
         <Message :result="result" :info="info" :errMsg="errMsg" :orderCode="orderCode" />
         <div v-if="result&&payOrdersStatus" class="success" >
         <Account :vbankInfo="vbankInfo"  v-if="payMethod===3" :info="info" />
@@ -18,7 +18,7 @@ import Account from '@/components/buypage/BuyComplete/BuyCompleteAccount'
 import Info from '@/components/buypage/BuyComplete/BuyCompleteInfo'
 import Guides from '@/components/buypage/BuyComplete/BuyCompleteGuides'
 import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
-import {payOrders} from '@/api/index.js'
+// import {payOrders, patchUserPoint, getAccessToken, removeCartList} from '@/api/index.js'
 
 export default {
   created () {
@@ -32,10 +32,33 @@ export default {
 
     let payInfo = JSON.parse(sessionStorage.getItem('payItem'))
 
+    // if (this.result === true && payInfo.discountPoint) {
+    //   let item = {
+    //     treatFlag: 2,
+    //     point: payInfo.discountPoint
+    //   }
+
+    //   patchUserPoint(sessionStorage.getItem('accessToken'), item)
+    //     .then(res => {
+    //       console.log(res)
+    //     })
+    //     .catch(err => {
+    //       if (err.response.status === 401) {
+    //         getAccessToken(sessionStorage.getItem('refreshToken'))
+    //           .then(res => {
+    //             sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+    //           })
+    //           .catch(err => {
+    //             if (err.response.status === 401) {
+    //               this.$store.dispatch('logOut')
+    //               this.$router.push('/Login')
+    //             }
+    //           })
+    //       }
+    //     })
+    // }
+
     this.info = payInfo
-    sessionStorage.removeItem('products')
-    sessionStorage.removeItem('selectedOptions')
-    sessionStorage.removeItem('payItem')
 
     switch (this.info.payMethod) {
       case 'card':
@@ -77,18 +100,52 @@ export default {
     }
 
     console.log(item)
+    console.log(sessionStorage.getItem('orderSysId'))
 
-    if (sessionStorage.getItem('orderSysId')) {
-      payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-        console.log(res)
-        this.vbankInfo = {...res.data.jsonData.res}
-        this.payOrdersStatus = true
-        sessionStorage.removeItem('orderSysId')
-      }).catch(err => {
-        console.log(err)
-        sessionStorage.removeItem('orderSysId')
-      })
-    }
+    // if (sessionStorage.getItem('orderSysId')) {
+    //   payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
+    //     console.log(res)
+    //     this.vbankInfo = {...res.data.jsonData.res}
+    //     this.payOrdersStatus = true
+
+    //     if (this.info.basketSysIds.length > 0 && this.$store.state.isLogin) {
+    //       let ids = this.info.basketSysIds.join()
+    //       removeCartList(sessionStorage.getItem('accessToken'), ids)
+    //         .then(res => {
+    //           console.log(res)
+    //         })
+    //         .catch(err => {
+    //           console.log(err)
+    //         })
+    //     } else if (this.info.basketSysIds.length > 0 && !this.$store.state.isLogin) {
+    //       let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+    //       for (let i = cartList.length - 1; i >= 0; i--) {
+    //         if (this.info.basketSysIds.includes(cartList[i].basketSysId)) {
+    //           cartList.splice(i, 1)
+    //         }
+    //       }
+    //       sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+    //     }
+
+    //     sessionStorage.removeItem('orderSysId')
+    //     sessionStorage.removeItem('products')
+    //     sessionStorage.removeItem('selectedOptions')
+    //     sessionStorage.removeItem('payItem')
+    //   }).catch(err => {
+    //     if (err.response.status === 401) {
+    //       getAccessToken(sessionStorage.getItem('refreshToken'))
+    //         .then(res => {
+    //           sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+    //         })
+    //         .catch(err => {
+    //           if (err.response.status === 401) {
+    //             this.$store.dispatch('logOut')
+    //             this.$router.push('/Login')
+    //           }
+    //         })
+    //     }
+    //   })
+    // }
   },
 
   data () {

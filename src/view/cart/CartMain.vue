@@ -58,7 +58,7 @@ import DeletedModal from '@/components/cartpage/Modal/BasketDeleted'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
-import {getProduct, getCartItem, getAccessToken, putCartItem, removeCartList} from '@/api/index.js'
+import {getCartItem, getAccessToken, putCartItem, removeCartList} from '@/api/index.js'
 
 export default {
   created () {
@@ -71,30 +71,9 @@ export default {
             this.cartSize = cartList.length
           }
           if (cartList) {
-            for (const c of cartList) {
-              getProduct(c.prdtSysId)
-                .then(res => {
-                  let item = {
-                    ...res.data.jsonData.product,
-                    normalOptions: res.data.jsonData.normalOptions,
-                    isAddingProduct: c.isAddingProduct,
-                    isOptionNormal: c.isOptionNormal,
-                    optionInfo: [],
-                    basketSysId: c.basketSysId,
-                    basketQty: c.basketQty,
-                    isChecked: true
-                  }
-
-                  if (c.productOptions) {
-                    item.optionInfo = c.productOptions
-                  }
-
-                  this.products.push(item)
-                })
-                .catch(err => {
-                  console.log(err)
-                })
-            }
+            cartList.forEach(c => {
+              this.products.push({...c, isChecked: true})
+            })
           }
         })
         .catch(err => {
@@ -119,41 +98,23 @@ export default {
       if (cartList) {
         for (let i = 0; i < cartList.length; i++) {
           const c = cartList[i]
-
-          cartList[i].basketSysId = 999 - i
-
           let item = {
-            isAddingProduct: c.isAddingProduct,
-            isOptionNormal: c.isOptionNormal,
-            optionInfo: [],
-            basketSysId: c.basketSysId,
-            basketQty: c.basketQty,
+            ...c,
+            productOptions: [],
             isChecked: true
-
           }
 
           if (c.optionGroups) {
             for (const og of c.optionGroups) {
               for (const po of og.productOptions) {
-                item.optionInfo.push({
+                item.productOptions.push({
                   ...po, optionGroupId: og.optionGroupId, optionQty: og.optionQty, price: po.price
                 })
               }
             }
           }
 
-          getProduct(c.prdtSysId)
-            .then(res => {
-              item = {
-                ...item,
-                ...res.data.jsonData.product
-              }
-
-              this.products.push(item)
-            })
-            .catch(err => {
-              console.log(err)
-            })
+          this.products.push(item)
         }
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
@@ -269,7 +230,7 @@ export default {
 
             if (p.isOptionNormal) {
               cartItem.optionGroups = []
-              for (const o of p.optionInfo) {
+              for (const o of p.productOptions) {
                 cartItem.optionGroups.push({
                   procTypeCode: 3,
                   optionGroupId: o.optionGroupId,
@@ -339,7 +300,7 @@ export default {
 
             if (p.isOptionNormal) {
               cartItem.optionGroups = []
-              for (const o of p.optionInfo) {
+              for (const o of p.productOptions) {
                 cartItem.optionGroups.push({
                   procTypeCode: 3,
                   optionGroupId: o.optionGroupId,
@@ -425,7 +386,18 @@ export default {
             this.DeletedModal = true
           })
           .catch(err => {
-            console.log(err)
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
           })
       } else {
         let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
@@ -463,11 +435,14 @@ export default {
         if (p.isChecked) {
           list.push(p)
           let map = new Map()
-          for (const o of p.optionInfo) {
-            if (!map.has(o.optionGroupId)) {
-              map.set(o.optionGroupId, [])
+
+          if (p.isOptionNormal) {
+            for (const o of p.productOptions) {
+              if (!map.has(o.optionGroupId)) {
+                map.set(o.optionGroupId, [])
+              }
+              map.get(o.optionGroupId).push(o)
             }
-            map.get(o.optionGroupId).push(o)
           }
 
           let x = []
@@ -518,11 +493,13 @@ export default {
       let op = []
       for (const p of this.products) {
         let map = new Map()
-        for (const o of p.optionInfo) {
-          if (!map.has(o.optionGroupId)) {
-            map.set(o.optionGroupId, [])
+        if (p.isOptionNormal) {
+          for (const o of p.productOptions) {
+            if (!map.has(o.optionGroupId)) {
+              map.set(o.optionGroupId, [])
+            }
+            map.get(o.optionGroupId).push(o)
           }
-          map.get(o.optionGroupId).push(o)
         }
 
         let x = []

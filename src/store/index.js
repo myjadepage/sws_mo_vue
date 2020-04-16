@@ -131,7 +131,12 @@ export const store = new Vuex.Store({
             sessionStorage.setItem('refreshToken', refreshToken)
 
             dispatch('getUserInfo')
-            router.push('/')
+
+            if (loginObj.mode) {
+              router.push('/buyproduct')
+            } else {
+              router.push('/')
+            }
           } else {
             alert('아이디나 패스워드가 다릅니다.')
             return false

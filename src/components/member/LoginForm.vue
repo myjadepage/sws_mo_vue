@@ -143,7 +143,7 @@ export default {
     loginBtnClick () {
       let self = this
       let password = makeRsa(self.password)
-      this.$store.dispatch('login', {id: self.id, password: password})
+      this.$store.dispatch('login', {id: self.id, password: password, mode: this.nonMemberBtnMode})
       this.id = ''
       this.password = ''
     },

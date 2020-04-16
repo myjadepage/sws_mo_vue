@@ -11,11 +11,11 @@
 
       <div class="entityText" v-if="optionMap.size === 1">
 
-        <div class="option" v-for="(o,idx) in product.optionInfo" :key="idx">
+        <div class="option" v-for="(o,idx) in product.productOptions" :key="idx">
            [옵션명{{idx+1}}] {{o.optionKeyName}}
         </div>
 
-          <select :value="product.optionInfo[0].optionQty" @change="cntChange">
+          <select :value="product.productOptions[0].optionQty" @change="cntChange">
             <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
           </select>
         <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
@@ -25,7 +25,7 @@
         <select v-model="product.basketQty" @change="cntChange">
             <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
           </select>
-        <span class="price">{{nonOptionPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+        <span class="price">{{nonOptionPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{originPrice|makeComma}}</span>
       </div>
 
         <div v-if="optionMap.size>1" class="priceSection">
@@ -48,11 +48,13 @@ export default {
   },
   created () {
     let map = new Map()
-    for (const o of this.product.optionInfo) {
-      if (!map.has(o.optionGroupId)) {
-        map.set(o.optionGroupId, [])
+    if (this.product.isOptionNormal) {
+      for (const o of this.product.productOptions) {
+        if (!map.has(o.optionGroupId)) {
+          map.set(o.optionGroupId, [])
+        }
+        map.get(o.optionGroupId).push(o)
       }
-      map.get(o.optionGroupId).push(o)
     }
 
     this.optionMap = map
@@ -98,7 +100,12 @@ export default {
 
       nonOptionPrice () {
         return (this.product.price - (this.product.price * this.product.discountRate)) * this.product.basketQty
+      },
+
+      originPrice () {
+        return this.product.price * this.product.basketQty
       }
+
     },
 
   beforeMount () {
@@ -110,13 +117,14 @@ export default {
   },
   beforeUpdate () {
     let map = new Map()
-    for (const o of this.product.optionInfo) {
-      if (!map.has(o.optionGroupId)) {
-        map.set(o.optionGroupId, [])
+    if (this.product.isOptionNormal) {
+      for (const o of this.product.productOptions) {
+        if (!map.has(o.optionGroupId)) {
+          map.set(o.optionGroupId, [])
+        }
+        map.get(o.optionGroupId).push(o)
       }
-      map.get(o.optionGroupId).push(o)
     }
-
     this.optionMap = map
 
     if (this.product.isOptionNormal) {
@@ -134,8 +142,8 @@ export default {
     },
     cntChange (x) {
       if (this.product.isOptionNormal) {
-        for (let i = 0; i < this.product.optionInfo.length; i++) {
-          this.product.optionInfo[i].optionQty = Number(x.target.value)
+        for (let i = 0; i < this.product.productOptions.length; i++) {
+          this.product.productOptions[i].optionQty = Number(x.target.value)
         }
       }
       this.$emit('sigleItemCntChange', [this.product.basketSysId, x.target.value])

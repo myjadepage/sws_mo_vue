@@ -14,6 +14,7 @@ import datePicker from '@/components/Calendar/DatePicker'
 import liveList from '@/components/Calendar/LiveList'
 import EmptyBlock from '@/components/shared/EmptyBlock'
 import liveFloatingBtn from '@/components/Calendar/LiveFloatingBtn'
+import {getBroadcastSchedules} from '@/api/index.js'
 
 export default {
   data () {
@@ -32,6 +33,7 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
+    // getBroadcastSchedules()
   }
 }
 </script>

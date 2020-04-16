@@ -1,8 +1,8 @@
 <template>
   <div class="deliveryAddrModal">
-    <ModalHeader @modalClose="modalClose" :title="'배송지 변경'" />
+    <ModalHeader @modalClose="modalClose" :title="$store.state.isLogin?'배송지 변경':'배송지 선택'" />
     <div class="modalBody">
-      <div class="catSelect">
+      <div v-if="$store.state.isLogin" class="catSelect">
         <button @click="deliveryBtnClick(0)" class="selected">배송지 목록</button><button @click="deliveryBtnClick(1)">신규 배송지</button>
         </div>
       <ul v-if="currentCat===0" class="addressList">
@@ -16,14 +16,14 @@
         <input type="text" ref="addr" readonly class="address" :value="mainAddress"><button @click="searchAddrBtnClick" class="searchAddrBtn">주소 검색</button>
         <input type="text" ref="jibun" readonly class="jibun" :value="jibunAddress">
         <input type="text" ref="detailAddr" class="detailAddr" placeholder="상세주소">
-        <div class="defualtAddrCheck">
+        <div v-if="$store.state.isLogin" class="defualtAddrCheck">
         <input ref="defaultAddrCheck" type="checkbox" id="defaultAddrCheck"><label for="defaultAddrCheck">기본 배송지로 설정</label>
         <label class="checkmark" for="defaultAddrCheck"></label>
         </div>
       </div>
 
       <button v-if="currentCat===0" @click="selectAddrClick" class="doneBtn">선택하기</button>
-      <button v-if="currentCat===1" @click="addAddrClick" class="doneBtn">추가하기</button>
+      <button v-if="currentCat===1" @click="addAddrClick" class="doneBtn">{{$store.state.isLogin?'추가하기':'선택하기'}}</button>
     </div>
   </div>
 </template>
@@ -36,6 +36,13 @@ export default {
   props: ['addresses'],
   components: {
     ModalHeader
+  },
+  created () {
+    if (this.$store.state.isLogin) {
+      this.currentCat = 0
+    } else {
+      this.currentCat = 1
+    }
   },
   data () {
     return {
