@@ -796,5 +796,6 @@ export {
   getAlertSetting,
   setAlertSetting,
   getProductReview,
-  getFollowing
+  getFollowing,
+  claimReview
 }
