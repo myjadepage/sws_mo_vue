@@ -63,6 +63,8 @@ export default {
             .then(res => {
               if (res.data.jsonData.addingDeliveryAmount) {
                 this.$store.commit('updateAddDeliveryCost', res.data.jsonData.addingDeliveryAmount)
+              } else {
+                this.$store.commit('updateAddDeliveryCost', 0)
               }
             })
             .catch(err => {
@@ -129,8 +131,18 @@ export default {
       }
 
       this.$store.state.postCode = {address: this.addresses[val].newAddress, detail: this.addresses[val].addressDetail, zonecode: this.addresses[val].zipCode}
-
-      this.$emit('addrModalClose')
+      getAddingCosts(Number(this.addresses[val].zipCode))
+        .then(res => {
+          if (res.data.jsonData.addingDeliveryAmount) {
+            this.$store.commit('updateAddDeliveryCost', res.data.jsonData.addingDeliveryAmount)
+          } else {
+            this.$store.commit('updateAddDeliveryCost', 0)
+          }
+          this.$emit('addrModalClose')
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   computed: {

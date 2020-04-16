@@ -825,7 +825,7 @@ body>#flowplayer-floating-container {
   /* 플레이어 오른쪽 아이콘 */
   /* 전체보기 */
   
-  .flowplayer .fp-secondary {
+  /* .flowplayer .fp-secondary {
     position: absolute;
     top: 20px;
     right: 10px;
@@ -835,7 +835,7 @@ body>#flowplayer-floating-container {
     background:rgba(0,0,0,0.45);
     text-align: center;
     opacity:0;
-  }
+  } */
   .flowplayer.is-hovered .fp-secondary,
   .flowplayer.is-starting .fp-secondary{
     opacity:0;
@@ -860,7 +860,7 @@ body>#flowplayer-floating-container {
   /* 볼륨음소거 */  
   .flowplayer .fp-volumebtn {
     position: absolute;
-    top: 65px;
+    top: 62px;
     right: 10px;
     width:30px;
     height:30px;
@@ -882,7 +882,7 @@ body>#flowplayer-floating-container {
   
   .fp-secondary .fp-share-menu {
     position: absolute;
-    top: 90px;
+    top: 105px;
     right: 0;
   }
   .info .fp-secondary .fp-share-menu{
@@ -945,9 +945,7 @@ body>#flowplayer-floating-container {
   } */
 
 
-  .live .flowplayer .fp-engine{
-    z-index:100;
-  }
+  
   .live .flowplayer .fp-footer{
     z-index:101;
   }
@@ -978,14 +976,10 @@ body>#flowplayer-floating-container {
     width:24px;
     margin-top:6px;
   } */
-  .live.info .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen,
-  .live .flowplayer .fp-secondary .fp-fullscreen-exit,
-  .live.fullscreen .flowplayer .fp-secondary .fp-fullscreen,
-  .live.fullscreen .flowplayer .fp-secondary .fp-fullscreen-exit,
-  .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen{
+  .flowplayer .fp-secondary .fp-fullscreen{
     display:none;
   }
-  .live.info .flowplayer .fp-secondary .fp-fullscreen,
+  /* .live.info .flowplayer .fp-secondary .fp-fullscreen,
   .live .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen-exit,
   .flowplayer .fp-secondary .fp-fullscreen,
   .flowplayer.is-fullscreen .fp-secondary .fp-fullscreen-exit{
@@ -993,7 +987,7 @@ body>#flowplayer-floating-container {
     margin-right:0;
     margin-top:7px;
     width:20px;
-  }
+  } */
   .live .flowplayer .fp-volumebtn{
     display:none;
     position:fixed;
@@ -1055,7 +1049,7 @@ body>#flowplayer-floating-container {
   }
   .flowplayer .fp-header .fp-share-menu{
     float:none;
-    right:0;
+    right:10px;
     width:30px;
     height:30px;
     margin-right:0;
@@ -1071,9 +1065,6 @@ body>#flowplayer-floating-container {
   }
   .flowplayer.is-starting .fp-header .fp-share-menu{
     opacity:0;
-  }
-  .live .flowplayer .fp-header .fp-share-menu{
-    right:0px;
   }
   .flowplayer .fp-header .fp-share-menu .fp-share{
     width:18px;
@@ -1199,19 +1190,30 @@ body>#flowplayer-floating-container {
   .mainMedia .toggleFullsize{
     position:absolute;
     top:20px;
-    right:16px;
+    right:10px;
     z-index:130;
     width:30px;
     height:30px;
     background:url('../img/ico/btn_movieSize.png') 50% 50% /30px auto no-repeat;
     transition:opacity 0.3s ease;
-    transform:translateX(100px);
+    /* transform:translateX(100px); */
     opacity:0;
   }
   .mainMedia .is-touched .toggleFullsize,
-  .mainMedia .is-paused .toggleFullsize{
-    opacity:1;
+  .mainMedia .is-paused .toggleFullsize,
+  .mainMedia .is-hovered.is-small .toggleFullsize,
+  .mainMedia .is-hovered.is-playing .toggleFullsize{
+    /* opacity:1; */
+    animation:infinite 1s infinite both alternate;
     transform:translateX(0);
+  }
+  @keyframes infinite {
+    0% {opacity:1}
+    100% {opacity:.99}
+  }
+  .mainMedia .is-paused.is-starting .toggleFullsize{
+    opacity:0;
+    transform:translateX(100px);
   }
   .mainMedia.info .toggleFullsize{
     top:20px;
@@ -1236,7 +1238,7 @@ body>#flowplayer-floating-container {
   .mainMedia .toggleMute{
     position:absolute;
     top:63px;
-    right:16px;
+    right:10px;
     z-index:130;
     width:30px;
     height:30px;

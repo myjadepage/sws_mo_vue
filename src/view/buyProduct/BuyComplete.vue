@@ -1,12 +1,12 @@
 <template>
   <div class="buyCompleteWrap">
-    <div v-if="result" class="success" >
-  </div>
     <Bar val="구매완료" />
-    <Message :result="result" :info="info" :errMsg="errMsg" :orderCode="orderCode" />
-    <Account v-if="payMethod===3" :info="info" />
-    <Info :info="info" />
-    <Guides/>
+        <Message :result="result" :info="info" :errMsg="errMsg" :orderCode="orderCode" />
+        <div v-if="result&&payOrdersStatus" class="success" >
+        <Account :vbankInfo="vbankInfo"  v-if="payMethod===3" :info="info" />
+        <Info :info="info" />
+        <Guides/>
+    </div>
     <Footer/>
     </div>
 </template>
@@ -73,7 +73,7 @@ export default {
     }
 
     let item = {
-      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, imp_uid: this.$route.query.imp_uid
+      paidAmount: payInfo.amount, totalAmount: payInfo.totalAmount, payTypeCode: this.payMethod, feeRate: 3.5, fee: Math.round(Math.round(payInfo.amount * 0.035) * 0.1) * 10, impUid: this.$route.query.imp_uid
     }
 
     console.log(item)
@@ -81,6 +81,8 @@ export default {
     if (sessionStorage.getItem('orderSysId')) {
       payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
         console.log(res)
+        this.vbankInfo = {...res.data.jsonData.res}
+        this.payOrdersStatus = true
         sessionStorage.removeItem('orderSysId')
       }).catch(err => {
         console.log(err)
@@ -92,11 +94,18 @@ export default {
   data () {
     return {
       result: true, // 성공 true / 실패 false
+      payOrdersStatus: false,
       item: {},
       info: {},
       payMethod: 0,
       errMsg: '',
-      orderCode: ''
+      orderCode: '',
+      vbankInfo: {
+        vbank_code: '',
+        vbank_holder: '',
+        vbank_name: '',
+        vbank_num: ''
+      }
     }
   },
 

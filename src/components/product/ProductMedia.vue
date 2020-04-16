@@ -1,8 +1,10 @@
 <template>
   <div class="productMediaWrap">
-    <div :style="mediaSize" class="mainMedia">
+    <div class="mainMedia">
       <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
-      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle"></div>
+      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle">
+        <button class="toggleFullsize" @click="fullSize" ><span class="ir_pm">전체화면 켜기/끄기</span></button>
+      </div>
     </div>
 
     <!-- <ul class="mediaMenu">
@@ -23,7 +25,12 @@ export default {
     return {
       mediaDirection: 0,
       mediaMode: 0,
-      item: { }
+      item: { },
+      mode: 'normal',
+      movSize: {
+        width: 0,
+        height: 0
+      }
     }
   },
   mounted: function () {
@@ -38,8 +45,9 @@ export default {
   methods: {
     getVideoTypePlayer () {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
-      const POSTER = 'http://cdn.shallwe.link/product/0/0/krill_oil_snapshot.jpg'
+      const POSTER = ''
       const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
+      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
 
       // eslint-disable-next-line no-undef
       flowplayer('#player_container', {
@@ -59,6 +67,57 @@ export default {
         muted: false,
         hls: {startLevel: 0}
       })
+
+      const video = document.getElementById('player_container').querySelector('video')
+      video.addEventListener('loadedmetadata', (e) => {
+        this.movSize.width = e.srcElement.videoWidth
+        this.movSize.height = e.srcElement.videoHeight
+        console.log(e.srcElement.videoWidth)
+        console.log(e.srcElement.videoHeight)
+      })
+    },
+    fullSize () {
+      let vWrap = document.getElementsByClassName('productMediaWrap')[0]
+      if (this.mode === 'normal') {
+        // 가로영상
+        if ((this.movSize.width / this.movSize.height) > 1) {
+          $(vWrap).css({
+            'transform': 'rotate(-90deg)',
+            'top': '100%',
+            'width': '100vh',
+            'height': '100vw'
+          })
+        } else {
+          // 세로영상
+          $(vWrap).css({
+            'transform': 'rotate(0)',
+            'top': '0',
+            'width': '100vw',
+            'height': '100vh'
+          })
+        }
+        $(vWrap).css({
+          'transform-origin': 'top left',
+          'position': 'fixed',
+          'left': '0',
+          'z-index': '100',
+          'padding-top': '0'
+        })
+        this.mode = 'fullscreen'
+      } else if (this.mode === 'fullscreen') {
+        $(vWrap).css({
+          'transform': 'rotate(0)',
+          'transform-origin': 'top left',
+          'position': 'static',
+          'top': '0',
+          'left': '0',
+          'width': '100%',
+          'height': '0',
+          'padding-top': '56.3%'
+        })
+        this.mode = 'normal'
+      }
+      console.log('f')
     }
   }
 }
