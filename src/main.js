@@ -40,11 +40,8 @@ new Vue({
     if (sessionStorage.getItem('accessToken')) {
       this.$store.dispatch('getUserInfo')
     }
-    if (sessionStorage.getItem('accessTokenGoogle')) {
-      this.$store.dispatch('getUserInfoGoogle')
-    }
-    if (sessionStorage.getItem('accessTokenKakao')) {
-      this.$store.dispatch('getUserInfoKakao')
+    if (sessionStorage.getItem('accessToken')) {
+      this.$store.dispatch('getUserInfoSns')
     }
   },
   components: { App },
