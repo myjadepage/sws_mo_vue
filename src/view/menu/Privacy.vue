@@ -10,6 +10,9 @@ import Bar from '@/components/shared/Bar'
 import LongText from '@/components/shared/LongText'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 개인정보처리방침'
+  },
   name: 'Privacy',
   data () {
     return {

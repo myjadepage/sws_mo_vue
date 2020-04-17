@@ -22,6 +22,9 @@ import qnaSearchBlock from '@/components/customer/qnaSearchBlock'
 import qnaList from '@/components/customer/qnaList'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 문의 조회/검색'
+  },
   data () {
     return {
       title: '고객센터',

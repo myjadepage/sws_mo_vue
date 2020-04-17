@@ -13,6 +13,9 @@ import ExchangeList from '@/components/mypage/Exchange/ExchangeDetailList'
 import EmptyBlock from '@/components/shared/EmptyBlock'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 취소/교환/반품'
+  },
   data () {
     return {
       title: '취소/교환/반품',

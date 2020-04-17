@@ -19,6 +19,9 @@ import PaymentComponent from '@/components/mypage/Exchange/PaymentComponent'
 import PaymentDetailComponent from '@/components/mypage/Exchange/PaymentDetailComponent'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 상세정보'
+  },
   data () {
     return {
       title: '상세정보'

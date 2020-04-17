@@ -34,6 +34,9 @@ import AddrModal from '@/components/buypage/Modal/DeliveryAddressModal'
 import {getMemberAddrList, getAccessToken, getUserInfo} from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 구매하기'
+  },
   created () {
     if (this.$store.state.isLogin) {
       getUserInfo(sessionStorage.getItem('accessToken'))

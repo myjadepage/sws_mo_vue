@@ -17,6 +17,9 @@ import BuyDecision from '@/components/mypage/MyReview/BuyDecision'
 import {getProduct} from '@/api/index'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 수취확인/리뷰작성'
+  },
   name: 'ReviewWrite',
   data () {
     return {

@@ -1,39 +1,9 @@
 <template>
   <ul class="dateList">
-    <li class="item">
-      <router-link to="">
-        <p>24<br/>목</p>
-      </router-link>
-    </li>
-    <li class="item on">
-      <router-link to="">
-        <p>25<br/>금</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="">
-        <p>26<br/>토</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="">
-        <p>27<br/>일</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="">
-        <p>28<br/>월</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="">
-        <p>29<br/>화</p>
-      </router-link>
-    </li>
-    <li class="item">
-      <router-link to="">
-        <p>30<br/>수</p>
-      </router-link>
+    <li class="item" :class="{'on': selected === index}" v-for="(list, index) in dateList" :key="index">
+      <button @click="selected = index">
+        <p>{{list.date.getDate()}}<br/>{{list.str}}</p>
+      </button>
     </li>
   </ul>
 </template>
@@ -43,6 +13,49 @@
 export default {
   data () {
     return {
+      today: new Date(),
+      dateList: [],
+      selected: 0
+    }
+  },
+  mounted () {
+    for (let i = 0; i < 7; i++) {
+      let tempData = new Date()
+      let day
+      tempData.setDate(tempData.getDate() + i)
+      if (tempData.getDay() === 0) {
+        day = '일'
+      } else if (tempData.getDay() === 1) {
+        day = '월'
+      } else if (tempData.getDay() === 2) {
+        day = '화'
+      } else if (tempData.getDay() === 3) {
+        day = '수'
+      } else if (tempData.getDay() === 4) {
+        day = '목'
+      } else if (tempData.getDay() === 5) {
+        day = '금'
+      } else if (tempData.getDay() === 6) {
+        day = '토'
+      }
+
+      this.dateList.push({
+        date: tempData,
+        str: day
+      })
+    }
+    this.sendDate()
+  },
+  methods: {
+    sendDate () {
+      this.$emit('setDate', this.dateList[this.selected])
+    }
+  },
+  watch: {
+    selected: {
+      handler () {
+        this.sendDate()
+      }
     }
   }
 }

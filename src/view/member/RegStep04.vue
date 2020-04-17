@@ -19,6 +19,9 @@
 <script>
 import Bar from '@/components/member/Bar'
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 회원가입'
+  },
   components: {
     Bar
   },

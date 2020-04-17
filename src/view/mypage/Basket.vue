@@ -16,6 +16,9 @@ import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
 import { getPicksList, getAccessToken } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 찜한 상품'
+  },
   data () {
     return {
       title: '찜한 상품',

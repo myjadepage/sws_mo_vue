@@ -558,6 +558,66 @@ function getFollowing (accessToken, getInfo) {
 
 /**
  *
+ * 편성표
+ */
+// 편성표 목록 가져오기
+function getBroadCastSchedules (accessToken, startDate) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}&userSysId=${userSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+// 방송예약 등록
+function setReservateBroadCast (accessToken, broadcastScheduleSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify({'broadcastScheduleSysId': broadcastScheduleSysId}))
+  return axios({
+    method: 'post',
+    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+// 방송예약 조회
+function getReservateBroadCast (accessToken, sIdx, rCnt, sDate) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate}))
+  console.log({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate})
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/list`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+// 방송예약 취소
+function removeReservateBroadCast (accessToken, userBroadcastReservationSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/${userBroadcastReservationSysId}`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+/**
+ *
  * 회원가입
  */
 
@@ -797,5 +857,9 @@ export {
   setAlertSetting,
   getProductReview,
   getFollowing,
-  claimReview
+  claimReview,
+  getBroadCastSchedules,
+  setReservateBroadCast,
+  getReservateBroadCast,
+  removeReservateBroadCast
 }

@@ -19,6 +19,9 @@ import ReviewEntity from '@/components/mypage/MyReview/MyReviewEntity'
 import {getMyReviewList, getAccessToken} from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 마이리뷰'
+  },
   created () {
     window.scrollTo(0, 0)
 

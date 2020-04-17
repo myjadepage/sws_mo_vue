@@ -18,6 +18,9 @@ import PointList from '@/components/mypage/Point/PointList'
 import { getMypageInfo, getCartItem, getPointInfo, getAccessToken } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 마이포인트'
+  },
   data () {
     return {
       title: '마이 포인트',

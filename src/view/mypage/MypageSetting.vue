@@ -14,6 +14,9 @@ import SettingList from '@/components/mypage/Setting/SettingList'
 import CashModal from '@/components/mypage/Setting/Modal/CashModal'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 설정'
+  },
   name: 'MypageSettingList',
   data () {
     return {

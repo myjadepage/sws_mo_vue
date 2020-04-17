@@ -24,6 +24,9 @@ import DeclareModal from '@/components/product/Modal/DeclareModal'
 import { getProductReview } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 상품 상세정보'
+  },
   components: {
     Bar, InfoBar, ReviewPhotos, LikeBox, OptionBar, ReviewMovie, DeclareModal
   },

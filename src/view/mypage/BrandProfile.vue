@@ -10,6 +10,9 @@ import PrDetail from '@/components/mypage/BrandProfile/PrDetail'
 import PrList from '@/components/mypage/BrandProfile/PrList'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 인플루언서'
+  },
   data () {
     return {
       userId: 'aa',

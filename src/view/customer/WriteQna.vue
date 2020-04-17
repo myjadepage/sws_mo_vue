@@ -14,6 +14,9 @@ import QnaForm from '@/components/customer/QnaForm'
 import PopSelectDoubleButton from '@/components/customer/Modal/PopSelectDoubleButton'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 문의하기'
+  },
   data () {
     return {
       title: '1:1 문의하기',

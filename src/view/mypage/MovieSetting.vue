@@ -15,6 +15,9 @@ import MovieSetList from '@/components/mypage/Setting/MovieSetList'
 import QualityModal from '@/components/mypage/Setting/Modal/QualityModal'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 비디오 설정'
+  },
   name: 'MovieSetting',
   data () {
     return {

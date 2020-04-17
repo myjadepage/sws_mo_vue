@@ -18,7 +18,9 @@
 
 <script>
 export default {
-
+  metaInfo: {
+    title: 'Shall We Shop - 비회원 주문조회'
+  }
 }
 </script>
 

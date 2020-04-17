@@ -61,6 +61,9 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 import {getProduct, getCartItem, getAccessToken, putCartItem, removeCartList} from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 장바구니'
+  },
   created () {
     if (this.$store.state.isLogin) {
       // 장바구니 목록 가져와야함

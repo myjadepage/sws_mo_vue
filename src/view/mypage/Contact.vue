@@ -16,6 +16,9 @@ import Info from '@/components/mypage/Contact/ContactInfo'
 import { writeQuestion, getAccessToken } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 문의하기'
+  },
   data () {
     return {
       title: '문의하기',

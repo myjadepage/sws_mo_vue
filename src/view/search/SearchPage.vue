@@ -1,7 +1,7 @@
 <template>
   <div class="searchPageWrap">
       <SearchHeader :cat="cat" @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
-      <SearchCategory @catChange="catChange" v-if="!isInputFocus" />
+      <SearchCategory @catChange="catChange" :cat="cat" v-if="!isInputFocus" />
       <div v-if="!isInputFocus&&cat===0">
         <SearchProduct  v-for="(r,idx) in searchResults" :key="idx" :product="r" />
       </div>
@@ -23,6 +23,9 @@ import SearchBrand from '@/components/search/SearchBrand'
 import SearchBroadcast from '@/components/search/SearchBroadcast'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 검색'
+  },
   components: {
     SearchHeader, SearchCategory, SearchProduct, SearchBrand, SearchBroadcast
   },

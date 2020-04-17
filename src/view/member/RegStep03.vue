@@ -9,6 +9,9 @@
 import Bar from '@/components/member/Bar'
 import RegisterPhone from '@/components/member/RegisterPhone'
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 회원가입'
+  },
   components: {
     Bar,
     RegisterPhone

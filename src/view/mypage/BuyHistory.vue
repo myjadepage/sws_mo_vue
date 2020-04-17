@@ -18,6 +18,9 @@ import EmptyBlock from '@/components/shared/EmptyBlock'
 import ExchangeInfo from '@/components/mypage/Exchange/Modal/ExchangeRequest'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 구매내역'
+  },
   data () {
     return {
       title: '구매 내역',

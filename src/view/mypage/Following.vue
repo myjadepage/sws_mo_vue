@@ -15,6 +15,9 @@ import RemoveModal from '@/components/mypage/Follow/Modal/RemoveModal'
 import { getFollowing } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 팔로잉'
+  },
   data () {
     return {
       title: '팔로잉',
