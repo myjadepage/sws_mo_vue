@@ -10,7 +10,7 @@
     <PayMethods/>
     <Term/>
     <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
-    <BuyFooter :addresses="addresses" :coupon="discountCoupon" :finalPrice="finalPrice" />
+    <BuyFooter :addresses="addresses" :coupon="discountCoupon" :point="discountPoint" :finalPrice="finalPrice" />
 
     <AddrModal :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
     <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
@@ -89,8 +89,7 @@ export default {
       title: '상품구매',
       discountPoint: 0,
       discountCoupon: 0,
-      coupons: [
-      ],
+      coupons: [],
       couponMode: false,
       finalPrice: 0,
       addrModalVisibility: false,

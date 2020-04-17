@@ -6,6 +6,7 @@
           <div class="phone">
           <div class="inputTitle">휴대폰 번호</div>
           <input class="" type="text" placeholder="“-” 없이 입력해 주세요.">
+          <button @click="authMineBtnClick">본인인증</button>
           </div>
          <div class="orderNumber">
           <div class="inputTitle">주문 번호</div>
@@ -20,6 +21,13 @@
 export default {
   metaInfo: {
     title: 'Shall We Shop - 비회원 주문조회'
+  },
+  methods: {
+    authMineBtnClick () {
+    //   this.$IMP().certification({}, (res) => {
+    //     console.log(res)
+    //   })
+    }
   }
 }
 </script>

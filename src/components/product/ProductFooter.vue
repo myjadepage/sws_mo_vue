@@ -126,10 +126,10 @@ export default {
 
           if (cartList) {
             cartList = JSON.parse(cartList)
-            cartList.push(cartItem)
+            cartList.push({...cartItem, ...this.$store.getters.getProduct, basketSysId: cartList[cartList.length - 1].basketSysId - 1})
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {
-            sessionStorage.setItem('nonMemberCartList', JSON.stringify([cartItem]))
+            sessionStorage.setItem('nonMemberCartList', JSON.stringify([{...cartItem, ...this.$store.getters.getProduct, basketSysId: 999}]))
           }
           this.$emit('addedCartItem')
         }

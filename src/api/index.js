@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
-  baseUrl3: 'http://api.shallwe.shop/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
@@ -47,7 +46,7 @@ function getLiveProductList () {
  * 라이브 방송정보
  */
 function getLiveProduct (broadcastSysId) {
-  return axios.get(`${config.baseUrl2}broadcasts/${broadcastSysId}/medialists`)
+  return axios.get(`${config.baseUrl}broadcasts/${broadcastSysId}/medialists`)
 }
 
 /*
@@ -67,13 +66,13 @@ function payOrders (jsonData, orderSysId) {
   formdata.set('jsonData', JSON.stringify(jsonData))
   // formdata.set('orderSysId', orderSysId)
 
-  return axios.post(`${config.baseUrl4}orders/${orderSysId}/pays`, formdata)
+  return axios.post(`${config.baseUrl}orders/${orderSysId}/pays`, formdata)
 }
 
 // 마이페이지 조회
 function getMypageInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}/mypage`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}/mypage`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -84,7 +83,7 @@ function getMypageInfo (accessToken) {
 // 회원 정보 가져오기
 function getUserInfo (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
-  return axios.get(`${config.baseUrl2}users/${userSysId}`, {
+  return axios.get(`${config.baseUrl}users/${userSysId}`, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -99,7 +98,7 @@ function modifyUserInfo (accessToken, userInfo) {
   formdata.set('jsonData', JSON.stringify(userInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/myinfo`,
+    url: `${config.baseUrl}users/${userSysId}/myinfo`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -137,7 +136,23 @@ function addMemberAddress (accessToken, addrInfo) {
 
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
-  return axios.get(`${config.baseUrl4}operations/deliveries/addingCosts/${postNumber}`)
+  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
+}
+
+// 회원 포인트 수정
+function patchUserPoint (accessToken, pointData) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(pointData))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl}users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
 }
 
 /*
@@ -163,16 +178,16 @@ function searchBroadcasts (title) {
  */
 // 단일 상품
 function getProduct (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}`)
 }
 
 function getBroadCast (prdtSysId) {
-  return axios.get(`${config.baseUrl2}broadcasts/${prdtSysId}`)
+  return axios.get(`${config.baseUrl}broadcasts/${prdtSysId}`)
 }
 
 // 리뷰 목록 가져오기
 function getPrdtReviewList (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/reviews/list`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/reviews/list`)
 }
 
 // 리뷰 신고하기
@@ -182,7 +197,7 @@ function claimReview (accessToken, prdtSysId, prdtReviewSysId, data) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}products/${prdtSysId}/reviews/${prdtReviewSysId}/claims`,
+    url: `${config.baseUrl}products/${prdtSysId}/reviews/${prdtReviewSysId}/claims`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -193,7 +208,7 @@ function claimReview (accessToken, prdtSysId, prdtReviewSysId, data) {
 
 // 문의 목록 가져오기
 function getPrdtQuestionList (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/questions/list`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/questions/list`)
 }
 
 // 문의 등록하기
@@ -203,7 +218,7 @@ function postPrdtQuestion (accessToken, prdtSysId, qaData) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}products/${prdtSysId}/questions`,
+    url: `${config.baseUrl}products/${prdtSysId}/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -223,7 +238,7 @@ function postCartItem (accessToken, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/baskets`,
+    url: `${config.baseUrl}users/${userSysId}/baskets`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -237,7 +252,7 @@ function getCartItem (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -251,7 +266,7 @@ function removeCartItem (accessToken, basketSysId) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -267,7 +282,7 @@ function removeCartList (accessToken, basketSysIds) {
 
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/list`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -283,7 +298,7 @@ function putCartItem (accessToken, basketSysId, cartItem) {
   formdata.set('jsonData', JSON.stringify(cartItem))
   return axios({
     method: 'put',
-    url: `${config.baseUrl2}users/${userSysId}/baskets/${basketSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/baskets/${basketSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -302,7 +317,7 @@ function writeQuestion (accessToken, questionInfo) {
   formdata.set('jsonData', JSON.stringify(questionInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}operations/questions`,
+    url: `${config.baseUrl}operations/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -318,7 +333,7 @@ function getNoticeList (sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
+    url: `${config.baseUrl}operations/notices/list?startIndex=${sIdx}&rowCount=${rCnt}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -332,7 +347,7 @@ function changePw (accessToken, pwInfo) {
   formdata.set('jsonData', JSON.stringify(pwInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/password`,
+    url: `${config.baseUrl}users/${userSysId}/password`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -348,7 +363,7 @@ function setRecentViewList (accessToken, viewInfo) {
   formdata.set('jsonData', JSON.stringify(viewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -365,7 +380,7 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -381,7 +396,7 @@ function getMyReviewList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/reviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/reviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -396,7 +411,7 @@ function setReview (accessToken, prdtSysId, reviewInfo) {
   formdata.set('jsonData', JSON.stringify(reviewInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}products/${prdtSysId}/reviews`,
+    url: `${config.baseUrl}products/${prdtSysId}/reviews`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -412,7 +427,7 @@ function delRecentViewList (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -428,7 +443,7 @@ function setPicksList (accessToken, pickInfo) {
   formdata.set('jsonData', JSON.stringify(pickInfo))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -442,7 +457,7 @@ function delPicksList (accessToken, prdtSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/${prdtSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/${prdtSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -458,7 +473,7 @@ function getPicksList (accessToken, sIdx, rCnt) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -474,7 +489,7 @@ function delPicksLists (accessToken, lists) {
   formdata.set('jsonData', JSON.stringify(lists))
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -492,7 +507,7 @@ function getPointInfo (accessToken, sDate, eData, flag) {
   formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/pointhists/list`,
+    url: `${config.baseUrl}users/${userSysId}/pointhists/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -506,7 +521,7 @@ function getAlertSetting (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    url: `${config.baseUrl}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -520,7 +535,7 @@ function setAlertSetting (accessToken, setInfo) {
   formdata.set('jsonData', JSON.stringify(setInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    url: `${config.baseUrl}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -533,7 +548,7 @@ function setAlertSetting (accessToken, setInfo) {
 function getProductReview (prdtSysId, prdtReviewSysId) {
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}products/${prdtSysId}/reviews/${prdtReviewSysId}`,
+    url: `${config.baseUrl}products/${prdtSysId}/reviews/${prdtReviewSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -547,7 +562,7 @@ function getFollowing (accessToken, getInfo) {
   formdata.set('jsonData', JSON.stringify(getInfo))
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/follows/list`,
+    url: `${config.baseUrl}users/${userSysId}/follows/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -732,15 +747,14 @@ function userLogin (userId, password) {
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
-  return axios.post(`${config.baseUrl2}auth/login`, formdata)
+  return axios.post(`${config.baseUrl}auth/login`, formdata)
 }
 
 // 간편로그인
-function snsLogin (snsType, snsToken, mobile) {
+function snsLogin (snsType, snsToken) {
   let jsonData = {
     'snsType': snsType,
-    'snsToken': snsToken,
-    'mobile': mobile
+    'snsToken': snsToken
   }
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
@@ -778,27 +792,6 @@ function getRefressToken (refreshToken) {
   return axios.post(`${config.baseUrl}auth/refresh`, header)
 }
 
-// function getAccessToken (refreshToken) {
-//   let header = {
-//     'Authorization': `Bearer ${refreshToken}`
-//   }
-//   return axios.post(`${config.baseUrl}auth/accesstoken`, '', header)
-// }
-
-// 토큰 만료 여부 확인 (true:만료 false:기한남음)
-// function isTokenExpired (token) {
-//   let tokenExp = parseJwt(token).exp * 1000
-//   let now = new Date().getTime()
-//   let timeDiff = tokenExp - now
-
-//   if (timeDiff < 0) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
-
-// let dayDiff = Math.ceil(Math.abs(timeDiff) / (1000 * 60 * 60 * 24))
 export {
   getAccessToken,
   getRefressToken,
@@ -861,5 +854,6 @@ export {
   getBroadCastSchedules,
   setReservateBroadCast,
   getReservateBroadCast,
-  removeReservateBroadCast
+  removeReservateBroadCast,
+  patchUserPoint
 }

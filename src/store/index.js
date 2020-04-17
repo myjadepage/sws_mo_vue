@@ -48,33 +48,6 @@ export const store = new Vuex.Store({
         state.isLogin = false
       }
     },
-    loginSuccessGoogle (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
-    loginSuccessKakao (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
-    loginSuccessNaver (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
     // 로그인 실패시
     loginError (state) {
       state.isLogin = false
@@ -131,7 +104,12 @@ export const store = new Vuex.Store({
             sessionStorage.setItem('refreshToken', refreshToken)
 
             dispatch('getUserInfo')
-            router.push('/')
+
+            if (loginObj.mode) {
+              router.push('/buyproduct')
+            } else {
+              router.push('/')
+            }
           } else {
             alert('아이디나 패스워드가 다릅니다.')
             return false
@@ -147,21 +125,9 @@ export const store = new Vuex.Store({
         resolve()
       })
     },
-    getUserInfoGoogle ({commit}) {
+    getUserInfoSns ({commit}) {
       return new Promise((resolve, reject) => {
-        commit('loginSuccessGoogle')
-        resolve()
-      })
-    },
-    getUserInfoKakao ({commit}) {
-      return new Promise((resolve, reject) => {
-        commit('loginSuccessKakao')
-        resolve()
-      })
-    },
-    getUserInfoNaver ({commit}) {
-      return new Promise((resolve, reject) => {
-        commit('loginSuccessNaver')
+        commit('loginSuccess')
         resolve()
       })
     }
