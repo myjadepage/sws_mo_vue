@@ -64,13 +64,14 @@
                 <li>
                   <v-facebook-login
                     app-id="2810824608956950"
+                    :options = fboption
                     class="btn btn-circle sws_icon btn-fb"/>
                   <span>페이스북</span>
                 </li>
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-                    callback-url="http://localhost:8080/Login"
+                    callback-url="http://m.shallwe.link/Login"
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -105,7 +106,12 @@ export default {
       id: null,
       password: null,
       checkedId: false,
-      checkedAuto: false
+      checkedAuto: false,
+      fboption: {
+        cookie: true,
+        xfbml: true,
+        autoLogAppEvents: true
+      }
     }
   },
   mounted () {
@@ -205,7 +211,6 @@ export default {
     onFailure: (data) => {
       console.log('failure', data)
     },
-
     // 네이버로그인시 콜백함수인데 여기서 처리안함!
     callbackFunction: function () {}, // mounted에서 함
 
