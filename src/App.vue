@@ -11,7 +11,13 @@ export default {
   computed: {
     ...mapState(['isLogin'])
   },
-  mounted: function () { // flowplayer 스크립트 넣기
+  mounted: function () {
+    window.onpopstate = event => {
+      if (sessionStorage.getItem('accessToken') === null && this.$route.path === '/MyPage') {
+        this.$router.push('/')
+      }
+    }
+    // flowplayer 스크립트 넣기
     const flowplayer = document.createElement('script')
     flowplayer.setAttribute('src', '/static/js/flowplayer.min.js')
     document.head.appendChild(flowplayer)

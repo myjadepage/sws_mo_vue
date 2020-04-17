@@ -127,7 +127,7 @@ export default {
     var params = {}
     var param = $(location).attr('href')
     param.replace(/[#&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value })
-    console.log('param', params.access_token)
+    console.log('params', params.access_token)
     snsLogin(2, params.access_token)
       .then(res => {
         console.log('res', res)
