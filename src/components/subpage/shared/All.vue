@@ -1,9 +1,9 @@
 <template>
   <div class="section_ITEM weekly_best_main">
-    <h4>Sale</h4>
+    <h4>전체상품</h4>
     <ul class="box_best_item">
       <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" />
-      <li class="item noItem" v-if="products.length === 0">세일 상품이 없습니다.</li>
+      <li class="item noItem" v-if="products.length === 0">상품이 없습니다.</li>
     </ul>
    </div>
 </template>
@@ -25,8 +25,8 @@ export default {
   },
   methods: {
     getList () {
-      let getInfo = 'startIndex=' + this.startIndex + '&categorySysId1=' + this.categorySysId1 + '&isSale=1'
-      // console.log(getInfo)
+      let getInfo = 'startIndex=' + this.startIndex + '&categorySysId1=' + this.categorySysId1 + '&isSale=0&isPlanBrand=0&isPlanThema=0'
+      console.log(getInfo)
       getProductLists(getInfo)
         .then(res => {
           console.log(res)
@@ -52,7 +52,7 @@ export default {
     }
   },
 
-  name: 'Sale'
+  name: 'All'
 }
 </script>
 

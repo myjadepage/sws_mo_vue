@@ -2,8 +2,12 @@ import axios from 'axios'
 
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
+<<<<<<< HEAD
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
+=======
+  baseUrl2: 'http://192.168.1.20:3800/api/v1/',
+>>>>>>> 42d5f5bd4cf3dc55cf99071abd525a056f2b8076
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl5: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
@@ -11,9 +15,20 @@ const config = {
 /**
  * 메인
  */
-// 상품리스트
+// 상품정보
 function getProductList (param = '') {
   return axios.get(`${config.baseUrl}products/lists${'?' + param}`)
+}
+// 상품리스트
+function getProductLists (getInfo) {
+  console.log(`${config.baseUrl2}products/mainlist?` + getInfo)
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl2}products/mainlist?` + getInfo,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
 }
 
 // 카테고리
@@ -624,7 +639,7 @@ function getAlertSetting (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/push/info`,
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -638,7 +653,7 @@ function setAlertSetting (accessToken, setInfo) {
   formdata.set('jsonData', JSON.stringify(setInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl}users/${userSysId}/push/info`,
+    url: `${config.baseUrl2}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -676,14 +691,37 @@ function getFollowing (accessToken, getInfo) {
 
 /**
  *
+ * 고객센터
+ */
+
+// 고객센터 - FAQ 목록 조회
+function getFaqList (getInfo) {
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(getInfo))
+  return axios({
+    method: 'get',
+    url: `${config.baseUrl}operations/faqs`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: formdata
+  })
+}
+
+/**
+ *
  * 편성표
  */
 // 편성표 목록 가져오기
-function getBroadCastSchedules (accessToken, startDate) {
-  let userSysId = parseJwt(accessToken).authSysId
+function getBroadCastSchedules (startDate, accessToken) {
+  let urlStr = `${config.baseUrl2}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}`
+  if (accessToken) {
+    let userSysId = parseJwt(accessToken).authSysId
+    urlStr += `&userSysId=${userSysId}`
+  }
   return axios({
     method: 'get',
-    url: `${config.baseUrl}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}&userSysId=${userSysId}`,
+    url: urlStr,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -907,6 +945,7 @@ export {
   userLogin,
   createtUser,
   getProductList,
+  getProductLists,
   getCategoryList,
   getSaleProduct,
   getWeeklyProduct,
@@ -961,5 +1000,7 @@ export {
   getBroadCastSchedules,
   setReservateBroadCast,
   getReservateBroadCast,
-  removeReservateBroadCast
+  removeReservateBroadCast,
+  patchUserPoint,
+  getFaqList
 }

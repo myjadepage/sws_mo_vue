@@ -2,7 +2,7 @@
 <div class="calendarBlock" :class="list.length === 0? 'emptyHeight': ''">
     <Bar :val="title" />
     <EmptyBlock :param="emptyMessage" v-if="list.length === 0"  />
-    <liveList v-else :mode="mode" :list="list" />
+    <liveList v-else :mode="mode" :list="list" @recall="getBroadCast" />
 
 </div>
 </template>
@@ -22,16 +22,23 @@ export default {
     let date = new Date()
     this.today = date.getFullYear() + (String(date.getMonth() + 1).length < 2 ? '0' + (date.getMonth() + 1) : String(date.getMonth() + 1)) + (String(date.getDate()).length < 2 ? '0' + date.getDate() : String(date.getDate()))
 
-    getReservateBroadCast(sessionStorage.getItem('accessToken'), this.sIndex, 10, this.today)
-      .then(res => {
-        console.log(res)
-        if (res.data.jsonData.resultCode === '0001') {
-          this.list = res.data.jsonData.broadcasts
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    this.getBroadCast()
+  },
+  methods: {
+    getBroadCast () {
+      getReservateBroadCast(sessionStorage.getItem('accessToken'), this.sIndex, 10, this.today)
+        .then(res => {
+          console.log(res)
+          if (res.data.jsonData.resultCode === '0001') {
+            this.list = res.data.jsonData.broadcasts
+          } else if (res.data.jsonData.resultCode === '0004') {
+            this.list = []
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   },
   data () {
     return {

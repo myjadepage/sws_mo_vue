@@ -1,23 +1,37 @@
 <template>
   <div class="mySettingsWrap">
-     <ul>
-
-      <router-link to="/ChangePw"><li><span class="ico_password"></span>비밀번호 변경</li></router-link>
-      <router-link to="/notice"><li><span class="ico_notice"></span>공지사항</li></router-link>
-      <router-link to="/AlertSet"><li><span class="ico_alert"></span>알림 설정</li></router-link>
-      <hr>
-      <router-link to="/ViewLog"><li><span class="ico_clock"></span>최근 본 상품</li></router-link>
-      <router-link to="/Basket"><li><span class="ico_heart"></span>찜한 상품</li></router-link>
-      <hr>
-      <router-link to="/MyReview"><li><span class="ico_review"></span>마이 리뷰(일반/포토/동영상)</li></router-link>
-      <hr>
-      <!-- 모바일 미사용 -->
-      <!-- <router-link to="/VersionChk"><li><span class="ico_info"></span>앱 버전 정보</li></router-link>
-      <hr> -->
-      <router-link to=""><li><span class="ico_message"></span>메세지</li></router-link>
-      <hr>
-      <button type="button" @click="$store.dispatch('logOut')"><li><span class="ico_signout"></span>로그아웃</li></button>
-    </ul>
+    <div class="setting_block">
+      <h4>쇼핑정보</h4>
+      <ul>
+        <li><router-link to="/BuyHistory">구매내역</router-link></li>
+        <li><router-link to="/Exchange">취소/환불/교환 내역</router-link></li>
+        <li><router-link to="/ViewLog">최근 본 상품</router-link></li>
+        <li><router-link to="/Basket">찜한 상품</router-link></li>
+      </ul>
+    </div>
+    <div class="setting_block">
+      <h4>나의 계정</h4>
+      <ul>
+        <li><router-link to="/MyReview">마이 리뷰</router-link></li>
+        <li><router-link to="/modifyProfile">회원정보 수정</router-link></li>
+        <li><router-link to="/AlertSet">알림 설정</router-link></li>
+      </ul>
+    </div>
+    <div class="setting_block">
+      <h4>고객센터</h4>
+      <ul>
+        <li><router-link to="">일반문의</router-link></li>
+        <li><router-link to="">구매상품문의</router-link></li>
+        <li><router-link to="">나의문의내역</router-link></li>
+        <li><router-link to="/CustomerMain">고객센터</router-link></li>
+      </ul>
+    </div>
+    <div class="setting_block">
+      <ul>
+        <li><router-link to="/notice">공지사항</router-link></li>
+      </ul>
+    </div>
+    <button class="logout_btn" @click="$store.dispatch('logOut')">로그아웃</button>
   </div>
 </template>
 

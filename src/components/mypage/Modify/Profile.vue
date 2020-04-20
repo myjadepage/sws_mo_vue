@@ -13,36 +13,43 @@
 
       <div class="profileInfo">
         <div class="row">
-          <label for="userMail">아이디</label>
-          <input type="mail" id="userMail" name="userMail" placeholder="이메일을 입력해 주세요." v-model.trim="member.userId" disabled/>
+          <label for="userMail">이메일</label>
+          <p>{{member.userId}}</p>
         </div>
         <div class="row">
-          <label for="userGender">성별</label>
-          <!-- <input type="text" id="userGender" name="userGender" placeholder="ex) 남 or 여" v-model="member.gender" /> -->
-          <select name="userGender" :class="{'on':member.gender!==''}" id="userGender" v-model="member.genderCode">
-            <option value="">성별을 선택해주세요</option>
-            <option value="1">남성</option>
-            <option value="2">여성</option>
-          </select>
+          <label for="userNick">닉네임</label>
+          <p>{{member.nickName}}</p>
+        </div>
+        <div class="row">
+          <label for="userNick">현재 비밀번호</label>
+          <input type="text" id="userNick" name="userNick" placeholder="현재 비밀번호를 입력해 주세요" v-model="member.currentPassword" />
+        </div>
+        <div class="row">
+          <label for="userNick">새 비밀번호</label>
+          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 입력해 주세요" v-model="member.newPassword" />
+        </div>
+        <div class="row">
+          <label for="userNick">새 비밀번호 확인</label>
+          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 다시 입력해 주세요" v-model="member.confirmpw" />
+        </div>
+        <div class="row">
+          <p class="tit">성별</p>
+          <input type="radio" id="male" :value="1" v-model="member.genderCode" />
+          <label for="male">남</label>
+          <input type="radio" id="female" :value="2" v-model="member.genderCode" />
+          <label for="female">여</label>
+        </div>
+        <div class="row">
+          <label for="userPhone">휴대폰</label>
+          <p>{{member.mobile}}</p>
         </div>
         <div class="row">
           <label for="userBirth">생년월일</label>
           <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model.trim="member.birthday" />
         </div>
-        <div class="row">
-          <label for="userPhone">휴대폰</label>
-          <input type="text" id="userPhone" name="userPhone" placeholder="ex)010-1234-5678" v-model.trim="member.mobile" disabled />
-        </div>
-        <div class="row">
-          <label for="userNick">닉네임</label>
-          <input type="text" id="userNick" name="userNick" placeholder="닉네임을 입력해 주세요" v-model="member.nickName" />
-        </div>
-        <div class="row">
-          <label for="userIntro">자기소개</label>
-          <input type="text" id="userIntro" name="userIntro" placeholder="자기소개를 입력해 주세요." v-model="member.profile" />
-        </div>
+        <router-link to="/Withdraw" class="Withdrawal">회원탈퇴하기</router-link>
       </div>
-      <button class="btn_submit" >회원정보 수정</button>
+      <button class="btn_submit" >확인</button>
 
     </form>
     <section v-if="modalVisiblity" class="modalBg">
@@ -69,6 +76,9 @@ export default {
         userId: '',
         nickName: '',
         profile: '',
+        currentPassword: '',
+        newPassword: '',
+        confirmpw: '',
         profileImgUrl: '/static/images/ico_member.png'
       },
       modalVisiblity: false,

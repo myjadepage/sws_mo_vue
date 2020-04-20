@@ -1,25 +1,26 @@
 <template>
-  <div class="mainPageWrap">
+  <div>
   <Bar :val="title" />
-  <Modify />
+  <ChkPw />
+
   </div>
 </template>
 
 <script>
 import Bar from '@/components/shared/Bar'
-import Modify from '@/components/mypage/Modify/Profile'
+import ChkPw from '@/components/mypage/ChkPw/ChkPw'
 
 export default {
   metaInfo: {
-    title: 'Shall We Shop - 회원정보수정'
+    title: 'Shall We Shop - 비밀번호 재확인'
   },
   data () {
     return {
-      title: '회원정보수정'
+      title: '비밀번호 재확인'
     }
   },
   components: {
-    Bar, Modify
+    Bar, ChkPw
   }
 }
 </script>

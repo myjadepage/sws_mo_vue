@@ -72,8 +72,6 @@ export default {
       video.addEventListener('loadedmetadata', (e) => {
         this.movSize.width = e.srcElement.videoWidth
         this.movSize.height = e.srcElement.videoHeight
-        console.log(e.srcElement.videoWidth)
-        console.log(e.srcElement.videoHeight)
       })
     },
     fullSize () {
@@ -104,18 +102,44 @@ export default {
           'padding-top': '0'
         })
         this.mode = 'fullscreen'
+        window.addEventListener('orientationchange', () => {
+          if (window.orientation === 0) {
+            // portrait
+            $(vWrap).css({
+              'transform': 'rotate(-90deg)',
+              'top': '100%',
+              'width': '100vh',
+              'height': '100vw'
+            })
+          } else {
+            // landscape
+            $(vWrap).css({
+              'transform': 'rotate(0)',
+              'top': '0',
+              'width': '100vw',
+              'height': '100vh'
+            })
+          }
+        })
+        document.querySelector('html').style.overflow = 'hidden'
+        window.addEventListener('scroll', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          return false
+        })
       } else if (this.mode === 'fullscreen') {
         $(vWrap).css({
           'transform': 'rotate(0)',
           'transform-origin': 'top left',
-          'position': 'static',
-          'top': '0',
+          'position': 'fixed',
+          'top': '50px',
           'left': '0',
           'width': '100%',
           'height': '0',
           'padding-top': '56.3%'
         })
         this.mode = 'normal'
+        document.querySelector('html').style.overflow = 'visible'
       }
     }
   }

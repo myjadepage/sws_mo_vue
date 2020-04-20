@@ -721,6 +721,12 @@
 
 
 /* 플레이어 커스텀 */
+.productDetailWrap .productMediaWrap{
+  position: fixed;
+  top:50px;
+  left:0;
+  z-index:10;
+}
 .productMediaWrap{
   position: relative;
   width:100%;

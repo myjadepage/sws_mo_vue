@@ -37,33 +37,8 @@ export default new Router({
       component: () => import('@/view/Home')
     },
     {
-      path: '/category/패션',
+      path: '/category/:category',
       name: 'Fashion',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/category/패션잡화',
-      name: 'FashionEtc',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/category/뷰티',
-      name: 'Beauty',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/category/유아',
-      name: 'Baby',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/category/식품',
-      name: 'Food',
-      component: () => import('@/view/subpage/Fashion/FashionMain')
-    },
-    {
-      path: '/category/리빙',
-      name: 'Living',
       component: () => import('@/view/subpage/Fashion/FashionMain')
     },
     {
@@ -202,6 +177,16 @@ export default new Router({
       component: () => import('@/view/mypage/ModifyProfile')
     },
     {
+      path: '/Coupon',
+      name: 'Coupon',
+      component: () => import('@/view/mypage/Coupon')
+    },
+    {
+      path: '/AlertList',
+      name: 'AlertList',
+      component: () => import('@/view/mypage/AlertList')
+    },
+    {
       path: '/AlertSet',
       name: 'AlertSet',
       component: () => import('@/view/mypage/AlertSet')
@@ -215,6 +200,11 @@ export default new Router({
       path: '/ChangePw',
       name: 'ChangePw',
       component: () => import('@/view/mypage/ChangePw')
+    },
+    {
+      path: '/ChkPw',
+      name: 'ChkPw',
+      component: () => import('@/view/mypage/ChkPw')
     },
     {
       path: '/Exchange',
@@ -352,8 +342,13 @@ export default new Router({
       component: () => import('@/view/mypage/BrandProfile')
     },
     {
-      path: '/CustomerSearch',
+      path: '/CustomerSearch/:faqKeyword',
       name: 'CustomerSearch',
+      component: () => import('@/view/customer/CustomerSearch')
+    },
+    {
+      path: '/CustomerSearch/:type/:code',
+      name: 'CustomerSearchType',
       component: () => import('@/view/customer/CustomerSearch')
     }
   ]

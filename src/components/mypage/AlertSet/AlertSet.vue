@@ -1,19 +1,24 @@
 <template>
   <div class="setBox">
       <div class="row">
+          <p>쿠폰/선물</p>
+          <input type="checkbox" id="presentBox" v-model="alertSets.coupon" />
+          <label for="presentBox"></label>
+      </div>
+      <div class="row">
+          <p>이벤트</p>
+          <input type="checkbox" id="event" v-model="alertSets.event"  />
+          <label for="event"></label>
+      </div>
+      <div class="row">
           <p>구매내역</p>
           <input type="checkbox" id="buyLog" v-model="alertSets.buyLog" @change="set()" />
           <label for="buyLog"></label>
       </div>
       <div class="row">
-          <p>선물함</p>
-          <input type="checkbox" id="presentBox" v-model="alertSets.present" />
-          <label for="presentBox"></label>
-      </div>
-      <div class="row">
-          <p>취소 환불 교환 내역</p>
-          <input type="checkbox" id="exchangeLog" v-model="alertSets.exchangeLog" @change="set()" />
-          <label for="exchangeLog"></label>
+          <p>라이브 방송</p>
+          <input type="checkbox" id="live" v-model="alertSets.live"  />
+          <label for="live"></label>
       </div>
   </div>
 </template>
@@ -26,8 +31,9 @@ export default {
     return {
       alertSets: {
         buyLog: 0,
-        present: 0,
-        exchangeLog: 0
+        coupon: 0,
+        event: 0,
+        live: 0
       }
     }
   },
