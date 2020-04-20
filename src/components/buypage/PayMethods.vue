@@ -68,13 +68,14 @@ export default {
 .PayMethodsWrap{
   background-color: #fff;
   margin-top: 5px;
- padding: 15px 12px;
+  padding: 15px 0;
 }
 
 .PayMethodsWrap .payHeader{
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 16px;
+  padding: 0 10px;
 }
 
 .PayMethodsWrap .methods{
@@ -82,9 +83,9 @@ export default {
 }
 
 .PayMethodsWrap .methods button{
-  width: 30%;
+  width: 45%;
   height: 40px;
-  margin: 0 10px 10px 0;
+  margin: 5px 5px;
   border: 1px solid #eeeeee;
 }
 

@@ -28,7 +28,7 @@
 
       </div>
 
-      <div v-if="currnetCat===1" class="pointSection">
+      <div v-if="$store.state.isLogin&&currnetCat===1" class="pointSection">
             <div class="pointHeader">
                 보유 포인트 <span class="price">{{discountPoint|makeComma}}</span>원
              </div>

@@ -32,7 +32,9 @@ export default {
   props: ['user'],
   watch: {
     user (val) {
+      this.name = val.name
       this.email = val.userId
+      this.phone = val.mobile
     }
   },
   methods: {
@@ -50,7 +52,7 @@ export default {
       }
     },
     isValidPhone (x) {
-      let regex = /^[0-9]+$/
+      let regex = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g
       if (!regex.test(this.phone)) {
         alert('정확한 번호를 입력 해주세요')
         this.phone = ''

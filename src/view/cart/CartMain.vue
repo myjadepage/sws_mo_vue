@@ -288,7 +288,7 @@ export default {
 
         sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
       }
-      // this.$forceUpdate()
+      this.$forceUpdate()
     },
     multiItemChange (info) {
       if (this.$store.state.isLogin) { // 회원인 경우

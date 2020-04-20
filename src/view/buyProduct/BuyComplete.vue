@@ -107,33 +107,38 @@ export default {
 
     if (sessionStorage.getItem('orderSysId')) {
       payOrders(item, sessionStorage.getItem('orderSysId')).then(res => {
-        console.log(res)
-        this.vbankInfo = {...res.data.jsonData.res}
-        this.payOrdersStatus = true
+        if (res.data.jsonData.resultCode === '0001') {
+          console.log(res)
+          this.vbankInfo = {...res.data.jsonData.res}
+          this.payOrdersStatus = true
 
-        if (this.info.basketSysIds.length > 0 && this.$store.state.isLogin) {
-          let ids = this.info.basketSysIds.join()
-          removeCartList(sessionStorage.getItem('accessToken'), {basketSysIds: ids})
-            .then(res => {
-              console.log(res)
-            })
-            .catch(err => {
-              console.log(err)
-            })
-        } else if (this.info.basketSysIds.length > 0 && !this.$store.state.isLogin) {
-          let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
-          for (let i = cartList.length - 1; i >= 0; i--) {
-            if (this.info.basketSysIds.includes(cartList[i].basketSysId)) {
-              cartList.splice(i, 1)
+          if (this.info.basketSysIds.length > 0 && this.$store.state.isLogin) {
+            let ids = this.info.basketSysIds.join()
+            removeCartList(sessionStorage.getItem('accessToken'), {basketSysIds: ids})
+              .then(res => {
+                console.log(res)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+          } else if (this.info.basketSysIds.length > 0 && !this.$store.state.isLogin) {
+            let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+            for (let i = cartList.length - 1; i >= 0; i--) {
+              if (this.info.basketSysIds.includes(cartList[i].basketSysId)) {
+                cartList.splice(i, 1)
+              }
             }
+            sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           }
-          sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
-        }
 
-        sessionStorage.removeItem('orderSysId')
-        sessionStorage.removeItem('products')
-        sessionStorage.removeItem('selectedOptions')
-        sessionStorage.removeItem('payItem')
+          sessionStorage.removeItem('orderSysId')
+          sessionStorage.removeItem('products')
+          sessionStorage.removeItem('selectedOptions')
+          sessionStorage.removeItem('payItem')
+        } else {
+          this.result = false
+          this.errMsg = '결제에 실패했습니다.'
+        }
       }).catch(err => {
         if (err.response.status === 401) {
           getAccessToken(sessionStorage.getItem('refreshToken'))
@@ -164,7 +169,8 @@ export default {
         vbank_code: '',
         vbank_holder: '',
         vbank_name: '',
-        vbank_num: ''
+        vbank_num: '',
+        vbank_date: ''
       }
     }
   },

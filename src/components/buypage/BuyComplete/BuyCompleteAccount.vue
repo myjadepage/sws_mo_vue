@@ -23,7 +23,7 @@
       </tr>
       <tr>
         <th>입금기한</th>
-        <!-- <td>{{vbankTerm}}</td> -->
+        <td>{{vbankInfo.vbank_date}}</td>
       </tr>
     </table>
     </div>
@@ -36,15 +36,11 @@ export default {
   computed: {
     vbankHolder () {
       return this.vbankInfo.vbank_holder.trim()
-    },
-
-    vbankTerm () {
-      // let date = this.accountInfo.termDate.split('.')
-      // let time = this.accountInfo.termTime.split(':')
-
-      // let val = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${time[0]}시 ${time[1]}분까지`
-      return ''
     }
+
+    // vbankTerm () {
+    //   // return
+    // }
   }
 }
 </script>

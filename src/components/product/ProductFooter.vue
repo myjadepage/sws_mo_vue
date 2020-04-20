@@ -12,7 +12,6 @@
 <script>
 import Option from './Footer/ProductFooterOption'
 import {postCartItem, getAccessToken} from '@/api/index.js'
-// import {isEquals} from '@/assets/js/common.js'
 
 export default {
   props: ['buyMode', 'options'],
@@ -100,7 +99,6 @@ export default {
         // 회원 장바구니 등록
           postCartItem(sessionStorage.getItem('accessToken'), cartItem)
             .then(res => {
-              console.log(res)
               if (res.data.jsonData.resultCode === '0001') {
                 this.$emit('addedCartItem')
               }

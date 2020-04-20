@@ -12,7 +12,7 @@
     <TotalPriceInfo @infoBtncilik="infoModalShow" @finalPrice="getfinalPrice" :discount="discountPoint+discountCoupon" />
     <BuyFooter :addresses="addresses" :coupon="discountCoupon" :point="discountPoint" :finalPrice="finalPrice" />
 
-    <AddrModal :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
+    <AddrModal @deleteAddr="deleteAddr" :addresses="addresses" @modalClose="addrModalVisibility = false" @addrModalClose="addrModalClose" v-if="addrModalVisibility" />
     <InfoModal @modalClose="infoModalVisibility = false" v-if="infoModalVisibility" />
 
 </div>
@@ -62,7 +62,11 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getMemberAddrList(sessionStorage.getItem('accessToken'))
         .then(res => {
-          this.addresses = res.data.jsonData.addresses
+          if (res.data.jsonData.addresses) {
+            this.addresses = res.data.jsonData.addresses
+          } else {
+            this.addresses = []
+          }
         })
         .catch(err => {
           if (err.response.status === 401) {
@@ -105,7 +109,13 @@ export default {
     addrModalClose () {
       if (sessionStorage.getItem('accessToken')) {
         getMemberAddrList(sessionStorage.getItem('accessToken'))
-          .then(res => { this.addresses = res.data.jsonData.addresses })
+          .then(res => {
+            if (res.data.jsonData.addresses) {
+              this.addresses = res.data.jsonData.addresses
+            } else {
+              this.addresses = []
+            }
+          })
           .catch(err => {
             if (err.response.status === 401) {
               getAccessToken(sessionStorage.getItem('refreshToken'))
@@ -141,6 +151,11 @@ export default {
     },
     getfinalPrice (price) {
       this.finalPrice = price
+    },
+
+    deleteAddr (idx) {
+      this.addresses.splice(idx, 1)
+      this.addrModalClose()
     }
   }
 }

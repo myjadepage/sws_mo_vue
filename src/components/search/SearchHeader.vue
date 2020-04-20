@@ -1,7 +1,7 @@
 <template>
   <div class="searchHeaderWrap">
       <span @click="goBack" class="ico_back_arr"></span>
-      <input ref="input" @change="inputKeyPressed" @focus="enFocused" @blur="unFocused"  @keydown="inputKeyPressed" @keydown.enter="clickSearchBtn" v-model="keyword" type="text" placeholder="검색어를 입력해주세요.">
+      <input ref="input" @change="inputKeyPressed" @focus="enFocused" @blur="unFocused"  @keydown="inputKeyPressed" @keydown.enter="inputEnter" @input="keyword = $event.target.value" type="text" placeholder="검색어를 입력해주세요.">
       <span @click="clickSearchBtn" class="ico_search_btn"></span>
       <span v-if="keyword" @click="deleteInput" class="ico_delete_btn"></span>
       <div class="searchList">
@@ -63,11 +63,12 @@ export default {
     },
     deleteInput () {
       this.keyword = ''
+      this.$refs.input.value = ''
       this.searchResults = []
     },
     inputKeyPressed () {
       let self = this
-      if (this.keyword && this.keyword !== '') {
+      if (this.keyword && this.keyword.trim() !== '') {
         if (this.timer) {
           clearTimeout(this.timer)
         }
@@ -75,31 +76,105 @@ export default {
           if (self.cat === 0) {
             searchProducts(self.keyword)
               .then((res) => {
-                console.log(res)
-                self.searchResults = res.data.jsonData.products
+                if (res.data.jsonData.products) {
+                  self.searchResults = res.data.jsonData.products
+                } else {
+                  self.searchResults = []
+                }
               }
-              ).catch((e) => console.log(e)
+              ).catch((e) => {
+                this.searchResults = []
+              }
               )
           } else if (self.cat === 1) {
             searchBrands(self.keyword)
               .then((res) => {
-                console.log(res)
-                self.searchResults = res.data.jsonData.brands
+                if (res.data.jsonData.brands) {
+                  self.searchResults = res.data.jsonData.brands
+                } else {
+                  self.searchResults = []
+                }
               }
-              ).catch((e) => console.log(e)
+              ).catch((e) => {
+                this.searchResults = []
+              }
               )
           } else if (self.cat === 2) {
             searchBroadcasts(self.keyword)
               .then((res) => {
-                console.log(res)
-                self.searchResults = res.data.jsonData.broadcasts
+                if (res.data.jsonData.broadcasts) {
+                  self.searchResults = res.data.jsonData.broadcasts
+                } else {
+                  self.searchResults = []
+                }
               }
-              ).catch((e) => console.log(e)
+              ).catch((e) => {
+                this.searchResults = []
+              }
               )
           }
         }, 200)
       } else {
         this.searchResults = []
+      }
+    },
+
+    inputEnter () {
+      let self = this
+      if (this.keyword && this.keyword.trim() !== '') {
+        if (self.cat === 0) {
+          searchProducts(self.keyword)
+            .then((res) => {
+              if (res.data.jsonData.products) {
+                self.searchResults = res.data.jsonData.products
+              } else {
+                self.searchResults = []
+              }
+
+              this.$emit('clickSearch', this.searchResults)
+              this.$refs.input.blur()
+              this.unFocused()
+            }
+            ).catch((e) => {
+              this.searchResults = []
+            }
+            )
+        } else if (self.cat === 1) {
+          searchBrands(self.keyword)
+            .then((res) => {
+              if (res.data.jsonData.brands) {
+                self.searchResults = res.data.jsonData.brands
+              } else {
+                self.searchResults = []
+              }
+
+              this.$emit('clickSearch', this.searchResults)
+              this.$refs.input.blur()
+              this.unFocused()
+            }
+            ).catch((e) => {
+              this.searchResults = []
+            }
+            )
+        } else if (self.cat === 2) {
+          searchBroadcasts(self.keyword)
+            .then((res) => {
+              if (res.data.jsonData.broadcasts) {
+                self.searchResults = res.data.jsonData.broadcasts
+              } else {
+                self.searchResults = []
+              }
+              self.searchResults = res.data.jsonData.broadcasts
+
+              this.$emit('clickSearch', this.searchResults)
+              this.$refs.input.blur()
+              this.unFocused()
+            }
+            ).catch((e) => {
+              this.searchResults = []
+            }
+            )
+        }
       }
     },
     clickSearchBtn () {
@@ -108,6 +183,7 @@ export default {
       this.unFocused()
     }
   }
+
 }
 </script>
 

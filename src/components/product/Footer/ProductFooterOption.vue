@@ -62,20 +62,36 @@ export default {
     }
   },
   methods: {
-
     optionCnt (idx) {
       return this.$store.getters.getOptionCnt(idx)
     },
 
     countDecraese (idx) {
-      if (this.$store.getters.getOptionCnt(idx) !== 1) {
+      if (this.$store.getters.getOptionCnt(idx) > 1) {
         this.$store.commit('decreaseOptionCnt', idx)
       }
     },
     countIncrease (idx) {
-      this.$store.commit('increaseOptionCnt', idx)
+      if (Number(this.$el.getElementsByClassName('count')[idx].value) >= 99) {
+        return
+      }
+
+      if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
+        this.$store.commit('increaseOptionCnt', idx)
+      }
     },
     countSet (idx) {
+      if (Number(this.$el.getElementsByClassName('count')[idx].value) > 99) {
+        this.$el.getElementsByClassName('count')[idx].value = 99
+      }
+
+      if (Number(this.$el.getElementsByClassName('count')[idx].value) > this.$store.getters.getProduct.stockQty) {
+        this.$el.getElementsByClassName('count')[idx].value = this.$store.getters.getProduct.stockQty
+      }
+
+      if (this.$el.getElementsByClassName('count')[idx].value < 1) {
+        this.$el.getElementsByClassName('count')[idx].value = 1
+      }
       this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
     },
 

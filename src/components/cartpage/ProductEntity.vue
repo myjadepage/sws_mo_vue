@@ -141,6 +141,14 @@ export default {
       this.$emit('selectItem', this.index)
     },
     cntChange (x) {
+      if (this.product.isSoldout) {
+        this.$emit('soldOut')
+        return
+      } else if (Number(x.target.value) > this.product.stockQty) {
+        this.$emit('salesLimitOver')
+        return
+      }
+
       if (this.product.isOptionNormal) {
         for (let i = 0; i < this.product.productOptions.length; i++) {
           this.product.productOptions[i].optionQty = Number(x.target.value)

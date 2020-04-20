@@ -153,7 +153,7 @@ function deleteMemberAddress (accessToken, addrSysId) {
 
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
-  return axios.get(`${config.baseUrl2}operations/deliveries/addingCosts/${postNumber}`)
+  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
 }
 
 // 회원 포인트 수정
@@ -178,15 +178,51 @@ function patchUserPoint (accessToken, pointData) {
 
 // 상품 검색
 function searchProducts (name) {
-  return axios.get(`${config.baseUrl}products/searchlists?name=${name}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}products/searchlists?name=${name}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            products: []
+          }
+        }
+      })
+    })
+  }
 }
 // 브랜드 검색
 function searchBrands (name) {
-  return axios.get(`${config.baseUrl}brands/searchlists?name=${name}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}brands/searchlists?name=${name}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            brands: []
+          }
+        }
+      })
+    })
+  }
 }
 // 방송 검색
 function searchBroadcasts (title) {
-  return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            broadcasts: []
+          }
+        }
+      })
+    })
+  }
 }
 
 /**
@@ -195,7 +231,7 @@ function searchBroadcasts (title) {
  */
 // 상품 상세 조회
 function getProductDetail (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/detail`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/detail`)
 }
 
 // 단일 상품 조회
@@ -647,7 +683,7 @@ function getBroadCastSchedules (accessToken, startDate) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}&userSysId=${userSysId}`,
+    url: `${config.baseUrl}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}&userSysId=${userSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -661,7 +697,7 @@ function setReservateBroadCast (accessToken, broadcastScheduleSysId) {
   formdata.set('jsonData', JSON.stringify({'broadcastScheduleSysId': broadcastScheduleSysId}))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -677,7 +713,7 @@ function getReservateBroadCast (accessToken, sIdx, rCnt, sDate) {
   console.log({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate})
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/list`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -690,7 +726,7 @@ function removeReservateBroadCast (accessToken, userBroadcastReservationSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/${userBroadcastReservationSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/${userBroadcastReservationSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`

@@ -34,7 +34,6 @@
 <script>
 
 export default {
-
   props: ['products'],
   computed: {
     deliveryPrice () {
