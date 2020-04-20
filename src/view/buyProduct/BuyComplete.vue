@@ -21,6 +21,9 @@ import Footer from '@/components/buypage/BuyComplete/BuyCompleteFooter'
 import {payOrders, patchUserPoint, getAccessToken, removeCartList} from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 구매완료'
+  },
   created () {
     if (this.$route.query.imp_success === 'true') {
       this.result = true

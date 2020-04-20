@@ -50,33 +50,6 @@ export const store = new Vuex.Store({
         state.isLogin = false
       }
     },
-    loginSuccessGoogle (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
-    loginSuccessKakao (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
-    loginSuccessNaver (state) {
-      sessionStorage.getItem('accessToken')
-      sessionStorage.getItem('refreshToken')
-      if (sessionStorage.getItem('accessToken')) {
-        state.isLogin = true
-      } else {
-        state.isLogin = false
-      }
-    },
     // 로그인 실패시
     loginError (state) {
       state.isLogin = false
@@ -154,21 +127,9 @@ export const store = new Vuex.Store({
         resolve()
       })
     },
-    getUserInfoGoogle ({commit}) {
+    getUserInfoSns ({commit}) {
       return new Promise((resolve, reject) => {
-        commit('loginSuccessGoogle')
-        resolve()
-      })
-    },
-    getUserInfoKakao ({commit}) {
-      return new Promise((resolve, reject) => {
-        commit('loginSuccessKakao')
-        resolve()
-      })
-    },
-    getUserInfoNaver ({commit}) {
-      return new Promise((resolve, reject) => {
-        commit('loginSuccessNaver')
+        commit('loginSuccess')
         resolve()
       })
     }

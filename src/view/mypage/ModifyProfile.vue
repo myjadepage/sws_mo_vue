@@ -10,6 +10,9 @@ import Bar from '@/components/shared/Bar'
 import Modify from '@/components/mypage/Modify/Profile'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 내 정보 관리'
+  },
   data () {
     return {
       title: '내 정보 관리'

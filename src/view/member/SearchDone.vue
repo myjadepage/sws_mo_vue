@@ -14,6 +14,9 @@
 <script>
 import Bar from '@/components/member/Bar'
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 아이디찾기'
+  },
   components: {
     Bar
   },

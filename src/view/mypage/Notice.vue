@@ -14,6 +14,9 @@ import NoticeList from '@/components/mypage/Notice/NoticeList'
 import { getNoticeList } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 공지사항'
+  },
   created () {
     getNoticeList(this.startIndex, 10)
       .then(res => {

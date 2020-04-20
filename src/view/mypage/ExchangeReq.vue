@@ -15,6 +15,9 @@ import ExchangeRequest from '@/components/mypage/Exchange/ExchangeReq'
 import FinishModal from '@/components/mypage/Exchange/Modal/RequestFinish'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 교환 요청'
+  },
   data () {
     return {
       title: '교환요청',

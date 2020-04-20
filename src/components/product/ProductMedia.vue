@@ -117,7 +117,6 @@ export default {
         })
         this.mode = 'normal'
       }
-      console.log('f')
     }
   }
 }

@@ -12,6 +12,9 @@ import LongText from '@/components/shared/LongText'
 import ChkButton from '@/components/shared/ChkButton'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 회원탈퇴'
+  },
   name: 'Widthdraw',
   data () {
     return {

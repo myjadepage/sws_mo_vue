@@ -16,6 +16,9 @@ import RemovedModal from '@/components/mypage/Exchange/Modal/BasketDeleted'
 import { getRecentViewList, getAccessToken } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 최근 본 상품'
+  },
   data () {
     return {
       title: '최근 본 상품',

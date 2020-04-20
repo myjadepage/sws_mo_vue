@@ -10,6 +10,9 @@ import SearchFormPw from '@/components/member/SearchFormPw'
 import Bar from '@/components/member/Bar'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 비밀번호 찾기'
+  },
   components: {
     SearchFormPw,
     Bar

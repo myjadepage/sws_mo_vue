@@ -9,6 +9,9 @@
 import Bar from '@/components/member/Bar'
 import RegisterCheck from '@/components/member/RegisterCheck'
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 회원가입'
+  },
   components: {
     Bar,
     RegisterCheck

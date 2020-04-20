@@ -1,0 +1,42 @@
+{
+  "name": "SWS APP",
+  "short_name": "SWS",
+  "theme_color": "#fff",
+  "background_color": "#FFF",
+  "description": "SWS - MOBILE",
+  "icons": [
+    {
+      "src": "/static/images/apple-touch-icon-57x57.png",
+      "sizes": "57x57",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/apple-touch-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/apple-touch-icon-120x120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/apple-touch-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/sws_bi_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/images/sws_bi_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "http://localhost:8080",
+  "display": "standalone",
+  "orientation": "any"
+}

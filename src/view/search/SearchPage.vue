@@ -2,7 +2,7 @@
   <div class="searchPageWrap">
     <div v-if="copyModalShow" class="darkFilter"></div>
       <SearchHeader :cat="cat" @clickSearch="search"  @inputOutFoucsed="isInputFocus=false" @inputFoucsed="isInputFocus=true" />
-      <SearchCategory :cat="cat" @catChange="catChange" v-if="!isInputFocus" />
+      <SearchCategory @catChange="catChange" :cat="cat" v-if="!isInputFocus" />
       <div v-if="!isInputFocus&&cat===0">
         <SearchProduct  v-for="(r,idx) in searchResults" :key="idx" :product="r" />
       </div>
@@ -26,6 +26,9 @@ import SearchBroadcast from '@/components/search/SearchBroadcast'
 import CopyModal from '@/components/search/Modal/CopyModal'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 검색'
+  },
   components: {
     SearchHeader, SearchCategory, SearchProduct, SearchBrand, SearchBroadcast, CopyModal
   },

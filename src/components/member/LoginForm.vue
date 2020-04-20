@@ -64,13 +64,14 @@
                 <li>
                   <v-facebook-login
                     app-id="2810824608956950"
+                    :options = fboption
                     class="btn btn-circle sws_icon btn-fb"/>
                   <span>페이스북</span>
                 </li>
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-                    callback-url="http://localhost:8080/Login"
+                    callback-url="http://m.shallwe.link/Login"
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -105,7 +106,12 @@ export default {
       id: null,
       password: null,
       checkedId: false,
-      checkedAuto: false
+      checkedAuto: false,
+      fboption: {
+        cookie: true,
+        xfbml: true,
+        autoLogAppEvents: true
+      }
     }
   },
   mounted () {
@@ -121,11 +127,12 @@ export default {
     var params = {}
     var param = $(location).attr('href')
     param.replace(/[#&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value })
-    console.log('param', params.access_token)
+    console.log('params', params.access_token)
     snsLogin(2, params.access_token)
       .then(res => {
         console.log('res', res)
-        this.snsSuccessDoing(res, 'naver')
+        // this.snsSuccessDoing(res, 'naver')
+        this.snsSuccessDoing(res, 'sns')
       })
       .catch(function (error) {
         console.log('ERROR', error)
@@ -156,20 +163,6 @@ export default {
       sessionStorage.setItem('accessToken', accessToken)
       sessionStorage.setItem('refreshToken', refreshToken)
 
-      // switch (snsParam) {
-      //   case 'google' :
-      //     sessionStorage.setItem('accessTokenGoogle', accessToken)
-      //     sessionStorage.setItem('refreshTokenGoogle', refreshToken)
-      //     break
-      //   case 'naver' :
-      //     sessionStorage.setItem('accessTokenNaver', accessToken)
-      //     sessionStorage.setItem('refreshTokenNaver', refreshToken)
-      //     break
-      //   case 'kakao' :
-      //     sessionStorage.setItem('accessTokenKakao', accessToken)
-      //     sessionStorage.setItem('refreshTokenKakao', refreshToken)
-      //     break
-      // }
       getUserInfo(accessToken).then(r => {
         sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
       }).catch(err => {
@@ -181,12 +174,8 @@ export default {
           case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
           case 1 : this.$router.push('/'); break
         }
-      } else { // 로그인
-        switch (snsParam) {
-          case 'google': this.$store.dispatch('getUserInfoGoogle'); break
-          case 'naver': this.$store.dispatch('getUserInfoNaver'); break
-          case 'kakao': this.$store.dispatch('getUserInfoKakao'); break
-        }
+      } else if (snsParam === 'sns') { // 로그인
+        this.$store.dispatch('getUserInfoSns')
         this.$router.push('/')
       }
     },
@@ -195,9 +184,10 @@ export default {
       this.$gAuth.signIn()
         .then(GoogleUser => {
           this.isSignIn = this.$gAuth.isAuthorized
-          snsLogin(3, GoogleUser.uc.access_token)
+          snsLogin(3, GoogleUser.tc.access_token)
             .then(res => {
-              this.snsSuccessDoing(res, 'google')
+              // this.snsSuccessDoing(res, 'google')
+              this.snsSuccessDoing(res, 'sns')
             })
             .catch(function (error) {
               console.log('ERROR', error)
@@ -211,7 +201,8 @@ export default {
     onSuccess: function (data) {
       snsLogin(1, data.access_token)
         .then(res => {
-          this.snsSuccessDoing(res, 'kakao')
+          // this.snsSuccessDoing(res, 'kakao')
+          this.snsSuccessDoing(res, 'sns')
         })
         .catch(function (error) {
           console.log('ERROR', error)
@@ -220,9 +211,8 @@ export default {
     onFailure: (data) => {
       console.log('failure', data)
     },
-
     // 네이버로그인시 콜백함수인데 여기서 처리안함!
-    callbackFunction: function () {},
+    callbackFunction: function () {}, // mounted에서 함
 
     // 비회원구매하기
     noMemberBuyClick () {

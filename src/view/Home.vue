@@ -13,6 +13,9 @@ import Footer from '@/components/shared/Footer'
 import MainContent from '@/components/MainContent'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop, 쉘위샵'
+  },
   created () {
     window.scrollTo(0, 0)
     sessionStorage.removeItem('products')

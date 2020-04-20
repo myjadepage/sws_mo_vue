@@ -29,6 +29,9 @@ import ScrollTopBtn from '@/components/subpage/shared/ScrollTopBtn'
 import Footer from '@/components/shared/Footer'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 패션'
+  },
   components: {
     Header, Categories, ScrollTopBtn, LiveSlide, Sale, SubSlide, CategorySlide, Brand, Theme, Footer
   },

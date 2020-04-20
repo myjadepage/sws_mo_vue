@@ -18,6 +18,9 @@ import profile3 from '@/assets/img/temp_profile3.jpg'
 import profile4 from '@/assets/img/temp_profile4.jpg'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 팔로워'
+  },
   data () {
     return {
       title: '팔로워',

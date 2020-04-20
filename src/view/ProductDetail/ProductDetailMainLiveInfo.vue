@@ -26,6 +26,9 @@ import CartModal from '@/components/product/Modal/CartModal'
 import {getProduct, setRecentViewList, getRecentViewList, getAccessToken} from '@/api/index'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 상품 상세정보'
+  },
   created () {
     window.scrollTo(0, 0)
     let id = this.$route.params.prdtSysId

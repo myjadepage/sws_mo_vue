@@ -22,6 +22,9 @@ import Footer from '@/components/mypage/Main/MyFooter'
 import { getMypageInfo, getCartItem, getAccessToken } from '@/api/index.js'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 마이페이지'
+  },
   data () {
     return {
       title: '마이페이지',

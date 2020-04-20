@@ -26,6 +26,7 @@
     "vue-jwt-decode": "^0.1.0",
     "vue-kakao-login": "^1.0.5",
     "vue-loading-overlay": "^3.3.2",
+    "vue-meta": "^2.3.3",
     "vue-naver-login": "^1.0.4",
     "vue-router": "^3.0.1",
     "vuejs-countdown-timer": "^2.1.2",

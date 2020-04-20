@@ -20,6 +20,9 @@ import csCenter from '@/components/customer/csCenter'
 import IconBlcok from '@/components/customer/qnaIconBlock'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 고객센터'
+  },
   data () {
     return {
       title: '고객센터',

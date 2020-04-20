@@ -753,7 +753,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 .layer-player {
     position: relative;
@@ -885,9 +885,7 @@ body>#flowplayer-floating-container {
     top: 105px;
     right: 0;
   }
-  .info .fp-secondary .fp-share-menu{
-    top:90px;
-  }
+
 
   /* 비디오메뉴선택 */
   
@@ -954,8 +952,13 @@ body>#flowplayer-floating-container {
     opacity:0;
     transition:all 0.3s ease;
   }
-  .live .flowplayer.is-paused .fp-ui{
+  .live .flowplayer.is-paused .fp-ui,
+  .flowplayer.is-ended .fp-ui{
     opacity:1;
+  }
+  .is-seamless.is-ended .fp-play{
+    width:5em;
+    height:auto;
   }
   /* .live .flowplayer .fp-secondary{
     top:65px;
@@ -1045,8 +1048,10 @@ body>#flowplayer-floating-container {
   }
   .live .flowplayer.is-touched .fp-ui{
     opacity:1;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.3);
+    animation:infinite 1s infinite both alternate;
   }
+
   .flowplayer .fp-header .fp-share-menu{
     float:none;
     right:10px;
@@ -1102,7 +1107,6 @@ body>#flowplayer-floating-container {
     bottom:0;
     z-index:103;
     width:calc(100% - 24px);
-    height:106px;
     margin:10px 12px;
     padding:15px 10px;
     background:#fff;
@@ -1113,7 +1117,8 @@ body>#flowplayer-floating-container {
   }
   .live .flowplayer.is-touched .productInfoBox,
   .live .flowplayer.is-paused .productInfoBox{
-    opacity:1;
+    /* opacity:1; */
+    animation:infinite 1s infinite both alternate;
   }
   .live .flowplayer .productInfoBox h1{
     font-size:15px;
@@ -1133,6 +1138,7 @@ body>#flowplayer-floating-container {
     font-size:18px;
     font-weight:700;
     vertical-align: bottom;
+    color:#e61754;
   }
   .live .flowplayer .productInfoBox .bottom .now_price{
     display:inline-block;
@@ -1232,8 +1238,9 @@ body>#flowplayer-floating-container {
   }
   .mainMedia .is-touched .btn_goBack,
   .mainMedia .is-paused .btn_goBack{
-    opacity:1;
+    /* opacity:1; */
     transform:translateX(0);
+    animation:infinite 1s infinite both alternate;
   }
   .mainMedia .toggleMute{
     position:absolute;
@@ -1252,6 +1259,7 @@ body>#flowplayer-floating-container {
   }
   .mainMedia .is-touched .toggleMute,
   .mainMedia .is-paused .toggleMute{
-    opacity:1;
+    /* opacity:1; */
     transform:translateX(0);
+    animation:infinite 1s infinite both alternate;
   }

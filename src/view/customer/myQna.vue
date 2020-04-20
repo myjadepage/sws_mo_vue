@@ -12,6 +12,9 @@ import EmptyBlock from '@/components/shared/EmptyBlock'
 import MyQna from '@/components/customer/MyQna'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 문의 내역'
+  },
   data () {
     return {
       title: '문의내역',

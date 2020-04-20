@@ -11,8 +11,6 @@
 <script>
 export default {
   props: ['cat'],
-  mounted () {
-  },
   methods: {
     selectMediaMode (x) {
       this.$emit('catChange', x)

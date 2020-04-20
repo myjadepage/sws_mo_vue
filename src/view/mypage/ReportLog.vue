@@ -12,6 +12,9 @@ import LogList from '@/components/mypage/Setting/LogList'
 import ListEmpty from '@/components/shared/ListEmpty'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 신고내역'
+  },
   name: 'ReportLog',
   data () {
     return {

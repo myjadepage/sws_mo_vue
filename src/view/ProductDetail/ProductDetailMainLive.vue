@@ -9,6 +9,9 @@ import MediaLive from '@/components/product/ProductMediaLive'
 import { getProduct } from '@/api/index'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 상품 Live'
+  },
   created () {
     let id = this.$route.params.prdtSysId
     let self = this

@@ -23,6 +23,9 @@ import Status from '@/components/mypage/Tracking/TrackingStatus'
 import Orders from '@/components/mypage/Tracking/TrackingOrder'
 
 export default {
+  metaInfo: {
+    title: 'Shall We Shop - 배송조회'
+  },
   data () {
     return {
       title: '배송조회',
