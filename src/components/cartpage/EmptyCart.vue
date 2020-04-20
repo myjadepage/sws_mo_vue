@@ -44,7 +44,7 @@ export default {
 
 .emptyCartWrap .goShopBtn{
     height: 42px;
-    width: 153px;
+    width: 40%;
     background-color: #e61754;
     color: white;
     font-size: 14px;

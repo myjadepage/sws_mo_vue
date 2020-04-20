@@ -3,9 +3,9 @@ import axios from 'axios'
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
-  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
+  baseUrl2: 'http://192.168.1.20:3800/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
-  // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
+  // baseUrl5: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
 
 /**
@@ -135,9 +135,25 @@ function addMemberAddress (accessToken, addrInfo) {
   })
 }
 
+// 회원 주소 삭제
+function deleteMemberAddress (accessToken, addrSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addrSysId))
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl}users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
-  return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
+  return axios.get(`${config.baseUrl2}operations/deliveries/addingCosts/${postNumber}`)
 }
 
 // 회원 포인트 수정
@@ -177,11 +193,17 @@ function searchBroadcasts (title) {
  *
  * 상품 상세
  */
-// 단일 상품
+// 상품 상세 조회
+function getProductDetail (prdtSysId) {
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/detail`)
+}
+
+// 단일 상품 조회
 function getProduct (prdtSysId) {
   return axios.get(`${config.baseUrl2}products/${prdtSysId}`)
 }
 
+// 방송 가져오기
 function getBroadCast (prdtSysId) {
   return axios.get(`${config.baseUrl2}broadcasts/${prdtSysId}`)
 }
@@ -306,6 +328,50 @@ function putCartItem (accessToken, basketSysId, cartItem) {
     },
     data: formdata
   })
+}
+
+// 비회원 장바구니 회원장바구니로 합치기
+function nonMemberCartMerge () {
+  if (sessionStorage.getItem('nonMemberCartList')) {
+    let nCart = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+    nCart.forEach(c => {
+      let cartItem = {
+        prdtSysId: c.prdtSysId,
+        basketQty: c.basketQty,
+        isOptionNormal: c.isOptionNormal,
+        isAddingProduct: 0
+        // optionGroups:,
+        // addingProducts
+      }
+
+      if (c.optionGroups) {
+        cartItem.optionGroups = []
+        for (const o of c.optionGroups) {
+          let groupItem = {
+            optionQty: o.optionQty,
+            productOptions: []
+          }
+
+          for (const po of o.productOptions) {
+            groupItem.productOptions.push({
+              prdtNormalOptionSysId: po.prdtNormalOptionSysId,
+              optionKeyName: po.optionKeyName
+            })
+          }
+
+          cartItem.optionGroups.push(groupItem)
+        }
+      }
+
+      postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+        .then(res => {
+          sessionStorage.removeItem('nonMemberCartList')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
+  }
 }
 
 /**
@@ -753,6 +819,7 @@ export {
   getLiveProduct,
   retauthMine,
   getProduct,
+  getProductDetail,
   getBrandList,
   getBroadCast,
   postOrders,
@@ -793,5 +860,7 @@ export {
   getProductReview,
   getFollowing,
   claimReview,
-  patchUserPoint
+  patchUserPoint,
+  nonMemberCartMerge,
+  deleteMemberAddress
 }

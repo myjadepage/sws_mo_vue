@@ -1,7 +1,7 @@
 <template>
   <div class="mediaEntityWrap">
         <div class="thumbnailSection" @click="play(idx)">
-            <img :src="media.thumbNailUrl" alt="" >
+            <img :src="media.thumnailUrl" alt="" >
             <span class="time">{{media.mediaLength}}</span>
         </div>
         <div class="titleSection">
@@ -68,6 +68,7 @@ export default {
     }
 
     .mediaEntityWrap .thumbnailSection img{
+        height: 100%;
         width:100%;
     }
 

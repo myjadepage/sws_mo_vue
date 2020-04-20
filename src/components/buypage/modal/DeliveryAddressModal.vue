@@ -22,7 +22,7 @@
         </div>
       </div>
 
-      <button v-if="currentCat===0" @click="selectAddrClick" class="doneBtn">선택하기</button>
+      <button @click="deleteClick" v-if="currentCat===0" class="listBtn">삭제하기</button><button v-if="currentCat===0" @click="selectAddrClick" class="listBtn doneBtn">선택하기</button>
       <button v-if="currentCat===1" @click="addAddrClick" class="doneBtn">{{$store.state.isLogin?'추가하기':'선택하기'}}</button>
     </div>
   </div>
@@ -30,7 +30,7 @@
 
 <script>
 import ModalHeader from './ModalHeader'
-import {addMemberAddress, getAccessToken, getAddingCosts} from '@/api/index.js'
+import {addMemberAddress, getAccessToken, getAddingCosts, deleteMemberAddress} from '@/api/index.js'
 
 export default {
   props: ['addresses'],
@@ -150,6 +150,39 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+
+    deleteClick () {
+      let x = this.$el.getElementsByClassName('addrRadio')
+      let val
+      for (const i of x) {
+        if (i.checked === true) {
+          val = i.value
+        }
+      }
+      if (!val) {
+        return
+      }
+
+      deleteMemberAddress(sessionStorage.getItem('accessToken'), {userAddressSysId: this.addresses[val].userAddressSysId})
+        .then(res => {
+          this.addresses.splice(val, 1)
+          this.$emit('addrModalClose')
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
     }
   },
   computed: {
@@ -176,10 +209,10 @@ export default {
 .deliveryAddrModal{
     z-index: 1000;
     position: fixed;
-    top: 20px;
+    top: 5%;
     left: 5%;
     width: 90%;
-    height: 95%;
+    height: 90%;
     background-color: #fff;
     overflow: scroll;
   }
@@ -220,6 +253,11 @@ export default {
     height: 42px;
     color: white;
     border-radius: 2px;
+  }
+
+  .deliveryAddrModal button.listBtn{
+    width: 45%;
+    margin: 0 5px 20px;
   }
 
   .deliveryAddrModal .defualtAddrCheck{

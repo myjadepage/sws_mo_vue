@@ -24,7 +24,7 @@
                 <label for="toggleButtonId"></label>
                 <div class="toggle-button__icon"></div>
               </div>
-              <label style="color:#666">아이디 저장</label>
+              <label for="toggleButtonId" style="color:#666">아이디 저장</label>
             </li>
             <!-- <li>
               <div class="toggle-button toggle-button-save">

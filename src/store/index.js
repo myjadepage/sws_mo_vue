@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import { userLogin } from '../api'
+import { userLogin, nonMemberCartMerge } from '../api'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
@@ -42,8 +42,10 @@ export const store = new Vuex.Store({
     loginSuccess (state) {
       sessionStorage.getItem('accessToken')
       sessionStorage.getItem('refreshToken')
+
       if (sessionStorage.getItem('accessToken')) {
         state.isLogin = true
+        nonMemberCartMerge()
       } else {
         state.isLogin = false
       }
