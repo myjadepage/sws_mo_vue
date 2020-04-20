@@ -1015,19 +1015,37 @@ Mypage > Main
 }
 
 .mySettingsWrap{
-  margin-top: 5px;
+  padding-bottom:1px;
   background-color: #fff;
+}
+.mySettingsWrap .setting_block{
+  border-bottom:1px solid #eee;
+}
+.mySettingsWrap .setting_block:first-child{
+  border-top:1px solid #eee;
+}
+.mySettingsWrap h4{
+  margin-top:34px;
+  margin-bottom:15px;
+  padding-left:22px;
+  font-size:18px;
+  color:#111;
 }
 
 .mySettingsWrap li{
   font-size: 15px;
   padding: 18px 22px;
 }
-
-.mySettingsWrap hr{
-  margin: 0 12px;
-  border : 1px solid #f3f3f3;
+.mySettingsWrap .logout_btn{
+  display:block;
+  width:calc(100% - 44px);
+  height:45px;
+  margin:20px 22px;
+  border:1px solid #eee;
+  border-radius: 4px;
 }
+
+
 
 .mySettingsWrap .ico_password{
     display: inline-block;
@@ -1120,25 +1138,55 @@ Mypage > Main
 }
 
 .myInfoWrap .infoHeader{
-  overflow: hidden;
+  position: relative;
   width:100%;
-  height: 120px;
-  padding:24px 22px 0px;
-  color: white;
-  background-color: #282a34;
+  height: 130px;
+  padding:33px 22px 0px;
+  background:#fff;
   box-sizing: border-box;
+  border-bottom:1px solid #eee;
+  border-top:1px solid #eee;
+  font-size:0;
 }
 .myInfoWrap .profile_pic,
 .myInfoWrap .profile_text{
-  float:left;
+  display:inline-block;
+  vertical-align: middle;
+  font-size:18px;
 }
 .myInfoWrap .profile_pic{
   position: relative;
+}
+.myInfoWrap .profile_btn{
+  position: absolute;
+  top:20px;
+  right:16px;
+}
+.myInfoWrap .profile_btn a{
+  display:inline-block;
+  width:65px;
+  height:30px;
+  padding-left:35px;
+  margin-left:20px;
+  border:1px solid #eee;
+  border-radius: 15px;
+  font-size:14px;
+  color:#111;
+  font-weight:700;
+  line-height:28px;
+  box-sizing: border-box;
+}
+.myInfoWrap .profile_btn .alarm_button{
+  background:url('../img/ico/alert.png') 15px 6px / 16px 17px no-repeat;
+}
+.myInfoWrap .profile_btn .like_button{
+  background:url('../img/ico/ico_like_search.png') 13px 8px / 17px auto no-repeat;
 }
 
 .myInfoWrap .profile_id{
   margin-top:10px;
   font-size: 16px;
+  color:#111;
   font-weight: 500;
 }
 
@@ -1146,13 +1194,30 @@ Mypage > Main
 
 .myInfoWrap .infoFooter{
   font-family: "Noto Sans KR";
-  height: 44px;
-  color: white;
-  font-size: 15px;
-  background: #32343e;
+  height: 50px;
+  padding:14px 0;
+  color: #111;
+  font-size: 0;
+  background: #fff;
   text-align: center;
-  line-height: 44px;
-  padding: 0 22px;
+  box-sizing: border-box;
+}
+.myInfoWrap .infoFooter a{
+  display:inline-block;
+  width:50%;
+  font-size:14px;
+  line-height:18px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+.myInfoWrap .infoFooter a:first-child{
+  border-right:1px solid #eee;
+}
+.myInfoWrap .infoFooter a span{
+  margin-left:5px;
+  font-size:18px;
+  font-weight:700;
+  line-height:1;
 }
 
 
@@ -1173,17 +1238,6 @@ Mypage > Main
   cursor: pointer;
 }
 
-.myInfoWrap .follower,.following,.point{
-  font-weight: 500;
-}
-.myInfoWrap .infoFooter a{
-  color:inherit;
-}
-
-.myInfoWrap .point{
-  color :#e61754;
-  font-weight: 500;
-}
   
 .myOptionBarWrap{
   /* height:  */
@@ -1194,12 +1248,28 @@ Mypage > Main
 }
 
 .cartBtn{
-  float: right;
+  position: absolute;
+  top:14px;
+  right:20px;
+  display:block;
   width: 19px;
   height: 22px;
-  background: url('../img/ico/ico_cart.png');
+  background: url('../img/ico/uncart.png');
   background-size: 90%;
   background-position: 0 -1px;
+  background-repeat: no-repeat;
+}
+.headBarWrap .settingBtn{
+  position: absolute;
+  top:15px;
+  right:22px;
+  display:block;
+  width: 20px;
+  height: 20px;
+  margin-right:0;
+  background: url('../img/ico/ico_setting_2.png');
+  background-size: 20px auto;
+  background-position: 0 0;
   background-repeat: no-repeat;
 }
 .settingBtn{
@@ -1219,22 +1289,21 @@ Mypage > Main
   background-size: 100%;
 }
 
-.myOptionBarWrap .cartBadge{
+.cartBadge{
   display: inline-block;
   position: relative;
-  top:-10px;
-  left: 10px;
-  line-height: 22px;
-  border-radius: 10px;
-  text-align: center;
-  padding: 0 4px;
-  min-width: 14px;
-  height: 20px;
+  top:-25px;
+  left: 8px;
+  width:18px;
+  height: 18px;
+  border-radius: 9px;
   background-color: #e61754;
   color: white;
   font-family: Roboto;
   font-size: 11px;
   font-weight: 500;
+  line-height: 19px;
+  text-align: center;
 }
 
 .orderStatusWrap{
@@ -1507,7 +1576,12 @@ MyPage > Notice
 Shared > Bar
 
 */
-
+.productDetailWrap .headBarWrap{
+  position: fixed;
+  top:0;
+  left:0;
+  z-index:10;
+}
 .headBarWrap{
   font-family: "Noto Sans KR";
   font-size: 16px;
@@ -2618,24 +2692,34 @@ html, body{
 #app{
   height: 100%;
 }
+#app.bg_gray,
+.wrap.bg_gray{
+  background:#f3f3f3;
+}
 /* .mypage{
   height:100%;
 } */
 
 .profilePic{
-    height:220px;
-    background:#282a34;
-    text-align:center;
+  height:106px;
+  padding:0 22px;
+  padding-top:26px;
+  background:#fff;
+  text-align:left;
+  font-size:0;
+  box-sizing: border-box;
+  border-top:1px solid #eee;
+  border-bottom:5px solid #eee;
 }
 .profilePic .picBox{
     position: relative;
     display:inline-block;
-    margin-top:45px;
+    vertical-align: middle;
 }
 .profilePic .prImage{
     display:block;
-    width:100px;
-    height:100px;
+    width:50px;
+    height:50px;
     clip-path:circle(50%);
     -webkit-clip-path:circle(50%);
     /* background:url('../img/temp_profile.jpg') 50% 50% no-repeat;
@@ -2651,8 +2735,8 @@ html, body{
 .profilePic .btnModifyPic{
     overflow: hidden;
     position: absolute;
-    bottom:2px;
-    right:-8px;
+    bottom:-4px;
+    right:-10px;
     display:block;
     width:30px;
     height:30px;
@@ -2662,40 +2746,49 @@ html, body{
 
 }
 .profilePic h2{
-    margin-top:20px;
-    font-size:16px;
-    font-weight:400;
-    color:#fff;
+  display: inline-block;
+  margin-left:20px;
+  font-size:16px;
+  font-weight:500;
+  color:#111;
+  vertical-align: middle;
 }
 
 
 .profileInfo{
-    padding:30px 22px;
+    padding:20px 22px 50px;
     background:#fff;
 }
 .profileInfo .row{
-    margin:25px 0;
+    height:36px;
+    margin:15px 0;
     font-size:0;
+    line-height:36px;
+}
+.profileInfo .row:first-child{
+  margin-top:0;
 }
 .profileInfo .row label,
-.profileInfo .row input{
+.profileInfo .row input,
+.profileInfo .row p{
     display:inline-block;
-    font-size:15px;
+    font-size:14px;
     vertical-align: middle;
 }
-.profileInfo .row label{
-    width:56px;
-    margin-right:10px;
+.profileInfo .row label,
+.profileInfo .row p.tit{
+    width:100px;
+    margin-right:6px;
     color:#666;
 }
 .profileInfo .row input,
 .profileInfo .row input:disabled{
-    width:calc(100% - 66px);
-    height:30px;
+    width:calc(100% - 106px);
+    height:36px;
     padding:0 10px;
     box-sizing: border-box;
     border:none;
-    border-bottom:1px solid #eee;
+    border:1px solid #eee;
     color:#111;
     background:transparent;
 }
@@ -2704,27 +2797,45 @@ html, body{
 .profileInfo .row input:-ms-input-placeholder{
     color:#999;
 }
-.profileInfo .row select{
-  display:inline-block;
-  width:calc(100% - 66px);
-  height:30px;
-  padding:0 10px;
-  box-sizing: border-box;
-  border:none;
-  border-bottom:1px solid #eee;
-  color:#999;
-  font-size:15px;
-  vertical-align: middle;
-  background:url('../img/ico/arrow_down.png') calc(100% - 20px) 50% / 13px auto no-repeat;
+.profileInfo .row input[type="radio"]{
+  display:none;
 }
-.profileInfo .row select.on{
+.profileInfo .row input[type="radio"]+label{
+  width:75px;
+  height:36px;
+  margin:0;
+  border:1px solid #eee;
+  border-left:none;
+  color:#eee;
+  font-size:14px;
+  text-align: center;
+  line-height:34px;
+  box-sizing: border-box;
+}
+.profileInfo .row input[type="radio"]:nth-of-type(1) +label{
+  border-left:1px solid #eee;
+}
+.profileInfo .row input[type="radio"]:checked+label{
+  border:1px solid #111;
   color:#111;
+}
+.profileInfo .Withdrawal{
+  display:inline-block;
+  margin-top:30px;
+  text-decoration: underline;
+}
+.profileForm form{
+  padding-bottom:1px;
+  background:#fff;
 }
 .profileForm .btn_submit{
     display:block;
-    width:100%;
+    width:calc(100% - 44px);
     height:50px;
-    background:#e61754;
+    margin-left:22px;
+    margin-bottom:34px;
+    background:#000;
+    border-radius: 4px;
     font-size:15px;
     color:#fff;
     text-align:center;
@@ -2809,7 +2920,39 @@ html, body{
     font-weight:500;
 }
 
-
+.chkPw p{
+  padding:50px 0;
+  border-bottom:5px solid #eee;
+  border-top:1px solid #eee;
+  font-size:15px;
+  text-align: center;
+}
+.chkPw h3{
+  padding-top:50px;
+  margin-left:22px;
+  font-size:16px;
+  font-weight:400;
+}
+.chkPw input{
+  width:calc(100% - 44px);
+  height:35px;
+  margin-left:22px;
+  margin-top:10px;
+  padding:0 10px;
+  letter-spacing: 2px;
+  border:none;
+  border-bottom:1px solid #eee;
+  box-sizing: border-box;
+}
+.chkPw .btn_them{
+  display:block;
+  width:calc(100% - 44px);
+  height:50px;
+  margin-left:22px;
+  margin-top:50px;
+  background:#111;
+  font-size:16px;
+}
 .chngPw{
     display:block;
     width:100%;
@@ -2911,6 +3054,67 @@ html, body{
 .setBox .row input:checked+label:after{
     transform: translateX(22px);
 }
+
+
+.blockList{
+  padding:5px 12px;
+}
+.blockList .item{
+  overflow: hidden;
+  margin:10px 0;
+  padding:20px 15px;
+  background:#fff;
+}
+.blockList .imgBox,
+.blockList .couponBox{
+  float:left;
+  width:50px;
+  height:50px;
+  margin-right:15px;
+  border-radius: 50%;
+  border:1px solid #eee;
+  box-sizing: border-box;
+}
+.blockList .txtBox{
+  float:right;
+  width:calc(100% - 65px);
+}
+.blockList .txtBox .date{
+  margin-top:3px;
+  font-size:14px;
+  color:#999;
+}
+.blockList.coupon .item{
+  overflow: visible;
+  font-size:0;
+}
+.blockList.coupon .couponBox,
+.blockList.coupon .txtBox{
+  display:inline-block;
+  float:none;
+  font-size:14px;
+  vertical-align: middle;
+}
+.blockList .couponBox{
+  width:93px;
+  height:auto;
+  margin:0;
+  border:none;
+}
+.blockList .couponBox span{
+  padding-right:2px;
+  font-size:20px;
+  font-weight:700;
+}
+.blockList.coupon .txtBox{
+  width:calc(100% - 93px);
+  padding-left:15px;
+  border-left:1px dashed #eee;
+  box-sizing: border-box;
+}
+
+
+
 
 
 .itemList.recent .listHead{
@@ -4822,6 +5026,9 @@ html, body{
 /* *******   제품상세    ******* */
 /* *******              ******* */
 
+.productDetailWrap .productMediaWrap+.productInfoWrap{
+  padding-top:calc(56.3% + 55px);
+}
 .productInfoWrap{
   padding: 5px 12px 10px;
 }

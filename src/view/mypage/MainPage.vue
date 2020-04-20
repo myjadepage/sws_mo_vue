@@ -1,10 +1,10 @@
 <template>
 <div class="mainPageWrap">
-<Bar :val="title" />
-<OptionBar :baskets="baskets"/>
+<Bar :val="title" :baskets="baskets" />
+<!-- <OptionBar :baskets="baskets"/> -->
 <Info :member="member"/>
-<OrderStatus :member="member"/>
-<Util/>
+<!-- <OrderStatus :member="member"/> -->
+<!-- <Util/> -->
 <Settings/>
 <Footer/>
 

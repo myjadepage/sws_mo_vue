@@ -11,7 +11,7 @@
               <!-- 쿼리가 있으면, `/register?plan=private` 이 됩니다. -->
               <!-- <router-link :to="{ path: 'register', query: { plan: 'private' }}">Register</router-link> -->
               <!-- <router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link> -->
-              <router-link :to="'/category/' + menu.name" class="link_gnb">
+              <router-link :to="'/category/' + menu.categorySysId" class="link_gnb">
                  <span class="link_gnb_text"> {{ menu.name }}</span>
               </router-link>
                 <!-- <a :href="'/category/' + menu.name" class="link_gnb">

@@ -6,41 +6,60 @@
     <h2>면역력 챙기셨어요?</h2>
     <p>외출 전 마스크와 면역력을 챙기세요!</p>
     <ul class="list">
-      <li class="item noItem">기획 상품이 없습니다.</li>
-      <!-- <li class="item">
-        <router-link to="">
-          <div class="imgBox" style="background:url('/static/images/temp_them_1.png') 50% 50% /cover no-repeat;"></div>
+      <li class="item noItem" v-if="products.length === 0">기획 상품이 없습니다.</li>
+      <li class="item" v-for="product in products" :key="product.prdtSysId">
+        <router-link :to="'/product/' + product.prdtSysId">
+          <div class="imgBox mov" :style="{backgroundImage:'url('+product.smallImageUrl+')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}"></div>
           <div class="txtBox">
-            <p class="itemName">보글스타일 폴리우레탄 소재 데일리 마스크(블랙 3개입)</p>
-            <p class="price">9,900원</p>
+            <p class="itemName">{{product.name}}</p>
+            <p class="price">{{product.price}}원</p>
           </div>
         </router-link>
       </li>
-      <li class="item">
-        <router-link to="">
-          <div class="imgBox" style="background:url('/static/images/temp_them_2.png') 50% 50% /cover no-repeat;"></div>
-          <div class="txtBox">
-            <p class="itemName">천연 아카시아 튜브 벌꿀 380g (패키지봉투+감사안내카드)</p>
-            <p class="price">16,000원</p>
-          </div>
-        </router-link>
-      </li>
-      <li class="item">
-        <router-link to="">
-          <div class="imgBox" style="background:url('/static/images/temp_them_3.png') 50% 50% /cover no-repeat;"></div>
-          <div class="txtBox">
-            <p class="itemName">슈퍼브레인 포스파티딜셰린 앤 징코 30캡슐(15일분)/뇌영양제</p>
-            <p class="price">37,000원</p>
-          </div>
-        </router-link>
-      </li> -->
     </ul>
   </div>
 </section>
 </template>
 
 <script>
+import {getProductLists} from '@/api/index.js'
+
 export default {
-  name: 'BrandBlock'
+  name: 'theme',
+  props: ['categorySysId1'],
+  data () {
+    return {
+      startIndex: 0,
+      products: []
+    }
+  },
+  methods: {
+    getList () {
+      let getInfo = 'startIndex=' + this.startIndex + '&rowCount=3&categorySysId1=' + this.categorySysId1 + '&isPlanThema=1'
+      // console.log(getInfo)
+      getProductLists(getInfo)
+        .then(res => {
+          // console.log(res)
+          if (res.data.jsonData.resultCode === '0001') {
+            this.products = res.data.jsonData.products
+            this.startIndex = res.data.jsonData.startIndex
+          } else if (res.data.jsonData.resultCode === '0004') {
+            this.products = []
+            this.startIndex = 0
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  watch: {
+    categorySysId1: {
+      handler (categorySysId1) {
+        this.startIndex = 0
+        this.getList()
+      }
+    }
+  }
 }
 </script>

@@ -170,14 +170,15 @@ export default {
         $(vWrap).css({
           'transform': 'rotate(0)',
           'transform-origin': 'top left',
-          'position': 'static',
-          'top': '0',
+          'position': 'fixed',
+          'top': '50px',
           'left': '0',
           'width': '100%',
           'height': '0',
           'padding-top': '56.3%'
         })
         this.fullMode = false
+        document.querySelector('html').style.overflow = 'visible'
       } else {
         if ((this.movSize.width / this.movSize.height) > 1) {
           // 가로영상
@@ -204,6 +205,31 @@ export default {
           'padding-top': '0'
         })
         this.fullMode = true
+        window.addEventListener('orientationchange', () => {
+          if (window.orientation === 0) {
+            // portrait
+            $(vWrap).css({
+              'transform': 'rotate(-90deg)',
+              'top': '100%',
+              'width': '100vh',
+              'height': '100vw'
+            })
+          } else {
+            // landscape
+            $(vWrap).css({
+              'transform': 'rotate(0)',
+              'top': '0',
+              'width': '100vw',
+              'height': '100vh'
+            })
+          }
+        })
+        document.querySelector('html').style.overflow = 'hidden'
+        window.addEventListener('scroll', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          return false
+        })
       }
     }
   }

@@ -7,7 +7,7 @@
     <!-- slides -->
         <swiper-slide  :class="selectedCat(idx)"  v-for="(c,idx) in category" :key="idx">
             <!-- <router-link :to="'/category/'+ c.name"> -->
-          <span @click="catClick(c.name)">
+          <span @click="catClick(c.categorySysId)">
              {{c.name}}
           </span>
        <!-- </router-link> -->
@@ -47,11 +47,12 @@ export default {
     this.windowScrollY()
   },
   methods: {
-    catClick (name) {
-      this.$router.push(`/category/${name}`)
+    catClick (categorySysId) {
+      this.$router.push(`/category/${categorySysId}`)
     },
     selectedCat (idx) {
-      if (this.category[idx].name === this.$route.path.split('/')[2]) {
+      if (this.category[idx].categorySysId === parseInt(this.$route.params.category)) {
+        this.$emit('chngCat', this.category[idx].categorySysId)
         return 'selected'
       }
     },

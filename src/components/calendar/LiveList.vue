@@ -11,7 +11,7 @@
             </div>
             <div class="rightBox">
               <p class="txt"><span class="c_them">{{it.reservationCnt}}명</span> 알림예약!</p>
-              <div class="switchBtn">
+              <div class="switchBtn" v-if="isLogin">
                 <input type="checkbox" :id="'temp_' + it.broadcastSysId" v-model="it.reservationFlag" @click="alarmChk($event, it.broadcastSysId, it.reservationFlag, it.broadcastScheduleSysId, it.userBroadcastReservationSysId)" />
                 <label :for="'temp_' + it.broadcastSysId"></label>
               </div>
@@ -65,7 +65,8 @@ export default {
       alarmAni: false,
       alarmMessageOn: '알림을 설정했습니다',
       alarmMessageOff: '알림을 삭제했습니다',
-      times: []
+      times: [],
+      isLogin: false
     }
   },
   components: {
@@ -169,6 +170,16 @@ export default {
                   this.closeModal()
                   this.times[i].item[j].reservationFlag = false
                   this.times[i].item[j].userBroadcastReservationSysId = ''
+                  if (this.mode === 'my') {
+                    setTimeout((j) => {
+                      this.times[i].item.splice(j, 1)
+                      this.times[i].length--
+                      if (this.times[i].length === 0) {
+                        this.times.splice(i, 1)
+                      }
+                      this.$emit('recall')
+                    }, 300)
+                  }
                   this.alarmModal = true
                   this.alarmState = false
                   setTimeout(() => {
@@ -221,6 +232,10 @@ export default {
       }
     }
     this.times.sort()
+
+    if (sessionStorage.getItem('accessToken')) {
+      this.isLogin = true
+    }
   }
 }
 </script>

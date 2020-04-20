@@ -18,17 +18,21 @@ export default {
     let self = this
 
     document.addEventListener('scroll', () => {
+      let bH = document.querySelector('.headBarWrap').clientHeight
+      let mH = document.querySelector('.productMediaWrap').clientHeight
       if (self.$refs.info) {
         let el = self.$refs.info
         let target = self.$refs.descMenu
         let top = el.getBoundingClientRect().top
-        if (top <= 0) {
+        if (top <= bH + mH) {
           if (!target.classList.contains('scrolling')) {
             target.classList.add('scrolling')
+            target.style.top = (bH + mH) + 'px'
           }
         } else {
           if (target.classList.contains('scrolling')) {
             target.classList.remove('scrolling')
+            target.style.top = '0px'
           }
         }
       }

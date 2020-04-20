@@ -56,7 +56,7 @@ export default {
         autoplay: {
           delay: 5000
         },
-        touchReleaseOnEdges: true,
+        loop: true,
         onSlideChangeEnd: function () {
           this.onSwipe()
         }
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     onSwipe (varuable) {
-      this.activePage = varuable.swiper.activeIndex + 1
+      this.activePage = varuable.swiper.realIndex + 1
     }
   },
   computed: {
