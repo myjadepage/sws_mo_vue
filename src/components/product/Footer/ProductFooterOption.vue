@@ -1,11 +1,13 @@
 <template>
   <div class="productOptionWrap" v-if="buyMode">
+
     <div class="selectSection" v-if="options">
     <select  @change="optionSelected" v-for="(o,idx) in optionContents" :key="o.prdtNormalOptionSysId" :name="o.name" :ref="'option'+idx">
       <option value="">{{options[idx].name}}</option>
       <option v-for="(c,idx) in o" :key="idx" :value="[c[0]+'**'+c[1]]">{{c[0]}}</option>
     </select>
     </div>
+
     <div class="optionListSection" v-if="$store.getters.getSelectedOptions">
       <div class="selectedOption" v-for="(item,idx) in $store.getters.getSelectedOptions" :key="idx">
         <div v-for="(o,i) in item.contentGroup" :key="i">
@@ -17,6 +19,26 @@
         <button class="countBtn" @click="countIncrease(idx)"><span class="ico_plus"></span></button>
         </div>
         <div class="optionPrice">{{calcPrice(idx)|makeComma}}<span class="won">원</span> <span v-if="options.length > 0" @click="deleteOption(idx)"  class="ico_times"></span></div>
+      </div>
+    </div>
+
+    <div class="addPrdtHeader" v-if="addPrdts.length">추가상품<button @click="showAP = !showAP" class="showAddPrdtsBtn">{{showAP?'&minus;':'&plus;'}}</button></div>
+    <div class="selectSection" v-if="showAP">
+      <select @change="addPrdtSelected(idx)"  v-for="(ap,idx) in addPrdts" :key="ap.base.prdtAddingProductSysId" :name="ap.base.itemGroup" :ref="'addPrdt'+idx">
+        <option value="">{{ap.base.itemGroup}}</option>
+        <option v-for="(apd,idx) in ap.details" :key="apd.prdtAddingProductDetailSysId" :value="idx">{{idx+1}}. {{apd.item}}+{{apd.price|makeComma}}원</option>
+      </select>
+    </div>
+
+    <div class="optionListSection" v-if="$store.getters.getSelectedAddPrdts && showAP">
+      <div class="selectedOption" v-for="(ap,idx) in $store.getters.getSelectedAddPrdts" :key="idx">
+        {{ap.item}} +{{ap.price|makeComma}}원
+        <br>
+        <div class="countBtnSection">
+        <button class="countBtn" @click="apDecrease(idx)"><span class="ico_minus"></span></button><input @keypress.enter="apCountSet(idx)" @blur="apCountSet(idx)" class="apCount" type="number" min="0" max="999" :value="addPrdtCnt(idx)">
+        <button class="countBtn" @click="apIncrease(idx)"><span class="ico_plus"></span></button>
+        </div>
+        <div class="optionPrice">{{calcAddPrdtPrice(idx)|makeComma}}<span class="won">원</span> <span @click="deleteAddPrdt(idx)"  class="ico_times"></span></div>
       </div>
     </div>
 
@@ -54,16 +76,20 @@ export default {
       this.$store.state.selectedOptions = [item]
     }
   },
-  props: ['buyMode', 'options'],
+  props: ['buyMode', 'options', 'addPrdts'],
   data () {
     return {
       optionContents: [],
-      isListContainsOptional: false
+      showAP: false
     }
   },
   methods: {
     optionCnt (idx) {
       return this.$store.getters.getOptionCnt(idx)
+    },
+
+    addPrdtCnt (idx) {
+      return this.$store.getters.getAddPrdtCnt(idx)
     },
 
     countDecraese (idx) {
@@ -80,6 +106,23 @@ export default {
         this.$store.commit('increaseOptionCnt', idx)
       }
     },
+
+    apDecrease (idx) {
+      if (this.$store.getters.getAddPrdtCnt(idx) > 1) {
+        this.$store.commit('decreaseAddPrdtCnt', idx)
+      }
+    },
+
+    apIncrease (idx) {
+      if (Number(this.$el.getElementsByClassName('apCount')[idx].value) >= 99) {
+        return
+      }
+
+      if (this.$el.getElementsByClassName('apCount')[idx].value <= this.$store.getters.getSelectedAddPrdts[idx].stockQty) {
+        this.$store.commit('increaseAddPrdtCnt', idx)
+      }
+    },
+
     countSet (idx) {
       if (Number(this.$el.getElementsByClassName('count')[idx].value) > 99) {
         this.$el.getElementsByClassName('count')[idx].value = 99
@@ -93,6 +136,21 @@ export default {
         this.$el.getElementsByClassName('count')[idx].value = 1
       }
       this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
+    },
+
+    apCountSet (idx) {
+      if (Number(this.$el.getElementsByClassName('apCount')[idx].value) > 99) {
+        this.$el.getElementsByClassName('apCount')[idx].value = 99
+      }
+
+      if (Number(this.$el.getElementsByClassName('apCount')[idx].value) > this.$store.getters.getProduct.stockQty) {
+        this.$el.getElementsByClassName('apCount')[idx].value = this.$store.getters.getProduct.stockQty
+      }
+
+      if (this.$el.getElementsByClassName('apCount')[idx].value < 1) {
+        this.$el.getElementsByClassName('apCount')[idx].value = 1
+      }
+      this.$store.commit('setAddPrdtCnt', [idx, this.$el.getElementsByClassName('apCount')[idx].value])
     },
 
     optionSelected () {
@@ -134,6 +192,25 @@ export default {
         this.$refs['option' + i][0].value = ''
       }
     },
+
+    addPrdtSelected (idx) {
+      if (!this.$refs['addPrdt' + idx][0].value) {
+        return
+      }
+
+      let item = {
+        prdtAddingProductSysId: this.addPrdts[idx].base.prdtAddingProductSysId,
+        prdtAddingProductDetailSysId: this.addPrdts[idx].details[this.$refs['addPrdt' + idx][0].value].prdtAddingProductDetailSysId,
+        addingQty: 1,
+        item: this.addPrdts[idx].details[this.$refs['addPrdt' + idx][0].value].item,
+        price: this.addPrdts[idx].details[this.$refs['addPrdt' + idx][0].value].price,
+        isSoldout: this.addPrdts[idx].details[this.$refs['addPrdt' + idx][0].value].isSoldout,
+        stockQty: this.addPrdts[idx].details[this.$refs['addPrdt' + idx][0].value].stockQty
+      }
+
+      this.$store.commit('addAddPrdt', item)
+    },
+
     formatPrice (money) {
       return (money + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
@@ -145,8 +222,17 @@ export default {
         return this.$store.getters.getOptionCnt(idx) * (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
       }
     },
+
+    calcAddPrdtPrice (idx) {
+      return this.$store.getters.getAddPrdtPrice(idx) * this.$store.getters.getAddPrdtCnt(idx)
+    },
+
     deleteOption (idx) {
       this.$store.commit('deleteOption', idx)
+    },
+
+    deleteAddPrdt (idx) {
+      this.$store.commit('deleteAddPrdt', idx)
     }
   },
   computed: {
@@ -154,6 +240,13 @@ export default {
       return this.$store.getters.getSelectedOptionsLength === this.optionContents.length
     },
     calcTotalPrice () {
+      let apPrices = 0
+      if (this.addPrdts) {
+        for (const ap of this.$store.getters.getSelectedAddPrdts) {
+          apPrices += ap.price * ap.addingQty
+        }
+      }
+
       if (this.options.length) {
         let o = this.$store.getters.getSelectedOptions
         let val = 0
@@ -164,12 +257,12 @@ export default {
         }
 
         if (val) {
-          return val
+          return val + apPrices
         } else {
-          return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt
+          return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt + apPrices
         }
       } else {
-        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count
+        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count + apPrices
       }
     }
   }
@@ -247,6 +340,18 @@ font-weight: bold;
   margin: 0;
 }
 
+.productOptionWrap .apCount{
+border: none;
+width: 50px;
+height: 100%;
+text-align: center;
+font-weight: bold;
+}
+.productOptionWrap input[type=number].apCount::-webkit-outer-spin-button,.productOptionWrap input[type=number].apCount::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .productOptionWrap .countBtnSection{
   display: inline-block;
   text-align: center;
@@ -271,7 +376,7 @@ font-weight: bold;
   width: 9px;
   height: 9px;
   position: relative;
-  top: 10px;
+  /* top: px; */
 }
 .productOptionWrap .ico_plus{
   display: inline-block;
@@ -289,6 +394,24 @@ font-weight: bold;
   bottom: 3px;
   width: 10px;
   height: 2px;
+}
+
+.productOptionWrap .addPrdtHeader{
+  font-weight: 500;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.showAddPrdtsBtn{
+  margin-left: 5px;
+  border: 1px solid #000000;
+  width: 15px;
+  height: 15px;
+  line-height: 5px;
+  border-radius: 2px;
+  position: relative;
+  bottom: 1px;
 }
 
 </style>

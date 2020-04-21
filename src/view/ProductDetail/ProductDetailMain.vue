@@ -7,7 +7,7 @@
       <SubMedia @play="playMedia" :subMedias='subMedias' />
       <Info2 :product="product" />
       <Description />
-      <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
+      <ProductFooter @addedCartItem="addedCartItem" :addPrdts="addingProducts" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
       <DeclareModal v-if="$store.state.declareModalShow" />
@@ -33,9 +33,12 @@ export default {
     let id = this.$route.params.prdtSysId
 
     getProductDetail(id).then((res) => {
+      console.log(res)
+
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
+      this.addingProducts = res.data.jsonData.addingProducts
       this.subMedias = res.data.jsonData.listProductMedia
 
       if (this.$store.state.isLogin) { // 회원인 경우
@@ -165,6 +168,7 @@ export default {
       buyMode: false,
       showCartModal: false,
       options: [],
+      addingProducts: [],
       subMedias: [],
       currentMedia: {}
     }
@@ -189,6 +193,7 @@ export default {
   beforeDestroy () {
     this.$store.state.product = {}
     this.$store.commit('deleteAllOption')
+    this.$store.commit('deleteAllAddPrdts')
   }
 }
 </script>

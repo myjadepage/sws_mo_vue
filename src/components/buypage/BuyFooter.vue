@@ -13,6 +13,7 @@ export default {
     payBtnClick () {
       let products = JSON.parse(sessionStorage.getItem('products'))
       let options = JSON.parse(sessionStorage.getItem('selectedOptions'))
+      let addPrdts = JSON.parse(sessionStorage.getItem('selectedAddPrdts'))
       let optionQty = 0
 
       if (options) {
@@ -43,6 +44,21 @@ export default {
         'couponDiscount': this.coupon,
         // 'couponList': '1;2',
         'orderProducts': []
+      }
+
+      if (addPrdts) {
+        item.addingProducts = []
+        for (let i = 0; i < addPrdts.length; i++) {
+          const ap = addPrdts[i]
+          ap.forEach(apd => {
+            item.addingProducts.push({
+              prdtSydId: products[i].prdtSysId,
+              prdtAddingProductDetailSysId: apd.prdtAddingProductDetailSysId,
+              price: apd.price,
+              qty: Number(apd.addingQty)
+            })
+          })
+        }
       }
 
       if (!item.orderName || !item.orderTel || !item.receiverName || !item.receiverTel) {
@@ -103,59 +119,40 @@ export default {
 
       console.log(item)
 
-      // let res = {'jsonData': {
-      //   'res': {
-      //     'orderSysId': 9,
-      //     'orderProducts': [
-      //       {
-      //         'prdtSysId': 39,
-      //         'orderPrdtSysId': 5
-      //       },
-      //       {
-      //         'prdtSysId': 40,
-      //         'orderPrdtSysId': 6
-      //       }
-      //     ],
-      //     'orderCode': 'S20200306190346-0000003'
-      //   },
-      //   'code': 200
-      // }}
-
       sessionStorage.setItem('payItem', JSON.stringify({...item, payInfo: this.$store.getters.getPayPriceInfo, payMethod: this.$store.getters.getPayMethod, discountPoint: this.point, basketSysIds: basketSysIds}))
-      // sessionStorage.setItem('orderRes', JSON.stringify(res))
 
-      postOrders(item)
-        .then(res => { // 주문정보등록 성공 시
-          console.log(res)
+      // postOrders(item)
+      //   .then(res => { // 주문정보등록 성공 시
+      //     console.log(res)
 
-          sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
-          let name = ''
-          if (products.length > 1) {
-            name = `${products[0].name} 외 ${products.length - 1}건`
-          } else {
-            name = products[0].name
-          }
+      //     sessionStorage.setItem('orderSysId', res.data.jsonData.res.orderSysId)
+      //     let name = ''
+      //     if (products.length > 1) {
+      //       name = `${products[0].name} 외 ${products.length - 1}건`
+      //     } else {
+      //       name = products[0].name
+      //     }
 
-          this.$IMP().request_pay({ // 아임포트 호출
-            pg: 'html5_inicis',
-            pay_method: this.$store.getters.getPayMethod,
-            merchant_uid: res.data.jsonData.res.orderCode,
-            name: name,
-            amount: this.finalPrice,
-            buyer_email: item.orderEmail,
-            buyer_name: item.orderName,
-            buyer_tel: item.orderMobile,
-            buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
-            buyer_postcode: item.receiverPostNumber,
-            m_redirect_url: `192.168.1.82:8080/buyComplete`
-          }, (res) => {
-            console.log(res)
-            this.$router.push('/buyComplete')
-          })
-        })
-        .catch(error => { // 주문정보등록 실패
-          console.log(error)
-        })
+      //     this.$IMP().request_pay({ // 아임포트 호출
+      //       pg: 'html5_inicis',
+      //       pay_method: this.$store.getters.getPayMethod,
+      //       merchant_uid: res.data.jsonData.res.orderCode,
+      //       name: name,
+      //       amount: this.finalPrice,
+      //       buyer_email: item.orderEmail,
+      //       buyer_name: item.orderName,
+      //       buyer_tel: item.orderMobile,
+      //       buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
+      //       buyer_postcode: item.receiverPostNumber,
+      //       m_redirect_url: `192.168.1.82:8080/buyComplete`
+      //     }, (res) => {
+      //       console.log(res)
+      //       this.$router.push('/buyComplete')
+      //     })
+      //   })
+      //   .catch(error => { // 주문정보등록 실패
+      //     console.log(error)
+      //   })
     }
   }
 }
