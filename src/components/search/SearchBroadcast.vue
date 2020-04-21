@@ -1,6 +1,6 @@
 <template>
   <div class="searchBroadcastWrap">
-      <div class="thumbnailSection">
+      <div @click="goLive" class="thumbnailSection">
         <span class="playTime">{{playTime}}</span>
         <img class="brThumbnail" :src="broadcast.thumnailUrl" alt="방송 썸네일">
       </div>
@@ -8,11 +8,11 @@
           <img class="brandImg" :src="broadcast.brandImageUrl" alt="브랜드 이미지"><span class="brandName">{{broadcast.brandName}}</span><span @click="moreMenu=!moreMenu" class="ico_3dot"></span>
           <div v-if="moreMenu" class="moreMenu">
               <ul>
-                  <li>링크복사</li>
-                  <li>신고</li>
+                  <li @click="copyUrl">링크복사</li>
+                  <li @click="declare">신고</li>
               </ul>
           </div>
-            <div>{{broadcast.title}}</div>
+            <div @click="goLive">{{broadcast.title}}</div>
             <div class="viewAndLike">
                 <span class="ico_views"></span>{{broadcast.viewCnt}}
             </div>
@@ -35,6 +35,18 @@ export default {
       } else {
         return this.broadcast.playTime
       }
+    }
+  },
+  methods: {
+    declare () {
+
+    },
+    copyUrl () {
+      this.$emit('copy', `/Product/${this.broadcast.broadcastPrdts[0].prdtSysId}/Live/${this.broadcast.broadcastSysId}`)
+      this.moreMenu = false
+    },
+    goLive () {
+      this.$router.push(`/Product/${this.broadcast.broadcastPrdts[0].prdtSysId}/Live/${this.broadcast.broadcastSysId}`)
     }
   }
 }

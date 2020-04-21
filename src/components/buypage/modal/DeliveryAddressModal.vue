@@ -3,12 +3,14 @@
     <ModalHeader @modalClose="modalClose" :title="$store.state.isLogin?'배송지 변경':'배송지 선택'" />
     <div class="modalBody">
       <div v-if="$store.state.isLogin" class="catSelect">
-        <button @click="deliveryBtnClick(0)" class="selected">배송지 목록</button><button @click="deliveryBtnClick(1)">신규 배송지</button>
+        <button @click="deliveryBtnClick(0)" :class="currentCat===0?'selected':''">배송지 목록</button><button :class="currentCat===0?'':'selected'"  @click="deliveryBtnClick(1)">신규 배송지</button>
         </div>
       <ul v-if="currentCat===0" class="addressList">
+        <p v-if="addresses.length===0" :style="{textAlign:'center'}">저장된 배송지가 없습니다.</p>
         <li v-for="(addr,idx) in addresses" :key="addr.userAddressSysId"><input type="radio" class="addrRadio" name="addrRadio" :id="'radio'+idx" :value="idx">
         <label class="checkmark" :for="'coupon'+idx"></label>
-        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}} {{addr.addressDetail}}</label></li>
+        <label class="radioLabel" :for="'radio'+idx">{{addr.newAddress}} {{addr.addressDetail}}</label>
+        <span v-if="addr.initFlag" class="defaultAddrBadge">기본배송지</span></li>
       </ul>
 
       <div v-if="currentCat===1" class="searchAddrSection">
@@ -22,7 +24,7 @@
         </div>
       </div>
 
-      <button v-if="currentCat===0" @click="selectAddrClick" class="doneBtn">선택하기</button>
+      <button @click="deleteClick" v-if="currentCat===0 && addresses.length" class="listBtn">삭제하기</button><button v-if="currentCat===0 && addresses.length" @click="selectAddrClick" class="listBtn doneBtn">선택하기</button>
       <button v-if="currentCat===1" @click="addAddrClick" class="doneBtn">{{$store.state.isLogin?'추가하기':'선택하기'}}</button>
     </div>
   </div>
@@ -30,7 +32,7 @@
 
 <script>
 import ModalHeader from './ModalHeader'
-import {addMemberAddress, getAccessToken, getAddingCosts} from '@/api/index.js'
+import {addMemberAddress, getAccessToken, getAddingCosts, deleteMemberAddress} from '@/api/index.js'
 
 export default {
   props: ['addresses'],
@@ -39,7 +41,11 @@ export default {
   },
   created () {
     if (this.$store.state.isLogin) {
-      this.currentCat = 0
+      if (this.addresses.length) {
+        this.currentCat = 0
+      } else {
+        this.currentCat = 1
+      }
     } else {
       this.currentCat = 1
     }
@@ -101,6 +107,7 @@ export default {
           if (sessionStorage.getItem('accessToken')) {
             addMemberAddress(sessionStorage.getItem('accessToken'), addrInfo).then(res => {
               this.$store.state.postCode = item
+              this.$store.state.postCode.initFlag = this.$refs.defaultAddrCheck.checked ? 1 : 0
               this.$emit('addrModalClose')
             }).catch(err => {
               if (err.response.status === 401) {
@@ -137,7 +144,7 @@ export default {
         return
       }
 
-      this.$store.state.postCode = {address: this.addresses[val].newAddress, detail: this.addresses[val].addressDetail, zonecode: this.addresses[val].zipCode}
+      this.$store.state.postCode = {address: this.addresses[val].newAddress, detail: this.addresses[val].addressDetail, zonecode: this.addresses[val].zipCode, initFlag: this.addresses[val].initFlag}
       getAddingCosts(Number(this.addresses[val].zipCode))
         .then(res => {
           if (res.data.jsonData.addingDeliveryAmount) {
@@ -149,6 +156,38 @@ export default {
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+
+    deleteClick () {
+      let x = this.$el.getElementsByClassName('addrRadio')
+      let val
+      for (const i of x) {
+        if (i.checked === true) {
+          val = i.value
+        }
+      }
+      if (!val) {
+        return
+      }
+
+      deleteMemberAddress(sessionStorage.getItem('accessToken'), {userAddressSysId: this.addresses[val].userAddressSysId})
+        .then(res => {
+          this.$emit('deleteAddr', val)
+        })
+        .catch(err => {
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
         })
     }
   },
@@ -176,10 +215,10 @@ export default {
 .deliveryAddrModal{
     z-index: 1000;
     position: fixed;
-    top: 20px;
+    top: 5%;
     left: 5%;
     width: 90%;
-    height: 95%;
+    height: 90%;
     background-color: #fff;
     overflow: scroll;
   }
@@ -220,6 +259,12 @@ export default {
     height: 42px;
     color: white;
     border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .deliveryAddrModal button.listBtn{
+    width: 45%;
+    margin: 0 5px 20px;
   }
 
   .deliveryAddrModal .defualtAddrCheck{
@@ -325,6 +370,17 @@ top: 6px;
   position: relative;
   right: 5px;
   top: 7px;
+}
+
+.deliveryAddrModal .defaultAddrBadge{
+  float: right;
+  bottom: 0;
+  top: 2px;
+}
+
+.deliveryAddrModal .radioLabel{
+  display: inline-block;
+  width: 60%;
 }
 
 </style>

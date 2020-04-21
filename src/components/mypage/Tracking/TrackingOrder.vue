@@ -3,7 +3,7 @@
       <div class="orderHeader">
          <span class="orderDate"><h3>{{order.date}}</h3></span><span class="orderSta">{{order.sta}}</span>
         </div>
-        <router-link to="/tracking/detail">
+        <router-link :to="`/tracking/detail/${order.orderCode}`">
       <div class="orderBody">
           <div class="orderImage"></div>
           <span class="orderTitle">{{order.title}}</span>

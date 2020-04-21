@@ -2,9 +2,10 @@ import axios from 'axios'
 
 const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
-  baseUrl2: 'http://192.168.1.20:3800/api/v1/',
+  baseUrl3: 'http://api.shallwe.shop/api/v1/',
+  baseUrl2: 'http://192.168.1.20:3000/api/v1/',
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
-  // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
+  // baseUrl5: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
 
 /**
@@ -145,6 +146,22 @@ function addMemberAddress (accessToken, addrInfo) {
   })
 }
 
+// 회원 주소 삭제
+function deleteMemberAddress (accessToken, addrSysId) {
+  let userSysId = parseJwt(accessToken).authSysId
+  let formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addrSysId))
+  return axios({
+    method: 'delete',
+    url: `${config.baseUrl}users/${userSysId}/address`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // 추가 배송비 조회
 function getAddingCosts (postNumber) {
   return axios.get(`${config.baseUrl}operations/deliveries/addingCosts/${postNumber}`)
@@ -172,26 +189,68 @@ function patchUserPoint (accessToken, pointData) {
 
 // 상품 검색
 function searchProducts (name) {
-  return axios.get(`${config.baseUrl}products/searchlists?name=${name}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}products/searchlists?name=${name}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            products: []
+          }
+        }
+      })
+    })
+  }
 }
 // 브랜드 검색
 function searchBrands (name) {
-  return axios.get(`${config.baseUrl}brands/searchlists?name=${name}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}brands/searchlists?name=${name}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            brands: []
+          }
+        }
+      })
+    })
+  }
 }
 // 방송 검색
 function searchBroadcasts (title) {
-  return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
+  if (name) {
+    return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
+  } else {
+    return new Promise((resolve, reject) => {
+      resolve({
+        data: {
+          jsonData: {
+            broadcasts: []
+          }
+        }
+      })
+    })
+  }
 }
 
 /**
  *
  * 상품 상세
  */
-// 단일 상품
+// 상품 상세 조회
+function getProductDetail (prdtSysId) {
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/detail`)
+}
+
+// 단일 상품 조회
 function getProduct (prdtSysId) {
   return axios.get(`${config.baseUrl}products/${prdtSysId}`)
 }
 
+// 방송 가져오기
 function getBroadCast (prdtSysId) {
   return axios.get(`${config.baseUrl}broadcasts/${prdtSysId}`)
 }
@@ -316,6 +375,50 @@ function putCartItem (accessToken, basketSysId, cartItem) {
     },
     data: formdata
   })
+}
+
+// 비회원 장바구니 회원장바구니로 합치기
+function nonMemberCartMerge () {
+  if (sessionStorage.getItem('nonMemberCartList')) {
+    let nCart = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+    nCart.forEach(c => {
+      let cartItem = {
+        prdtSysId: c.prdtSysId,
+        basketQty: c.basketQty,
+        isOptionNormal: c.isOptionNormal,
+        isAddingProduct: 0
+        // optionGroups:,
+        // addingProducts
+      }
+
+      if (c.optionGroups) {
+        cartItem.optionGroups = []
+        for (const o of c.optionGroups) {
+          let groupItem = {
+            optionQty: o.optionQty,
+            productOptions: []
+          }
+
+          for (const po of o.productOptions) {
+            groupItem.productOptions.push({
+              prdtNormalOptionSysId: po.prdtNormalOptionSysId,
+              optionKeyName: po.optionKeyName
+            })
+          }
+
+          cartItem.optionGroups.push(groupItem)
+        }
+      }
+
+      postCartItem(sessionStorage.getItem('accessToken'), cartItem)
+        .then(res => {
+          sessionStorage.removeItem('nonMemberCartList')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
+  }
 }
 
 /**
@@ -624,7 +727,7 @@ function setReservateBroadCast (accessToken, broadcastScheduleSysId) {
   formdata.set('jsonData', JSON.stringify({'broadcastScheduleSysId': broadcastScheduleSysId}))
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -640,7 +743,7 @@ function getReservateBroadCast (accessToken, sIdx, rCnt, sDate) {
   console.log({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate})
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/list`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/list`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -653,7 +756,7 @@ function removeReservateBroadCast (accessToken, userBroadcastReservationSysId) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'delete',
-    url: `${config.baseUrl2}users/${userSysId}/broadcastreservations/${userBroadcastReservationSysId}`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/${userBroadcastReservationSysId}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -842,6 +945,7 @@ export {
   getLiveProduct,
   retauthMine,
   getProduct,
+  getProductDetail,
   getBrandList,
   getBroadCast,
   postOrders,
@@ -882,10 +986,12 @@ export {
   getProductReview,
   getFollowing,
   claimReview,
+  patchUserPoint,
+  nonMemberCartMerge,
+  deleteMemberAddress,
   getBroadCastSchedules,
   setReservateBroadCast,
   getReservateBroadCast,
   removeReservateBroadCast,
-  patchUserPoint,
   getFaqList
 }

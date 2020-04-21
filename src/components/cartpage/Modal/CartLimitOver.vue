@@ -30,7 +30,7 @@ export default {
   width: 80%;
   top: 30%;
   left: 10%;
-  z-index: 100;
+  z-index: 102;
   border-radius: 8px;
   text-align: center;
   background-color: #fff;

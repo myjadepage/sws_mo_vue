@@ -7,8 +7,10 @@
 <script>
 
 export default {
+  props: ['orderCode'],
   methods: {
     orderDetailBtnClick () {
+      this.$router.push(`/tracking/detail/${this.orderCode}`)
     },
     orderContinueBtnClick () {
       this.$router.push('/')

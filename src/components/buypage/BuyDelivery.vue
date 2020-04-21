@@ -2,6 +2,7 @@
   <div class="buyDeliveryWrap">
     <div class="buyDeliveryHeader">
       배송지 정보
+      <span v-if="isDefaultAddr" class="defaultAddrBadge">기본배송지</span>
       <button @click="deliveryBtnClick" class="deliveryConfigBtn">주소선택</button>
     </div>
     <div class="buyDeliveryBody">
@@ -16,7 +17,7 @@
         </div>
 
         <div class="address">
-        <label for="">주소</label>
+        <label class="addressLabel">주소</label>
         <div class="addressInput">
           <input type="text" :value="address" disabled>
           <br>
@@ -28,8 +29,34 @@
 </template>
 
 <script>
+import {getAddingCosts} from '@/api/index.js'
+
 export default {
+
   props: ['addresses'],
+  watch: {
+    addresses (val, ov) {
+      if (ov.length === 0) {
+        for (const addr of val) {
+          if (addr.initFlag) {
+            this.$store.state.postCode = {address: addr.newAddress, detail: addr.addressDetail, zonecode: addr.zipCode, initFlag: addr.initFlag}
+            getAddingCosts(Number(addr.zipCode))
+              .then(res => {
+                if (res.data.jsonData.addingDeliveryAmount) {
+                  this.$store.commit('updateAddDeliveryCost', res.data.jsonData.addingDeliveryAmount)
+                } else {
+                  this.$store.commit('updateAddDeliveryCost', 0)
+                }
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            break
+          }
+        }
+      }
+    }
+  },
   methods: {
     deliveryBtnClick () {
       this.$emit('deliveryBtnClick')
@@ -75,6 +102,9 @@ export default {
       set (value) {
         this.$store.commit('updateDestInfo', ['phone', value])
       }
+    },
+    isDefaultAddr () {
+      return this.$store.getters.getPostCode.initFlag
     }
   }
 }
@@ -140,6 +170,18 @@ margin-bottom: 15px
   width: 73px;
   font-size: 15px;
   color: #111111;
+}
+
+.defaultAddrBadge{
+  display: inline-block;
+  width: 60px;
+  height: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 11px;
+  border: 1px solid black;
+  position: relative;
+  bottom: 3px;
 }
 
 </style>

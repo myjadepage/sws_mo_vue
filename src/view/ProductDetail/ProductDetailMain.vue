@@ -2,11 +2,11 @@
   <div class="productDetailWrap" v-if="product.prdtSysId">
     <div v-if="$store.state.declareModalShow||buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <Media :listProductMedia="listProductMedia"/>
+      <Media :media="currentMedia" :listProductMedia="listProductMedia"/>
       <Info :product="product" />
-      <SubMedia />
+      <SubMedia @play="playMedia" :subMedias='subMedias' />
       <Info2 :product="product" />
-      <Description @declare="declare" />
+      <Description />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
@@ -25,18 +25,18 @@ import Description from '@/components/product/ProductDescription'
 import ProductFooter from '@/components/product/ProductFooter'
 import CartModal from '@/components/product/Modal/CartModal'
 import DeclareModal from '@/components/product/Modal/DeclareModal'
-import {getProduct, setRecentViewList, getRecentViewList, getAccessToken} from '@/api/index'
+import {getProductDetail, setRecentViewList, getRecentViewList, getAccessToken} from '@/api/index'
 
 export default {
   created () {
     window.scrollTo(0, 0)
     let id = this.$route.params.prdtSysId
 
-    getProduct(id).then((res) => {
-      console.log(res)
+    getProductDetail(id).then((res) => {
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
+      this.subMedias = res.data.jsonData.listProductMedia
 
       if (res.data.jsonData.listProductMedia.length > 0) {
         this.listProductMedia = res.data.jsonData.listProductMedia
@@ -173,6 +173,8 @@ export default {
       buyMode: false,
       showCartModal: false,
       options: [],
+      subMedias: [],
+      currentMedia: {},
       listProductMedia: []
     }
   },
@@ -189,8 +191,8 @@ export default {
         this.showCartModal = false
       }, 3000)
     },
-    declare () {
-      console.log('aaa')
+    playMedia () {
+
     }
   },
   beforeDestroy () {

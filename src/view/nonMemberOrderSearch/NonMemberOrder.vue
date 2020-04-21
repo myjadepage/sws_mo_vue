@@ -1,12 +1,12 @@
 <template>
   <div class="nonMemberOrderWrap">
-      <span class="logo"></span>
+      <span @click="logoClick" class="logo"></span>
       <div class="title">비회원 주문조회</div>
       <div class="formbody">
           <div class="phone">
           <div class="inputTitle">휴대폰 번호</div>
           <input class="" type="text" placeholder="“-” 없이 입력해 주세요.">
-          <button @click="authMineBtnClick">본인인증</button>
+          <!-- <button @click="authMineBtnClick">본인인증</button> -->
           </div>
          <div class="orderNumber">
           <div class="inputTitle">주문 번호</div>
@@ -27,6 +27,9 @@ export default {
     //   this.$IMP().certification({}, (res) => {
     //     console.log(res)
     //   })
+    },
+    logoClick () {
+      this.$router.push('/')
     }
   }
 }

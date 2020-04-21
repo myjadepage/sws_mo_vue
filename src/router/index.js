@@ -142,7 +142,7 @@ export default new Router({
       component: () => import('@/view/mypage/Tracking')
     },
     {
-      path: '/Tracking/Detail',
+      path: '/Tracking/Detail/:orderCode',
       name: 'TrackingDetail',
       component: () => import('@/view/mypage/TrackingDetail')
     },

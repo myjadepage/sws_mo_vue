@@ -19,7 +19,7 @@
       <span class="info"><span class="ico ico_comments"></span>{{comments}}</span>
     </div>
     <footer>
-      <span v-if="deliveryPriceTypeCode===1" class="delivery">무료배송</span>
+      <span v-if="product.deliveryPriceTypeCode===1" class="delivery">무료배송</span>
       <span v-if="pointRate" class="point">{{pointRate*10}}%적립</span>
       <span v-if="!hasCart" @click="clickCart" class="ico_uncart"></span>
       <span v-if="hasCart" @click="clickCart" class="ico_cart"></span>

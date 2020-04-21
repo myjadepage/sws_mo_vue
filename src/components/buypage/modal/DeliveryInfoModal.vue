@@ -51,10 +51,12 @@ export default {
   .deliveryInfoModal{
     z-index: 1000;
     position: fixed;
-    top: 20px;
+    top: 5%;
     left: 5%;
     width: 90%;
+    height: 90%;
     background-color: #fff;
+    overflow: scroll;
   }
 
   .modalBody{
