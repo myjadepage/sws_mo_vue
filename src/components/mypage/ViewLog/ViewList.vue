@@ -67,7 +67,8 @@ export default {
       allChecked: false,
       selectedProducts: [],
       items: this.products,
-      scrolled: false
+      scrolled: false,
+      pickStartIndex: 0
     }
   },
   create () {
@@ -180,10 +181,12 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.windowScrollY)
     if (this.items.length > 0) {
-      getPicksList(sessionStorage.getItem('accessToken'), 0, 10)
+      let pickStr = `?startIndex=${this.pickStartIndex}&rowCount=20`
+      getPicksList(sessionStorage.getItem('accessToken'), pickStr)
         .then(res => {
           if (res.data.jsonData.resultCode === '0001') {
             let picksList = res.data.jsonData.prdtPicks
+            this.pickStartIndex = res.data.jsonData.startIndex
             this.items.forEach(obj => {
               for (let i = 0; i < picksList.length; i++) {
                 if (obj.prdtSysId === picksList[i].prdtSysId) {

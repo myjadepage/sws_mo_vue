@@ -24,8 +24,8 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
-
-    getMyReviewList(sessionStorage.getItem('accessToken'), 0, 10)
+    let str = `?startIndex=${this.startIndex}&rowCount=10`
+    getMyReviewList(sessionStorage.getItem('accessToken'), str)
       .then(res => {
         console.log(res)
         if (res.data.jsonData.resultCode === '0001') {
@@ -37,7 +37,7 @@ export default {
           getAccessToken(sessionStorage.getItem('refreshToken'))
             .then(res => {
               sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-              getMyReviewList(sessionStorage.getItem('accessToken'), 0, 10)
+              getMyReviewList(sessionStorage.getItem('accessToken'), str)
                 .then(res => {
                   console.log(res)
                   if (res.data.jsonData.resultCode === '0001') {
@@ -69,7 +69,8 @@ export default {
       emptyMessage2: '리뷰를 작성한 상품 내역이 없습니다.',
       products: [],
       reviews: [],
-      tabState: false
+      tabState: false,
+      startIndex: 0
     }
   },
   components: {

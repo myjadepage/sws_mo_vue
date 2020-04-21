@@ -2,14 +2,14 @@
   <div class="qnaList compBlock compBorderBlock">
     <h3 v-if="pageType==='search'" class="searchResult"><span class="c_them">{{keyword}}</span>에 대한 <span class="c_them">{{list.length}}</span>개의 검색 결과</h3>
     <ul>
-      <li class="item" v-for="(item, index) in list" :key="item.siteFaqSysId">
-        <h3 @click="toggle($event)">
+      <li class="item" v-for="(item, index) in list" :key="item.siteFaqSysId" @click="toggle($event)">
+        <h3>
           <span class="num">{{index+1}}.</span>
           <span class="title" v-html="wordWrap(item.title)"></span>
         </h3>
         <div class="answer">
           <h4 class="c_them">답변</h4>
-          <p>{{item.content}}</p>
+          <div v-html="item.content"></div>
         </div>
       </li>
     </ul>
@@ -26,12 +26,18 @@ export default {
   },
   methods: {
     toggle (event) {
-      if ($(event.target).parents('h3').next().is(':visible')) {
-        $(event.target).parents('.item').css('background', '#fff')
+      let el
+      if ($(event.target).hasClass('item')) {
+        el = $(event.target)
       } else {
-        $(event.target).parents('.item').css('background', '#f3f3f3')
+        el = $(event.target).parents('.item')
       }
-      $(event.target).parents('h3').next().slideToggle('fast')
+      if (el.find('.answer').is(':visible')) {
+        el.css('background', '#fff')
+      } else {
+        el.css('background', '#f3f3f3')
+      }
+      el.find('.answer').slideToggle('fast')
     },
     wordWrap (txt) {
       let val = new RegExp(this.keyword, 'gi')

@@ -27,13 +27,14 @@ export default {
       products: [],
       modalVisiblity: false,
       basketDeleteModal: false,
-      removedModal: false
+      removedModal: false,
+      startIndex: 0
     }
   },
   created () {
     window.scrollTo(0, 0)
-
-    getPicksList(sessionStorage.getItem('accessToken'), 0, 10)
+    let str = `?startIndex=${this.startIndex}&rowCount=20`
+    getPicksList(sessionStorage.getItem('accessToken'), str)
       .then(res => {
         if (res.data.jsonData.resultCode === '0001') {
           this.products = res.data.jsonData.prdtPicks
@@ -45,7 +46,7 @@ export default {
           getAccessToken(sessionStorage.getItem('refreshToken'))
             .then(res => {
               sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-              getPicksList(sessionStorage.getItem('accessToken'), 0, 10)
+              getPicksList(sessionStorage.getItem('accessToken'), str)
                 .then(res => {
                   if (res.data.jsonData.resultCode === '0001') {
                     this.products = res.data.jsonData.prdtPicks

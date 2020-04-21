@@ -17,10 +17,9 @@ function getProductList (param = '') {
 }
 // 상품리스트
 function getProductLists (getInfo) {
-  console.log(`${config.baseUrl2}products/mainlist?` + getInfo)
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}products/mainlist?` + getInfo,
+    url: `${config.baseUrl2}products/mainlist?${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -487,14 +486,11 @@ function setRecentViewList (accessToken, viewInfo) {
 }
 
 // 마이페이지-최근 본 상품 조회
-function getRecentViewList (accessToken, sIdx, rCnt) {
+function getRecentViewList (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let req = {startIndex: sIdx, rowCount: rCnt}
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtviews/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -503,19 +499,15 @@ function getRecentViewList (accessToken, sIdx, rCnt) {
 }
 
 // 마이 리뷰 목록 가져오기
-function getMyReviewList (accessToken, sIdx, rCnt) {
+function getMyReviewList (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let req = {startIndex: sIdx, rowCount: rCnt}
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/reviews/list`,
+    url: `${config.baseUrl}users/${userSysId}/reviews/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
-    },
-    data: formdata
+    }
   })
 }
 
@@ -580,19 +572,15 @@ function delPicksList (accessToken, prdtSysId) {
 }
 
 // 마이페이지-찜한 상품 조회
-function getPicksList (accessToken, sIdx, rCnt) {
+function getPicksList (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let req = {startIndex: sIdx, rowCount: rCnt}
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/prdtpick/list`,
+    url: `${config.baseUrl}users/${userSysId}/prdtpick/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
-    },
-    data: formdata
+    }
   })
 }
 
@@ -668,16 +656,13 @@ function getProductReview (prdtSysId, prdtReviewSysId) {
 // 마이페이지 - 팔로잉 목록 조회
 function getFollowing (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(getInfo))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/follows/list`,
+    url: `${config.baseUrl}users/${userSysId}/follows/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
-    },
-    data: formdata
+    }
   })
 }
 
@@ -688,15 +673,12 @@ function getFollowing (accessToken, getInfo) {
 
 // 고객센터 - FAQ 목록 조회
 function getFaqList (getInfo) {
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(getInfo))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}operations/faqs`,
+    url: `${config.baseUrl2}operations/faqs${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: formdata
+    }
   })
 }
 
@@ -736,19 +718,15 @@ function setReservateBroadCast (accessToken, broadcastScheduleSysId) {
   })
 }
 // 방송예약 조회
-function getReservateBroadCast (accessToken, sIdx, rCnt, sDate) {
+function getReservateBroadCast (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate}))
-  console.log({'startIndex': sIdx, 'rowCount': rCnt, 'startDate': sDate})
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/list`,
+    url: `${config.baseUrl}users/${userSysId}/broadcastreservations/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
-    },
-    data: formdata
+    }
   })
 }
 // 방송예약 취소

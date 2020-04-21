@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getList () {
-      let getInfo = 'startIndex=' + this.startIndex + '&categorySysId1=' + this.categorySysId1 + '&isSale=1'
+      let getInfo = 'startIndex=' + this.startIndex + '&rowCount=20&categorySysId1=' + this.categorySysId1 + '&isSale=1'
       // console.log(getInfo)
       getProductLists(getInfo)
         .then(res => {

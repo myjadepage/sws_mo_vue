@@ -28,7 +28,8 @@ export default {
       modalVisiblity: false,
       basketDeleteModal: false,
       removedModal: false,
-      viewStartIndex: 0
+      viewStartIndex: 0,
+      startIndex: 0
     }
   },
   components: {
@@ -36,9 +37,9 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
-
+    let str = `?startIndex=${this.startIndex}&rowCount=20`
     if (sessionStorage.getItem('accessToken')) {
-      getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
+      getRecentViewList(sessionStorage.getItem('accessToken'), str)
         .then(res => {
           console.log(res)
           this.viewStartIndex = res.data.jsonData.viewStartIndex
@@ -50,7 +51,7 @@ export default {
             getAccessToken(sessionStorage.getItem('refreshToken'))
               .then(res => {
                 sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                getRecentViewList(sessionStorage.getItem('accessToken'), this.viewStartIndex, 10)
+                getRecentViewList(sessionStorage.getItem('accessToken'), str)
                   .then(res => {
                     console.log(res)
                     this.viewStartIndex = res.data.jsonData.viewStartIndex
