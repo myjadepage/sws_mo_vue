@@ -1,19 +1,14 @@
 <template>
   <div class="productMediaWrap">
     <div class="mainMedia">
-      <!-- <div id="player_container"  class="use-drag-handle is-poster use-thin-controlbar use-play-1 flowplayer"></div> -->
-      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle">
+
+      <!-- this.listProductMedia 에 영상이 있을 때 -->
+      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle" v-if="this.movFlag">
         <button class="toggleFullsize" @click="fullSize" ><span class="ir_pm">전체화면 켜기/끄기</span></button>
       </div>
-    </div>
 
-    <!-- <ul class="mediaMenu">
-      <li @click="selectMediaMode(0)" class="selected"><div class="dot">·</div>제품뷰티</li>
-      <li @click="selectMediaMode(1)"><div class="dot">·</div>언박싱</li>
-      <li @click="selectMediaMode(2)"><div class="dot">·</div>설명</li>
-      <li @click="selectMediaMode(3)"><div class="dot">·</div>제품특장점</li>
-      <li @click="selectMediaMode(4)"><div class="dot">·</div>비교</li>
-    </ul> -->
+      <div class="img_box" :style="{backgroundImage:'url(' + media[0].image + ')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}" v-if="!this.movFlag"></div>
+    </div>
   </div>
 </template>
 
@@ -21,6 +16,7 @@
 // import 'flowplayer-files/lib/styles/flowplayer.css'
 
 export default {
+  props: ['listProductMedia'],
   data () {
     return {
       mediaDirection: 0,
@@ -30,11 +26,22 @@ export default {
       movSize: {
         width: 0,
         height: 0
-      }
+      },
+      media: this.listProductMedia,
+      movFlag: false
     }
   },
+  beforeMount () {
+    this.media.map(x => {
+      if (x.hasOwnProperty('objectIds')) {
+        this.movFlag = true
+      }
+    })
+  },
   mounted: function () {
-    this.getVideoTypePlayer()
+    if (this.movFlag) {
+      this.getVideoTypePlayer()
+    }
   },
   computed: {
     mediaSize () {
@@ -46,8 +53,8 @@ export default {
     getVideoTypePlayer () {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       const POSTER = ''
-      const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
-      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
+      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.listProductMedia.objectIds}/playlist.m3u8`
+      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
 
       // eslint-disable-next-line no-undef
       flowplayer('#player_container', {
@@ -103,22 +110,43 @@ export default {
         })
         this.mode = 'fullscreen'
         window.addEventListener('orientationchange', () => {
+          console.log(window.orientation)
           if (window.orientation === 0) {
             // portrait
-            $(vWrap).css({
-              'transform': 'rotate(-90deg)',
-              'top': '100%',
-              'width': '100vh',
-              'height': '100vw'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            } else {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            }
           } else {
             // landscape
-            $(vWrap).css({
-              'transform': 'rotate(0)',
-              'top': '0',
-              'width': '100vw',
-              'height': '100vh'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            } else {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            }
           }
         })
         document.querySelector('html').style.overflow = 'hidden'
@@ -142,6 +170,9 @@ export default {
         document.querySelector('html').style.overflow = 'visible'
       }
     }
+  },
+  destroyed () {
+    document.querySelector('html').style.overflow = 'visible'
   }
 }
 </script>

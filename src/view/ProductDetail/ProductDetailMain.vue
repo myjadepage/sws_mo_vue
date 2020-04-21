@@ -2,7 +2,7 @@
   <div class="productDetailWrap" v-if="product.prdtSysId">
     <div v-if="$store.state.declareModalShow||buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <Media :media="currentMedia"/>
+      <Media :media="currentMedia" :listProductMedia="listProductMedia"/>
       <Info :product="product" />
       <SubMedia @play="playMedia" :subMedias='subMedias' />
       <Info2 :product="product" />
@@ -37,6 +37,14 @@ export default {
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
       this.subMedias = res.data.jsonData.listProductMedia
+
+      if (res.data.jsonData.listProductMedia.length > 0) {
+        this.listProductMedia = res.data.jsonData.listProductMedia
+      } else if (res.data.jsonData.product.bigImageUrl) {
+        this.listProductMedia = [{'image': res.data.jsonData.product.bigImageUrl}]
+      } else if (res.data.jsonData.product.middleImageUrl) {
+        this.listProductMedia = [{'image': res.data.jsonData.product.middleImageUrl}]
+      }
 
       if (this.$store.state.isLogin) { // 회원인 경우
         // eslint-disable-next-line
@@ -166,7 +174,8 @@ export default {
       showCartModal: false,
       options: [],
       subMedias: [],
-      currentMedia: {}
+      currentMedia: {},
+      listProductMedia: []
     }
   },
   components: {

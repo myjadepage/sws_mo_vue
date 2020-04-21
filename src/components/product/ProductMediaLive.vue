@@ -76,6 +76,9 @@ export default {
       // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
       const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
 
+      // 실시간 url
+      // const VIDEOSRC = 'http://epiens.xst.kinxcdn.com/epiens/1/playlist.m3u8'
+
       // 테스트용 url
       // const VIDEOSRC = 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
       // const VIDEOSRC = 'http://epiensup1.xst.kinxcdn.com/epiens/test2.m3u8'
@@ -206,22 +209,43 @@ export default {
         })
         this.fullMode = true
         window.addEventListener('orientationchange', () => {
+          console.log(window.orientation)
           if (window.orientation === 0) {
             // portrait
-            $(vWrap).css({
-              'transform': 'rotate(-90deg)',
-              'top': '100%',
-              'width': '100vh',
-              'height': '100vw'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            } else {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            }
           } else {
             // landscape
-            $(vWrap).css({
-              'transform': 'rotate(0)',
-              'top': '0',
-              'width': '100vw',
-              'height': '100vh'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            } else {
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            }
           }
         })
         document.querySelector('html').style.overflow = 'hidden'
@@ -232,6 +256,9 @@ export default {
         })
       }
     }
+  },
+  destroyed () {
+    document.querySelector('html').style.overflow = 'visible'
   }
 }
 </script>

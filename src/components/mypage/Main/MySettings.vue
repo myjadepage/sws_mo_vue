@@ -20,9 +20,9 @@
     <div class="setting_block">
       <h4>고객센터</h4>
       <ul>
-        <li><router-link to="">일반문의</router-link></li>
-        <li><router-link to="">구매상품문의</router-link></li>
-        <li><router-link to="">나의문의내역</router-link></li>
+        <li><router-link to="/Contact">일반문의</router-link></li>
+        <li><router-link to="/writeQna">구매상품문의</router-link></li>
+        <li><router-link to="/myQna">나의문의내역</router-link></li>
         <li><router-link to="/CustomerMain">고객센터</router-link></li>
       </ul>
     </div>
