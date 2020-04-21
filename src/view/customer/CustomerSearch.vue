@@ -6,7 +6,7 @@
     </section>
     <EmptyBlock :param="emptyMessage" v-if="list.length === 0" />
     <div v-else >
-      <qnaList :list="list" :pageType="pageType" :keyword="keyword" />
+      <qnaList :list="list" :pageType="pageType" :keyword="keyword" :typeCode="typeCode" />
       <div class="reportBlock compBlock">
         <p>더 궁금하신 사항이 있으신가요?</p>
         <router-link to="/contact" class="c_them">1:1 문의하기</router-link>
@@ -49,8 +49,7 @@ export default {
       let str = `?startIndex=${this.startIndex}&rowCount=20`
       if (this.keyword !== '' && this.keyword !== undefined) {
         str += `&keyword=${this.keyword}`
-      }
-      if (this.typeCode !== 0) {
+      } else if (this.typeCode !== 0) {
         str += `&faqTypeCode=${this.typeCode}`
       }
       getFaqList(str)
@@ -69,6 +68,7 @@ export default {
         })
     },
     search (key) {
+      this.startIndex = 0
       this.keyword = key
       this.getList()
     }

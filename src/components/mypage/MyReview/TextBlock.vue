@@ -29,7 +29,7 @@
 <script>
 import Axios from 'axios'
 import uuidv4 from 'uuid4'
-import { setReview } from '@/api/index.js'
+import { setReview, getKinxToken } from '@/api/index.js'
 
 export default {
   name: 'TextBlock',
@@ -74,11 +74,14 @@ export default {
       setReview(sessionStorage.getItem('accessToken'), this.prdtSysId, reviewInfo)
         .then(res => {
           // console.log(res)
-          if (res.data.jsonData.resultCode !== '0001') {
-            alert('사진 업로드에 실패했습니다.')
-          } else if (res.data.jsonData.resultCode === '0001') {
+          if (res.data.jsonData.resultCode === '0001') {
             this.$router.push('/MyReview')
+          } else if (res.data.jsonData.resultCode !== '0001') {
+            alert('사진 업로드에 실패했습니다.')
           }
+        })
+        .catch(err => {
+          console.log(err)
         })
     },
     delPhoto (index) {
@@ -88,9 +91,14 @@ export default {
 
     /* eslint-disable */
     async upload (event) {
+      // KINX 토큰 발급 API
+      // getKinxToken().then(res => {
+      //   console.log(res)
+      // })
+      
+      // 1. 사용자 인증
       let dir = '/static/images'
       let cdnUrl = 'http://cdn.shallwe.link'
-      // 1. 사용자 인증
       let loginParam = {user: 'l2e2e2@epiens.com', pwd: 'ny3yQaQumeje', stoid: 'epienscdn', stopwd: 'dlvldpstm2020!!'}
       let auth = await Axios.request({url: 'https://stats.kinxcdn.com/api/auth?', params: loginParam}).then((res) => { return res })
       // 2. 디렉토리를 체크한다.
