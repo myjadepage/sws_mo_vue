@@ -245,5 +245,4 @@ export default {
 .loader {
     opacity: 0 !important;
 }
-
 </style>
