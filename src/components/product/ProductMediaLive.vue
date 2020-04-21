@@ -49,23 +49,9 @@ export default {
     getLiveProduct(this.$route.params.broadcastSysId)
       .then(res => {
         this.getVideoTypePlayer(res.data.jsonData.broadcastMedias[0])
-
-        // if (this.mode === 'fullscreen') {
-        //   if ($(this.$refs.player)[0].requestFullscreen) {
-        //     $(this.$refs.player)[0].requestFullscreen()
-        //   } else if ($(this.$refs.player)[0].mozRequestFullScreen) { /* Firefox */
-        //     $(this.$refs.player)[0].mozRequestFullScreen()
-        //   } else if ($(this.$refs.player)[0].webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-        //     $(this.$refs.player)[0].webkitRequestFullscreen()
-        //   } else if ($(this.$refs.player)[0].msRequestFullscreen) { /* IE/Edge */
-        //     $(this.$refs.player)[0].msRequestFullscreen()
-        //   }
-        // }
       })
       .catch(error => {
         console.log(error)
-        // alert('네트워크 오류입니다.')
-        // this.$router.go(-1)
       })
   },
   methods: {
@@ -73,8 +59,11 @@ export default {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       // const POSTER = item.thumnailUrl
       const POSTER = ''
-      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
-      const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
+      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
+      // const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
+
+      // 실시간 url
+      // const VIDEOSRC = 'http://epiens.xst.kinxcdn.com/epiens/1/playlist.m3u8'
 
       // 테스트용 url
       // const VIDEOSRC = 'https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8'
@@ -206,22 +195,43 @@ export default {
         })
         this.fullMode = true
         window.addEventListener('orientationchange', () => {
+          console.log(window.orientation)
           if (window.orientation === 0) {
             // portrait
-            $(vWrap).css({
-              'transform': 'rotate(-90deg)',
-              'top': '100%',
-              'width': '100vh',
-              'height': '100vw'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            } else {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            }
           } else {
             // landscape
-            $(vWrap).css({
-              'transform': 'rotate(0)',
-              'top': '0',
-              'width': '100vw',
-              'height': '100vh'
-            })
+            if ((this.movSize.width / this.movSize.height) > 1) {
+              // 세로영상
+              $(vWrap).css({
+                'transform': 'rotate(0)',
+                'top': '0',
+                'width': '100vw',
+                'height': '100vh'
+              })
+            } else {
+              $(vWrap).css({
+                'transform': 'rotate(-90deg)',
+                'top': '100%',
+                'width': '100vh',
+                'height': '100vw'
+              })
+            }
           }
         })
         document.querySelector('html').style.overflow = 'hidden'
@@ -232,6 +242,9 @@ export default {
         })
       }
     }
+  },
+  destroyed () {
+    document.querySelector('html').style.overflow = 'visible'
   }
 }
 </script>

@@ -27,8 +27,8 @@
             </div>
             <!-- <div class="wrap_btn_search common-header-search" v-if="$store.state.isLogin === true"> -->
             <div class="wrap_btn_search common-header-search" >
-                 <router-link to="/cart" id="btnSearchTop" class="link_search" role="button">
-                    <span class="sws_icon ico_basket">장바구니</span>
+                 <router-link to="/cart" id="btnSearchTop" class="link_search cart" role="button">
+                    <span v-if="baskets.length > 0" class="cartBadge">{{baskets.length}}</span>
                 </router-link>
             </div>
             <!-- <div class="wrap_btn_search common-header-search" v-else>
@@ -42,8 +42,51 @@
 </template>
 
 <script>
+import { getCartItem, getAccessToken } from '@/api/index.js'
+
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+      baskets: []
+    }
+  },
+  beforeMount () {
+    if (sessionStorage.getItem('accessToken')) {
+      getCartItem(sessionStorage.getItem('accessToken'))
+        .then(res => {
+        //   console.log(res)
+          if (res.data.jsonData.resultCode === '0001') {
+            this.baskets = res.data.jsonData.baskets
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response.status === 401) {
+            getAccessToken(sessionStorage.getItem('refreshToken'))
+              .then(res => {
+                sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                getCartItem(sessionStorage.getItem('accessToken'))
+                  .then(res => {
+                  //   console.log(res)
+                    if (res.data.jsonData.resultCode === '0001') {
+                      this.baskets = res.data.jsonData.baskets
+                    }
+                  })
+                  .catch(err => {
+                    console.log(err)
+                  })
+              })
+              .catch(err => {
+                if (err.response.status === 401) {
+                  this.$store.dispatch('logOut')
+                  this.$router.push('/Login')
+                }
+              })
+          }
+        })
+    }
+  }
 }
 </script>
 

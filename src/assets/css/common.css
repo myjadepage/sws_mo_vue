@@ -332,7 +332,14 @@ input:-webkit-autofill {
   height: 21px;
   position: relative;
   top: 12px;
-  left: 18px
+  left: 18px;
+}
+.head_sws .box_menu_right .common-header-search .link_search.cart{
+  background:url('../img/ico/uncart.png') 50% 50% / 17px auto no-repeat;
+}
+.head_sws .box_menu_right .common-header-search .link_search.cart .cartBadge{
+  top: -10px;
+  left:10px;
 }
 
 .head_sws .box_menu_right .common-header-search .link_search .ico_search {
@@ -3875,7 +3882,22 @@ html, body{
 
 
 .lookUp.compBlock{
-  margin-top:1px;
+  overflow:hidden;
+  margin-top:5px;
+  padding:17px 22px;
+}
+.lookUp.compBlock p{
+  float:left;
+  margin-top:0;
+  color:#141414;
+  font-size:24px;
+}
+.lookUp.compBlock p.point{
+  float:right;
+  font-family: 'Roboto';
+  font-size:24px;
+  font-weight:700;
+  color:#e61754;
 }
 .pointList{
   margin-bottom:0;
@@ -3910,19 +3932,13 @@ html, body{
   height:4px;
   background:#e61754;
 }
-.pointList input#all:checked~.all_list,
-.pointList input#save:checked~.save_list,
-.pointList input#use:checked~.use_list{
-  display:block;
-}
 .pointList .list{
-  display:none;
   padding:0 12px;
   border-top:1px solid #eee;
 }
 .pointList .list .item{
   overflow: hidden;
-  padding:15px 0;
+  padding:20px 0;
   border-bottom:1px solid #eee;
 }
 .pointList .list .txt{
@@ -3951,16 +3967,12 @@ html, body{
   position: relative;
   height:calc(100% - 52px);
   padding:0;
-  border-top:none;
+  border-top:1px solid #eee;
   color:#666;
   text-align: center;
-  background:#f3f3f3;
 }
 .pointList .list.emptyBox .emptyItem{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
+  padding-top:140px;
   font-size:14px;
 }
 .pointList .list.emptyBox img{
@@ -4673,7 +4685,7 @@ html, body{
 }
 .qnaList .item h3,
 .qnaList .item h4,
-.qnaList .item p{
+.qnaList .item .answer div{
   padding-left:14px;
 }
 .qnaList .item h3 .num{
@@ -5143,7 +5155,7 @@ background-size: 100%;
   position:fixed;
   left: 0;
   top: 0;
-  z-index: 99;
+  z-index: 90;
   width: 100%;
   background-color: #fff;
   opacity: 0.9;

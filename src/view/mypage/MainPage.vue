@@ -2,7 +2,7 @@
 <div class="mainPageWrap">
 <Bar :val="title" :baskets="baskets" />
 <!-- <OptionBar :baskets="baskets"/> -->
-<Info :member="member"/>
+<Info :member="member" :picks="picks"/>
 <!-- <OrderStatus :member="member"/> -->
 <!-- <Util/> -->
 <Settings/>
@@ -19,7 +19,7 @@ import OrderStatus from '@/components/mypage/Main/MyOrderStatus'
 import Util from '@/components/mypage/Main/MyUtility'
 import Settings from '@/components/mypage/Main/MySettings'
 import Footer from '@/components/mypage/Main/MyFooter'
-import { getMypageInfo, getCartItem, getAccessToken } from '@/api/index.js'
+import { getMypageInfo, getCartItem, getPicksList, getAccessToken } from '@/api/index.js'
 
 export default {
   metaInfo: {
@@ -41,7 +41,8 @@ export default {
         deliveringCnt: 0,
         deliveryCompleteCnt: 0
       },
-      baskets: []
+      baskets: [],
+      picks: []
     }
   },
   components: {
@@ -123,6 +124,17 @@ export default {
                 }
               })
           }
+        })
+
+      let str = `?startIndex=0&rowCount=40`
+      getPicksList(sessionStorage.getItem('accessToken'), str)
+        .then(res => {
+          if (res.data.jsonData.resultCode === '0001') {
+            this.picks = res.data.jsonData.prdtPicks
+          }
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
   }

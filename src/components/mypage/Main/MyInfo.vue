@@ -3,14 +3,13 @@
     <div class="infoHeader">
       <div class="profile_pic">
         <div class="profile_img" :style="{backgroundImage:'url('+member.profileImgUrl+')', backgroundSize:'cover', backgroundPosition:'50%', backgroundRepeat:'no-repeat'}"></div>
-        <!-- <router-link to="/chkPw" class="ico_edit"></router-link> -->
       </div>
       <div class="profile_text">
         <div class="profile_name">{{member.nickName}}</div>
       </div>
       <div class="profile_btn">
         <router-link to="/AlertList" class="alarm_button">7</router-link>
-        <router-link to="" class="like_button">23</router-link>
+        <router-link to="" class="like_button">{{picks.length}}</router-link>
       </div>
     </div>
     <div class="infoFooter">
@@ -26,7 +25,7 @@
 
 <script>
 export default {
-  props: ['member'],
+  props: ['member', 'picks'],
   data () {
     return {
     }

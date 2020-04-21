@@ -15,28 +15,7 @@ import DetailDesc from './ProductDetailDesc'
 
 export default {
   mounted () {
-    let self = this
-
-    document.addEventListener('scroll', () => {
-      let bH = document.querySelector('.headBarWrap').clientHeight
-      let mH = document.querySelector('.productMediaWrap').clientHeight
-      if (self.$refs.info) {
-        let el = self.$refs.info
-        let target = self.$refs.descMenu
-        let top = el.getBoundingClientRect().top
-        if (top <= bH + mH) {
-          if (!target.classList.contains('scrolling')) {
-            target.classList.add('scrolling')
-            target.style.top = (bH + mH) + 'px'
-          }
-        } else {
-          if (target.classList.contains('scrolling')) {
-            target.classList.remove('scrolling')
-            target.style.top = '0px'
-          }
-        }
-      }
-    })
+    document.addEventListener('scroll', this.scrollHandler, true)
   },
   components: {
     DetailDesc
@@ -44,7 +23,27 @@ export default {
   data () {
     return {
       selectedMenu: 0,
-      timer: null
+      timer: null,
+      scrollHandler: () => {
+        let bH = document.querySelector('.headBarWrap').clientHeight
+        let mH = document.querySelector('.productMediaWrap').clientHeight
+        if (this.$refs.info) {
+          let el = this.$refs.info
+          let target = this.$refs.descMenu
+          let top = el.getBoundingClientRect().top
+          if (top <= bH + mH) {
+            if (!target.classList.contains('scrolling')) {
+              target.classList.add('scrolling')
+              target.style.top = (bH + mH) + 'px'
+            }
+          } else {
+            if (target.classList.contains('scrolling')) {
+              target.classList.remove('scrolling')
+              target.style.top = '0px'
+            }
+          }
+        }
+      }
     }
   },
   methods: {
@@ -54,6 +53,9 @@ export default {
       this.$el.getElementsByTagName('li')[this.selectedMenu].className = 'selected'
       window.scrollTo(0, 400)
     }
+  },
+  destroyed () {
+    document.removeEventListener('scroll', this.scrollHandler, true)
   }
 }
 </script>
