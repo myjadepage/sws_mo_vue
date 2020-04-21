@@ -2,7 +2,7 @@
   <div class="productDetailWrap" v-if="product.prdtSysId">
     <div v-if="$store.state.declareModalShow||buyMode" class="darkFilter"></div>
       <Bar :val="title" />
-      <Media/>
+      <Media :listProductMedia="listProductMedia"/>
       <Info :product="product" />
       <SubMedia />
       <Info2 :product="product" />
@@ -33,9 +33,18 @@ export default {
     let id = this.$route.params.prdtSysId
 
     getProduct(id).then((res) => {
+      console.log(res)
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
+
+      if (res.data.jsonData.listProductMedia.length > 0) {
+        this.listProductMedia = res.data.jsonData.listProductMedia
+      } else if (res.data.jsonData.product.bigImageUrl) {
+        this.listProductMedia = [{'image': res.data.jsonData.product.bigImageUrl}]
+      } else if (res.data.jsonData.product.middleImageUrl) {
+        this.listProductMedia = [{'image': res.data.jsonData.product.middleImageUrl}]
+      }
 
       if (this.$store.state.isLogin) { // 회원인 경우
         // eslint-disable-next-line
@@ -163,7 +172,8 @@ export default {
       product: {},
       buyMode: false,
       showCartModal: false,
-      options: []
+      options: [],
+      listProductMedia: []
     }
   },
   components: {

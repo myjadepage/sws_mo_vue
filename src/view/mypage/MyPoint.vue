@@ -1,8 +1,8 @@
 <template>
-  <div class="mainPageWrap emptyHeight" >
+  <div class="mainPageWrap" >
   <Bar :val="title" />
-  <LookUp @sendDate="setDate" />
-  <PointList :lists="lists" />
+  <LookUp />
+  <PointList :lists="lists" :treatFlag="treatFlag" @tab="tab" />
 
   </div>
 </template>
@@ -20,30 +20,45 @@ export default {
   data () {
     return {
       title: '마이 포인트',
-      todayStr: '',
-      startDateStr: '',
-      baskets: [],
+      startIndex: 0,
+      treatFlag: 0,
       lists: []
     }
   },
   components: {
     Bar, LookUp, PointList
   },
+  created () {
+    this.getList()
+  },
   methods: {
-    setDate (today, startDate) {
-      this.todayStr = today.replace(/\./gi, '')
-      this.startDateStr = startDate.replace(/\./gi, '')
-
-      getPointInfo(sessionStorage.getItem('accessToken'), this.todayStr, this.startDateStr, 0)
+    getList () {
+      let str = `?startIndex=${this.startIndex}&treatFlag=${this.treatFlag}`
+      getPointInfo(sessionStorage.getItem('accessToken'), str)
         .then(res => {
           console.log(res)
           if (res.data.jsonData.resultCode === '0001') {
             this.lists = res.data.jsonData.pointHists
+            this.startIndex = res.data.jsonData.startIndex
+          } else if (res.data.jsonData.resultCode === '0004') {
+            this.lists = []
+            this.startIndex = 0
           }
         })
         .catch(err => {
           console.log(err)
         })
+    },
+    tab (num) {
+      this.treatFlag = num
+    }
+  },
+  watch: {
+    treatFlag: {
+      handler () {
+        this.startIndex = 0
+        this.getList()
+      }
     }
   }
 }

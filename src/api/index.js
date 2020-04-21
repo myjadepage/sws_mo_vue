@@ -219,7 +219,7 @@ function claimReview (accessToken, prdtSysId, prdtReviewSysId, data) {
 
 // 문의 목록 가져오기
 function getPrdtQuestionList (prdtSysId) {
-  return axios.get(`${config.baseUrl}products/${prdtSysId}/questions/list`)
+  return axios.get(`${config.baseUrl2}products/${prdtSysId}/questions/list`)
 }
 
 // 문의 등록하기
@@ -229,7 +229,7 @@ function postPrdtQuestion (accessToken, prdtSysId, qaData) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl}products/${prdtSysId}/questions`,
+    url: `${config.baseUrl2}products/${prdtSysId}/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -511,19 +511,15 @@ function delPicksLists (accessToken, lists) {
 
 // 마이페이지-마이 포인트 내역 조회
 // flag - 0: 전체 1: 적립 2:사용.
-function getPointInfo (accessToken, sDate, eData, flag) {
+function getPointInfo (accessToken, getInfo) {
   let userSysId = parseJwt(accessToken).authSysId
-  let req = {startDate: sDate, endDate: eData, treatFlag: flag}
-  let formdata = new FormData()
-  formdata.set('jsonData', JSON.stringify(req))
   return axios({
     method: 'get',
-    url: `${config.baseUrl}users/${userSysId}/pointhists/list`,
+    url: `${config.baseUrl}users/${userSysId}/pointhists/list${getInfo}`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
-    },
-    data: formdata
+    }
   })
 }
 

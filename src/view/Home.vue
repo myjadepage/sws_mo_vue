@@ -14,7 +14,7 @@ import MainContent from '@/components/MainContent'
 
 export default {
   metaInfo: {
-    title: 'Shall We Shop, 쉘위샵'
+    title: 'Shall We Shop, 쉐리샵'
   },
   created () {
     window.scrollTo(0, 0)

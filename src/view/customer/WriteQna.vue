@@ -15,11 +15,11 @@ import PopSelectDoubleButton from '@/components/customer/Modal/PopSelectDoubleBu
 
 export default {
   metaInfo: {
-    title: 'Shall We Shop - 문의하기'
+    title: 'Shall We Shop - 상품 문의하기'
   },
   data () {
     return {
-      title: '1:1 문의하기',
+      title: '상품 문의하기',
       modalVisiblity: false,
       lookUp: false,
       lookUpItem: ['a'],
