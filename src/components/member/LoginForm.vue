@@ -71,7 +71,7 @@
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-                    callback-url="http://m.shallwe.link/Login"
+                    callback-url="http://shallwe.shop/Login"
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />

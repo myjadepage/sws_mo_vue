@@ -4,8 +4,8 @@ const config = {
   baseUrl4: 'http://192.168.1.40:3000/api/v1/',
   baseUrl3: 'http://api.shallwe.shop/api/v1/',
   baseUrl2: 'http://192.168.1.20:3000/api/v1/',
-  baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
-  // baseUrl5: 'http://api.shallwe.link:3800/api/v1/' // 배포
+  // baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
+  baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
 
 /**
@@ -17,10 +17,10 @@ function getProductList (param = '') {
 }
 // 상품리스트
 function getProductLists (getInfo) {
-  console.log(`${config.baseUrl2}products/mainlist?` + getInfo)
+  console.log(`${config.baseUrl}products/mainlist?` + getInfo)
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}products/mainlist?` + getInfo,
+    url: `${config.baseUrl}products/mainlist?` + getInfo,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -278,7 +278,7 @@ function claimReview (accessToken, prdtSysId, prdtReviewSysId, data) {
 
 // 문의 목록 가져오기
 function getPrdtQuestionList (prdtSysId) {
-  return axios.get(`${config.baseUrl2}products/${prdtSysId}/questions/list`)
+  return axios.get(`${config.baseUrl}products/${prdtSysId}/questions/list`)
 }
 
 // 문의 등록하기
@@ -288,7 +288,7 @@ function postPrdtQuestion (accessToken, prdtSysId, qaData) {
 
   return axios({
     method: 'post',
-    url: `${config.baseUrl2}products/${prdtSysId}/questions`,
+    url: `${config.baseUrl}products/${prdtSysId}/questions`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -631,7 +631,7 @@ function getAlertSetting (accessToken) {
   let userSysId = parseJwt(accessToken).authSysId
   return axios({
     method: 'get',
-    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    url: `${config.baseUrl}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -645,7 +645,7 @@ function setAlertSetting (accessToken, setInfo) {
   formdata.set('jsonData', JSON.stringify(setInfo))
   return axios({
     method: 'patch',
-    url: `${config.baseUrl2}users/${userSysId}/push/info`,
+    url: `${config.baseUrl}users/${userSysId}/push/info`,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': `Bearer ${accessToken}`
@@ -706,7 +706,7 @@ function getFaqList (getInfo) {
  */
 // 편성표 목록 가져오기
 function getBroadCastSchedules (startDate, accessToken) {
-  let urlStr = `${config.baseUrl2}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}`
+  let urlStr = `${config.baseUrl}broadcasts/schedules/list?startIndex=0&rowCount=50&startDate=${startDate}`
   if (accessToken) {
     let userSysId = parseJwt(accessToken).authSysId
     urlStr += `&userSysId=${userSysId}`
@@ -993,9 +993,5 @@ export {
   setReservateBroadCast,
   getReservateBroadCast,
   removeReservateBroadCast,
-<<<<<<< HEAD
-  // patchUserPoint,
-=======
->>>>>>> 2100ac89685a900db2035862f0ffa5dbb122eda7
   getFaqList
 }
