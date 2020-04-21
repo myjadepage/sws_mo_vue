@@ -33,7 +33,11 @@
         </div>
     </div>
     <div v-if="optionMap.size > 1">
-    <OptionEntity v-for="o in optionMap" @optionCntChange="optionCntChange" :product="product" :key="o[0]" :option="o" />
+      <OptionEntity v-for="o in optionMap" @optionCntChange="optionCntChange" :product="product" :key="o[0]" :option="o" />
+    </div>
+
+    <div v-if="product.isAddingProduct">
+      <AddPrdtEntity v-for="(ap,idx) in product.addingProducts" @addPrdtCntChange="addPrdtCntChange"  :product="product" :addPrdt="ap" :index="idx" :key="ap.prdtAddingProductDetailSysId"  />
     </div>
 
      </div>
@@ -41,10 +45,11 @@
 
 <script>
 import OptionEntity from './OptionEntity'
+import AddPrdtEntity from './addingPrdtEntity'
 
 export default {
   components: {
-    OptionEntity
+    OptionEntity, AddPrdtEntity
   },
   created () {
     let map = new Map()
@@ -68,6 +73,13 @@ export default {
   computed:
     {
       totalPrice () {
+        let apPrice = 0
+        if (this.product.isAddingProduct) {
+          for (const ap of this.product.addingProducts) {
+            apPrice += ap.price * ap.addingQty
+          }
+        }
+
         let prdtPrice = this.product.price - (this.product.price * this.product.discountRate)
         let val = 0
 
@@ -84,7 +96,7 @@ export default {
             val += p
           }
 
-          return val
+          return val + apPrice
         } else {
           for (const o of this.optionMap.values()) {
             val += prdtPrice
@@ -94,12 +106,19 @@ export default {
             val *= o[0].optionQty
           }
 
-          return val
+          return val + apPrice
         }
       },
 
       nonOptionPrice () {
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.product.basketQty
+        let apPrice = 0
+        if (this.product.isAddingProduct) {
+          for (const ap of this.product.addingProducts) {
+            apPrice += ap.price * ap.addingQty
+          }
+        }
+
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.product.basketQty + apPrice
       },
 
       originPrice () {
@@ -161,6 +180,9 @@ export default {
     },
     prdtClick () {
       this.$router.push(`/product/${this.product.prdtSysId}`)
+    },
+    addPrdtCntChange (info) {
+      this.$emit('addPrdtCntChange', [this.product.basketSysId, info])
     }
   }
 }

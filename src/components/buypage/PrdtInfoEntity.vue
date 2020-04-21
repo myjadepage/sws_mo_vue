@@ -8,25 +8,40 @@
     </div>
     <div class="prdPriceCnt">
       {{calcTotalPrice|makeComma}}원 / 수량{{calcCnt}}개
-      <span v-if="option.length>1">
+      <span v-if="option.length>1 || addPrdts.length">
         <button class="moreBtn" @click="moreOption = !moreOption">{{moreOption?"접기":"더 보기"}}</button>
       </span>
     </div>
+    </div>
+
+    <div class="subOptionSection">
         <div class="prdOptions" v-if="moreOption">
-        <div class="subOptions" v-for="x in option.length-1" :key="x">
-          [옵션명{{x+1}}] <div v-for="(c,idx) in option[x].contentGroup" :key="idx">{{c.name}}</div>
-        </div>
+          <div class="subOptions" v-for="x in option.length-1" :key="x">
+            [옵션명{{x+1}}] <div v-for="(c,idx) in option[x].contentGroup" :key="idx">{{c.name}}</div>
+          </div>
         </div>
       </div>
-  </div>
+
+        <div class="prdOptions" v-if="moreOption">
+          <div class="subOptions" v-for="(ap,idx) in addPrdts" :key="idx">
+            [추가상품{{idx+1}}] {{ap.item}} +{{ap.price|makeComma}}원 {{ap.addingQty}}개</div>
+        </div>
+      </div>
 </template>
 
 <script>
 export default {
-  props: ['product', 'option'],
+  props: ['product', 'option', 'addPrdts'],
 
   computed: {
     calcTotalPrice () {
+      let apPrice = 0
+      if (this.addPrdts) {
+        for (const ap of this.addPrdts) {
+          apPrice += ap.price * ap.addingQty
+        }
+      }
+
       if (this.option[0].contentName !== '') {
         let val = 0
         for (const o of this.option) {
@@ -38,9 +53,9 @@ export default {
             val += (optionPrice + this.product.price - (this.product.price * this.product.discountRate)) * o.count
           }
         }
-        return val
+        return val + apPrice
       } else {
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.option[0].count
+        return (this.product.price - (this.product.price * this.product.discountRate)) * this.option[0].count + apPrice
       }
     },
 
@@ -49,6 +64,11 @@ export default {
       for (const o of this.option) {
         val += o.count
       }
+
+      for (const ap of this.addPrdts) {
+        val += Number(ap.addingQty)
+      }
+
       return val
     }
 
@@ -103,6 +123,10 @@ background-color: #f9f9f9;
 /* width: fit-content; */
 padding: 5px;
 border-radius: 2px;
+}
+
+.buyPrdtEntityWrap .subOptionSection{
+  margin-top: 30px;
 }
 
 .buyPrdtEntityWrap .moreBtn{

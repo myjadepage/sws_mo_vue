@@ -3,7 +3,7 @@
       <div class="hideBtnDiv">
         <div @click="clickHide" v-if="buyMode" class="hideBtn"><span class="ico_hide"></span></div>
       </div>
-      <Option :options="options" :buyMode="buyMode" />
+      <Option :options="options" :addPrdts="addPrdts" :buyMode="buyMode" />
       <button @click="clickCart" class="goBtn cart"><span class="ico_heart"></span>장바구니</button>
       <button @click="clickBuy" class="goBtn buy">구매하기</button>
   </div>
@@ -14,7 +14,7 @@ import Option from './Footer/ProductFooterOption'
 import {postCartItem, getAccessToken} from '@/api/index.js'
 
 export default {
-  props: ['buyMode', 'options'],
+  props: ['buyMode', 'options', 'addPrdts'],
   components: {
     Option
   },
@@ -26,7 +26,6 @@ export default {
     }
   },
   methods: {
-
     clickBuy () {
       if (!this.buyMode) {
         this.$emit('buyModeClick')
@@ -34,10 +33,12 @@ export default {
         if (this.$store.state.isLogin) {
           sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
           sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
+          sessionStorage.setItem('selectedAddPrdts', JSON.stringify([this.$store.getters.getSelectedAddPrdts]))
           this.$router.push('/BuyProduct')
         } else {
           sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
           sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
+          sessionStorage.setItem('selectedAddPrdts', JSON.stringify([this.$store.getters.getSelectedAddPrdts]))
           this.$router.push('/Login')
         }
       }
@@ -56,6 +57,19 @@ export default {
           isAddingProduct: 0
           // optionGroups: []
           // addingProducts: []
+        }
+
+        if (this.$store.getters.getSelectedAddPrdtsLength) { // 추가 상품이 있는 경우
+          cartItem.isAddingProduct = 1
+          cartItem.addingProducts = []
+
+          this.$store.getters.getSelectedAddPrdts.forEach(ap => {
+            cartItem.addingProducts.push({
+              prdtAddingProductSysId: ap.prdtAddingProductSysId,
+              prdtAddingProductDetailSysId: ap.prdtAddingProductDetailSysId,
+              addingQty: ap.addingQty
+            })
+          })
         }
 
         if (this.$store.getters.getSelectedOptions[0].contentName !== '') { // 옵션이 있는 경우
@@ -120,14 +134,18 @@ export default {
         } else {
           // 비회원 장바구니 등록
 
+          if (cartItem.isAddingProduct) {
+            cartItem.addingProducts = this.$store.getters.getSelectedAddPrdts
+          }
+
           let cartList = sessionStorage.getItem('nonMemberCartList')
 
           if (cartList) {
             cartList = JSON.parse(cartList)
-            cartList.push({...cartItem, ...this.$store.getters.getProduct, basketSysId: cartList[cartList.length - 1].basketSysId - 1})
+            cartList.push({...this.$store.getters.getProduct, ...cartItem, basketSysId: cartList[cartList.length - 1].basketSysId - 1, isAddingProduct: cartItem.isAddingProduct})
             sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
           } else {
-            sessionStorage.setItem('nonMemberCartList', JSON.stringify([{...cartItem, ...this.$store.getters.getProduct, basketSysId: 999}]))
+            sessionStorage.setItem('nonMemberCartList', JSON.stringify([{...this.$store.getters.getProduct, ...cartItem, basketSysId: 999}]))
           }
           this.$emit('addedCartItem')
         }

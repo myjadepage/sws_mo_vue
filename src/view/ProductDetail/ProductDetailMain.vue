@@ -7,7 +7,7 @@
       <SubMedia @play="playMedia" :subMedias='subMedias' />
       <Info2 :product="product" />
       <Description />
-      <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
+      <ProductFooter @addedCartItem="addedCartItem" :addPrdts="addingProducts" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
       <DeclareModal v-if="$store.state.declareModalShow" />
@@ -33,9 +33,12 @@ export default {
     let id = this.$route.params.prdtSysId
 
     getProductDetail(id).then((res) => {
+      console.log(res)
+
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
+      this.addingProducts = res.data.jsonData.addingProducts
       this.subMedias = res.data.jsonData.listProductMedia
 
       if (res.data.jsonData.listProductMedia.length > 0) {
@@ -53,11 +56,14 @@ export default {
           viewTypeCode: 0
         }
         // 회원인 경우, 최근 본 상품 조회.
-        getRecentViewList(sessionStorage.getItem('accessToken'), 0, 10)
+        let str = `?startIndex=${this.startIndex}&rowCount=20`
+        getRecentViewList(sessionStorage.getItem('accessToken'), str)
           .then(res => {
             // console.log(res)
-            let f = res.data.jsonData.views.find(obj => obj.prdtSysId === this.product.prdtSysId)
-
+            let f
+            if (res.data.jsonData.resultCode === '0001') {
+              f = res.data.jsonData.views.find(obj => obj.prdtSysId === this.product.prdtSysId)
+            }
             // 같은 상품이 있을 경우, false.
             if (f) {
               console.log('이미 있음')
@@ -82,7 +88,7 @@ export default {
               getAccessToken(sessionStorage.getItem('refreshToken'))
                 .then(res => {
                   sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
-                  getRecentViewList(sessionStorage.getItem('accessToken'), 0, 10)
+                  getRecentViewList(sessionStorage.getItem('accessToken'), str)
                     .then(res => {
                       // console.log(res)
                       let f = res.data.jsonData.views.find(obj => obj.prdtSysId === this.product.prdtSysId)
@@ -173,9 +179,11 @@ export default {
       buyMode: false,
       showCartModal: false,
       options: [],
+      addingProducts: [],
       subMedias: [],
       currentMedia: {},
-      listProductMedia: []
+      listProductMedia: [],
+      startIndex: 0
     }
   },
   components: {
@@ -198,6 +206,7 @@ export default {
   beforeDestroy () {
     this.$store.state.product = {}
     this.$store.commit('deleteAllOption')
+    this.$store.commit('deleteAllAddPrdts')
   }
 }
 </script>

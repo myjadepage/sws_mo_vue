@@ -20,6 +20,7 @@ export default {
     window.scrollTo(0, 0)
     sessionStorage.removeItem('products')
     sessionStorage.removeItem('selectedOptions')
+    sessionStorage.removeItem('selectedAddPrdts')
   },
   name: 'Home',
   data () {

@@ -332,7 +332,14 @@ input:-webkit-autofill {
   height: 21px;
   position: relative;
   top: 12px;
-  left: 18px
+  left: 18px;
+}
+.head_sws .box_menu_right .common-header-search .link_search.cart{
+  background:url('../img/ico/uncart.png') 50% 50% / 17px auto no-repeat;
+}
+.head_sws .box_menu_right .common-header-search .link_search.cart .cartBadge{
+  top: -10px;
+  left:10px;
 }
 
 .head_sws .box_menu_right .common-header-search .link_search .ico_search {
@@ -4678,7 +4685,7 @@ html, body{
 }
 .qnaList .item h3,
 .qnaList .item h4,
-.qnaList .item p{
+.qnaList .item .answer div{
   padding-left:14px;
 }
 .qnaList .item h3 .num{

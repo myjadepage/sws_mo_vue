@@ -26,11 +26,13 @@ export default {
   },
   methods: {
     getBroadCast () {
-      getReservateBroadCast(sessionStorage.getItem('accessToken'), this.sIndex, 10, this.today)
+      let str = `?startIndex=${this.sIndex}&rowCount=10&startDate=${this.today}`
+      getReservateBroadCast(sessionStorage.getItem('accessToken'), str)
         .then(res => {
           console.log(res)
           if (res.data.jsonData.resultCode === '0001') {
             this.list = res.data.jsonData.broadcasts
+            this.sIndex = res.data.jsonData.startIndex
           } else if (res.data.jsonData.resultCode === '0004') {
             this.list = []
           }
