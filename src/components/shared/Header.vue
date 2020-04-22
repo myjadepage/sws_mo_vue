@@ -85,6 +85,10 @@ export default {
               })
           }
         })
+    } else {
+      if (sessionStorage.getItem('nonMemberCartList')) {
+        this.baskets = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 <template>
    <div class="addingPrdtWrap">
+        <div>
        [추가상품{{index+1}}] {{addPrdt.item}}
+       </div>
         <select @change="cntChange" :value="addPrdt.addingQty">
           <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
         </select>
