@@ -34,11 +34,13 @@ export default {
   created () {
     this.products = JSON.parse(sessionStorage.getItem('products'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
+    this.addPrdts = JSON.parse(sessionStorage.getItem('selectedAddPrdts'))
   },
   data () {
     return {
       products: [],
-      options: []
+      options: [],
+      addPrdts: []
     }
   },
   methods: {
@@ -51,6 +53,15 @@ export default {
   },
   computed: {
     prdPrice () {
+      let apPrice = 0
+      if (this.addPrdts) {
+        for (const ap of this.addPrdts) {
+          ap.forEach(apd => {
+            apPrice += apd.price * apd.addingQty
+          })
+        }
+      }
+
       let price = 0
       for (let i = 0; i < this.products.length; i++) {
         const product = this.products[i]
@@ -72,6 +83,7 @@ export default {
           price += (product.price - (product.price * product.discountRate)) * option.count
         }
       }
+      price += apPrice
 
       this.$store.commit('updatePayPriceInfo', {name: 'prdtPrice', price: price})
       return price

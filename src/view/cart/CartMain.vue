@@ -17,6 +17,7 @@
     @soldOut="StockOutModalShow"
     @sigleItemCntChange="singleItemChange"
     @multiOptionCntChange="multiItemChange"
+    @addPrdtCntChange="addPrdtCntChange"
     @prdtPrice="calcPrdtPrice"
     :index="idx"
     :product="{...p}"
@@ -434,6 +435,7 @@ export default {
     selectedItemBuyClick () {
       let list = []
       let op = []
+      let ap = []
       for (const p of this.products) {
         if (p.isChecked) {
           list.push(p)
@@ -446,6 +448,12 @@ export default {
               }
               map.get(o.optionGroupId).push(o)
             }
+          }
+
+          if (p.isAddingProduct) {
+            ap.push(p.addingProducts)
+          } else {
+            ap.push([])
           }
 
           let x = []
@@ -489,11 +497,13 @@ export default {
 
       sessionStorage.setItem('products', JSON.stringify(list))
       sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+      sessionStorage.setItem('selectedAddPrdts', JSON.stringify(ap))
 
       this.$router.push('/buyproduct')
     },
     allItemBuyClick () {
       let op = []
+      let ap = []
       for (const p of this.products) {
         let map = new Map()
         if (p.isOptionNormal) {
@@ -503,6 +513,12 @@ export default {
             }
             map.get(o.optionGroupId).push(o)
           }
+        }
+
+        if (p.isAddingProduct) {
+          ap.push(p.addingProducts)
+        } else {
+          ap.push([])
         }
 
         let x = []
@@ -545,8 +561,83 @@ export default {
 
       sessionStorage.setItem('products', JSON.stringify(this.products))
       sessionStorage.setItem('selectedOptions', JSON.stringify(op))
+      sessionStorage.setItem('selectedAddPrdts', JSON.stringify(ap))
 
       this.$router.push('/buyproduct')
+    },
+    addPrdtCntChange (info) {
+      if (this.$store.state.isLogin) { // 회원인 경우
+        let cartItem = {}
+
+        for (const p of this.products) {
+          if (p.basketSysId === info[0]) {
+            cartItem.prdtSysId = p.prdtSysId
+            cartItem.basketQty = Number(p.basketQty)
+            cartItem.isOptionNormal = p.isOptionNormal
+            cartItem.isAddingProduct = p.isAddingProduct
+
+            if (p.isOptionNormal) {
+              cartItem.optionGroups = []
+              for (const o of p.productOptions) {
+                cartItem.optionGroups.push({
+                  procTypeCode: 1,
+                  optionGroupId: o.optionGroupId,
+                  optionQty: Number(o.optionQty)
+                })
+              }
+            } else {
+              cartItem.basketQty = p.basketQty
+            }
+
+            if (p.isAddingProduct) {
+              cartItem.addingProducts = []
+              for (const ap of p.addingProducts) {
+                cartItem.addingProducts.push({
+                  procTypeCode: 3,
+                  basketAddingSysId: ap.basketAddingSysId,
+                  addingQty: Number(ap.addingQty)
+                })
+              }
+            }
+          }
+        }
+        console.log(cartItem)
+
+        putCartItem(sessionStorage.getItem('accessToken'), info[0], cartItem)
+          .then(res => {
+          })
+          .catch(err => {
+            if (err.response.status === 401) {
+              getAccessToken(sessionStorage.getItem('refreshToken'))
+                .then(res => {
+                  sessionStorage.setItem('accessToken', res.data.jsonData.accessToken)
+                })
+                .catch(err => {
+                  if (err.response.status === 401) {
+                    this.$store.dispatch('logOut')
+                    this.$router.push('/Login')
+                  }
+                })
+            }
+          })
+      } else { // 비회원인 경우
+        let cartList = JSON.parse(sessionStorage.getItem('nonMemberCartList'))
+        let targetIdx = 0
+        for (let i = 0; i < cartList.length; i++) {
+          if (info[0] === cartList[i].basketSysId) {
+            targetIdx = i
+          }
+        }
+        for (let i = 0; i < cartList[targetIdx].addingProducts.length; i++) {
+          const o = cartList[targetIdx].addingProducts[i]
+          if (o.prdtAddingProductDetailSysId === info[1][0]) {
+            cartList[targetIdx].addingProducts[i].addingQty = Number(info[1][1])
+          }
+        }
+
+        sessionStorage.setItem('nonMemberCartList', JSON.stringify(cartList))
+      }
+      this.$forceUpdate()
     }
   }
 }

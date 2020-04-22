@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     finalPrice: null,
     payMethod: null,
     selectedOptions: [],
+    selectedAddPrdts: [],
     isAuth: false,
     ordererInfo: {name: '', phone: '', email: ''},
     destInfo: {name: '', phone: ''},
@@ -32,6 +33,10 @@ export const store = new Vuex.Store({
     getSelectedOptionsLength: state => state.selectedOptions.length,
     getOptionCnt: state => idx => state.selectedOptions[idx].count,
     getOptionPrice: state => idx => state.selectedOptions[idx].price,
+    getSelectedAddPrdts: state => state.selectedAddPrdts,
+    getSelectedAddPrdtsLength: state => state.selectedAddPrdts.length,
+    getAddPrdtCnt: state => idx => state.selectedAddPrdts[idx].addingQty,
+    getAddPrdtPrice: state => idx => state.selectedAddPrdts[idx].price,
     getPostCode: state => state.postCode,
     getPayPriceInfo: state => state.payPriceInfo,
     getOrdererInfo: state => state.ordererInfo,
@@ -66,6 +71,14 @@ export const store = new Vuex.Store({
     increaseOptionCnt: (state, idx) => state.selectedOptions[idx].count++,
     setOptionCnt (state, [idx, num]) {
       state.selectedOptions[idx].count = num
+    },
+    addAddPrdt: (state, item) => state.selectedAddPrdts.push(item),
+    deleteAddPrdt: (state, idx) => state.selectedAddPrdts.splice(idx, 1),
+    deleteAllAddPrdts (state) { state.selectedAddPrdts = [] },
+    decreaseAddPrdtCnt: (state, idx) => state.selectedAddPrdts[idx].addingQty--,
+    increaseAddPrdtCnt: (state, idx) => state.selectedAddPrdts[idx].addingQty++,
+    setAddPrdtCnt (state, [idx, num]) {
+      state.selectedAddPrdts[idx].addingQty = num
     },
     updatePayPriceInfo (state, {name, price}) {
       state.payPriceInfo[name] = price

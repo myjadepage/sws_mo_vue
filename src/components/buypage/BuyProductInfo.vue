@@ -1,7 +1,7 @@
 <template>
   <div class="buyPrdInfoWrap">
     <div class="infoHeader">주문상품 정보</div>
-    <Entity v-for="(p,idx) in products" :key="idx" :product="p" :option="options[idx]" />
+    <Entity v-for="(p,idx) in products" :key="idx" :product="p" :addPrdts="addPrdts[idx]" :option="options[idx]" />
   </div>
 </template>
 
@@ -15,11 +15,13 @@ export default {
   created () {
     this.products = JSON.parse(sessionStorage.getItem('products'))
     this.options = JSON.parse(sessionStorage.getItem('selectedOptions'))
+    this.addPrdts = JSON.parse(sessionStorage.getItem('selectedAddPrdts'))
   },
   data () {
     return {
       product: {},
-      options: []
+      options: [],
+      addPrdts: []
     }
   }
 
