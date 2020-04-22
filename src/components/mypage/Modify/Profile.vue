@@ -13,7 +13,7 @@
 
       <div class="profileInfo">
         <div class="row">
-          <label for="userMail">이메일</label>
+          <label for="userMail">아이디</label>
           <p>{{member.userId}}</p>
         </div>
         <div class="row">
