@@ -800,6 +800,11 @@ function checkJoinId (id) {
   })
 }
 
+// 닉네임 중복확인
+function checkJoinNick (nick) {
+  return axios.get(`${config.baseUrl}users/chkdupnick?nickName=${nick}`)
+}
+
 // 본인인증전송
 function sendSms (authType, authWay, authWayValue, userId) {
   let jsonData = {
@@ -999,5 +1004,6 @@ export {
   getReservateBroadCast,
   removeReservateBroadCast,
   getFaqList,
-  getKinxToken
+  getKinxToken,
+  checkJoinNick
 }

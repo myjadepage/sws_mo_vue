@@ -118,6 +118,11 @@ export default new Router({
       component: () => import('@/view/member/RegStep03')
     },
     {
+      path: '/RegStep03Sns',
+      name: 'RegStep03Sns',
+      component: () => import('@/view/member/RegStep03_sns')
+    },
+    {
       path: '/MyPage',
       name: 'MyPage',
       beforeEach: {

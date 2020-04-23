@@ -21,16 +21,8 @@
           <p>{{member.nickName}}</p>
         </div>
         <div class="row">
-          <label for="userNick">현재 비밀번호</label>
-          <input type="text" id="userNick" name="userNick" placeholder="현재 비밀번호를 입력해 주세요" v-model="member.currentPassword" />
-        </div>
-        <div class="row">
-          <label for="userNick">새 비밀번호</label>
-          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 입력해 주세요" v-model="member.newPassword" />
-        </div>
-        <div class="row">
-          <label for="userNick">새 비밀번호 확인</label>
-          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 다시 입력해 주세요" v-model="member.confirmpw" />
+          <label for="userPhone">휴대폰</label>
+          <p>{{member.mobile}}</p>
         </div>
         <div class="row">
           <p class="tit">성별</p>
@@ -40,12 +32,12 @@
           <label for="female">여</label>
         </div>
         <div class="row">
-          <label for="userPhone">휴대폰</label>
-          <p>{{member.mobile}}</p>
-        </div>
-        <div class="row">
           <label for="userBirth">생년월일</label>
           <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model.trim="member.birthday" />
+        </div>
+        <div class="row">
+          <p class="tit">비밀번호</p>
+          <router-link to="/ChangePw" class="btn_cng">변경하기</router-link>
         </div>
         <router-link to="/Withdraw" class="Withdrawal">회원탈퇴하기</router-link>
       </div>
@@ -76,9 +68,6 @@ export default {
         userId: '',
         nickName: '',
         profile: '',
-        currentPassword: '',
-        newPassword: '',
-        confirmpw: '',
         profileImgUrl: '/static/images/ico_member.png'
       },
       modalVisiblity: false,
@@ -171,6 +160,7 @@ export default {
       delete userInfo.profileImgUrl
       delete userInfo.userId
       delete userInfo.mobile
+      delete userInfo.nickName
 
       // 유효성 검사
       let nameRegExp = /^[가-힣]{2,4}$/ // 이름
@@ -212,11 +202,6 @@ export default {
         return false
       }
 
-      // 닉네임 유효성 검사
-      if (!inputRegExp.test(userInfo.nickName) && userInfo.nickName.length > 0) {
-        alert('닉네임이 올바르지 않습니다.')
-        return false
-      }
 
       // 자기소개 유효성 검사
       if (!inputRegExp.test(userInfo.profile) && userInfo.profile.length > 0) {

@@ -61,9 +61,9 @@ export default {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       // const POSTER = item.thumnailUrl
       const POSTER = ''
-      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
+      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
       // const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
-      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
+      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
 
       // 실시간 url
       // const VIDEOSRC = 'http://epiens.xst.kinxcdn.com/epiens/1/playlist.m3u8'
@@ -166,6 +166,7 @@ export default {
           'top': '50px',
           'left': '50%',
           'width': '100%',
+          'height': 'auto',
           'max-width': '640px'
         }).removeClass('full')
         this.fullMode = false
@@ -174,7 +175,7 @@ export default {
         if ((this.movSize.width / this.movSize.height) > 1) {
           // 가로영상
           $(vWrap).css({
-            'transform': 'rotate(-90deg)',
+            'transform': 'rotate(-90deg) translateY(-50%)',
             'top': '100%',
             'width': '100vh',
             'height': '100vw',
@@ -183,7 +184,7 @@ export default {
         } else {
           // 세로영상
           $(vWrap).css({
-            'transform': 'rotate(0)',
+            'transform': 'rotate(0) translateX(-50%)',
             'top': '0',
             'width': '100vw',
             'height': '100vh',
@@ -193,51 +194,57 @@ export default {
         $(vWrap).css({
           'transform-origin': 'top left',
           'position': 'fixed',
-          'left': '0',
+          'left': '50%',
           'z-index': '100',
           'padding-top': '0'
         }).addClass('full')
-        this.fullMode = true
         window.addEventListener('orientationchange', () => {
-          console.log(window.orientation)
-          if (window.orientation === 0) {
-            // portrait
-            if ((this.movSize.width / this.movSize.height) > 1) {
-              $(vWrap).css({
-                'transform': 'rotate(-90deg)',
-                'top': '100%',
-                'width': '100vh',
-                'height': '100vw'
-              })
+          if (this.fullMode) {
+            // console.log(window.orientation)
+            if (window.orientation === 0) {
+              // portrait
+              if ((this.movSize.width / this.movSize.height) > 1) {
+                $(vWrap).css({
+                  'transform': 'rotate(-90deg) translateY(-50%)',
+                  'top': '100%',
+                  'width': '100vh',
+                  'height': '100vw',
+                  'max-width': '100vh'
+                })
+              } else {
+                // 세로영상
+                $(vWrap).css({
+                  'transform': 'rotate(0) translateX(-50%)',
+                  'top': '0',
+                  'width': '100vw',
+                  'height': '100vh',
+                  'max-width': '100vw'
+                })
+              }
             } else {
-              // 세로영상
-              $(vWrap).css({
-                'transform': 'rotate(0)',
-                'top': '0',
-                'width': '100vw',
-                'height': '100vh'
-              })
-            }
-          } else {
-            // landscape
-            if ((this.movSize.width / this.movSize.height) > 1) {
-              // 세로영상
-              $(vWrap).css({
-                'transform': 'rotate(0)',
-                'top': '0',
-                'width': '100vw',
-                'height': '100vh'
-              })
-            } else {
-              $(vWrap).css({
-                'transform': 'rotate(-90deg)',
-                'top': '100%',
-                'width': '100vh',
-                'height': '100vw'
-              })
+              // landscape
+              if ((this.movSize.width / this.movSize.height) > 1) {
+                // 세로영상
+                $(vWrap).css({
+                  'transform': 'rotate(0) translateX(-50%)',
+                  'top': '0',
+                  'width': '100vw',
+                  'height': '100vh',
+                  'max-width': '100vw'
+                })
+              } else {
+                $(vWrap).css({
+                  'transform': 'rotate(-90deg) translateY(-50%)',
+                  'top': '100%',
+                  'width': '100vh',
+                  'height': '100vw',
+                  'max-width': '100vh'
+                })
+              }
             }
           }
         })
+        this.fullMode = true
         document.querySelector('html').style.overflow = 'hidden'
         window.addEventListener('scroll', (e) => {
           e.preventDefault()

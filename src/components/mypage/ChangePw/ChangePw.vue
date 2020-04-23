@@ -1,16 +1,17 @@
 <template>
   <form action="" class="chngPw">
-    <h2>기존 비밀번호</h2>
-    <input type="password" name="oldPw" placeholder="기존 비밀번호 입력" v-model="pw.currentPassword" required />
+    <div class="info">
+      <p>비밀번호는 영문, 숫자, 특수문자 혼합<br/>8-20자 이내입니다.</p>
+    </div>
+    <h2>현재 비밀번호 입력</h2>
+    <input type="password" name="oldPw" v-model="pw.currentPassword" required />
 
-    <h2>새 비밀번호 설정</h2>
-    <input type="password" name="newPw" placeholder="새 비밀번호 6~20자 이내" maxlength="20" v-model="pw.newPassword" required />
+    <h2>새 비밀번호 입력</h2>
+    <input type="password" name="newPw" placeholder="영문, 숫자, 특수문자 혼합 8-20자 이내" maxlength="20" v-model="pw.newPassword" required />
     <input type="password" name="newPw_chk" placeholder="새 비밀번호 다시 입력" maxlength="20" v-model="confirmpw" required />
-    <p>영문, 숫자 또는 특수문자 혼합</p>
 
     <div class="btnsWrap">
-      <button @click="emptyBack" class="btn_them gray border">취소</button>
-      <button class="btn_them " @click.stop.prevent="sendNewPw">확인</button>
+      <button class="btn_them" @click.stop.prevent="sendNewPw">확인</button>
     </div>
   </form>
 </template>
@@ -34,14 +35,10 @@ export default {
     }
   },
   methods: {
-    emptyBack (e) {
-      e.preventDefault()
-      this.$router.go(-1)
-    },
     sendNewPw () {
       const enChk = new RegExp(/[a-z|A-Z]/gi)
 
-      if (this.pw.newPassword.legnth < 6 && this.pw.newPassword.legnth > 20) {
+      if (this.pw.newPassword.legnth < 8 && this.pw.newPassword.legnth > 20) {
         alert('비밀번호는 8~20자 이내로 입력해주세요.')
         return false
       } else if (this.pw.newPassword !== this.confirmpw) {
@@ -62,6 +59,7 @@ export default {
             this.mspw.currentPassword = null
             this.mspw.newPassword = null
             alert('비밀번호가 변경되었습니다.')
+            this.$router.go(-1)
           })
           .catch(err => {
             this.pw.currentPassword = null
@@ -84,6 +82,7 @@ export default {
                       this.mspw.currentPassword = null
                       this.mspw.newPassword = null
                       alert('비밀번호가 변경되었습니다.')
+                      this.$router.go(-1)
                     })
                     .catch(err => {
                       this.pw.currentPassword = null

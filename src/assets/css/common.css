@@ -1651,6 +1651,15 @@ Shared > Bar
   width: 16px;
   height: 12px;
 }
+.headBarWrap .close{
+  position: absolute;
+  top:18px;
+  right:26px;
+  display:inline-block;
+  width:14px;
+  height:14px;
+  background: url('../img/ico/ico_times_black.png') 0 0 / 100% auto no-repeat;
+}
 
 .headBarWrap .ico_back_arr{
   position: relative;
@@ -2831,6 +2840,19 @@ html, body{
     margin-right:6px;
     color:#666;
 }
+.profileInfo .row .btn_cng{
+  display:inline-block;
+  width:75px;
+  height:36px;
+  margin:0;
+  border:1px solid #111;
+  color:#111;
+  font-size:14px;
+  text-align: center;
+  line-height:34px;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
 .profileInfo .row input,
 .profileInfo .row input:disabled{
     width:calc(100% - 106px);
@@ -3006,12 +3028,20 @@ html, body{
 .chngPw{
     display:block;
     width:100%;
-    padding:0 22px 10px 22px;
+    padding:0 0 10px;
     border-top:1px solid #eee;
     box-sizing: border-box;
 }
+.chngPw .info{
+  padding:50px 0;
+  border-bottom:5px solid #eee;
+  text-align: center;
+  font-size:15px;
+  color:#111;
+}
 .chngPw h2{
     margin-top:20px;
+    padding:0 22px;
     font-size:16px;
     font-weight:400;
     color:#111;
@@ -3020,9 +3050,9 @@ html, body{
     margin-top:30px;
 }
 .chngPw input{
-    width:100%;
+    width:calc(100% - 44px);
     height:30px;
-    margin-top:20px;
+    margin:20px 22px 0;
     border:none;
     border-bottom:1px solid #eee;
     font-size:14px;
@@ -3038,6 +3068,7 @@ html, body{
 }
 .chngPw p{
     margin-top:5px;
+    padding:0 22px;
     color:#666;
 }
 .chngPw .btnsWrap{
@@ -3046,11 +3077,14 @@ html, body{
 }
 .chngPw .btnsWrap .btn_them{
     display:inline-block;
-    width:calc( (100% - 10px) / 2);
+    width:calc(100% - 44px);
     height:50px;
+    margin-left:22px;
     border-radius:4px;
     font-size:16px;
     vertical-align: middle;
+    background:#111;
+    color:#fff;
 }
 .chngPw .btnsWrap .btn_them.gray{
     margin-right:10px;
