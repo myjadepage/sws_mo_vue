@@ -2,7 +2,7 @@
   <div class="searchCatWrap">
       <ul>
           <li><button @click="selectMediaMode(0)" :class="{'selected':cat===0}">상품</button></li>
-          <li><button @click="selectMediaMode(1)" :class="{'selected':cat===1}">브랜드</button></li>
+          <!-- <li><button @click="selectMediaMode(1)" :class="{'selected':cat===1}">브랜드</button></li> -->
           <li><button @click="selectMediaMode(2)" :class="{'selected':cat===2}">방송</button></li>
       </ul>
   </div>
@@ -33,7 +33,7 @@ export default {
 .searchCatWrap li{
     text-align: center;
     float: left;
-    width: 33%;
+    width: 50%;
     /* text-align: center; */
 }
 .searchCatWrap li button{

@@ -9,10 +9,10 @@
       <li class="item noItem" v-if="products.length === 0">기획 상품이 없습니다.</li>
       <li class="item" v-for="product in products" :key="product.prdtSysId">
         <router-link :to="'/product/' + product.prdtSysId">
-          <div class="imgBox mov" :style="{backgroundImage:'url('+product.smallImageUrl+')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}"></div>
+          <div class="imgBox mov" :style="{backgroundImage:'url('+product.bigImageUrl+')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}"></div>
           <div class="txtBox">
             <p class="itemName">{{product.name}}</p>
-            <p class="price">{{product.price}}원</p>
+            <p class="price">{{product.price|makeComma}}원</p>
           </div>
         </router-link>
       </li>

@@ -51,13 +51,15 @@ new Vue({
     }
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then((success) => {
-          console.log('Service Worker register success', success)
-        })
-        .catch((err) => {
-          console.log('Service Worker register fail', err)
-        })
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js', {scope: '/'})
+          .then((success) => {
+            console.log('Service Worker register success', success)
+          })
+          .catch((err) => {
+            console.log('Service Worker register fail', err)
+          })
+      })
     }
   },
   components: { App },

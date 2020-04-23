@@ -217,6 +217,47 @@ input:-webkit-autofill {
   line-height: 0;
   text-indent: -9999px
 }
+
+.a2hs {
+  position:fixed;
+  top:10px;
+  left:10px;
+  z-index:10001;
+  width:calc(100% - 20px);
+  padding:15px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size:0;
+  background:#fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition:transform 0.4s ease-in-out;
+  transform:translateY(calc(-100% - 20px));
+}
+.a2hs.show{
+  transform:translateY(0);
+}
+.a2hs p{
+  font-size:14px;
+}
+.a2hs button{
+  display:inline-block;
+  width:calc((100% - 10px) / 2);
+  margin-top:5px;
+  padding:7px 0;
+  font-size:14px;
+  border:1px solid #eee;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+.a2hs .add-button{
+  background:#e61754;
+  color:#fff;
+  border:none;
+}
+.a2hs .close-button{
+  margin-left:10px;
+  color:#666;
+}
 #swsWrap {
   min-width: 320px;
   background: #fff
@@ -1586,8 +1627,10 @@ Shared > Bar
 .productDetailWrap .headBarWrap{
   position: fixed;
   top:0;
-  left:0;
+  left:50%;
   z-index:10;
+  max-width:640px;
+  transform: translateX(-50%);
 }
 .headBarWrap{
   font-family: "Noto Sans KR";
@@ -5153,12 +5196,14 @@ background-size: 100%;
 }
 .productDescWrap .descMenu.scrolling{
   position:fixed;
-  left: 0;
   top: 0;
+  left: 50%;
   z-index: 90;
   width: 100%;
+  max-width:640px;
   background-color: #fff;
   opacity: 0.9;
+  transform: translateX(-50%);
 }
 .productDescWrap .descMenu li{
   float:left;

@@ -1,8 +1,7 @@
 <template>
 <div class="detailInfoWrap">
   <div class="infoSection">
-    <div ref="descSection" class="descSection">
-    </div>
+    <div ref="descSection" class="descSection" v-html="this.product.detailDescription"></div>
    </div>
   <button ref="spreadBtn" v-if="isSpreadable"  @click="clickSpread">{{btnText}}</button>
 </div>
@@ -23,7 +22,7 @@ export default {
     }
   },
   mounted () {
-    this.$refs.descSection.innerHTML = this.product.detailDescription
+    // this.$refs.descSection.innerHTML = this.product.detailDescription
     setTimeout(() => {
       if (this.$refs.descSection.clientHeight >= 800) {
         this.isSpreadable = true

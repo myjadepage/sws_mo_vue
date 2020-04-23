@@ -31,6 +31,7 @@ export default {
   created () {
     window.scrollTo(0, 0)
     let id = this.$route.params.prdtSysId
+    console.log(id)
 
     getProductDetail(id).then((res) => {
       console.log(res)
@@ -48,6 +49,8 @@ export default {
       } else if (res.data.jsonData.product.middleImageUrl) {
         this.listProductMedia = [{'image': res.data.jsonData.product.middleImageUrl}]
       }
+      // test용 시네마gif
+      // this.listProductMedia = [{'image': 'http://cdn.shallwe.link/test/0a3f5c69902159.5b911439ddc7f.gif'}]
 
       if (this.$store.state.isLogin) { // 회원인 경우
         // eslint-disable-next-line

@@ -14,13 +14,11 @@
     </div>
     </div>
 
-    <div class="subOptionSection">
         <div class="prdOptions" v-if="moreOption">
           <div class="subOptions" v-for="x in option.length-1" :key="x">
             [옵션명{{x+1}}] <div v-for="(c,idx) in option[x].contentGroup" :key="idx">{{c.name}}</div>
           </div>
         </div>
-      </div>
 
         <div class="prdOptions" v-if="moreOption">
           <div class="subOptions" v-for="(ap,idx) in addPrdts" :key="idx">
@@ -120,13 +118,9 @@ export default {
 .buyPrdtEntityWrap .subOptions{
 margin-top: 5px;
 background-color: #f9f9f9;
-/* width: fit-content; */
 padding: 5px;
 border-radius: 2px;
-}
-
-.buyPrdtEntityWrap .subOptionSection{
-  margin-top: 30px;
+margin-left: 80px;
 }
 
 .buyPrdtEntityWrap .moreBtn{
@@ -136,4 +130,5 @@ border-radius: 2px;
   border-radius: 2px;
   padding: 0 2px;
 }
+
 </style>
