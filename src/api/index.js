@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const config = {
-  // baseUrl4: 'http://192.168.1.40:3000/api/v1/',
-  // baseUrl3: 'http://api.shallwe.shop/api/v1/',
+  // baseUrl: 'http://192.168.1.40:3000/api/v1/',
+  // baseUrl: 'http://api.shallwe.shop/api/v1/',
   baseUrl: 'http://192.168.1.20:3000/api/v1/'
   // baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
@@ -220,7 +220,7 @@ function searchBrands (name) {
 }
 // 방송 검색
 function searchBroadcasts (title) {
-  if (name) {
+  if (title) {
     return axios.get(`${config.baseUrl}broadcasts/searchlists?title=${title}`)
   } else {
     return new Promise((resolve, reject) => {

@@ -164,7 +164,6 @@ export default {
               } else {
                 self.searchResults = []
               }
-              self.searchResults = res.data.jsonData.broadcasts
 
               this.$emit('clickSearch', this.searchResults)
               this.$refs.input.blur()

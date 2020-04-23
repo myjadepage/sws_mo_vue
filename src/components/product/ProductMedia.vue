@@ -1,13 +1,15 @@
 <template>
   <div class="productMediaWrap">
-    <div class="mainMedia">
+    <div class="sizingWrap">
+      <div class="mainMedia">
 
-      <!-- this.listProductMedia 에 영상이 있을 때 -->
-      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle" v-if="this.movFlag">
-        <button class="toggleFullsize" @click="fullSize" ><span class="ir_pm">전체화면 켜기/끄기</span></button>
+        <!-- this.listProductMedia 에 영상이 있을 때 -->
+        <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar use-drag-handle" v-if="this.movFlag">
+          <button class="toggleFullsize" @click="fullSize" ><span class="ir_pm">전체화면 켜기/끄기</span></button>
+        </div>
+
+        <div class="img_box" :style="{backgroundImage:'url(' + media[0].image + ')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}" v-if="!this.movFlag"></div>
       </div>
-
-      <div class="img_box" :style="{backgroundImage:'url(' + media[0].image + ')', backgroundSize: 'cover', backgroundPosition: '50%', backgroundRepeat:'no-repeat'}" v-if="!this.movFlag"></div>
     </div>
   </div>
 </template>
@@ -28,12 +30,13 @@ export default {
         height: 0
       },
       media: this.listProductMedia,
-      movFlag: false
+      movFlag: false,
+      wW: 0
     }
   },
   beforeMount () {
     this.media.map(x => {
-      if (x.hasOwnProperty('objectIds')) {
+      if (x.hasOwnProperty('mediaId')) {
         this.movFlag = true
       }
     })
@@ -53,8 +56,8 @@ export default {
     getVideoTypePlayer () {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       const POSTER = ''
-      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.listProductMedia.objectIds}/playlist.m3u8`
-      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
+      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.listProductMedia[0].mediaId}/playlist.m3u8`
+      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
 
       // eslint-disable-next-line no-undef
       flowplayer('#player_container', {
@@ -83,6 +86,7 @@ export default {
     },
     fullSize () {
       let vWrap = document.getElementsByClassName('productMediaWrap')[0]
+      let sWrap = document.getElementsByClassName('sizingWrap')[0]
       if (this.mode === 'normal') {
         // 가로영상
         if ((this.movSize.width / this.movSize.height) > 1) {
@@ -105,9 +109,8 @@ export default {
           'transform-origin': 'top left',
           'position': 'fixed',
           'left': '0',
-          'z-index': '100',
-          'padding-top': '0'
-        })
+          'z-index': '100'
+        }).addClass('full')
         this.mode = 'fullscreen'
         window.addEventListener('orientationchange', () => {
           console.log(window.orientation)
@@ -156,16 +159,16 @@ export default {
           return false
         })
       } else if (this.mode === 'fullscreen') {
+        console.log($(vWrap).width())
         $(vWrap).css({
-          'transform': 'rotate(0)',
+          'transform': 'rotate(0) translateX(-50%)',
           'transform-origin': 'top left',
           'position': 'fixed',
           'top': '50px',
-          'left': '0',
+          'left': '50%',
           'width': '100%',
-          'height': '0',
-          'padding-top': '56.3%'
-        })
+          'height': 'auto'
+        }).removeClass('full')
         this.mode = 'normal'
         document.querySelector('html').style.overflow = 'visible'
       }
@@ -179,7 +182,7 @@ export default {
 
 <style>
 .productMediaWrap .mainMedia{
-   background-color: gray;
+   /* background-color: gray; */
 }
 
 .productMediaWrap .mediaMenu{

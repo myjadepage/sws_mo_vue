@@ -572,6 +572,8 @@
   font-size:14px;
 } 
 .subBlock .itemList .price{
+  margin-top:5px;
+  font-family: 'Roboto';
   font-size:15px;
   font-weight:500;
 } 
@@ -726,16 +728,28 @@
 
 
 /* 플레이어 커스텀 */
+
 .productDetailWrap .productMediaWrap{
   position: fixed;
   top:50px;
-  left:0;
+  left:50%;
   z-index:10;
+  max-width:640px;
+  transform: translateX(-50%);
 }
 .productMediaWrap{
+  width:100%;
+  /* padding-top:56.25%; */
+}
+.productMediaWrap .sizingWrap{
   position: relative;
   width:100%;
-  padding-top:56.3%;
+  padding-top:56.25%;
+}
+.productMediaWrap.full .sizingWrap,
+.productMediaWrap.fullscreen .sizingWrap{
+  height:100%;
+  padding-top:0;
 }
 .productMediaWrap.fullscreen{
   height:100vh;

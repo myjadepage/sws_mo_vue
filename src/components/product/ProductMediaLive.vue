@@ -1,23 +1,25 @@
 <template>
 <!-- 라이브 방송일 경우 사용하는 상품 페이지 -->
   <div class="productMediaWrap" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
-    <div class="mainMedia live" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
-      <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar" ref="player">
-        <!-- <div class="ui-custom"> -->
-          <button class="toggleFullsize" @click="goDetail" v-if="mode === 'fullscreen'"><span class="ir_pm">전체화면 켜기/끄기</span></button>
-          <button class="toggleFullsize" @click="toggleFullsize" v-if="mode === 'info'"><span class="ir_pm">전체화면 켜기/끄기</span></button>
-          <button class="toggleMute" :class="{'muted':muteState}"  ref="muteBtn"><span class="ir_pm">음소거 켜기/끄기</span></button>
-        <!-- </div> -->
-        <button class="btn_goBack" @click="goBack" v-if="mode === 'fullscreen'"></button>
-        <div class="productInfoBox" v-if="mode === 'fullscreen'" >
-          <h1>[{{product.brandName}}] {{product.name}}</h1>
-          <div class="bottom">
-            <p class="price">
-              <span class="sale c_them" v-if="product.discountRate > 0">{{product.discountRate * 100}}%</span>
-              <span class="now_price">{{formatNumber(product.price)}}<span>원</span></span>
-              <span class="org_price" v-if="product.marketPrice > 0">{{formatNumber(product.marketPrice)}}</span>
-            </p>
-            <button class="btn_buy btn_them" @click="goDetail">구매하기</button>
+    <div class="sizingWrap">
+      <div class="mainMedia live" :class="{'fullscreen': mode==='fullscreen', 'info': mode==='info'}">
+        <div id="player_container" class="use-play-1 flowplayer use-thin-controlbar" ref="player">
+          <!-- <div class="ui-custom"> -->
+            <button class="toggleFullsize" @click="goDetail" v-if="mode === 'fullscreen'"><span class="ir_pm">전체화면 켜기/끄기</span></button>
+            <button class="toggleFullsize" @click="toggleFullsize" v-if="mode === 'info'"><span class="ir_pm">전체화면 켜기/끄기</span></button>
+            <button class="toggleMute" :class="{'muted':muteState}"  ref="muteBtn"><span class="ir_pm">음소거 켜기/끄기</span></button>
+          <!-- </div> -->
+          <button class="btn_goBack" @click="goBack" v-if="mode === 'fullscreen'"></button>
+          <div class="productInfoBox" v-if="mode === 'fullscreen'" >
+            <h1>[{{product.brandName}}] {{product.name}}</h1>
+            <div class="bottom">
+              <p class="price">
+                <span class="sale c_them" v-if="product.discountRate > 0">{{product.discountRate * 100}}%</span>
+                <span class="now_price">{{formatNumber(product.price)}}<span>원</span></span>
+                <span class="org_price" v-if="product.marketPrice > 0">{{formatNumber(product.marketPrice)}}</span>
+              </p>
+              <button class="btn_buy btn_them" @click="goDetail">구매하기</button>
+            </div>
           </div>
         </div>
       </div>
@@ -59,8 +61,9 @@ export default {
       const TOKEN = 'eyJraWQiOiJYZWhNQUszd2JGSHAiLCJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiJ9.eyJjIjoie1wiYWNsXCI6NCxcImlkXCI6XCJYZWhNQUszd2JGSHBcIn0iLCJpc3MiOiJGbG93cGxheWVyIn0.kiejCp7cRQqdfbz_TOMiXirRIuu0MCNWnAHjGmR3M7RuhiTp3qFxohwzImU9hVXbrJdaVDo_wwkHQbxeJ23t-A'
       // const POSTER = item.thumnailUrl
       const POSTER = ''
-      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
+      // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${item.objectIds}/playlist.m3u8`
       // const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
+      const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
 
       // 실시간 url
       // const VIDEOSRC = 'http://epiens.xst.kinxcdn.com/epiens/1/playlist.m3u8'
@@ -157,15 +160,14 @@ export default {
       let vWrap = document.getElementsByClassName('productMediaWrap')[0]
       if (this.fullMode) {
         $(vWrap).css({
-          'transform': 'rotate(0)',
+          'transform': 'rotate(0) translateX(-50%)',
           'transform-origin': 'top left',
           'position': 'fixed',
           'top': '50px',
-          'left': '0',
+          'left': '50%',
           'width': '100%',
-          'height': '0',
-          'padding-top': '56.3%'
-        })
+          'max-width': '640px'
+        }).removeClass('full')
         this.fullMode = false
         document.querySelector('html').style.overflow = 'visible'
       } else {
@@ -175,7 +177,8 @@ export default {
             'transform': 'rotate(-90deg)',
             'top': '100%',
             'width': '100vh',
-            'height': '100vw'
+            'height': '100vw',
+            'max-width': '100vh'
           })
         } else {
           // 세로영상
@@ -183,7 +186,8 @@ export default {
             'transform': 'rotate(0)',
             'top': '0',
             'width': '100vw',
-            'height': '100vh'
+            'height': '100vh',
+            'max-width': '100vw'
           })
         }
         $(vWrap).css({
@@ -192,7 +196,7 @@ export default {
           'left': '0',
           'z-index': '100',
           'padding-top': '0'
-        })
+        }).addClass('full')
         this.fullMode = true
         window.addEventListener('orientationchange', () => {
           console.log(window.orientation)

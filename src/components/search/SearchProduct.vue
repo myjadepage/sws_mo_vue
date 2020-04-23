@@ -1,7 +1,7 @@
 <template>
   <div class="searchProductWrap">
     <div ref="img" class="img">
-      <img :src="product.smallImageUrl" alt="">
+      <img :src="product.bigImageUrl" alt="">
     </div>
     <div class="title">
       <router-link :to="'/product/'+product.prdtSysId">
@@ -10,7 +10,7 @@
     </div>
     <div class="price">
      <span v-if="product.discountRate" class="discount">{{product.discountRate * 100}}%</span>
-     <span class="totalPrice">{{product.price - (product.price * product.discountRate) | makeComma}}원</span>
+     <span class="totalPrice">{{product.price| makeComma}}원</span>
      <span v-if="product.discountRate" class="p_price">{{product.price|makeComma}}</span>
     </div>
     <div class="p_info">
