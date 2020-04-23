@@ -385,7 +385,7 @@ function nonMemberCartMerge () {
         prdtSysId: c.prdtSysId,
         basketQty: c.basketQty,
         isOptionNormal: c.isOptionNormal,
-        isAddingProduct: 0
+        isAddingProduct: c.isAddingProduct
         // optionGroups:,
         // addingProducts
       }
@@ -409,14 +409,26 @@ function nonMemberCartMerge () {
         }
       }
 
+      if (c.isAddingProduct) {
+        cartItem.addingProducts = []
+        for (const ap of c.addingProducts) {
+          cartItem.addingProducts.push({
+            prdtAddingProductSysId: ap.prdtAddingProductSysId,
+            prdtAddingProductDetailSysId: ap.prdtAddingProductDetailSysId,
+            addingQty: ap.addingQty
+          })
+        }
+      }
+
       postCartItem(sessionStorage.getItem('accessToken'), cartItem)
         .then(res => {
-          sessionStorage.removeItem('nonMemberCartList')
+
         })
         .catch(err => {
           console.log(err)
         })
     })
+    sessionStorage.removeItem('nonMemberCartList')
   }
 }
 

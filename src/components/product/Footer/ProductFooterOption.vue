@@ -399,7 +399,7 @@ font-weight: bold;
 .productOptionWrap .addPrdtHeader{
   font-weight: 500;
   text-align: left;
-  padding-left: 10px;
+  padding-left: 20px;
   margin-bottom: 10px;
 }
 
@@ -408,7 +408,7 @@ font-weight: bold;
   border: 1px solid #000000;
   width: 15px;
   height: 15px;
-  line-height: 5px;
+  line-height:5px;
   border-radius: 2px;
   position: relative;
   bottom: 1px;
