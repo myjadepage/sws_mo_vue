@@ -137,7 +137,7 @@ export default {
       if (this.$el.getElementsByClassName('count')[idx].value < 1) {
         this.$el.getElementsByClassName('count')[idx].value = 1
       }
-      this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
+      this.$store.commit('setOptionCnt', [idx, Number(this.$el.getElementsByClassName('count')[idx].value)])
     },
 
     apCountSet (idx) {
@@ -152,7 +152,7 @@ export default {
       if (this.$el.getElementsByClassName('apCount')[idx].value < 1) {
         this.$el.getElementsByClassName('apCount')[idx].value = 1
       }
-      this.$store.commit('setAddPrdtCnt', [idx, this.$el.getElementsByClassName('apCount')[idx].value])
+      this.$store.commit('setAddPrdtCnt', [idx, Number(this.$el.getElementsByClassName('apCount')[idx].value)])
     },
 
     optionSelected () {

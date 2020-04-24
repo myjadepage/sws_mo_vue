@@ -18,7 +18,7 @@
           <select :value="product.productOptions[0].optionQty" @change="cntChange">
             <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
           </select>
-        <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+        <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.marketPrice|makeComma}}</span>
       </div>
 
       <div v-if="!product.isOptionNormal">
@@ -29,7 +29,7 @@
       </div>
 
         <div v-if="optionMap.size>1" class="priceSection">
-          <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+          <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.marketPrice|makeComma}}</span>
         </div>
     </div>
     <div v-if="optionMap.size > 1">
@@ -80,7 +80,7 @@ export default {
           }
         }
 
-        let prdtPrice = this.product.price - (this.product.price * this.product.discountRate)
+        let prdtPrice = this.product.price
         let val = 0
 
         if (this.optionMap.size > 1) {
@@ -118,11 +118,11 @@ export default {
           }
         }
 
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.product.basketQty + apPrice
+        return this.product.price * this.product.basketQty + apPrice
       },
 
       originPrice () {
-        return this.product.price * this.product.basketQty
+        return this.product.marketPrice * this.product.basketQty
       }
 
     },

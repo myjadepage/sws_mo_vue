@@ -10,7 +10,9 @@
               <td class="price">{{price|makeComma}}원</td>
           </tr>
           <tr>
-              <th class="delivery">배송비 <span @click="deliveryBtnClick" class="deliveryInfoBtn" >?</span></th>
+              <th class="delivery">배송비
+                <!-- <span @click="deliveryBtnClick" class="deliveryInfoBtn" >?</span> -->
+                </th>
               <td class="delivery">{{deliveryPrice|makeComma}}원</td>
           </tr>
           <tr>
@@ -47,9 +49,9 @@ export default {
         switch (product.deliveryPriceTypeCode) {
           case 1: price += 0
             break
-          case 2: price += this.product.debitAmount
+          case 2: price += product.debitAmount
             break
-          case 3: price += this.product.prepaymentAmount
+          case 3: price += product.prepaymentAmount
             break
           case 4: price += 2500
             break

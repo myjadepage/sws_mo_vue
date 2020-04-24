@@ -75,12 +75,12 @@ export default {
               for (const oo of o.contentGroup) {
                 optionPrice += oo.price
               }
-              val += (optionPrice + product.price - (product.price * product.discountRate)) * o.count
+              val += (optionPrice + product.price) * o.count
             }
           }
           price += val
         } else {
-          price += (product.price - (product.price * product.discountRate)) * option.count
+          price += product.price * option.count
         }
       }
       price += apPrice
@@ -94,9 +94,9 @@ export default {
         switch (product.deliveryPriceTypeCode) {
           case 1: price += 0
             break
-          case 2: price += this.product.debitAmount
+          case 2: price += product.debitAmount
             break
-          case 3: price += this.product.prepaymentAmount
+          case 3: price += product.prepaymentAmount
             break
           case 4: price += 2500
             break
