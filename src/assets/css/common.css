@@ -219,6 +219,7 @@ input:-webkit-autofill {
 }
 
 .a2hs {
+  display:none;
   position:fixed;
   top:10px;
   left:10px;
@@ -664,7 +665,7 @@ member-----------------------------------------*/
   padding-top: 20px;
 }
 .member_foot .btn {
-  color: #111;
+  color: #fff;
   font-size:14px;
 }
 .btn_center .btn {
@@ -982,8 +983,8 @@ input[type="button"].btn-block {
 }
 .btn-dark {
   color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
+  background-color: #000;
+  border-color: #000;
 }
 .btn-dark:focus, .btn-dark.focus {
   box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);

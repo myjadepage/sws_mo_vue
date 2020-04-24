@@ -92,7 +92,7 @@ import $ from 'jquery'
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
 import VFacebookLogin from 'vue-facebook-login-component'
-import { makeRsa, jwtDecode } from '@/assets/js/common.js'
+import { makeRsa } from '@/assets/js/common.js'
 import { snsLogin, getUserInfo } from '../../api'
 
 export default {

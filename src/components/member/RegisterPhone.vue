@@ -118,6 +118,7 @@ export default {
         this.$store.dispatch('getUserInfoKakao')
         vm.$router.push('/RegStep04')
       } else {
+        console.log(this.$store.state.userInfo)
         createtUser(this.$store.state.userInfo) // 일반회원가입시
           .then(function (res) {
             console.log('가입성공?', res)

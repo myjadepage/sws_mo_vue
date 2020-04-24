@@ -874,6 +874,7 @@ function createtUser (user) {
     'userId': user.userId,
     'password': user.password,
     'mobile': user.phone,
+    'nickName': user.nickName,
     'agreeSellection1': user.agreeSellection1,
     'agreeSellection2': user.agreeSellection2
   }
