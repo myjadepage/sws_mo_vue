@@ -25,6 +25,10 @@
           <p>{{member.mobile}}</p>
         </div>
         <div class="row">
+          <label for="userName">이름</label>
+          <input type="text" id="userName" name="userName" placeholder="이름을 입력해주세요" v-model.trim="member.name" />
+        </div>
+        <div class="row">
           <p class="tit">성별</p>
           <input type="radio" id="male" :value="1" v-model="member.genderCode" />
           <label for="male">남</label>
@@ -66,6 +70,7 @@ export default {
         birthday: '',
         mobile: '',
         userId: '',
+        name: '',
         nickName: '',
         profile: '',
         profileImgUrl: '/static/images/ico_member.png'
@@ -94,6 +99,9 @@ export default {
           if (res.data.jsonData.genderCode) {
             this.member.genderCode = res.data.jsonData.genderCode
           }
+          if (res.data.jsonData.name) {
+            this.member.name = res.data.jsonData.name
+          }
           if (res.data.jsonData.profile) {
             this.member.profile = res.data.jsonData.profile
           }
@@ -121,6 +129,9 @@ export default {
 
                     if (res.data.jsonData.nickName) {
                       this.member.nickName = res.data.jsonData.nickName
+                    }
+                    if (res.data.jsonData.name) {
+                      this.member.name = res.data.jsonData.name
                     }
                     if (res.data.jsonData.genderCode) {
                       this.member.genderCode = res.data.jsonData.genderCode
@@ -209,6 +220,13 @@ export default {
         return false
       }
 
+      // 이름 유효성 검사
+      if (!nameRegExp.test(userInfo.name) && userInfo.name.length > 0) {
+        alert('이름 올바르지 않습니다.')
+        return false
+      }
+
+      console.log(userInfo)
       modifyUserInfo(sessionStorage.getItem('accessToken'), userInfo)
         .then(res => {
           if (res.data.jsonData.resultCode !== '0001') {

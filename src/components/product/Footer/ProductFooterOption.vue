@@ -49,7 +49,7 @@
 <script>
 export default {
   created () {
-    if (this.options.length) { // 옵션이 있는 상품의 경우
+    if (this.options.length > 0) { // 옵션이 있는 상품의 경우
       for (const o of this.options) {
         let first = o.content.split(';')
         let second = []
@@ -69,7 +69,7 @@ export default {
       let item = {
         contentGroup: [{name: p.name, prdtNormalOptionSysId: null, price: null}],
         count: 1,
-        price: p.price - (p.price * p.discountRate),
+        price: p.price,
         contentName: ''
       }
 
@@ -102,6 +102,8 @@ export default {
         return
       }
 
+      console.log(this.$store.getters.getProduct)
+      console.log(this.$store.getters.getProduct.stockQty)
       if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
         this.$store.commit('increaseOptionCnt', idx)
       }
@@ -217,9 +219,9 @@ export default {
 
     calcPrice (idx) {
       if (this.$store.getters.getSelectedOptions[idx].contentName) {
-        return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getOptionCnt(idx)
+        return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price) * this.$store.getters.getOptionCnt(idx)
       } else {
-        return this.$store.getters.getOptionCnt(idx) * (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        return this.$store.getters.getOptionCnt(idx) * this.$store.getters.getProduct.price
       }
     },
 
@@ -241,28 +243,28 @@ export default {
     },
     calcTotalPrice () {
       let apPrices = 0
-      if (this.addPrdts) {
+      if (this.addPrdts.length > 0) {
         for (const ap of this.$store.getters.getSelectedAddPrdts) {
           apPrices += ap.price * ap.addingQty
         }
       }
 
-      if (this.options.length) {
+      if (this.options.length > 0) {
         let o = this.$store.getters.getSelectedOptions
         let val = 0
         let cnt = 0
         for (const item of o) {
           cnt += item.count
-          val += (item.price + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * item.count
+          val += (item.price + this.$store.getters.getProduct.price) * item.count
         }
 
         if (val) {
           return val + apPrices
         } else {
-          return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt + apPrices
+          return (this.$store.getters.getProduct.price * cnt) + apPrices
         }
       } else {
-        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count + apPrices
+        return this.$store.getters.getProduct.price * this.$store.getters.getSelectedOptions[0].count + apPrices
       }
     }
   }

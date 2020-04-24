@@ -19,6 +19,14 @@
                 <button type="button" class="btn_send" @click="checkId" :isClicked='false'>중복확인</button>
             </div>
 
+            <h4 class="small_title">닉네임 입력</h4>
+            <div class="wrap-input100">
+                <input class="input100" type="text" name="userNickName" placeholder="특수문자 제외"
+                  v-model="formData.userNickName" required>
+                <span class="focus-input100"></span>
+                <button type="button" class="btn_send" @click="checkNick" :isNickClicked='false'>중복확인</button>
+            </div>
+
             <h4 class="small_title">비밀번호 입력</h4>
             <div class="wrap-input100">
                 <input class="input100" type="password" name="password" placeholder="영문, 숫자, 특수문자 혼합 6-20자" maxlength="20"
@@ -47,14 +55,15 @@
 
 <script>
 import { makeRsa } from '@/assets/js/common.js'
-import { checkJoinId } from '../../api'
+import { checkJoinId, checkJoinNick } from '../../api'
 
 export default {
   data () {
     return {
       formData: {}, // userId, password, email
       confirmpw: null,
-      isClicked: false
+      isClicked: false,
+      isNickClicked: false
     }
   },
   methods: {
@@ -87,8 +96,7 @@ export default {
     /** 아이디 유효성Check
      * 영문, 숫자 6~12자 입력 */
     checkId: function () {
-      this.isClicked = true
-      const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+      const regEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,30})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
       if (this.formData.userId === null) {
         alert('이메일을 입력해 주세요')
         return false
@@ -102,9 +110,11 @@ export default {
           .then(res => {
             if (res.data.jsonData.resultCode === '0001') {
               alert('사용가능한 이메일입니다.')
+              this.isClicked = true
             } else if (res.data.jsonData.resultCode === '0003') {
               alert('중복 이메일이 있습니다.')
               this.formData.userId = ''
+              this.isClicked = false
               return false
             }
           })
@@ -114,12 +124,49 @@ export default {
           })
       }
     },
+    /** 닉네임 유효성Check
+     * 특수문자 제외 입력 */
+    checkNick: function () {
+      const inputRegExp = /^([ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s/]{0,20})+$/ // 영문,숫자,한글
+
+      if (this.formData.userNickName === null) {
+        alert('닉네임을 입력해 주세요')
+        return false
+      } else if (!inputRegExp.test(this.formData.userNickName)) {
+        alert('닉네임에 특수문자를 입력할 수 없습니다.')
+        this.formData.userNickName = ''
+        return false
+      } else {
+      // 닉네임중복체크
+        checkJoinNick(this.formData.userNickName)
+          .then(res => {
+            console.log(res)
+            if (res.data.jsonData.resultCode === '0001') {
+              this.isNickClicked = true
+              alert('사용가능한 닉네임입니다.')
+            } else if (res.data.jsonData.resultCode === '0003') {
+              alert('중복 닉네임이 있습니다.')
+              this.formData.userNickName = ''
+              this.isNickClicked = false
+              return false
+            }
+          })
+          .catch(error => {
+            console.log('error', error)
+            alert('닉네임체크 중 문제가 생겼습니다.')
+          })
+      }
+    },
     checkJoin: function () {
       const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       if (this.formData.userId === null) {
         alert('이메일을 입력해 주세요')
       } else if (this.isClicked === false) {
         alert('이메일 중복확인을 해주세요')
+      } else if (this.formData.userNickName === null) {
+        alert('닉네임 입력해 주세요')
+      } else if (this.isNickClicked === false) {
+        alert('닉네임 중복확인을 해주세요')
       } else if (this.formData.password === null) {
         alert('비밀번호를 입력해 주세요')
       } else if (regPassword.test(this.formData.password)) {

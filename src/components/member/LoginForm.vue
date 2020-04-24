@@ -71,7 +71,7 @@
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-                    callback-url="http://m.shallwe.link/Login"
+                    callback-url="http://m.shallwe.link/RegStep03_sns"
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -92,7 +92,7 @@ import $ from 'jquery'
 import KakaoLogin from 'vue-kakao-login'
 import NaverLogin from 'vue-naver-login'
 import VFacebookLogin from 'vue-facebook-login-component'
-import { makeRsa } from '@/assets/js/common.js'
+import { makeRsa, jwtDecode } from '@/assets/js/common.js'
 import { snsLogin, getUserInfo } from '../../api'
 
 export default {
@@ -159,24 +159,38 @@ export default {
       let accessToken = res.data.jsonData.accessToken
       let refreshToken = res.data.jsonData.refreshToken
       let snsAddInfoFlag = res.data.jsonData.snsAddInfoFlag
+      let firstFlag = false
 
       sessionStorage.setItem('accessToken', accessToken)
       sessionStorage.setItem('refreshToken', refreshToken)
+      console.log(jwtDecode(sessionStorage.getItem('accessToken')).authSysId)
 
       getUserInfo(accessToken).then(r => {
         sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
+        console.log(r)
+        if (!r.data.jsonData.nickName) {
+          firstFlag = true
+        }
       }).catch(err => {
         console.log(err)
       })
       // 회원가입
+      console.log(res.data.jsonData.snsLoginType)
+      console.log(firstFlag)
       if (res.data.jsonData.snsLoginType === 0) {
+        console.log(snsAddInfoFlag)
         switch (snsAddInfoFlag) { // 0:추가정보 미존재=>정보받아야함   1:추가정보존재
-          case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
+          case 0 : this.$router.push({name: 'RegStep03Sns', params: {key: snsParam}}); break
+          // case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
           case 1 : this.$router.push('/'); break
         }
       } else if (snsParam === 'sns') { // 로그인
         this.$store.dispatch('getUserInfoSns')
-        this.$router.push('/')
+        if (firstFlag) {
+          this.$router.push('/RegStep03Sns')
+        } else {
+          this.$router.push('/')
+        }
       }
     },
     // 구글로그인
