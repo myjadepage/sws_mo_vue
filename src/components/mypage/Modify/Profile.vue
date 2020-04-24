@@ -39,7 +39,7 @@
           <label for="userBirth">생년월일</label>
           <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model.trim="member.birthday" />
         </div>
-        <div class="row">
+        <div class="row" v-if="member.joinTypeCode === 0">
           <p class="tit">비밀번호</p>
           <router-link to="/ChangePw" class="btn_cng">변경하기</router-link>
         </div>
@@ -73,6 +73,7 @@ export default {
         name: '',
         nickName: '',
         profile: '',
+        joinTypeCode: null,
         profileImgUrl: '/static/images/ico_member.png'
       },
       modalVisiblity: false,
@@ -86,12 +87,13 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getUserInfo(sessionStorage.getItem('accessToken'))
         .then(res => {
-          // console.log(res)
+          console.log(res)
           if (res.data.jsonData.birthday) {
             this.member.birthday = res.data.jsonData.birthday.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3')
           }
           this.member.mobile = res.data.jsonData.mobile
           this.member.userId = res.data.jsonData.userId
+          this.member.joinTypeCode = res.data.jsonData.joinTypeCode
 
           if (res.data.jsonData.nickName) {
             this.member.nickName = res.data.jsonData.nickName

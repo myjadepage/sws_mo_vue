@@ -102,8 +102,6 @@ export default {
         return
       }
 
-      console.log(this.$store.getters.getProduct)
-      console.log(this.$store.getters.getProduct.stockQty)
       if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
         this.$store.commit('increaseOptionCnt', idx)
       }

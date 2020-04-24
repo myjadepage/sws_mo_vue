@@ -3,8 +3,8 @@ import axios from 'axios'
 const config = {
   // baseUrl: 'http://192.168.1.40:3000/api/v1/',
   // baseUrl: 'http://api.shallwe.shop/api/v1/',
-  // baseUrl: 'http://192.168.1.20:3000/api/v1/'
-  baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
+  baseUrl: 'http://192.168.1.20:3000/api/v1/'
+  // baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
   // baseUrl: 'http://api.shallwe.link:3800/api/v1/' // 배포
 }
 
@@ -904,6 +904,22 @@ function snsLogin (snsType, snsToken) {
   return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
 }
 
+// SNS 회원 추가정보
+function snsAddInfo (accessToken, addInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl}users/${userSysId}/addinfo`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
+}
+
 // JWT 토큰 파싱 함수
 function parseJwt (token) {
   var base64Url = token.split('.')[1]
@@ -1005,5 +1021,6 @@ export {
   removeReservateBroadCast,
   getFaqList,
   getKinxToken,
-  checkJoinNick
+  checkJoinNick,
+  snsAddInfo
 }

@@ -163,31 +163,29 @@ export default {
 
       sessionStorage.setItem('accessToken', accessToken)
       sessionStorage.setItem('refreshToken', refreshToken)
-      console.log(jwtDecode(sessionStorage.getItem('accessToken')).authSysId)
 
       getUserInfo(accessToken).then(r => {
         sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
-        console.log(r)
         if (!r.data.jsonData.nickName) {
           firstFlag = true
         }
+        this.snsPush(snsAddInfoFlag, firstFlag, r, snsParam)
       }).catch(err => {
         console.log(err)
       })
       // 회원가입
-      console.log(res.data.jsonData.snsLoginType)
-      console.log(firstFlag)
-      if (res.data.jsonData.snsLoginType === 0) {
-        console.log(snsAddInfoFlag)
+    },
+    // sns회원 체크 후 라우터 푸시
+    snsPush (snsAddInfoFlag, firstFlag, r, snsParam) {
+      if (r.data.jsonData.snsLoginType === 0) {
         switch (snsAddInfoFlag) { // 0:추가정보 미존재=>정보받아야함   1:추가정보존재
-          case 0 : this.$router.push({name: 'RegStep03Sns', params: {key: snsParam}}); break
-          // case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
+          case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
           case 1 : this.$router.push('/'); break
         }
       } else if (snsParam === 'sns') { // 로그인
         this.$store.dispatch('getUserInfoSns')
         if (firstFlag) {
-          this.$router.push('/RegStep03Sns')
+          this.$router.push({name: 'RegStep00', params: {key: snsParam}})
         } else {
           this.$router.push('/')
         }
