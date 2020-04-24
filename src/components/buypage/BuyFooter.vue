@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import {postOrders} from '@/api/index.js'
+import {postOrders} from '@/api/index.js'
 
 export default {
   props: ['finalPrice', 'coupon', 'addresses', 'point'],
