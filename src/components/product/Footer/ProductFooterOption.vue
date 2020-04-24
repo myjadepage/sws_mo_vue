@@ -55,7 +55,11 @@ export default {
         let second = []
         for (const f of first) {
           if (!f.includes('품절')) {
-            second.push([f.split('^')[0], Number(f.split('^')[1])])
+            let tempF = f.split('^')
+            if (tempF.length < 2) {
+              tempF[1] = 0
+            }
+            second.push([tempF[0], Number(tempF[1])])
           }
         }
         if (o.content.includes('선택') && !second[0].includes('선택없음')) {
@@ -226,6 +230,7 @@ export default {
 
     calcPrice (idx) {
       if (this.$store.getters.getSelectedOptions[idx].contentName) {
+        console.log(this.$store.getters.getSelectedOptions)
         return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price) * this.$store.getters.getOptionCnt(idx)
       } else {
         return this.$store.getters.getOptionCnt(idx) * this.$store.getters.getProduct.price

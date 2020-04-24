@@ -258,6 +258,66 @@ input:-webkit-autofill {
   margin-left:10px;
   color:#666;
 }
+.iosA2hs{
+  display:none;
+  position: fixed;
+  z-index:200;
+  width:calc(100% - 10px);
+  height:60px;
+  padding:19px 22px;
+  background:rgba(0,0,0,0.95);
+  font-size:0;
+  color:#fff;
+  box-sizing: border-box;
+  transition: transform 0.4s ease;
+}
+.iosA2hs.mobile{
+  left:5px;
+  bottom:5px;
+  border-radius: 12px 12px 0 12px;
+  transform: translateY(calc(100% + 10px));
+}
+.iosA2hs.pad{
+  left:5px;
+  top:5px;
+  border-radius: 12px 0 12px 12px;
+  transform: translateY(calc(-100% - 10px));
+}
+.iosA2hs.mobile.show,
+.iosA2hs.pad.show{
+  transform: translateY(0);
+}
+.iosA2hs .close{
+  position: absolute;
+  top:12px;
+  right:12px;
+  width:13px;
+}
+.iosA2hs .close img{
+  width:100%;
+  display:block;
+}
+.iosA2hs p > span,
+.iosA2hs p > img{
+  display:inline-block;
+  font-size:14px;
+  vertical-align: middle;
+}
+.iosA2hs p .c_them{
+  font-weight:500;
+}
+.iosA2hs .img_btn{
+  position: relative;
+  top:-1px;
+  width:17px;
+  margin-right:5px;
+}
+.iosA2hs .img_heart{
+  width:23px;
+  margin-left:4px;
+  margin-right:2px;
+}
+
 #swsWrap {
   min-width: 320px;
   background: #fff
@@ -548,6 +608,7 @@ input[type="search"]::-webkit-search-cancel-button {
   font-size:16px;
   font-weight:400
 }
+
 
 
 

@@ -45,7 +45,7 @@
 
 <script>
 import { makeRsa, parseDate } from '@/assets/js/common.js'
-import { chkSmsAuth, sendSms, createtUser, checkJoinNick } from '../../api'
+import { chkSmsAuth, sendSms, createtUser, checkJoinNick, snsAddInfo } from '../../api'
 
 export default {
   data () {
@@ -58,7 +58,9 @@ export default {
       isClickedCheck: false,
       pwPhone: null,
       isNickClicked: false,
-      nickName: null
+      nickName: null,
+      agreeSelection1: this.$store.getters.getUser.agreeSelection1,
+      agreeSelection2: this.$store.getters.getUser.agreeSelection2
     }
   },
   methods: {
@@ -154,12 +156,26 @@ export default {
       var vm = this
       if (this.isClickedSend === false || this.isClickedCheck === false) {
         alert('인증번호 버튼을 눌러주세요')
-      } else if (this.$route.params.key === 'google') { // 구글간편가입시, 아래 로직은 임시
-        this.$store.dispatch('getUserInfoGoogle')
-        vm.$router.push('/RegStep04')
-      } else if (this.$route.params.key === 'kakao') { // 카카오간편가입시
-        this.$store.dispatch('getUserInfoKakao')
-        vm.$router.push('/RegStep04')
+      } else if (this.$route.params.key === 'sns') { // sns
+        this.$store.dispatch('getUserInfoSns')
+        // router push 직전에 닉네임 수정. success 일 때만 라우팅
+        let addInfo = {
+          'nickName': this.nickName,
+          'mobile': this.pwPhone,
+          'agreeSelection1': this.agreeSelection1,
+          'agreeSelection2': this.agreeSelection2
+        }
+        snsAddInfo(sessionStorage.getItem('accessToken'), addInfo)
+          .then(res => {
+            if (res.data.jsonData.resultCode === '0001') {
+              vm.$router.push('/RegStep04')
+            } else {
+              console.log(res)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
         createtUser(this.$store.state.userInfo) // 일반회원가입시
           .then(function (res) {

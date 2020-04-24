@@ -9,8 +9,14 @@
       <button class="add-button">설치</button>
       <button class="close-button">닫기</button>
     </div>
-    <div class="ios-info">
-
+    <div class="iosA2hs">
+      <button class="close"><img src="/static/images/close_gray.png" alt="닫기" /></button>
+      <p>
+        <img src="/static/images/menuUp_ios.png" alt="사파리 메뉴버튼" class="img_btn" />
+        <span>을 탭하여</span>
+        <img src="/static/images/shallwe_heart.png" alt="쉘위샵 하트 이미지" class="img_heart" />
+        <span><span class="c_them">쉘위샵</span>을 홈화면에 추가해 주세요</span>
+      </p>
     </div>
     <router-view/>
   </div>
@@ -30,9 +36,9 @@ export default {
       }
     }
     // flowplayer 스크립트 넣기
-    // const flowplayer = document.createElement('script')
-    // flowplayer.setAttribute('src', '/static/js/flowplayer.min.js')
-    // document.head.appendChild(flowplayer)
+    const flowplayer = document.createElement('script')
+    flowplayer.setAttribute('src', '/static/js/flowplayer.min.js')
+    document.head.appendChild(flowplayer)
     const hls = document.createElement('script')
     hls.setAttribute('src', '/static/js/hls.min.js')
     document.head.appendChild(hls)
@@ -60,12 +66,49 @@ export default {
       }
     }
 
-    // 아이폰 대응
+    // 쿠키설정하고 팝업 닫아주는 함수
+    let setClose = (btn, el) => {
+      // 닫기를 누르면 1일 셋 쿠키
+      btn.addEventListener('click', (e) => {
+        // hide our user interface that shows our A2HS button
+        el.classList.remove('show')
+        setTimeout(() => {
+          el.style.display = 'none'
+
+          var d = new Date()
+          d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000))
+          var expires = 'expires=' + d.toUTCString()
+          document.cookie = 'a2hs=false;' + expires + ';path=/'
+        }, 400)
+      })
+    }
+
+    // IOS 대응
     var varUA = navigator.userAgent.toLowerCase()
+    const iosA2hs = document.querySelector('.iosA2hs')
+    const iosA2hsBtn = document.querySelector('.iosA2hs .close')
     if (varUA.indexOf('iphone') > -1) {
-
+      if (varUA.indexOf('safari') > -1) {
+        iosA2hs.classList.add('mobile')
+        if (a2hsFlag) {
+          iosA2hs.style.display = 'block'
+          setTimeout(() => {
+            iosA2hs.classList.add('show')
+          }, 50)
+        }
+        setClose(iosA2hsBtn, iosA2hs)
+      }
     } else if (varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
-
+      if (varUA.indexOf('safari') > -1) {
+        iosA2hs.classList.add('pad')
+        if (a2hsFlag) {
+          iosA2hs.style.display = 'block'
+          setTimeout(() => {
+            iosA2hs.classList.add('show')
+          }, 50)
+        }
+        setClose(iosA2hsBtn, iosA2hs)
+      }
     }
 
     // A2HS - 안드로이드일때.
@@ -73,7 +116,6 @@ export default {
     const addWrap = document.querySelector('.a2hs')
     const addBtn = document.querySelector('.add-button')
     const clBtn = document.querySelector('.close-button')
-    addWrap.style.display = 'none'
 
     // 이미 설치되어 있을경우는 나타나지 않음. 앱을 삭제 했을 때 다시 나타남
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -106,19 +148,7 @@ export default {
         }, 400)
       })
 
-      // 닫기를 누르면 1일 셋 쿠키
-      clBtn.addEventListener('click', (e) => {
-        // hide our user interface that shows our A2HS button
-        addWrap.classList.remove('show')
-        setTimeout(() => {
-          addWrap.style.display = 'none'
-
-          var d = new Date()
-          d.setTime(d.getTime() + (1 * 24 * 60 * 60 * 1000))
-          var expires = 'expires=' + d.toUTCString()
-          document.cookie = 'a2hs=false;' + expires + ';path=/'
-        }, 400)
-      })
+      setClose(clBtn, addWrap)
     })
   }
 }
