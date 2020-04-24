@@ -102,9 +102,11 @@ export default {
         return
       }
 
-      console.log(this.$store.getters.getProduct)
-      console.log(this.$store.getters.getProduct.stockQty)
-      if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
+      if (this.$store.getters.getProduct.stockQty.stockTypeCode === 2) {
+        if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
+          this.$store.commit('increaseOptionCnt', idx)
+        }
+      } else {
         this.$store.commit('increaseOptionCnt', idx)
       }
     },
@@ -126,11 +128,16 @@ export default {
     },
 
     countSet (idx) {
-      if (Number(this.$el.getElementsByClassName('count')[idx].value) > 99) {
+      if (Number(this.$el.getElementsByClassName('count')[idx].value) >= 99) {
         this.$el.getElementsByClassName('count')[idx].value = 99
+        return
       }
 
-      if (Number(this.$el.getElementsByClassName('count')[idx].value) > this.$store.getters.getProduct.stockQty) {
+      if (this.$store.getters.getProduct.stockQty.stockTypeCode === 2) {
+        if (Number(this.$el.getElementsByClassName('count')[idx].value) > this.$store.getters.getProduct.stockQty) {
+          this.$el.getElementsByClassName('count')[idx].value = this.$store.getters.getProduct.stockQty
+        }
+      } else {
         this.$el.getElementsByClassName('count')[idx].value = this.$store.getters.getProduct.stockQty
       }
 

@@ -63,10 +63,6 @@ export default {
         val += Number(o.count)
       }
 
-      for (const ap of this.addPrdts) {
-        val += Number(ap.addingQty)
-      }
-
       return val
     }
 
