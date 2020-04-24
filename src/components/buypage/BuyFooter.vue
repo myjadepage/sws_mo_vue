@@ -151,15 +151,39 @@ export default {
               buyer_tel: item.orderMobile,
               buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
               buyer_postcode: item.receiverPostNumber,
-              // m_redirect_url: `192.168.1.82:8080/buyComplete` // 개발
-              // m_redirect_url: `http://m.shallwe.shop/buyComplete` // 운영
-              m_redirect_url: `http://127.0.0.1:8080/buyComplete`
+              m_redirect_url: `${location.origin}/buyComplete`
             }, (res) => {
-              console.log(res)
               this.$router.push('/buyComplete')
             })
           } else {
-            // alert()
+            let p
+            for (const product of products) {
+              if (product.prdtSysId === Number(res.data.jsonData.optionValue)) {
+                p = product
+              }
+            }
+
+            // console.log(p)
+
+            switch (res.data.jsonData.resultCode) {
+              case '2000':
+                alert(`다음 상품의 가격이 변경 되었습니다. :: ${p.name.length < 20 ? p.name : p.name.substr(0, 20) + '...'}`)
+                break
+              case '2003':
+                alert(`다음 상품이 품절되었습니다. :: ${p.name.length < 20 ? p.name : p.name.substr(0, 20) + '...'}`)
+                break
+              case '2004':
+                alert(`다음 상품이 차단되었습니다. :: ${p.name.length < 20 ? p.name : p.name.substr(0, 20) + '...'}`)
+                break
+              case '2008':
+                alert(`다음 상품이 존재하지 않습니다. :: ${p.name.length < 20 ? p.name : p.name.substr(0, 20) + '...'}`)
+                break
+              case '2009':
+                alert(`다음 상품의 상품정보가 삭제되었습니다. :: ${p.name.length < 20 ? p.name : p.name.substr(0, 20) + '...'}`)
+                break
+              default:
+                break
+            }
           }
         })
         .catch(error => { // 주문정보등록 실패
