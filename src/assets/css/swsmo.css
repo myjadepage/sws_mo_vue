@@ -397,7 +397,7 @@
   border-radius:50%;
   background:rgba(255,255,255,0.9);
   box-shadow:0 2px 2px 0 rgba(0,0,0,0.1);
-  animation:btn_ani 2s ease alternate infinite;
+  /* animation:btn_ani 2s ease alternate infinite; */
 }
 .weekly_best_main .img_box .txtBox .btn_movie img{
   position: absolute;
@@ -405,7 +405,7 @@
   left:16px;
   width:13px;
   transform-origin: 5px 50%;
-  animation:btn_ani2 2s ease alternate infinite;
+  /* animation:btn_ani2 2s ease alternate infinite; */
 }
 
 @keyframes btn_ani{

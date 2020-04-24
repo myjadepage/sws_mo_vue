@@ -2,12 +2,12 @@
   <div class="setBox">
       <div class="row">
           <p>쿠폰/선물</p>
-          <input type="checkbox" id="presentBox" v-model="alertSets.coupon" />
+          <input type="checkbox" id="presentBox" v-model="alertSets.coupon" @change="set()" />
           <label for="presentBox"></label>
       </div>
       <div class="row">
           <p>이벤트</p>
-          <input type="checkbox" id="event" v-model="alertSets.event"  />
+          <input type="checkbox" id="event" v-model="alertSets.event" @change="set()" />
           <label for="event"></label>
       </div>
       <div class="row">
@@ -17,7 +17,7 @@
       </div>
       <div class="row">
           <p>라이브 방송</p>
-          <input type="checkbox" id="live" v-model="alertSets.live"  />
+          <input type="checkbox" id="live" v-model="alertSets.live" @change="set()" />
           <label for="live"></label>
       </div>
   </div>
@@ -43,7 +43,9 @@ export default {
         console.log(res)
         if (res.data.jsonData.resultCode === '0001') {
           this.alertSets.buyLog = res.data.jsonData.orderFlag
-          this.alertSets.exchangeLog = res.data.jsonData.orderStatFlag
+          this.alertSets.live = res.data.jsonData.liveBroadcastFlag
+          this.alertSets.coupon = res.data.jsonData.couponPresentFlag
+          this.alertSets.event = res.data.jsonData.eventFlag
         }
       })
       .catch(err => {
@@ -56,7 +58,9 @@ export default {
                 .then(res => {
                   if (res.data.jsonData.resultCode === '0001') {
                     this.alertSets.buyLog = res.data.jsonData.orderFlag
-                    this.alertSets.exchangeLog = res.data.jsonData.orderStatFlag
+                    this.alertSets.live = res.data.jsonData.liveBroadcastFlag
+                    this.alertSets.coupon = res.data.jsonData.couponPresentFlag
+                    this.alertSets.event = res.data.jsonData.eventFlag
                   }
                 })
                 .catch(err => {
@@ -83,15 +87,27 @@ export default {
       } else if (this.alertSets.buyLog === false) {
         this.alertSets.buyLog = 0
       }
-      if (this.alertSets.exchangeLog === true) {
-        this.alertSets.exchangeLog = 1
-      } else if (this.alertSets.exchangeLog === false) {
-        this.alertSets.exchangeLog = 0
+      if (this.alertSets.live === true) {
+        this.alertSets.live = 1
+      } else if (this.alertSets.live === false) {
+        this.alertSets.live = 0
+      }
+      if (this.alertSets.coupon === true) {
+        this.alertSets.coupon = 1
+      } else if (this.alertSets.coupon === false) {
+        this.alertSets.coupon = 0
+      }
+      if (this.alertSets.event === true) {
+        this.alertSets.event = 1
+      } else if (this.alertSets.event === false) {
+        this.alertSets.event = 0
       }
 
       let setInfo = {
         orderFlag: this.alertSets.buyLog,
-        orderStatFlag: this.alertSets.exchangeLog
+        couponPresentFlag: this.alertSets.coupon,
+        eventFlag: this.alertSets.event,
+        liveBroadcastFlag: this.alertSets.live
       }
       // console.log(setInfo)
       setAlertSetting(sessionStorage.getItem('accessToken'), setInfo)

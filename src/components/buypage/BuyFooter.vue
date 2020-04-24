@@ -90,6 +90,10 @@ export default {
         if (option) {
           op.optionGroups = []
           for (const o of option) {
+            if (o.contentName === '') {
+              op.qty = o.count
+              continue
+            }
             op.qty += o.count
             let og = {
               groupId: id++,
@@ -104,6 +108,10 @@ export default {
               })
             }
             op.optionGroups.push(og)
+          }
+
+          if (op.optionGroups.length === 0) {
+            delete op.optionGroups
           }
         } else {
           op.qty = option[0].count
@@ -143,11 +151,15 @@ export default {
               buyer_tel: item.orderMobile,
               buyer_addr: item.receiverAddress1 + ' ' + item.receiverAddress2,
               buyer_postcode: item.receiverPostNumber,
-              m_redirect_url: `192.168.1.82:8080/buyComplete`
+              // m_redirect_url: `192.168.1.82:8080/buyComplete` // 개발
+              // m_redirect_url: `http://m.shallwe.shop/buyComplete` // 운영
+              m_redirect_url: `http://127.0.0.1:8080/buyComplete`
             }, (res) => {
               console.log(res)
               this.$router.push('/buyComplete')
             })
+          } else {
+            // alert()
           }
         })
         .catch(error => { // 주문정보등록 실패

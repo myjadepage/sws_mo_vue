@@ -48,23 +48,19 @@ export default {
             for (const oo of o.contentGroup) {
               optionPrice += oo.price
             }
-            val += (optionPrice + this.product.price - (this.product.price * this.product.discountRate)) * o.count
+            val += (optionPrice + this.product.price) * o.count
           }
         }
         return val + apPrice
       } else {
-        return (this.product.price - (this.product.price * this.product.discountRate)) * this.option[0].count + apPrice
+        return this.product.price * this.option[0].count + apPrice
       }
     },
 
     calcCnt () {
       let val = 0
       for (const o of this.option) {
-        val += o.count
-      }
-
-      for (const ap of this.addPrdts) {
-        val += Number(ap.addingQty)
+        val += Number(o.count)
       }
 
       return val

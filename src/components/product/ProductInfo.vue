@@ -7,8 +7,8 @@
           라이브가
       </span> -->
       <span v-if="product.discountRate" class="productDiscount">{{product.discountRate * 100}}%</span>
-      <span class="won"><span class="saleProductPrice">{{formatPrice(calcPrice)}}</span>원</span>
-        <span v-if="product.discountRate" class="orProductPrice">{{formatPrice(product.price)}}</span>
+      <span class="won"><span class="saleProductPrice">{{product.price|makeComma}}</span>원</span>
+        <span v-if="product.discountRate" class="orProductPrice">{{product.marketPrice|makeComma}}</span>
         </div>
 
         <!-- <div class="utilSection">
@@ -33,18 +33,7 @@ export default {
       }
     }
   },
-  mounted () {
-    this.$store.state.productPrice = this.calcPrice
-  },
   computed: {
-    calcPrice () {
-      if (!this.product.discountRate) {
-        return this.product.price
-      }
-      let val = this.product.price - (this.product.price * this.product.discountRate)
-      // let val = this.product.price - Math.floor(this.product.price * (this.product.discountRate) / 10) * 10
-      return val
-    },
     calcDeliveryPrice () {
       switch (this.product.deliveryPriceTypeCode) {
         case 1: return 0

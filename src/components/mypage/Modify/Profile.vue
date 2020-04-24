@@ -21,16 +21,12 @@
           <p>{{member.nickName}}</p>
         </div>
         <div class="row">
-          <label for="userNick">현재 비밀번호</label>
-          <input type="text" id="userNick" name="userNick" placeholder="현재 비밀번호를 입력해 주세요" v-model="member.currentPassword" />
+          <label for="userPhone">휴대폰</label>
+          <p>{{member.mobile}}</p>
         </div>
         <div class="row">
-          <label for="userNick">새 비밀번호</label>
-          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 입력해 주세요" v-model="member.newPassword" />
-        </div>
-        <div class="row">
-          <label for="userNick">새 비밀번호 확인</label>
-          <input type="text" id="userNick" name="userNick" placeholder="새 비밀번호를 다시 입력해 주세요" v-model="member.confirmpw" />
+          <label for="userName">이름</label>
+          <input type="text" id="userName" name="userName" placeholder="이름을 입력해주세요" v-model.trim="member.name" />
         </div>
         <div class="row">
           <p class="tit">성별</p>
@@ -40,12 +36,12 @@
           <label for="female">여</label>
         </div>
         <div class="row">
-          <label for="userPhone">휴대폰</label>
-          <p>{{member.mobile}}</p>
-        </div>
-        <div class="row">
           <label for="userBirth">생년월일</label>
           <input type="text" id="userBirth" name="userBirth" placeholder="ex)2002.02.02" v-model.trim="member.birthday" />
+        </div>
+        <div class="row" v-if="member.joinTypeCode === 0">
+          <p class="tit">비밀번호</p>
+          <router-link to="/ChangePw" class="btn_cng">변경하기</router-link>
         </div>
         <router-link to="/Withdraw" class="Withdrawal">회원탈퇴하기</router-link>
       </div>
@@ -74,11 +70,10 @@ export default {
         birthday: '',
         mobile: '',
         userId: '',
+        name: '',
         nickName: '',
         profile: '',
-        currentPassword: '',
-        newPassword: '',
-        confirmpw: '',
+        joinTypeCode: null,
         profileImgUrl: '/static/images/ico_member.png'
       },
       modalVisiblity: false,
@@ -92,18 +87,22 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getUserInfo(sessionStorage.getItem('accessToken'))
         .then(res => {
-          // console.log(res)
+          console.log(res)
           if (res.data.jsonData.birthday) {
             this.member.birthday = res.data.jsonData.birthday.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3')
           }
           this.member.mobile = res.data.jsonData.mobile
           this.member.userId = res.data.jsonData.userId
+          this.member.joinTypeCode = res.data.jsonData.joinTypeCode
 
           if (res.data.jsonData.nickName) {
             this.member.nickName = res.data.jsonData.nickName
           }
           if (res.data.jsonData.genderCode) {
             this.member.genderCode = res.data.jsonData.genderCode
+          }
+          if (res.data.jsonData.name) {
+            this.member.name = res.data.jsonData.name
           }
           if (res.data.jsonData.profile) {
             this.member.profile = res.data.jsonData.profile
@@ -132,6 +131,9 @@ export default {
 
                     if (res.data.jsonData.nickName) {
                       this.member.nickName = res.data.jsonData.nickName
+                    }
+                    if (res.data.jsonData.name) {
+                      this.member.name = res.data.jsonData.name
                     }
                     if (res.data.jsonData.genderCode) {
                       this.member.genderCode = res.data.jsonData.genderCode
@@ -171,6 +173,7 @@ export default {
       delete userInfo.profileImgUrl
       delete userInfo.userId
       delete userInfo.mobile
+      delete userInfo.nickName
 
       // 유효성 검사
       let nameRegExp = /^[가-힣]{2,4}$/ // 이름
@@ -212,11 +215,6 @@ export default {
         return false
       }
 
-      // 닉네임 유효성 검사
-      if (!inputRegExp.test(userInfo.nickName) && userInfo.nickName.length > 0) {
-        alert('닉네임이 올바르지 않습니다.')
-        return false
-      }
 
       // 자기소개 유효성 검사
       if (!inputRegExp.test(userInfo.profile) && userInfo.profile.length > 0) {
@@ -224,6 +222,13 @@ export default {
         return false
       }
 
+      // 이름 유효성 검사
+      if (!nameRegExp.test(userInfo.name) && userInfo.name.length > 0) {
+        alert('이름 올바르지 않습니다.')
+        return false
+      }
+
+      console.log(userInfo)
       modifyUserInfo(sessionStorage.getItem('accessToken'), userInfo)
         .then(res => {
           if (res.data.jsonData.resultCode !== '0001') {

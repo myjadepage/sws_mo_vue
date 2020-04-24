@@ -71,7 +71,11 @@
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
+<<<<<<< HEAD
                     callback-url="http://shallwe.shop/Login"
+=======
+                    callback-url="http://m.shallwe.link/RegStep03_sns"
+>>>>>>> b0c4b35e7828694d7d7b25a6f63252cc50b05b2b
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -159,24 +163,36 @@ export default {
       let accessToken = res.data.jsonData.accessToken
       let refreshToken = res.data.jsonData.refreshToken
       let snsAddInfoFlag = res.data.jsonData.snsAddInfoFlag
+      let firstFlag = false
 
       sessionStorage.setItem('accessToken', accessToken)
       sessionStorage.setItem('refreshToken', refreshToken)
 
       getUserInfo(accessToken).then(r => {
         sessionStorage.setItem('memberInfo', JSON.stringify(r.data.jsonData))
+        if (!r.data.jsonData.nickName) {
+          firstFlag = true
+        }
+        this.snsPush(snsAddInfoFlag, firstFlag, r, snsParam)
       }).catch(err => {
         console.log(err)
       })
       // 회원가입
-      if (res.data.jsonData.snsLoginType === 0) {
+    },
+    // sns회원 체크 후 라우터 푸시
+    snsPush (snsAddInfoFlag, firstFlag, r, snsParam) {
+      if (r.data.jsonData.snsLoginType === 0) {
         switch (snsAddInfoFlag) { // 0:추가정보 미존재=>정보받아야함   1:추가정보존재
           case 0 : this.$router.push({name: 'RegStep00', params: {key: snsParam}}); break
           case 1 : this.$router.push('/'); break
         }
       } else if (snsParam === 'sns') { // 로그인
         this.$store.dispatch('getUserInfoSns')
-        this.$router.push('/')
+        if (firstFlag) {
+          this.$router.push({name: 'RegStep00', params: {key: snsParam}})
+        } else {
+          this.$router.push('/')
+        }
       }
     },
     // 구글로그인

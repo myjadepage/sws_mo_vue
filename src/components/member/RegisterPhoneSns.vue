@@ -7,7 +7,15 @@
         <span class="circle_dot disable"></span>
     </h5>
     <div class="member_con">
-        <!-- 일반로그인 -->
+        <!-- SNS 최초가입 추가정보 -->
+        <h4 class="small_title">닉네임 입력</h4>
+        <div class="wrap-input100">
+            <input class="input100" type="text" name="userNickName" placeholder="특수문자 제외"
+              v-model="nickName" required>
+            <span class="focus-input100"></span>
+            <button type="button" class="btn_send" @click="checkNick" :isNickClicked='false'>중복확인</button>
+        </div>
+
         <h2 class="title">휴대폰 인증절차</h2>
         <h4 class="small_title">휴대폰 번호 인증</h4>
         <div class="wrap-input100">
@@ -36,8 +44,8 @@
 </template>
 
 <script>
-import { makeRsa, parseDate } from '@/assets/js/common.js'
-import { chkSmsAuth, sendSms, createtUser } from '../../api'
+import { makeRsa, parseDate, jwtDecode } from '@/assets/js/common.js'
+import { chkSmsAuth, sendSms, createtUser, checkJoinNick, snsAddInfo } from '../../api'
 
 export default {
   data () {
@@ -48,10 +56,47 @@ export default {
       countTime: null,
       isClickedSend: false,
       isClickedCheck: false,
-      pwPhone: null
+      pwPhone: null,
+      isNickClicked: false,
+      nickName: null,
+      agreeSelection1: this.$store.getters.getUser.agreeSelection1,
+      agreeSelection2: this.$store.getters.getUser.agreeSelection2
     }
   },
   methods: {
+    /** 닉네임 유효성Check
+     * 특수문자 제외 입력 */
+    checkNick: function () {
+      const inputRegExp = /^([ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|/\s/]{0,20})+$/ // 영문,숫자,한글
+
+      if (this.nickName === null) {
+        alert('닉네임을 입력해 주세요')
+        return false
+      } else if (!inputRegExp.test(this.nickName)) {
+        alert('닉네임에 특수문자를 입력할 수 없습니다.')
+        this.nickName = null
+        return false
+      } else {
+      // 닉네임중복체크
+        checkJoinNick(this.nickName)
+          .then(res => {
+            console.log(res)
+            if (res.data.jsonData.resultCode === '0001') {
+              this.isNickClicked = true
+              alert('사용가능한 닉네임입니다.')
+            } else if (res.data.jsonData.resultCode === '0003') {
+              alert('중복 닉네임이 있습니다.')
+              this.nickName = null
+              this.isNickClicked = false
+              return false
+            }
+          })
+          .catch(error => {
+            console.log('error', error)
+            alert('닉네임체크 중 문제가 생겼습니다.')
+          })
+      }
+    },
     // 1.문자본인인증
     sendPhone: function () {
       let regPhone = /(01[0|1|6|9|7]\d{3}|\d{4}\d{4}$)/g
@@ -111,14 +156,27 @@ export default {
       var vm = this
       if (this.isClickedSend === false || this.isClickedCheck === false) {
         alert('인증번호 버튼을 눌러주세요')
-      } else if (this.$route.params.key === 'google') { // 구글간편가입시, 아래 로직은 임시
-        this.$store.dispatch('getUserInfoGoogle')
-        vm.$router.push('/RegStep04')
-      } else if (this.$route.params.key === 'kakao') { // 카카오간편가입시
-        this.$store.dispatch('getUserInfoKakao')
-        vm.$router.push('/RegStep04')
+      } else if (this.$route.params.key === 'sns') { // sns
+        this.$store.dispatch('getUserInfoSns')
+        // router push 직전에 닉네임 수정. success 일 때만 라우팅
+        let addInfo = {
+          'nickName': this.nickName,
+          'mobile': this.pwPhone,
+          'agreeSelection1': this.agreeSelection1,
+          'agreeSelection2': this.agreeSelection2
+        }
+        snsAddInfo(sessionStorage.getItem('accessToken'), addInfo)
+          .then(res => {
+            if (res.data.jsonData.resultCode === '0001') {
+              vm.$router.push('/RegStep04')
+            } else {
+              console.log(res)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
       } else {
-        console.log(this.$store.state.userInfo)
         createtUser(this.$store.state.userInfo) // 일반회원가입시
           .then(function (res) {
             console.log('가입성공?', res)

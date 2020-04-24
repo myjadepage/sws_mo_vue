@@ -52,6 +52,7 @@ export default {
     if (sessionStorage.getItem('accessToken')) {
       getMypageInfo(sessionStorage.getItem('accessToken'))
         .then(res => {
+          console.log(res)
           if (res.data.jsonData.resultCode === '0001') {
             if (res.data.jsonData.userId) {
               this.member.userId = res.data.jsonData.userId

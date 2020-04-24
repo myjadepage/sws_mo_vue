@@ -24,6 +24,7 @@ export const store = new Vuex.Store({
   },
   getters: {
     getId: state => state.userInfo.userId,
+    getUser: state => state.userInfo,
     getIsAuth: state => state.isAuth,
     getProduct: state => state.product,
     getOptionAddedPrice: state => state.optionAddedPrice,
@@ -61,7 +62,7 @@ export const store = new Vuex.Store({
     },
     logOut (state) {
       state.isLogin = false
-      state.userInfo = null
+      state.userInfo = {}
       sessionStorage.clear()
     },
     addOption: (state, item) => state.selectedOptions.push(item),

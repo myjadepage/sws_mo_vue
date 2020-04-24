@@ -91,8 +91,9 @@ export default {
       }
 
       switch (this.$route.params.key) {
-        case 'google': this.$router.push({name: 'RegStep03', params: {key: 'google'}}); break
-        case 'kakao': this.$router.push({name: 'RegStep03', params: {key: 'kakao'}}); break
+        case 'sns': this.$router.push({name: 'RegStep03Sns', params: {key: 'sns'}}); break
+        // case 'google': this.$router.push({name: 'RegStep03', params: {key: 'google'}}); break
+        // case 'kakao': this.$router.push({name: 'RegStep03', params: {key: 'kakao'}}); break
         default: this.$router.push('/RegStep02'); break
       }
     }

@@ -29,16 +29,14 @@ export default {
     clickBuy () {
       if (!this.buyMode) {
         this.$emit('buyModeClick')
-      } else if (this.buyMode && this.$store.getters.getSelectedOptionsLength > 0) {
+      } else if (this.buyMode && this.$store.getters.optionTypeCode !== 1) {
+        sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
+        sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
+        sessionStorage.setItem('selectedAddPrdts', JSON.stringify([this.$store.getters.getSelectedAddPrdts]))
+
         if (this.$store.state.isLogin) {
-          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
-          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
-          sessionStorage.setItem('selectedAddPrdts', JSON.stringify([this.$store.getters.getSelectedAddPrdts]))
           this.$router.push('/BuyProduct')
         } else {
-          sessionStorage.setItem('products', JSON.stringify([this.$store.getters.getProduct]))
-          sessionStorage.setItem('selectedOptions', JSON.stringify([this.$store.getters.getSelectedOptions]))
-          sessionStorage.setItem('selectedAddPrdts', JSON.stringify([this.$store.getters.getSelectedAddPrdts]))
           this.$router.push('/Login')
         }
       }

@@ -49,13 +49,17 @@
 <script>
 export default {
   created () {
-    if (this.options.length) { // 옵션이 있는 상품의 경우
+    if (this.options.length > 0) { // 옵션이 있는 상품의 경우
       for (const o of this.options) {
         let first = o.content.split(';')
         let second = []
         for (const f of first) {
           if (!f.includes('품절')) {
-            second.push([f.split('^')[0], Number(f.split('^')[1])])
+            let tempF = f.split('^')
+            if (tempF.length < 2) {
+              tempF[1] = 0
+            }
+            second.push([tempF[0], Number(tempF[1])])
           }
         }
         if (o.content.includes('선택') && !second[0].includes('선택없음')) {
@@ -69,7 +73,7 @@ export default {
       let item = {
         contentGroup: [{name: p.name, prdtNormalOptionSysId: null, price: null}],
         count: 1,
-        price: p.price - (p.price * p.discountRate),
+        price: p.price,
         contentName: ''
       }
 
@@ -102,7 +106,11 @@ export default {
         return
       }
 
-      if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
+      if (this.$store.getters.getProduct.stockQty.stockTypeCode === 2) {
+        if (this.$el.getElementsByClassName('count')[idx].value <= this.$store.getters.getProduct.stockQty) {
+          this.$store.commit('increaseOptionCnt', idx)
+        }
+      } else {
         this.$store.commit('increaseOptionCnt', idx)
       }
     },
@@ -124,18 +132,23 @@ export default {
     },
 
     countSet (idx) {
-      if (Number(this.$el.getElementsByClassName('count')[idx].value) > 99) {
+      if (Number(this.$el.getElementsByClassName('count')[idx].value) >= 99) {
         this.$el.getElementsByClassName('count')[idx].value = 99
+        return
       }
 
-      if (Number(this.$el.getElementsByClassName('count')[idx].value) > this.$store.getters.getProduct.stockQty) {
+      if (this.$store.getters.getProduct.stockQty.stockTypeCode === 2) {
+        if (Number(this.$el.getElementsByClassName('count')[idx].value) > this.$store.getters.getProduct.stockQty) {
+          this.$el.getElementsByClassName('count')[idx].value = this.$store.getters.getProduct.stockQty
+        }
+      } else {
         this.$el.getElementsByClassName('count')[idx].value = this.$store.getters.getProduct.stockQty
       }
 
       if (this.$el.getElementsByClassName('count')[idx].value < 1) {
         this.$el.getElementsByClassName('count')[idx].value = 1
       }
-      this.$store.commit('setOptionCnt', [idx, this.$el.getElementsByClassName('count')[idx].value])
+      this.$store.commit('setOptionCnt', [idx, Number(this.$el.getElementsByClassName('count')[idx].value)])
     },
 
     apCountSet (idx) {
@@ -150,7 +163,7 @@ export default {
       if (this.$el.getElementsByClassName('apCount')[idx].value < 1) {
         this.$el.getElementsByClassName('apCount')[idx].value = 1
       }
-      this.$store.commit('setAddPrdtCnt', [idx, this.$el.getElementsByClassName('apCount')[idx].value])
+      this.$store.commit('setAddPrdtCnt', [idx, Number(this.$el.getElementsByClassName('apCount')[idx].value)])
     },
 
     optionSelected () {
@@ -217,9 +230,10 @@ export default {
 
     calcPrice (idx) {
       if (this.$store.getters.getSelectedOptions[idx].contentName) {
-        return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getOptionCnt(idx)
+        console.log(this.$store.getters.getSelectedOptions)
+        return (this.$store.getters.getOptionPrice(idx) + this.$store.getters.getProduct.price) * this.$store.getters.getOptionCnt(idx)
       } else {
-        return this.$store.getters.getOptionCnt(idx) * (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate))
+        return this.$store.getters.getOptionCnt(idx) * this.$store.getters.getProduct.price
       }
     },
 
@@ -241,28 +255,28 @@ export default {
     },
     calcTotalPrice () {
       let apPrices = 0
-      if (this.addPrdts) {
+      if (this.addPrdts.length > 0) {
         for (const ap of this.$store.getters.getSelectedAddPrdts) {
           apPrices += ap.price * ap.addingQty
         }
       }
 
-      if (this.options.length) {
+      if (this.options.length > 0) {
         let o = this.$store.getters.getSelectedOptions
         let val = 0
         let cnt = 0
         for (const item of o) {
           cnt += item.count
-          val += (item.price + this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * item.count
+          val += (item.price + this.$store.getters.getProduct.price) * item.count
         }
 
         if (val) {
           return val + apPrices
         } else {
-          return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * cnt + apPrices
+          return (this.$store.getters.getProduct.price * cnt) + apPrices
         }
       } else {
-        return (this.$store.getters.getProduct.price - (this.$store.getters.getProduct.price * this.$store.getters.getProduct.discountRate)) * this.$store.getters.getSelectedOptions[0].count + apPrices
+        return this.$store.getters.getProduct.price * this.$store.getters.getSelectedOptions[0].count + apPrices
       }
     }
   }

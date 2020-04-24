@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     play (idx) {
-      this.$emit('play', idx)
+      // this.$emit('play', idx)
     }
   }
 }

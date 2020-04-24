@@ -4,7 +4,7 @@
       <Bar :val="title" />
       <Media :media="currentMedia" :listProductMedia="listProductMedia"/>
       <Info :product="product" />
-      <SubMedia @play="playMedia" :subMedias='subMedias' />
+      <SubMedia :subMedias='subMedias' v-if="subMedias.length > 0" />
       <Info2 :product="product" />
       <Description />
       <ProductFooter @addedCartItem="addedCartItem" :addPrdts="addingProducts" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
@@ -31,16 +31,15 @@ export default {
   created () {
     window.scrollTo(0, 0)
     let id = this.$route.params.prdtSysId
-    console.log(id)
+    // console.log(id)
 
     getProductDetail(id).then((res) => {
-      console.log(res)
+      // console.log(res)
 
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product
       this.options = res.data.jsonData.normalOptions
       this.addingProducts = res.data.jsonData.addingProducts
-      this.subMedias = res.data.jsonData.listProductMedia
 
       if (res.data.jsonData.listProductMedia.length > 0) {
         this.listProductMedia = res.data.jsonData.listProductMedia
@@ -49,6 +48,13 @@ export default {
       } else if (res.data.jsonData.product.middleImageUrl) {
         this.listProductMedia = [{'image': res.data.jsonData.product.middleImageUrl}]
       }
+      if (this.addingProducts.length > 1) {
+        this.subMedias = [...this.listProductMedia].splice(0, 1)
+      }
+      if (this.product.optionTypeCode === 1) {
+        this.options = []
+      }
+
       // test용 시네마gif
       // this.listProductMedia = [{'image': 'http://cdn.shallwe.link/test/0a3f5c69902159.5b911439ddc7f.gif'}]
 
@@ -201,9 +207,6 @@ export default {
       setTimeout(() => {
         this.showCartModal = false
       }, 3000)
-    },
-    playMedia () {
-
     }
   },
   beforeDestroy () {

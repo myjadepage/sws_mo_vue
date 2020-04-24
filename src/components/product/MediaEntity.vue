@@ -1,8 +1,8 @@
 <template>
   <div class="mediaEntityWrap">
-        <div class="thumbnailSection" @click="play(idx)">
-            <img :src="media.thumnailUrl" alt="" >
-            <span class="time">{{media.mediaLength}}</span>
+        <div class="thumbnailSection">
+            <img :src="media.thumnailUrl" alt="" />
+            <span class="time">{{media.duration}}</span>
         </div>
         <div class="titleSection">
             <p class="title" v-html="media.title"></p>

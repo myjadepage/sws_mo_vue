@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const config = {
-  // baseUrl: 'http://192.168.1.40:3000/api/v1/',
+  // baseUrl: 'http://192.168.1.40:3800/api/v1/'
   // baseUrl: 'http://api.shallwe.shop/api/v1/',
   // baseUrl: 'http://192.168.1.20:3000/api/v1/'
   baseUrl: 'http://api.shallwe.link:3000/api/v1/' // 개발
@@ -801,6 +801,11 @@ function checkJoinId (id) {
   })
 }
 
+// 닉네임 중복확인
+function checkJoinNick (nick) {
+  return axios.get(`${config.baseUrl}users/chkdupnick?nickName=${nick}`)
+}
+
 // 본인인증전송
 function sendSms (authType, authWay, authWayValue, userId) {
   let jsonData = {
@@ -870,6 +875,7 @@ function createtUser (user) {
     'userId': user.userId,
     'password': user.password,
     'mobile': user.phone,
+    'nickName': user.nickName,
     'agreeSellection1': user.agreeSellection1,
     'agreeSellection2': user.agreeSellection2
   }
@@ -898,6 +904,22 @@ function snsLogin (snsType, snsToken) {
   var formdata = new FormData()
   formdata.set('jsonData', JSON.stringify(jsonData))
   return axios.post(`${config.baseUrl}auth/snslogin`, formdata)
+}
+
+// SNS 회원 추가정보
+function snsAddInfo (accessToken, addInfo) {
+  let userSysId = parseJwt(accessToken).authSysId
+  var formdata = new FormData()
+  formdata.set('jsonData', JSON.stringify(addInfo))
+  return axios({
+    method: 'patch',
+    url: `${config.baseUrl}users/${userSysId}/addinfo`,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    data: formdata
+  })
 }
 
 // JWT 토큰 파싱 함수
@@ -1000,5 +1022,7 @@ export {
   getReservateBroadCast,
   removeReservateBroadCast,
   getFaqList,
-  getKinxToken
+  getKinxToken,
+  checkJoinNick,
+  snsAddInfo
 }

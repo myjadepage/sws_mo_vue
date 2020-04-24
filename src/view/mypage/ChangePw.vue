@@ -1,6 +1,6 @@
 <template>
   <div>
-  <Bar :val="title" />
+  <Bar :val="title" :exit="true" />
   <ChangePw />
 
   </div>

@@ -58,6 +58,7 @@ export default {
       const POSTER = ''
       const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/${this.listProductMedia[0].mediaId}/playlist.m3u8`
       // const VIDEOSRC = `https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/170c79acc9763aba/playlist.m3u8`
+      // const VIDEOSRC = 'https://hls.midibus.kinxcdn.com/hls/ch_16fc4988/1706171e5dd6ad88/playlist.m3u8'
 
       // eslint-disable-next-line no-undef
       flowplayer('#player_container', {
@@ -86,7 +87,6 @@ export default {
     },
     fullSize () {
       let vWrap = document.getElementsByClassName('productMediaWrap')[0]
-      let sWrap = document.getElementsByClassName('sizingWrap')[0]
       if (this.mode === 'normal') {
         // 가로영상
         if ((this.movSize.width / this.movSize.height) > 1) {
@@ -94,7 +94,8 @@ export default {
             'transform': 'rotate(-90deg)',
             'top': '100%',
             'width': '100vh',
-            'height': '100vw'
+            'height': '100vw',
+            'max-width': '100vh'
           })
         } else {
           // 세로영상
@@ -102,7 +103,8 @@ export default {
             'transform': 'rotate(0)',
             'top': '0',
             'width': '100vw',
-            'height': '100vh'
+            'height': '100vh',
+            'max-width': '100vw'
           })
         }
         $(vWrap).css({
@@ -111,47 +113,54 @@ export default {
           'left': '0',
           'z-index': '100'
         }).addClass('full')
-        this.mode = 'fullscreen'
+
         window.addEventListener('orientationchange', () => {
-          console.log(window.orientation)
-          if (window.orientation === 0) {
-            // portrait
-            if ((this.movSize.width / this.movSize.height) > 1) {
-              $(vWrap).css({
-                'transform': 'rotate(-90deg)',
-                'top': '100%',
-                'width': '100vh',
-                'height': '100vw'
-              })
+          if (this.mode === 'fullscreen') {
+            // console.log(window.orientation)
+            if (window.orientation === 0) {
+              // portrait
+              if ((this.movSize.width / this.movSize.height) > 1) {
+                $(vWrap).css({
+                  'transform': 'rotate(-90deg)',
+                  'top': '100%',
+                  'width': '100vh',
+                  'height': '100vw',
+                  'max-width': '100vh'
+                })
+              } else {
+                // 세로영상
+                $(vWrap).css({
+                  'transform': 'rotate(0)',
+                  'top': '0',
+                  'width': '100vw',
+                  'height': '100vh',
+                  'max-width': '100vw'
+                })
+              }
             } else {
-              // 세로영상
-              $(vWrap).css({
-                'transform': 'rotate(0)',
-                'top': '0',
-                'width': '100vw',
-                'height': '100vh'
-              })
-            }
-          } else {
-            // landscape
-            if ((this.movSize.width / this.movSize.height) > 1) {
-              $(vWrap).css({
-                'transform': 'rotate(0)',
-                'top': '0',
-                'width': '100vw',
-                'height': '100vh'
-              })
-            } else {
-              // 세로영상
-              $(vWrap).css({
-                'transform': 'rotate(-90deg)',
-                'top': '100%',
-                'width': '100vh',
-                'height': '100vw'
-              })
+              // landscape
+              if ((this.movSize.width / this.movSize.height) > 1) {
+                $(vWrap).css({
+                  'transform': 'rotate(0)',
+                  'top': '0',
+                  'width': '100vw',
+                  'height': '100vh',
+                  'max-width': '100vw'
+                })
+              } else {
+                // 세로영상
+                $(vWrap).css({
+                  'transform': 'rotate(-90deg)',
+                  'top': '100%',
+                  'width': '100vh',
+                  'height': '100vw',
+                  'max-width': '100vh'
+                })
+              }
             }
           }
         })
+        this.mode = 'fullscreen'
         document.querySelector('html').style.overflow = 'hidden'
         window.addEventListener('scroll', (e) => {
           e.preventDefault()
@@ -167,7 +176,8 @@ export default {
           'top': '50px',
           'left': '50%',
           'width': '100%',
-          'height': 'auto'
+          'height': 'auto',
+          'max-width': '640px'
         }).removeClass('full')
         this.mode = 'normal'
         document.querySelector('html').style.overflow = 'visible'
