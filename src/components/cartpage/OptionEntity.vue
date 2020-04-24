@@ -6,7 +6,7 @@
         <select @change="cntChange" :value="option[1][0].optionQty">
           <option v-for="x in 99" :value="x" :key="x">{{x}}</option>
         </select>
-        <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.price|makeComma}}</span>
+        <span class="price">{{totalPrice|makeComma}}원</span> <span v-if="product.discountRate" class="prdPrice">{{product.marketPrice|makeComma}}</span>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   computed:
     {
       totalPrice () {
-        let prdtPrice = this.product.price - (this.product.price * this.product.discountRate)
+        let prdtPrice = this.product.price
         let val = 0
         for (const o of this.option[1]) {
           val += o.price
