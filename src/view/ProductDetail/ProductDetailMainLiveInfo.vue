@@ -6,7 +6,7 @@
       <Info :product="product" />
       <!-- <SubMedia @play="play" /> -->
       <Info2 :product="product" />
-      <Description />
+      <Description :product="product" />
       <ProductFooter @addedCartItem="addedCartItem" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />

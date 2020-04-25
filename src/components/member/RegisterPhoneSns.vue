@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { makeRsa, parseDate, jwtDecode } from '@/assets/js/common.js'
+import { makeRsa, parseDate } from '@/assets/js/common.js'
 import { chkSmsAuth, sendSms, createtUser, checkJoinNick, snsAddInfo } from '../../api'
 
 export default {

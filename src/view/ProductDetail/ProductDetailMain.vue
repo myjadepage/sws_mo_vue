@@ -6,7 +6,7 @@
       <Info :product="product" />
       <SubMedia :subMedias='subMedias' v-if="subMedias.length > 0" />
       <Info2 :product="product" />
-      <Description />
+      <Description :product="product" />
       <ProductFooter @addedCartItem="addedCartItem" :addPrdts="addingProducts" :options="options" @hideClick="buyMode = false" @buyModeClick="buyMode = true" :buyMode="buyMode" />
       <transition name="fade">
       <CartModal @cartModalClose="showCartModal = false" v-if="showCartModal" />
@@ -34,7 +34,7 @@ export default {
     // console.log(id)
 
     getProductDetail(id).then((res) => {
-      // console.log(res)
+      console.log(res)
 
       this.$store.state.product = res.data.jsonData.product
       this.product = res.data.jsonData.product

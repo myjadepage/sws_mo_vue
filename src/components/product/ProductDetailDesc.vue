@@ -1,6 +1,6 @@
 <template>
   <div class="detailDescWrap">
-    <Info v-if="selectedMenu===0" />
+    <Info :product="product" v-if="selectedMenu===0" />
     <Review :reviews="reivews" v-if="selectedMenu===1" />
     <QA @QABtnClick="QABtnClick" :questions="questions" v-if="selectedMenu===2&&!QAWriteMode" />
     <QAWrite @qaDone="qaDone" @cancelClick="QAWriteMode=false" v-if="selectedMenu===2&&QAWriteMode" />
@@ -17,10 +17,20 @@ import QAWrite from './detailDescription/qa/QAWrite'
 import Delivery from './detailDescription/DetailDelivery'
 
 export default {
+  props: ['selectedMenu', 'product'],
+  components: {
+    Info, Review, QA, QAWrite, Delivery
+  },
+  data () {
+    return {
+      prdtSysId: this.product.prdtSysId,
+      reivews: [],
+      questions: [],
+      QAWriteMode: false
+    }
+  },
   created () {
-    let id = this.$route.params.prdtSysId
-
-    getPrdtReviewList(id)
+    getPrdtReviewList(this.product.prdtSysId)
       .then(res => {
         // console.log(res)
         this.reivews = res.data.jsonData.reviews
@@ -28,25 +38,13 @@ export default {
       .catch(err => {
         console.log(err)
       })
-
-    getPrdtQuestionList(id)
+    getPrdtQuestionList(this.product.prdtSysId)
       .then(res => {
         this.questions = res.data.jsonData.questions
       })
       .catch(err => {
         console.log(err)
       })
-  },
-  props: ['selectedMenu'],
-  components: {
-    Info, Review, QA, QAWrite, Delivery
-  },
-  data () {
-    return {
-      reivews: [],
-      questions: [],
-      QAWriteMode: false
-    }
   },
   watch: {
     selectedMenu (newVal) {
@@ -71,7 +69,7 @@ export default {
     },
     qaDone () {
       this.QAWriteMode = false
-      getPrdtQuestionList(this.$route.params.prdtSysId)
+      getPrdtQuestionList(this.product.prdtSysId)
         .then(res => {
           this.questions = res.data.jsonData.questions
         })

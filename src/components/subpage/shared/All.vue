@@ -1,8 +1,8 @@
 <template>
-  <div class="section_ITEM weekly_best_main" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" infinite-scroll-throttle-delay="2000">
+  <div class="section_ITEM weekly_best_main" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" infinite-scroll-throttle-delay="1500">
     <h4>전체상품</h4>
     <ul class="box_best_item">
-      <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" />
+      <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" :pickLists="pickLists" />
       <li class="item noItem" v-if="products.length === 0">상품이 없습니다.</li>
     </ul>
    </div>
@@ -13,7 +13,7 @@ import SaleEntity from './SaleEntity'
 import {getProductLists} from '@/api/index.js'
 
 export default {
-  props: ['categorySysId1'],
+  props: ['categorySysId1', 'pickLists'],
   components: {
     SaleEntity
   },
@@ -29,7 +29,7 @@ export default {
       let getInfo = 'startIndex=' + this.startIndex + '&rowCount=10&categorySysId1=' + this.categorySysId1 + '&isSale=0&isPlanBrand=0&isPlanThema=0'
       getProductLists(getInfo)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.jsonData.resultCode === '0001') {
             res.data.jsonData.products.map(x => this.products.push(x))
             this.startIndex = res.data.jsonData.startIndex

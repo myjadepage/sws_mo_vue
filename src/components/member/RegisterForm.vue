@@ -161,6 +161,7 @@ export default {
       // const regPassword = new RegExp('[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{6,20}$')
       const regNum = this.formData.password.search(/[0-9]/g)
       const regEng = this.formData.password.search(/[a-z]/ig)
+      // eslint-disable-next-line
       const regSpc = this.formData.password.search(/[`~!@#$%^&*|\\\'\";:\/?]/gi)
 
       if (this.formData.userId === null) {

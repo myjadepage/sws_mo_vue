@@ -18,6 +18,9 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
+    if (document.querySelector('html').style.overflow === 'hidden') {
+      document.querySelector('html').style.overflow = 'visible'
+    }
     sessionStorage.removeItem('products')
     sessionStorage.removeItem('selectedOptions')
     sessionStorage.removeItem('selectedAddPrdts')
