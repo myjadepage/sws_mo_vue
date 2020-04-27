@@ -1,6 +1,6 @@
 <template>
-  <div class="productMediaWrap">
-    <div class="sizingWrap">
+  <div class="productMediaWrap" :class="{'nonMov': !this.movFlag}">
+    <div class="sizingWrap" :class="{'nonMov': !this.movFlag}">
       <div class="mainMedia">
 
         <!-- this.listProductMedia 에 영상이 있을 때 -->
@@ -191,9 +191,6 @@ export default {
 </script>
 
 <style>
-.productMediaWrap .mainMedia{
-   /* background-color: gray; */
-}
 
 .productMediaWrap .mediaMenu{
   text-align: center;

@@ -29,7 +29,11 @@
 <script>
 import Axios from 'axios'
 import uuidv4 from 'uuid4'
+<<<<<<< HEAD
 import { setReview } from '@/api/index.js'
+=======
+import { setReview } from '@/api/index.js' // getKinxToken 필요
+>>>>>>> 5a85f6f30ee15f6bebfccbe2b595804aaea99c2b
 
 export default {
   name: 'TextBlock',

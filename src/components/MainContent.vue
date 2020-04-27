@@ -2,10 +2,11 @@
 <div id="swsContent" class="cont_sws">
   <BigSlide></BigSlide>
   <Gnb></Gnb>
-    <LiveSlide></LiveSlide>
+  <LiveSlide></LiveSlide>
   <!-- <ProductSlide></ProductSlide> -->
-    <!-- <BrandSlide></BrandSlide> -->
-  <WeeklyBest></WeeklyBest>
+  <!-- <BrandSlide></BrandSlide> -->
+  <GrandOpen></GrandOpen>
+  <BrandCollabo></BrandCollabo>
   <ScrollTopBtn />
 </div>
 </template>
@@ -14,7 +15,8 @@
 import Gnb from './shared/Gnb'
 import LiveSlide from './slide/LiveSlide'
 import BigSlide from './slide/BigSlide'
-import WeeklyBest from './WeeklyBest'
+import GrandOpen from './GrandOpen'
+import BrandCollabo from './BrandCollabo'
 import ProductSlide from './slide/ProductSlide'
 import BrandSlide from './slide/BrandSlide'
 import ScrollTopBtn from '@/components/subpage/shared/ScrollTopBtn'
@@ -29,7 +31,8 @@ export default {
   components: {
     BigSlide,
     Gnb,
-    WeeklyBest,
+    GrandOpen,
+    BrandCollabo,
     ProductSlide,
     BrandSlide,
     LiveSlide,

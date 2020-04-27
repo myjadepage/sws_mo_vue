@@ -1,6 +1,6 @@
 <template>
 <section class="brandBlock subBlock">
-  <h1>브랜드 기획전</h1>
+  <h1>그랜드 오픈</h1>
   <div class="bgBox" style="background:url('/static/images/temp_sub_brand.png') 50% 50% /cover no-repeat;"></div>
   <div class="itemList">
     <h2>라이프썸</h2>
@@ -25,7 +25,7 @@
 import {getProductLists} from '@/api/index.js'
 
 export default {
-  name: 'BrandBlock',
+  name: 'GrandOpen',
   props: ['categorySysId1'],
   data () {
     return {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     getList () {
-      let getInfo = 'startIndex=' + this.startIndex + '&rowCount=3&categorySysId1=' + this.categorySysId1 + '&isPlanBrand=1'
+      let getInfo = 'startIndex=' + this.startIndex + '&rowCount=20&categorySysId1=' + this.categorySysId1
       // console.log(getInfo)
       getProductLists(getInfo)
         .then(res => {

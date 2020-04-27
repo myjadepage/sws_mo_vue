@@ -42,6 +42,11 @@ export default new Router({
       component: () => import('@/view/subpage/Fashion/FashionMain')
     },
     {
+      path: '/Planning/:type',
+      name: 'Planning',
+      component: () => import('@/view/planning/Planning')
+    },
+    {
       path: '/Product/:prdtSysId',
       name: 'ProductDetail',
       component: () => import('@/view/productDetail/ProductDetailMain')
@@ -71,6 +76,16 @@ export default new Router({
       path: '/About',
       name: 'About',
       component: () => import('@/view/menu/About')
+    },
+    {
+      path: '/About/Terms',
+      name: 'TermsAll',
+      component: () => import('@/view/menu/TermsService')
+    },
+    {
+      path: '/About/Privacy',
+      name: 'Priavte',
+      component: () => import('@/view/menu/Privacy')
     },
     {
       path: '/search',

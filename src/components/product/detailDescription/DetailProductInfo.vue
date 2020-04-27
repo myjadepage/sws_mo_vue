@@ -1,7 +1,7 @@
 <template>
 <div class="detailInfoWrap">
   <div class="infoSection">
-    <div ref="descSection" class="descSection" v-html="this.product.detailDescription"></div>
+    <div ref="descSection" class="descSection" v-html="product.detailDescription"></div>
    </div>
   <button ref="spreadBtn" v-if="isSpreadable"  @click="clickSpread">{{btnText}}</button>
 </div>
@@ -9,26 +9,21 @@
 
 <script>
 export default {
-  created () {
-    if (this.$store.getters.getProduct.detailDescription) {
-      this.product = this.$store.getters.getProduct
-    }
-  },
+  props: ['product'],
   data () {
     return {
       btnText: '상세 정보 펼쳐보기',
-      product: {},
       isSpreadable: false
     }
   },
   mounted () {
-    // this.$refs.descSection.innerHTML = this.product.detailDescription
-    setTimeout(() => {
-      if (this.$refs.descSection.clientHeight >= 800) {
-        this.isSpreadable = true
-        this.$forceUpdate()
-      }
-    }, 500)
+    this.$nextTick(() => {
+      setTimeout(() => {
+        if (this.$refs.descSection.clientHeight >= 800) {
+          this.isSpreadable = true
+        }
+      }, 500)
+    })
   },
 
   methods: {

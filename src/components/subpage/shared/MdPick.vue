@@ -1,39 +1,35 @@
 <template>
   <div class="section_ITEM weekly_best_main">
-    <h4>Weekly Best</h4>
+    <h4>MD PICK</h4>
     <ul class="box_best_item">
-      <!-- 임시주석 -->
-      <Entity v-for="(i,idx) in products" :key="idx" :product="i" />
-      <li class="item noItem" v-if="products.length === 0"><p>Weekly 상품이 없습니다.</p></li>
-
+      <SaleEntity v-for="product in products" :key="product.prdtSysId" :product="product" :pickLists="pickLists" />
+      <li class="item noItem" v-if="products.length === 0">MD PICK 상품이 없습니다.</li>
     </ul>
    </div>
 </template>
 
 <script>
-import { getProductLists } from '../api/index'
-import Entity from '@/components/mainpage/WeeklyBestEntity'
+import SaleEntity from './SaleEntity'
+import {getProductLists} from '@/api/index.js'
+
 export default {
+  props: ['categorySysId1', 'pickLists'],
   components: {
-    Entity
+    SaleEntity
   },
-  name: 'WeeklyBest',
   data () {
     return {
       startIndex: 0,
       products: []
     }
   },
-  created () {
-    this.getList()
-  },
   methods: {
     getList () {
-      let getInfo = 'startIndex=' + this.startIndex + '&isWeekly=1'
+      let getInfo = 'startIndex=' + this.startIndex + '&rowCount=20&categorySysId1=' + this.categorySysId1
       // console.log(getInfo)
       getProductLists(getInfo)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.jsonData.resultCode === '0001') {
             this.products = res.data.jsonData.products
             this.startIndex = res.data.jsonData.startIndex
@@ -46,7 +42,17 @@ export default {
           console.log(err)
         })
     }
-  }
+  },
+  watch: {
+    categorySysId1: {
+      handler (categorySysId1) {
+        this.startIndex = 0
+        this.getList()
+      }
+    }
+  },
+
+  name: 'MdPick'
 }
 </script>
 

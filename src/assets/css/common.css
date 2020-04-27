@@ -638,7 +638,7 @@ member-----------------------------------------*/
 }
 .member_con{ 
   /* height: 390px; */
-  padding: 30px 30px 0;
+  padding: 30px 30px 10px;
 }
 .member_con h2 {
   font-size: 20px;
@@ -655,7 +655,8 @@ member-----------------------------------------*/
   font-family: 'Roboto';
 }
 .member_foot{ 
-  padding: 10px 20px;
+  margin:10px 0;
+  padding: 0 20px;
   text-align: center;
   color: #666;
  
@@ -798,7 +799,7 @@ member-----------------------------------------*/
 }
 .form_item_wrap_ver + .form_item_wrap_ver li:first-child{
  border-bottom: 0;
- margin-bottom: 10px;
+ padding-bottom: 10px;
 }
 .social ul {
   position: relative;
@@ -5180,6 +5181,9 @@ html, body{
 .productDetailWrap .productMediaWrap+.productInfoWrap{
   padding-top:calc(56.3% + 55px);
 }
+.productDetailWrap .productMediaWrap.nonMov+.productInfoWrap{
+  padding-top:5px;
+}
 .productInfoWrap{
   padding: 5px 12px 10px;
 }
@@ -5333,3 +5337,48 @@ background-size: 100%;
 /* *******              ******* */
 /* ******* !!제품상세!!  ******* */
 /* *******              ******* */
+
+
+
+
+/* *******               ******* */
+/* *******   테마기획전    ******* */
+/* *******               ******* */
+
+.planningImgBox{
+  position: relative;
+  width:100%;
+  margin-bottom:50px;
+  padding-top:calc((100% / 3) * 2);
+}
+.planningImgBox:after{
+  position: absolute;
+  top:0;
+  left:0;
+  z-index:1;
+  background:rgba(0,0,0,0.3)
+}
+.planningImgBox .titBox{
+  position: absolute;
+  top:50%;
+  left:50%;
+  z-index:2;
+  max-width:280px;
+  color:#fff;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.planningImgBox .subTitle{
+  font-family: 'Roboto';
+  font-size:16px;
+  font-weight:700;
+}
+.planningImgBox .mainTitle{
+  margin-top:10px;
+  font-size:30px;
+  font-weight:700;
+}
+
+/* *******               ******* */
+/* ******* !!테마기획전!!  ******* */
+/* *******               ******* */

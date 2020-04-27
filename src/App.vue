@@ -88,7 +88,7 @@ export default {
     const iosA2hs = document.querySelector('.iosA2hs')
     const iosA2hsBtn = document.querySelector('.iosA2hs .close')
     if (varUA.indexOf('iphone') > -1) {
-      if (varUA.indexOf('safari') > -1) {
+      if (varUA.indexOf('chrome') === -1 && varUA.indexOf('firefox') === -1 && varUA.indexOf('crios') === -1) {
         iosA2hs.classList.add('mobile')
         if (a2hsFlag) {
           iosA2hs.style.display = 'block'
@@ -98,8 +98,8 @@ export default {
         }
         setClose(iosA2hsBtn, iosA2hs)
       }
-    } else if (varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
-      if (varUA.indexOf('safari') > -1) {
+    } else if (varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1 || varUA.indexOf('macintosh') > -1) {
+      if (varUA.indexOf('chrome') === -1 && varUA.indexOf('firefox') === -1 && varUA.indexOf('crios') === -1) {
         iosA2hs.classList.add('pad')
         if (a2hsFlag) {
           iosA2hs.style.display = 'block'

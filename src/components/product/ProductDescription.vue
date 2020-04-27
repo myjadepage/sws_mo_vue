@@ -6,7 +6,7 @@
         <li><button @click="menuClick(2)">상품문의</button></li>
         <li><button @click="menuClick(3)">배송/교환/반품</button></li>
       </ul>
-      <DetailDesc :selectedMenu="selectedMenu" />
+      <DetailDesc :product="product" :selectedMenu="selectedMenu" />
   </div>
 </template>
 
@@ -14,6 +14,7 @@
 import DetailDesc from './ProductDetailDesc'
 
 export default {
+  props: ['product'],
   mounted () {
     document.addEventListener('scroll', this.scrollHandler, true)
   },
@@ -27,6 +28,9 @@ export default {
       scrollHandler: () => {
         let bH = document.querySelector('.headBarWrap').clientHeight
         let mH = document.querySelector('.productMediaWrap').clientHeight
+        if (document.querySelector('.productMediaWrap').classList.contains('nonMov')) {
+          mH = 0
+        }
         if (this.$refs.info) {
           let el = this.$refs.info
           let target = this.$refs.descMenu
