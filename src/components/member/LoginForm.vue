@@ -71,11 +71,7 @@
                 <li>
                   <NaverLogin
                     client-id="wot76zDwHaETcFxP4xEM"
-<<<<<<< HEAD
-                    callback-url="http://shallwe.shop/Login"
-=======
                     callback-url="http://m.shallwe.link/RegStep03_sns"
->>>>>>> b0c4b35e7828694d7d7b25a6f63252cc50b05b2b
                     :callback-function=callbackFunction
                     class="btn btn-circle sws_icon btn-naver"
                   />
@@ -84,8 +80,8 @@
             </ul>
         </div>
         <div style="clear:both">
-          <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn">비회원으로 구매</button>
-          <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn">비회원 주문조회</button>
+          <button @click="noMemberBuyClick" v-if="nonMemberBtnMode" class="btn" style="color:#000">비회원으로 구매</button>
+          <button @click="noMemeberOrderClick" v-if="!nonMemberBtnMode" class="btn" style="color:#000">비회원 주문조회</button>
         </div>
     </div>
 </div>
